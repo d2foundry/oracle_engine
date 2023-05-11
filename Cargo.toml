@@ -1,9 +1,9 @@
 [package]
-name = "d2_calculation_api"
+name = "oracle_engine"
 edition = "2021"
 version = "1.0.2"
 rust-version = "1.65"
-repository = "https://github.com/oh-yes-0-fps/D2_Calculation_API"
+repository = "https://github.com/d2foundry/oracle_engine/"
 build = "build.rs"
 
 [features]
