@@ -66,6 +66,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
         let opt_bodyshots = 0;
         let mut opt_headshots = 0;
         let mut opt_bullet_timeline: Vec<(f64, f64)> = Vec::new();
+        let mut mag_expended = 0.0;
 
         //Optimal ttk
         while opt_bullets_hit < 50.0 {
@@ -123,13 +124,12 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
                 shot_delay *= 1.45;
             }
 
-            let ammo_fired;
-            if _weapon.firing_data.one_ammo {
-                ammo_fired = opt_bullets_fired/shot_burst_size;
+            let ammo_fired = if _weapon.firing_data.one_ammo {
+                opt_bullets_hit / shot_burst_size
             } else {
-                ammo_fired = opt_bullets_fired;
-            }
-            if ammo_fired
+                opt_bullets_fired
+            };
+            if ammo_fired - mag_expended
                 >= _weapon
                     .calc_ammo_sizes(Some(calc_input.clone()), Some(&mut persistent_data), true)
                     .mag_size
@@ -138,6 +138,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
                 shot_delay += _weapon
                     .calc_reload_time(Some(calc_input.clone()), Some(&mut persistent_data), true)
                     .reload_time;
+                mag_expended += ammo_fired;
             }
 
             if opt_bullets_hit % shot_burst_size == 0.0 {
@@ -183,13 +184,14 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
         let optimal_ttk = OptimalKillData {
             headshots: opt_timeline_headshots,
             bodyshots: opt_timeline_bodyshots,
-            time_taken: opt_time_taken
+            time_taken: opt_time_taken,
         };
 
         let mut bdy_bullets_hit = 0.0;
         let mut bdy_bullets_fired = 0.0;
         let mut bdy_time_taken = 0.0;
         let mut bdy_damage_dealt = 0.0;
+        mag_expended = 0.0;
         while bdy_bullets_hit < 50.0 {
             //PERK CALCULATIONS////////////
             persistent_data.insert("health%".to_string(), (health - bdy_damage_dealt) / 70.0);
@@ -245,13 +247,12 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
                 shot_delay *= 1.45;
             }
 
-            let ammo_fired;
-            if _weapon.firing_data.one_ammo {
-                ammo_fired = opt_bullets_fired/shot_burst_size;
+            let ammo_fired = if _weapon.firing_data.one_ammo {
+                bdy_bullets_hit / shot_burst_size
             } else {
-                ammo_fired = opt_bullets_fired;
-            }
-            if ammo_fired
+                bdy_bullets_fired
+            };
+            if ammo_fired - mag_expended
                 >= _weapon
                     .calc_ammo_sizes(Some(calc_input.clone()), Some(&mut persistent_data), true)
                     .mag_size
@@ -260,6 +261,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
                 shot_delay += _weapon
                     .calc_reload_time(Some(calc_input.clone()), Some(&mut persistent_data), true)
                     .reload_time;
+                mag_expended += ammo_fired;
             }
 
             bdy_time_taken += shot_delay;

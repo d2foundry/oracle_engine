@@ -155,7 +155,7 @@
         "subFam": {
             "Precision":   {"damage": 100.7, "crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "Lightweight": {"damage": 85.61, "crit_mult": 5, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
-            "Trinity":     {"damage": 34.3,  "crit_mult": 0, "burst_delay": 0, "burst_size": 3, "inner_burst_delay": 0},
+            "Trinity":     {"damage": 34.3,  "crit_mult": 0, "burst_delay": 0, "burst_size": 3, "inner_burst_delay": 0, "one_ammo":true},
             "Hierarchy":   {"damage": 93.0,  "crit_mult": 5, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "leviathan":   {"damage": 345.6, "crit_mult": 5, "burst_delay": 0,   "burst_size": 1, "inner_burst_delay": 0},
             "test" :       {"damage": 100,   "crit_mult": 2, "burst_delay": 20,   "burst_size": 2, "inner_burst_delay": 0}
