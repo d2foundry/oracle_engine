@@ -179,24 +179,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "d2_calculation_api"
-version = "1.0.2"
-dependencies = [
- "built",
- "console_error_panic_hook",
- "num-traits",
- "num_enum",
- "pyo3",
- "pyo3-built",
- "reqwest",
- "ron",
- "serde",
- "serde-wasm-bindgen",
- "serde_json",
- "wasm-bindgen",
-]
-
-[[package]]
 name = "encoding_rs"
 version = "0.8.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -608,6 +590,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "lol_alloc"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "36aabc32b791f1a506e0bb90e0fa03e983500549d7b1f2dad45b5fc20ef45974"
+dependencies = [
+ "spin",
+]
+
+[[package]]
 name = "memchr"
 version = "2.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -756,6 +747,25 @@ dependencies = [
  "libc",
  "pkg-config",
  "vcpkg",
+]
+
+[[package]]
+name = "oracle_engine"
+version = "1.0.2"
+dependencies = [
+ "built",
+ "console_error_panic_hook",
+ "lol_alloc",
+ "num-traits",
+ "num_enum",
+ "pyo3",
+ "pyo3-built",
+ "reqwest",
+ "ron",
+ "serde",
+ "serde-wasm-bindgen",
+ "serde_json",
+ "wasm-bindgen",
 ]
 
 [[package]]
@@ -1115,6 +1125,15 @@ checksum = "64a4a911eed85daf18834cfaa86a79b7d266ff93ff5ba14005426219480ed662"
 dependencies = [
  "libc",
  "winapi",
+]
+
+[[package]]
+name = "spin"
+version = "0.9.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6980e8d7511241f8acf4aebddbb1ff938df5eebe98691418c4468d0b72a96a67"
+dependencies = [
+ "lock_api",
 ]
 
 [[package]]
