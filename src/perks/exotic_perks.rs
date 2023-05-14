@@ -119,7 +119,7 @@ pub fn exotic_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let mut damage_buff = 1.0;
             if _input.value > 0 && _input.calc_data.total_shots_fired < 7.0 {
-                damage_buff = if _input.pvp { 1.5 } else { 1.285 };
+                damage_buff = if _input.pvp { 1.285 } else { 1.5 };
             };
             DamageModifierResponse {
                 impact_dmg_scale: damage_buff,
@@ -874,14 +874,13 @@ pub fn exotic_perks() {
         }),
     );
 
-
     add_sbr(
         Perks::CranialSpike,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut out = HashMap::new();
             let val = clamp(_input.value, 0, 5) as i32;
-            out.insert(StatHashes::RANGE.into(), 8*val);
-            out.insert(StatHashes::AIM_ASSIST.into(), 4*val);
+            out.insert(StatHashes::RANGE.into(), 8 * val);
+            out.insert(StatHashes::AIM_ASSIST.into(), 4 * val);
             out
         }),
     );
@@ -903,7 +902,7 @@ pub fn exotic_perks() {
         Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
             let val = clamp(_input.value, 0, 5) as i32;
             RangeModifierResponse {
-                range_stat_add: 8*val,
+                range_stat_add: 8 * val,
                 ..Default::default()
             }
         }),
@@ -913,7 +912,13 @@ pub fn exotic_perks() {
         Perks::DarkForgedTrigger,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
             if _input.value == 0 {
-                if _input.calc_data.perk_value_map.get(&1319823571).unwrap_or(&0) > &4 {
+                if _input
+                    .calc_data
+                    .perk_value_map
+                    .get(&1319823571)
+                    .unwrap_or(&0)
+                    > &4
+                {
                     FiringModifierResponse {
                         burst_delay_add: -5.0 / 30.0,
                         ..Default::default()
