@@ -386,7 +386,7 @@ pub enum Perks {
     HuntersTrance = 383825919,
     NobleRounds = 2144092201,
     StormAndStress = 2238035098,
-    Roadborn = 3413860062,
+    Roadborn = 1658733671,
     MarkovChain = 2814973067,
     MementoMori = 647617635,
 
