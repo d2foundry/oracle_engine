@@ -390,6 +390,30 @@ impl Default for DamageResistModifierResponse {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct MovementSpeedModifierResponse {
+    pub walk_speed_mult: f64,
+    pub sprint_speed_mult: f64,
+    pub crouch_speed_mult: f64,
+    pub slide_distance_mult: f64,
+    pub base_jump_height_mult: f64,
+    pub strafe_speed_mult: f64,
+    pub extra_mobility: i32,
+}
+impl Default for MovementSpeedModifierResponse {
+    fn default() -> Self {
+        Self {
+            walk_speed_mult: 1.0,
+            sprint_speed_mult: 1.0,
+            crouch_speed_mult: 1.0,
+            slide_distance_mult: 1.0,
+            base_jump_height_mult: 1.0,
+            strafe_speed_mult: 1.0,
+            extra_mobility: 0,
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct ModifierResponseSummary {
     pub rmr: Option<RangeModifierResponse>,
     pub dmr: Option<DamageModifierResponse>,
