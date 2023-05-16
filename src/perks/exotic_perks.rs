@@ -952,6 +952,6 @@ pub fn exotic_perks() {
                 sprint_speed: 0.8,
                 ..Default::default()
             }
-        })
-    )
+        }),
+    );
 }
