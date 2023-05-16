@@ -40,10 +40,7 @@ pub fn extern_log(s: &str, log_level: LogLevel) {
     if log_level > get_log_level() {
         return;
     }
-    #[cfg(feature = "wasm")]
     crate::console_log!("{}", s);
-    #[cfg(not(feature = "wasm"))]
-    println!("{}", s);
 }
 
 pub fn log(s: &str, log_level: usize) {

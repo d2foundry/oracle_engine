@@ -6,11 +6,6 @@ rust-version = "1.65"
 repository = "https://github.com/d2foundry/oracle_engine/"
 build = "build.rs"
 
-[features]
-wasm = ["serde-wasm-bindgen", "wasm-bindgen", "console_error_panic_hook"]
-python = ["pyo3", "pyo3-built"]
-foundry = []
-
 [build-dependencies]
 built = { version = "0.6", features = ["git2", "chrono", "semver"] }
 serde = { version = "^1.0", features = ["derive"]}
@@ -25,12 +20,10 @@ num-traits = "0.2"
 [dependencies]
 serde = { version = "^1.0", features = ["derive"]}
 
-serde-wasm-bindgen = { version = "^0.5", optional = true }
-console_error_panic_hook = { version = "0.1.7", optional = true}
-wasm-bindgen = { version = "^0.2", optional = true}
+serde-wasm-bindgen = { version = "^0.5"}
+console_error_panic_hook = { version = "0.1.7"}
+wasm-bindgen = { version = "^0.2"}
 
-pyo3 = { version = "^0.18", features = ["extension-module"], optional = true}
-pyo3-built = { version = "^0.4", optional = true}
 num_enum = "0.6.0"
 lol_alloc = "0.4.0"
 
