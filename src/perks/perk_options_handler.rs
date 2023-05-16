@@ -129,7 +129,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::RightHook => Some(PerkOptionData::toggle()),
         Perks::Ambush => Some(PerkOptionData::toggle()),
         Perks::TexBalancedStock => Some(PerkOptionData::toggle()),
-        Perks::SearchParty => Some(PerkOptionData::static_()),
+        Perks::SearchParty => Some(PerkOptionData::toggle()),
         Perks::HarmonicResonance => Some(PerkOptionData::stacking(2)),
         Perks::FieldTested => Some(PerkOptionData::stacking(5)),
 
