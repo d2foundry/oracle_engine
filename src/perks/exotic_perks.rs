@@ -944,4 +944,14 @@ pub fn exotic_perks() {
             }
         })
     )
+
+    add_msmr(
+        Perks::MidaMT,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            MovementSpeedModifierResponse {
+                sprint_speed: 0.8,
+                ..Default::default()
+            }
+        })
+    )
 }
