@@ -8,13 +8,13 @@ use crate::{
 };
 
 use super::{
-    add_dmr, add_epr, add_fmr, add_hmr, add_imr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr,
+    add_dmr, add_epr, add_fmr, add_hmr, add_imr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr, add_msmr,
     clamp,
     lib::{
         CalculationInput, DamageModifierResponse, ExtraDamageResponse, FiringModifierResponse,
         FlinchModifierResponse, HandlingModifierResponse, InventoryModifierResponse,
         MagazineModifierResponse, RangeModifierResponse, RefundResponse, ReloadModifierResponse,
-        ReloadOverrideResponse,
+        ReloadOverrideResponse, MovementSpeedModifierResponse
     },
     ModifierResponseInput, Perks,
 };
@@ -588,7 +588,7 @@ pub fn other_perks() {
     add_msmr(
         Perks::MidaSynergy,
         Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
-            let speed_bonus = if _input.value > 0 { 0.8 } else { 0.5 } // mida synergy bonus is 10%, unsure if my number is accurate
+            let speed_bonus = if _input.value > 0 { 0.77 } else { 0.5 }; // mida synergy bonus is 10%, unsure if my number is accurate
             MovementSpeedModifierResponse {
                 sprint_speed: speed_bonus,
                 extra_mobility: 20,
@@ -603,7 +603,7 @@ pub fn other_perks() {
             if _input.value > 0 {
                 MovementSpeedModifierResponse {
                     // crouch speed is set to 4.0 and cannot be lowered by slows
-                    crouch_speed = 4.0,
+                    crouch_speed: 4.0,
                     ..Default::default()
                 }
             }

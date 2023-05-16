@@ -391,7 +391,7 @@ impl Default for DamageResistModifierResponse {
 
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct MovementSpeedModifierResponse {
-    // if mult isn't in the var name its additive 
+    // if mult isn't in the var name its additive
     // exception for the crouch speed since all things
     // that affect crouch speed just set it to a value as far as I could tell
     pub walk_speed: f64,
@@ -405,10 +405,10 @@ pub struct MovementSpeedModifierResponse {
 impl Default for MovementSpeedModifierResponse {
     fn default() -> Self {
         Self {
-            walk_speed: 0,
-            sprint_speed: 0,
+            walk_speed: 0.0,
+            sprint_speed: 0.0,
             //
-            crouch_speed: 1.0,
+            crouch_speed: 0.0,
             slide_distance_mult: 1.0,
             base_jump_height_mult: 1.0,
             strafe_speed_mult: 1.0,

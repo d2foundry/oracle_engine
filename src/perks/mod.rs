@@ -32,8 +32,8 @@ use self::{
         CalculationInput, DamageModifierResponse, ExplosivePercentResponse, ExtraDamageResponse,
         FiringModifierResponse, FlinchModifierResponse, HandlingModifierResponse,
         InventoryModifierResponse, MagazineModifierResponse, ModifierResponseSummary,
-        RangeModifierResponse, RefundResponse, ReloadModifierResponse, ReloadOverrideResponse,
-        VelocityModifierResponse,
+        MovementSpeedModifierResponse, RangeModifierResponse, RefundResponse,
+        ReloadModifierResponse, ReloadOverrideResponse, VelocityModifierResponse,
     },
     meta_perks::*,
     origin_perks::*,
@@ -104,7 +104,8 @@ pub enum Perks {
 
     //intrinsics
     RapidFireFrame = 902,
-    MidaSynergy = 1057935015,
+    MidaSynergy = 912,
+    Lightweights = 905,
 
     //armor
     DexterityMod = 1001,
@@ -453,6 +454,7 @@ pub struct PersistentModifierResponses {
     pub epr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> ExplosivePercentResponse>>,
     pub mmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> MagazineModifierResponse>>,
     pub imr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> InventoryModifierResponse>>,
+    pub msmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> MovementSpeedModifierResponse>>,
 }
 impl PersistentModifierResponses {
     fn is_empty(&self) -> bool {
@@ -641,7 +643,10 @@ fn add_imr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> InventoryModi
         map.borrow_mut().imr.insert(perk, func);
     });
 }
-fn add_msmr(perk: Perks, funct: Box<dyn Fn(ModifierResponseInput) -> InventoryModifierResponse>) {
+fn add_msmr(
+    perk: Perks,
+    func: Box<dyn Fn(ModifierResponseInput) -> MovementSpeedModifierResponse>,
+) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().msmr.insert(perk, func);
     });

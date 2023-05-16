@@ -592,7 +592,7 @@ pub fn exotic_armor() {
                 ..Default::default()
             }
         })
-    )    
+    );
 
     add_msmr(
         Perks::Peacekeepers,
