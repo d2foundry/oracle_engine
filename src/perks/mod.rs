@@ -424,7 +424,7 @@ pub enum Perks {
     DarkDescent = 3333994164,
     TargetAquired = 939227542,
     SleeperCatalyst = 2142466730,
-    TractorCannon = 1210807262,
+    RepulsorForce = 1210807262,
 
     #[num_enum(default)]
     Ignore = 69420,
