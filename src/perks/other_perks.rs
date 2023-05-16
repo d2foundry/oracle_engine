@@ -588,7 +588,7 @@ pub fn other_perks() {
     add_msmr(
         Perks::MidaSynergy,
         Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
-            let speed_bonus = if _input.value > 0 { 0.77 } else { 0.5 } // mida synergy bonus is 10%, unsure if my number is accurate
+            let speed_bonus = if _input.value > 0 { 0.8 } else { 0.5 } // mida synergy bonus is 10%, unsure if my number is accurate
             MovementSpeedModifierResponse {
                 sprint_speed: speed_bonus,
                 extra_mobility: 20,
@@ -603,7 +603,7 @@ pub fn other_perks() {
             if _input.value > 0 {
                 MovementSpeedModifierResponse {
                     // crouch speed is set to 4.0 and cannot be lowered by slows
-                    crouch_speed = 4.0
+                    crouch_speed = 4.0,
                     ..Default::default()
                 }
             }
@@ -619,7 +619,7 @@ pub fn other_perks() {
             // Speed boosted
             if _input.value > 0 {
                 MovementSpeedModifierResponse {
-                    sprint_speed: 0.96 // this number may be incorrect
+                    sprint_speed: 1.0, // this number may be incorrect
                     slide_distance_mult: 1.5,
                     extra_mobility: 50,
                     base_jump_height_mult: 1.5,

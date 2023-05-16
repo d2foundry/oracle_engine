@@ -934,4 +934,14 @@ pub fn exotic_perks() {
             }
         }),
     );
+
+    add_msmr(
+        Perks::RepulsorForce,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            MovementSpeedModifierResponse {
+                sprint_speed: 1.0,
+                ..Default::default()
+            }
+        })
+    )
 }
