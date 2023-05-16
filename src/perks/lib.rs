@@ -405,9 +405,8 @@ pub struct MovementSpeedModifierResponse {
 impl Default for MovementSpeedModifierResponse {
     fn default() -> Self {
         Self {
-            walk_speed: 0,
-            sprint_speed: 0,
-            //
+            walk_speed: 0.0,
+            sprint_speed: 0.0,
             crouch_speed: 1.0,
             slide_distance_mult: 1.0,
             base_jump_height_mult: 1.0,

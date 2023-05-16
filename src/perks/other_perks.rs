@@ -8,13 +8,13 @@ use crate::{
 };
 
 use super::{
-    add_dmr, add_epr, add_fmr, add_hmr, add_imr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr,
+    add_dmr, add_epr, add_fmr, add_hmr, add_imr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr,add_msmr,
     clamp,
     lib::{
         CalculationInput, DamageModifierResponse, ExtraDamageResponse, FiringModifierResponse,
         FlinchModifierResponse, HandlingModifierResponse, InventoryModifierResponse,
         MagazineModifierResponse, RangeModifierResponse, RefundResponse, ReloadModifierResponse,
-        ReloadOverrideResponse,
+        ReloadOverrideResponse, MovementSpeedModifierResponse,
     },
     ModifierResponseInput, Perks,
 };
