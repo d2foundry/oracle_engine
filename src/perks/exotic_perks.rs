@@ -4,12 +4,13 @@ use std::collections::HashMap;
 use crate::{d2_enums::StatHashes, enemies::EnemyType, weapons::Stat};
 
 use super::{
-    add_dmr, add_edr, add_epr, add_fmr, add_hmr, add_mmr, add_rmr, add_rr, add_rsmr, add_sbr,
-    add_vmr, add_msmr, clamp,
+    add_dmr, add_edr, add_epr, add_fmr, add_hmr, add_mmr, add_msmr, add_rmr, add_rr, add_rsmr,
+    add_sbr, add_vmr, clamp,
     lib::{
         CalculationInput, DamageModifierResponse, ExtraDamageResponse, FiringModifierResponse,
         HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
-        RangeModifierResponse, RefundResponse, ReloadModifierResponse, ReloadOverrideResponse, MovementSpeedModifierResponse,
+        MovementSpeedModifierResponse, RangeModifierResponse, RefundResponse,
+        ReloadModifierResponse, ReloadOverrideResponse,
     },
     ModifierResponseInput, Perks,
 };
@@ -937,21 +938,25 @@ pub fn exotic_perks() {
 
     add_msmr(
         Perks::RepulsorForce,
-        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
-            MovementSpeedModifierResponse {
-                sprint_speed: 1.0,
-                ..Default::default()
-            }
-        })
-    )
+        Box::new(
+            |_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+                MovementSpeedModifierResponse {
+                    sprint_speed: 1.0,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
 
     add_msmr(
         Perks::MidaMT,
-        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
-            MovementSpeedModifierResponse {
-                sprint_speed: 0.8,
-                ..Default::default()
-            }
-        }),
+        Box::new(
+            |_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+                MovementSpeedModifierResponse {
+                    sprint_speed: 0.8,
+                    ..Default::default()
+                }
+            },
+        ),
     );
 }

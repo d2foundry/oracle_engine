@@ -394,7 +394,6 @@ pub struct MovementSpeedModifierResponse {
     // if mult isn't in the var name its additive
     // exception for the crouch speed since all things
     // that affect crouch speed just set it to a value as far as I could tell
-    pub walk_speed: f64,
     pub sprint_speed: f64,
     pub crouch_speed: f64,
     pub slide_distance_mult: f64,
@@ -405,9 +404,7 @@ pub struct MovementSpeedModifierResponse {
 impl Default for MovementSpeedModifierResponse {
     fn default() -> Self {
         Self {
-            walk_speed: 0.0,
             sprint_speed: 0.0,
-            //
             crouch_speed: 0.0,
             slide_distance_mult: 1.0,
             base_jump_height_mult: 1.0,

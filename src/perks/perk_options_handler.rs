@@ -87,7 +87,8 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         //intrinsics
         Perks::RapidFireFrame => Some(PerkOptionData::toggle()),
-
+        Perks::Lightweights => Some(PerkOptionData::static_()),
+        Perks::MidaSynergy => Some(PerkOptionData::toggle()),
         //armor
 
         //parts
@@ -330,6 +331,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::NobleRounds => Some(PerkOptionData::toggle()),
         Perks::MementoMori => Some(PerkOptionData::toggle()),
         Perks::RepulsorForce => Some(PerkOptionData::toggle()),
+        Perks::MidaMT => Some(PerkOptionData::static_()),
 
         Perks::DexterityMod => Some(PerkOptionData::stacking(3)),
         Perks::ReserveMod => Some(PerkOptionData::stacking(3)),
@@ -340,8 +342,6 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::OnYourMark => Some(PerkOptionData::stacking(3)),
         Perks::Frequency => Some(PerkOptionData::toggle()),
         Perks::Tempering => Some(PerkOptionData::toggle()),
-        Perks::DragonShadow => Some(PerkOptionData::toggle()),
-        Perks::OphidianAspect => Some(PerkOptionData::static_()),
         Perks::Hedrons => Some(PerkOptionData::toggle()),
         Perks::HeatRises => Some(PerkOptionData::toggle()),
         Perks::FlowState => Some(PerkOptionData::toggle()),
@@ -355,6 +355,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::BannerShield => Some(PerkOptionData::static_()),
         Perks::DeadFall => Some(PerkOptionData::toggle()),
         Perks::MoebiusQuiver => Some(PerkOptionData::toggle()),
+        Perks::Dilation => Some(PerkOptionData::toggle()),
 
         Perks::PathOfTheBurningSteps => Some(PerkOptionData::stacking(4)),
         Perks::MantleOfBattleHarmony => Some(PerkOptionData::static_()),
@@ -385,10 +386,9 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::AeonInsight => Some(PerkOptionData::toggle()),
         Perks::Felwinters => Some(PerkOptionData::toggle()),
         Perks::Transversives => Some(PerkOptionData::static_()),
-        Perks::MidaSynergy => Some(PerkOptionData::toggle()),
         Perks::Dunemarchers => Some(PerkOptionData::static_()),
-        Perks::Dilation => Some(PerkOptionData::toggle()),
-        Perks::Lightweights => Some(PerkOptionData::static_()),
+        Perks::DragonShadow => Some(PerkOptionData::toggle()),
+        Perks::OphidianAspect => Some(PerkOptionData::static_()),
 
         //misc
         Perks::UmbralSharpening => Some(PerkOptionData::stacking(5)),

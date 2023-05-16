@@ -577,6 +577,13 @@ impl PersistentModifierResponses {
             InventoryModifierResponse::default()
         }
     }
+    fn get_msmr(&self, perk: Perks, input: ModifierResponseInput) -> MovementSpeedModifierResponse {
+        if let Some(func) = self.msmr.get(&perk) {
+            func(input)
+        } else {
+            MovementSpeedModifierResponse::default()
+        }
+    }
 }
 
 fn add_sbr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> HashMap<BungieHash, StatBump>>) {
@@ -1004,6 +1011,34 @@ pub fn get_velocity_modifier(
         velocity.velocity_scaler *= tmp.velocity_scaler;
     }
     velocity
+}
+
+pub fn get_movement_modifier(
+    _perks: Vec<Perk>,
+    _input_data: &CalculationInput,
+    _pvp: bool,
+    _cached_data: &mut HashMap<String, f64>,
+) -> MovementSpeedModifierResponse {
+    let mut buffer = MovementSpeedModifierResponse::default();
+    for perk in _perks {
+        let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
+            let inp = ModifierResponseInput {
+                is_enhanced: perk.enhanced,
+                value: perk.value,
+                calc_data: &_input_data,
+                pvp: _pvp,
+                cached_data: _cached_data,
+            };
+            pers_modifier.borrow().get_msmr(perk.hash.into(), inp)
+        });
+        buffer.crouch_speed += tmp.crouch_speed;
+        buffer.extra_mobility += tmp.extra_mobility;
+        buffer.sprint_speed += tmp.sprint_speed;
+        buffer.base_jump_height_mult *= buffer.base_jump_height_mult;
+        buffer.slide_distance_mult *= buffer.slide_distance_mult;
+        buffer.strafe_speed_mult *= buffer.strafe_speed_mult;
+    }
+    buffer
 }
 
 impl Weapon {

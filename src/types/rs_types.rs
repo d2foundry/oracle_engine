@@ -208,3 +208,23 @@ impl FiringResponse {
         self.pve_explosion_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
     }
 }
+
+pub struct MovementResponse {
+    sprint_speed: f64,
+    walk_speed: f64,
+    strafe_speed: f64,
+    crouch_speed: f64,
+    slide_distance: f64,
+}
+
+impl Default for MovementResponse {
+    fn default() -> Self {
+        MovementResponse {
+            sprint_speed: 8.0,
+            walk_speed: 5.0,
+            strafe_speed: 4.25,
+            crouch_speed: 2.75,
+            slide_distance: 5.25, //recheck
+        }
+    }
+}
