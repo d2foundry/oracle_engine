@@ -104,6 +104,7 @@ pub enum Perks {
 
     //intrinsics
     RapidFireFrame = 902,
+    Lightweights = 1458010786,
     MidaSynergy = 1057935015,
 
     //armor
