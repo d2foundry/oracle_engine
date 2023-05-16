@@ -588,7 +588,7 @@ pub fn other_perks() {
     add_msmr(
         Perks::MidaSynergy,
         Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
-            let speed_bonus = if _input.value > 0 { 0.77 } else { 0.5 }; // mida synergy bonus is 10%, unsure if my number is accurate
+            let speed_bonus = if _input.value > 0 { 0.8 } else { 0.5 }; // mida synergy bonus is 10%, unsure if my number is accurate
             MovementSpeedModifierResponse {
                 sprint_speed: speed_bonus,
                 extra_mobility: 20,
