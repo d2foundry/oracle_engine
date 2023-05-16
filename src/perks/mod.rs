@@ -104,6 +104,7 @@ pub enum Perks {
 
     //intrinsics
     RapidFireFrame = 902,
+    MidaSynergy = 1057935015,
 
     //armor
     DexterityMod = 1001,
@@ -361,6 +362,7 @@ pub enum Perks {
     Tempering = 362132290,
     ThreadOfAscent = 4208512216,
     Amplified = 880704824,
+    Dilation = 2272984656,
 
     //kinetic exotic
     CranialSpike = 1319823571,
@@ -635,6 +637,11 @@ fn add_mmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> MagazineModif
 fn add_imr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> InventoryModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().imr.insert(perk, func);
+    });
+}
+fn add_msmr(perk: Perks, funct: Box<dyn Fn(ModifierResponseInput) -> InventoryModifierResponse>) {
+    PERK_FUNC_MAP.with(|map| {
+        map.borrow_mut().msmr.insert(perk, func);
     });
 }
 

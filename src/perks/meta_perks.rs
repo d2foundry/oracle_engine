@@ -7,12 +7,12 @@ use crate::{
 
 use super::{
     add_dmr, add_epr, add_flmr, add_fmr, add_hmr, add_imr, add_mmr, add_rmr, add_rsmr, add_sbr,
-    add_vmr, clamp,
+    add_vmr, add_msmr, clamp,
     lib::{
         CalculationInput, DamageModifierResponse, ExplosivePercentResponse, ExtraDamageResponse,
         FiringModifierResponse, FlinchModifierResponse, HandlingModifierResponse,
         InventoryModifierResponse, MagazineModifierResponse, RangeModifierResponse, RefundResponse,
-        ReloadModifierResponse,
+        ReloadModifierResponse, MovementSpeedModifierResponse,
     },
     ModifierResponseInput, Perks,
 };

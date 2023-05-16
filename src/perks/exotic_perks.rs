@@ -5,11 +5,11 @@ use crate::{d2_enums::StatHashes, enemies::EnemyType, weapons::Stat};
 
 use super::{
     add_dmr, add_edr, add_epr, add_fmr, add_hmr, add_mmr, add_rmr, add_rr, add_rsmr, add_sbr,
-    add_vmr, clamp,
+    add_vmr, add_msmr, clamp,
     lib::{
         CalculationInput, DamageModifierResponse, ExtraDamageResponse, FiringModifierResponse,
         HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
-        RangeModifierResponse, RefundResponse, ReloadModifierResponse, ReloadOverrideResponse,
+        RangeModifierResponse, RefundResponse, ReloadModifierResponse, ReloadOverrideResponse, MovementSpeedModifierResponse,
     },
     ModifierResponseInput, Perks,
 };

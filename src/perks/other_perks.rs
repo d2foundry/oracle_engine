@@ -573,4 +573,64 @@ pub fn other_perks() {
             }
         }),
     );
+
+    add_msmr(
+        Perks::Lightweights,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            MovementSpeedModifierResponse {
+                sprint_speed: 0.5,
+                extra_mobility: 20,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_msmr(
+        Perks::MidaSynergy,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            let speed_bonus = if _input.value > 0 { 0.77 } else { 0.5 } // mida synergy bonus is 10%, unsure if my number is accurate
+            MovementSpeedModifierResponse {
+                sprint_speed: speed_bonus,
+                extra_mobility: 20,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_msmr(
+        Perks::Dilation,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            if _input.value > 0 {
+                MovementSpeedModifierResponse {
+                    crouch_speed = 4.0
+                    ..Default::default()
+                }
+            }
+            else {
+                MovementSpeedModifierResponse::default()
+            }
+        }),
+    );
+
+    add_msmr(
+        Perks::Amplified,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            if _input.value > 0 {
+                MovementSpeedModifierResponse {
+                    sprint_speed: 0.96 // this number may be incorrect
+                    slide_distance_mult: 1.5,
+                    extra_mobility: 50,
+                    base_jump_height_mult: 1.5,
+                    ..Default::default()
+                }
+            }
+            else {
+                MovementSpeedModifierResponse {
+                    slide_distance_mult: 1.33,
+                    extra_mobility: 50,
+                    ..Default::default()
+                }
+            }
+        }),
+    );
 }
