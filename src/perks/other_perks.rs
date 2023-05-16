@@ -602,6 +602,7 @@ pub fn other_perks() {
         Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
             if _input.value > 0 {
                 MovementSpeedModifierResponse {
+                    // crouch speed is set to 4.0 and cannot be lowered by slows
                     crouch_speed = 4.0
                     ..Default::default()
                 }
@@ -615,6 +616,7 @@ pub fn other_perks() {
     add_msmr(
         Perks::Amplified,
         Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            // Speed boosted
             if _input.value > 0 {
                 MovementSpeedModifierResponse {
                     sprint_speed: 0.96 // this number may be incorrect
@@ -624,6 +626,7 @@ pub fn other_perks() {
                     ..Default::default()
                 }
             }
+            // normal amplified
             else {
                 MovementSpeedModifierResponse {
                     slide_distance_mult: 1.33,
