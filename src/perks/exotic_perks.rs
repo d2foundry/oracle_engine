@@ -959,4 +959,34 @@ pub fn exotic_perks() {
             },
         ),
     );
+
+    add_msmr(Perks::HarshTruths,
+             Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            if _input.value > 0 {
+                MovementSpeedModifierResponse {
+                    sprint_speed: 0.5,
+                    slide_distance_mult: 1.33,
+                    extra_mobility: 20,
+                    ..Default::default()
+                }
+            }
+            else {
+                MovementSpeedModifierResponse::default()
+            }
+        }),
+    );
+
+    add_rsmr(Perks::LastStand,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value > 0 {
+                ReloadModifierResponse {
+                    reload_stat_add: 30,
+                    ..Default::default()
+                }
+            }
+            else {
+                ReloadModifierResponse::default()
+            }
+        }),
+    );
 }

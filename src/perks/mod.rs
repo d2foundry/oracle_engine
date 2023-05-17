@@ -395,6 +395,8 @@ pub enum Perks {
     MarkovChain = 2814973067,
     MementoMori = 647617635,
     MidaMT = 1331482397,
+    HarshTruths = 2307143135,
+    LastStand = 4146729347,
 
     //energy exotic
     LagragianSight = 2881100038,

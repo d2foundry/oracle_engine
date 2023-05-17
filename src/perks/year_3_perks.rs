@@ -6,11 +6,11 @@ use crate::{
 };
 
 use super::{
-    add_dmr, add_epr, add_fmr, add_hmr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr,
+    add_dmr, add_epr, add_fmr, add_hmr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr, add_msmr,
     lib::{
         CalculationInput, DamageModifierResponse, ExtraDamageResponse, FiringModifierResponse,
         HandlingModifierResponse, MagazineModifierResponse, RangeModifierResponse, RefundResponse,
-        ReloadModifierResponse,
+        ReloadModifierResponse, MovementSpeedModifierResponse,
     },
     ModifierResponseInput, Perks,
 };
@@ -79,6 +79,16 @@ pub fn year_3_perks() {
         }),
     );
 
+    add_msmr(
+        Perks::ElementalCapacitor,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            MovementSpeedModifierResponse {
+                ads_scalar: 1.05,
+                ..Default::default()
+            }
+        }),
+    );
+
     add_sbr(
         Perks::KillingWind,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
@@ -126,6 +136,16 @@ pub fn year_3_perks() {
                 }
             },
         ),
+    );
+
+    add_msmr(
+        Perks::KillingWind,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            MovementSpeedModifierResponse {
+                extra_mobility: 50,
+                ..Default::default()
+            }
+        }),
     );
 
     add_dmr(
