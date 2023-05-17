@@ -210,11 +210,11 @@ impl FiringResponse {
 }
 
 pub struct MovementResponse {
-    sprint_speed: f64,
-    walk_speed: f64,
-    strafe_speed: f64,
-    crouch_speed: f64,
-    slide_distance: f64,
+    pub sprint_speed: f64,
+    pub walk_speed: f64,
+    pub strafe_speed: f64,
+    pub crouch_speed: f64,
+    pub slide_distance: f64,
 }
 
 impl Default for MovementResponse {

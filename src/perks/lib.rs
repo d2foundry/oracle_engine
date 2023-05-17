@@ -400,6 +400,7 @@ pub struct MovementSpeedModifierResponse {
     pub base_jump_height_mult: f64,
     pub strafe_speed_mult: f64,
     pub extra_mobility: i32,
+    pub ads_scalar: f64,
 }
 impl Default for MovementSpeedModifierResponse {
     fn default() -> Self {
@@ -410,6 +411,7 @@ impl Default for MovementSpeedModifierResponse {
             base_jump_height_mult: 1.0,
             strafe_speed_mult: 1.0,
             extra_mobility: 0,
+            ads_scalar: 1.0,
         }
     }
 }
