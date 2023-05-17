@@ -19,7 +19,7 @@ impl LinearTable {
         }
         let mut index = 0;
         for i in 0..self.table.len() {
-            if self.table[i].time > time {
+            if self.table[i].time >= time {
                 index = i;
                 break;
             }
@@ -58,27 +58,27 @@ pub struct DifficultyData {
 }
 
 const MASTER_VALUES: [f64; 11] = [
-    0.85, 0.68, 0.58, 0.5336, 0.505, 0.485, 0.475, 0.46, 0.44, 0.42, 0.418,
+    0.85, 0.68, 0.58, 0.535, 0.510, 0.490, 0.475, 0.46, 0.44, 0.42, 0.404,
 ];
 const MASTER_TIMES: [f64; 11] = [
     0.0, -10.0, -20.0, -30.0, -40.0, -50.0, -60.0, -70.0, -80.0, -90.0, -99.0,
 ];
 
 const NORMAL_VALUES: [f64; 11] = [
-    1.0, 0.78, 0.66, 0.5914, 0.5405, 0.5, 0.475, 0.46, 0.44, 0.42, 0.418,
+    1.0, 0.78, 0.66, 0.5914, 0.541, 0.5, 0.475, 0.46, 0.44, 0.42, 0.402,
 ];
 const NORMAL_TIMES: [f64; 11] = [
     0.0, -10.0, -20.0, -30.0, -40.0, -50.0, -60.0, -70.0, -80.0, -90.0, -99.0,
 ];
 
 const RAID_VALUES: [f64; 11] = [
-    0.925, 0.74, 0.62, 0.5623, 0.5225, 0.4925, 0.475, 0.46, 0.44, 0.42, 0.418,
+    0.925, 0.73, 0.62, 0.563, 0.525, 0.495, 0.475, 0.46, 0.44, 0.42, 0.402,
 ];
 const RAID_TIMES: [f64; 11] = [
     0.0, -10.0, -20.0, -30.0, -40.0, -50.0, -60.0, -70.0, -80.0, -90.0, -99.0,
 ];
 
-const WEAPON_DELTA_EXPONENT: f64 = 1.006736;
+const WEAPON_DELTA_EXPONENT: f64 = 0.00672;
 
 #[derive(Debug, Clone)]
 pub enum DifficultyOptions {
@@ -124,12 +124,13 @@ impl From<i32> for DifficultyOptions {
 }
 
 pub(super) fn rpl_mult(_rpl: f64) -> f64 {
-    return (1.0 + ((1.0 / 30.0) * _rpl)) / (1.0 + 1.0 / 3.0);
+    // good - harm
+    return (1.0 + ((1.0 / 30.0) * _rpl)) / (4.0 / 3.0);
 }
 
 pub(super) fn gpl_delta(_activity: &Activity) -> f64 {
-    let difficulty_data = _activity.difficulty.get_difficulty_data();
-    let curve = difficulty_data.table;
+    let difficulty_data: DifficultyData = _activity.difficulty.get_difficulty_data();
+
     let rpl = _activity.rpl;
     let cap = if _activity.cap < difficulty_data.cap {
         _activity.cap
@@ -142,7 +143,9 @@ pub(super) fn gpl_delta(_activity: &Activity) -> f64 {
     } else if delta > cap {
         delta = cap;
     }
-    let wep_delta_mult = WEAPON_DELTA_EXPONENT.powi(delta);
+    let wep_delta_mult = std::f64::consts::E.powf(WEAPON_DELTA_EXPONENT * (delta as f64));
+
+    let curve = difficulty_data.table;
     let gear_delta_mult = curve.evaluate(delta as f64);
     wep_delta_mult * gear_delta_mult
 }
@@ -163,11 +166,7 @@ pub(super) fn gpl_delta(_activity: &Activity) -> f64 {
 //     _damage / (gpl_delta * rpl_mult * _combatant_mult)
 // }
 
-pub fn remove_pve_bonuses(
-    _damage: f64,
-    _combatant_mult: f64,
-    _activity: &Activity,
-) -> f64 {
+pub fn remove_pve_bonuses(_damage: f64, _combatant_mult: f64, _activity: &Activity) -> f64 {
     let rpl_mult = rpl_mult(_activity.rpl as f64);
     let gpl_delta = gpl_delta(_activity);
 

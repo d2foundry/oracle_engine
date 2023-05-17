@@ -393,7 +393,10 @@ fn main() {
     } else {
         let file_res = std::fs::File::open(build_cache_path);
         if file_res.is_err() {
-            println!("cargo:warning=error opening cached build file: {}", file_res.err().unwrap());
+            println!(
+                "cargo:warning=error opening cached build file: {}",
+                file_res.err().unwrap()
+            );
             cached_data = CachedBuildData::default();
         } else {
             let file = file_res.unwrap();
@@ -431,9 +434,11 @@ fn main() {
             panic!("cargo:warning=error initializing ron serializer");
         } else {
             #[allow(unused_variables)]
-            let cd: CachedBuildData = ron::de::from_str(&res.clone().unwrap()).expect("cargo:warning=error deserializing");
+            let cd: CachedBuildData = ron::de::from_str(&res.clone().unwrap())
+                .expect("cargo:warning=error deserializing");
         }
-        file.write_all(res.unwrap().as_bytes()).expect("cargo:warning=error writing cached build file");
+        file.write_all(res.unwrap().as_bytes())
+            .expect("cargo:warning=error writing cached build file");
     }
 }
 
@@ -656,7 +661,7 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
                     .into();
                 let mut scalar = b_scalar.add_pve_mult(
                     weapon_def
-                        .get("pve_mult")
+                        .get("pve")
                         .unwrap_or(&json_1_float())
                         .as_f64()
                         .unwrap_or(1.0),
