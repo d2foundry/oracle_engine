@@ -43,7 +43,6 @@ use wasm_bindgen::prelude::*;
 
 use crate::types::js_types::JsScalarResponse;
 
-
 #[derive(Debug, Clone, Default)]
 pub struct PersistentData {
     pub weapon: Weapon,
@@ -62,14 +61,12 @@ thread_local! {
     static PERS_DATA: RefCell<PersistentData> = RefCell::new(PersistentData::new());
 }
 
-
 #[wasm_bindgen]
 extern "C" {
     //foreign function interface
     #[wasm_bindgen(js_namespace = console)]
     pub fn log(s: &str);
 }
-
 
 #[macro_export]
 macro_rules! console_log {
@@ -85,7 +82,6 @@ pub fn start() {
 
 //---------------WEAPONS---------------//
 
-
 #[wasm_bindgen(js_name = "getMetadata")]
 pub fn get_metadata() -> Result<JsMetaData, JsValue> {
     let metadata = JsMetaData {
@@ -97,21 +93,19 @@ pub fn get_metadata() -> Result<JsMetaData, JsValue> {
     Ok(metadata)
 }
 
-
 #[wasm_bindgen(js_name = "stringifyWeapon")]
-pub fn weapon_as_string() -> Result<String, JsValue> {
+pub fn weapon_as_string() -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
-    Ok(format!("{:?}", weapon))
+    Ok(serde_wasm_bindgen::to_value(&weapon).unwrap())
 }
 
-// 
+//
 // #[wasm_bindgen(js_name = "weaponJSON")]
 // ///Returns the weapon as a JSON structure, snake case fields
 // pub fn weapon_as_json() -> Result<JsValue, JsValue> {
 //     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
 //     Ok(serde_wasm_bindgen::to_value(&weapon).unwrap())
 // }
-
 
 #[wasm_bindgen(js_name = "setWeapon")]
 pub fn set_weapon(
@@ -144,7 +138,6 @@ pub fn set_weapon(
     Ok(())
 }
 
-
 #[wasm_bindgen(js_name = "getStats")]
 pub fn get_stats() -> Result<JsValue, JsValue> {
     let stat_map = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.stats.clone());
@@ -159,7 +152,6 @@ pub fn get_stats() -> Result<JsValue, JsValue> {
     Ok(value.unwrap())
 }
 
-
 #[wasm_bindgen(js_name = "setStats")]
 pub fn set_stats(_stats: JsValue) -> Result<(), JsValue> {
     let in_stats: HashMap<u32, i32> = serde_wasm_bindgen::from_value(_stats).unwrap();
@@ -170,7 +162,6 @@ pub fn set_stats(_stats: JsValue) -> Result<(), JsValue> {
     PERS_DATA.with(|perm_data| perm_data.borrow_mut().weapon.stats = stats);
     Ok(())
 }
-
 
 #[wasm_bindgen(js_name = "addTrait")]
 pub fn add_perk(_stats: JsValue, _value: u32, _hash: u32) -> Result<(), JsValue> {
@@ -186,12 +177,10 @@ pub fn add_perk(_stats: JsValue, _value: u32, _hash: u32) -> Result<(), JsValue>
     Ok(())
 }
 
-
 #[wasm_bindgen(js_name = "getTraitHashes")]
 pub fn query_perks() -> Vec<u32> {
     PERS_DATA.with(|perm_data| perm_data.borrow_mut().weapon.list_perk_ids())
 }
-
 
 #[wasm_bindgen(js_name = "setTraitValue")]
 pub fn change_perk_value(perk_hash: u32, new_value: u32) {
@@ -203,7 +192,6 @@ pub fn change_perk_value(perk_hash: u32, new_value: u32) {
             .change_perk_val(data.0, new_value)
     });
 }
-
 
 #[wasm_bindgen(js_name = "getTraitOptions")]
 pub fn get_perk_options_js(_perks: Vec<u32>) -> Result<JsValue, JsValue> {
@@ -217,7 +205,6 @@ pub fn get_perk_options_js(_perks: Vec<u32>) -> Result<JsValue, JsValue> {
     Ok(value.unwrap())
 }
 
-
 #[wasm_bindgen(js_name = "getWeaponRangeFalloff")]
 pub fn get_weapon_range(_dynamic_traits: bool, _pvp: bool) -> Result<JsRangeResponse, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
@@ -229,7 +216,6 @@ pub fn get_weapon_range(_dynamic_traits: bool, _pvp: bool) -> Result<JsRangeResp
         Ok(weapon.calc_range_falloff(None, None, _pvp).into())
     }
 }
-
 
 #[wasm_bindgen(js_name = "getWeaponHandlingTimes")]
 pub fn get_weapon_handling(
@@ -246,7 +232,6 @@ pub fn get_weapon_handling(
     }
 }
 
-
 #[wasm_bindgen(js_name = "getWeaponReloadTimes")]
 pub fn get_weapon_reload(_dynamic_traits: bool, _pvp: bool) -> Result<JsReloadResponse, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
@@ -258,7 +243,6 @@ pub fn get_weapon_reload(_dynamic_traits: bool, _pvp: bool) -> Result<JsReloadRe
         Ok(weapon.calc_reload_time(None, None, _pvp).into())
     }
 }
-
 
 #[wasm_bindgen(js_name = "getWeaponAmmoSizes")]
 pub fn get_weapon_ammo(_dynamic_traits: bool, _pvp: bool) -> Result<JsAmmoResponse, JsValue> {
@@ -272,7 +256,6 @@ pub fn get_weapon_ammo(_dynamic_traits: bool, _pvp: bool) -> Result<JsAmmoRespon
     }
 }
 
-
 #[wasm_bindgen(js_name = "getWeaponTtk")]
 pub fn get_weapon_ttk(_overshield: f64) -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
@@ -282,7 +265,7 @@ pub fn get_weapon_ttk(_overshield: f64) -> Result<JsValue, JsValue> {
 }
 
 ///DEPRECATED for now
-// 
+//
 // #[wasm_bindgen(js_name = "getWeaponDps")]
 // pub fn get_weapon_dps(_use_rpl: bool) -> Result<JsDpsResponse, JsValue> {
 //     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
@@ -295,7 +278,6 @@ pub fn get_weapon_ttk(_overshield: f64) -> Result<JsValue, JsValue> {
 //     }
 //     Ok(dps_response.into())
 // }
-
 
 #[wasm_bindgen(js_name = "getWeaponFiringData")]
 pub fn get_weapon_firing_data(
@@ -324,7 +306,6 @@ pub fn get_weapon_firing_data(
     });
     Ok(response.into())
 }
-
 
 #[wasm_bindgen(js_name = "getWeaponFlinch")]
 pub fn get_weapon_flinch(
