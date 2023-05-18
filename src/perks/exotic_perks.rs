@@ -934,4 +934,17 @@ pub fn exotic_perks() {
             }
         }),
     );
+
+    //Queenbreaker's sights
+    add_dmr(
+        Perks::MarksmanSights,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            DamageModifierResponse{
+                impact_dmg_scale: 1.38,
+                explosive_dmg_scale: 1.38,
+                crit_scale: 1.0,
+
+            }
+        })
+    )
 }
