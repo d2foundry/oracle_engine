@@ -94,9 +94,9 @@ pub fn get_metadata() -> Result<JsMetaData, JsValue> {
 }
 
 #[wasm_bindgen(js_name = "stringifyWeapon")]
-pub fn weapon_as_string() -> Result<String, JsValue> {
+pub fn weapon_as_string() -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
-    Ok(format!("{:?}", weapon))
+    Ok(serde_wasm_bindgen::to_value(&weapon).unwrap())
 }
 
 //
