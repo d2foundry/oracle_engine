@@ -204,6 +204,14 @@ impl FiringResponse {
         _pve_mult: f64,
         _combatant_mult: f64,
     ) {
+        crate::logging::log(
+            format!(
+                "rpl: {}, gpl: {}, pve: {}, combat_mult: {}",
+                _rpl_mult, _gpl_mult, _pve_mult, _combatant_mult
+            )
+            .as_str(),
+            crate::logging::LogLevel::Debug.into(),
+        );
         self.pve_impact_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
         self.pve_explosion_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
     }

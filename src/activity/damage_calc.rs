@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 use super::Activity;
-use crate::{enemies::EnemyType, types::rs_types::DamageMods};
+use crate::{enemies::EnemyType, logging, types::rs_types::DamageMods};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Copy)]
@@ -124,7 +124,6 @@ impl From<i32> for DifficultyOptions {
 }
 
 pub(super) fn rpl_mult(_rpl: f64) -> f64 {
-    // good - harm
     return (1.0 + ((1.0 / 30.0) * _rpl)) / (4.0 / 3.0);
 }
 
@@ -137,16 +136,28 @@ pub(super) fn gpl_delta(_activity: &Activity) -> f64 {
     } else {
         difficulty_data.cap
     };
-    let mut delta = _activity.player.pl as i32 - rpl as i32;
-    if delta < -99 {
+    let mut epl = _activity.player.pl as i32 - rpl as i32;
+    if epl < -99 {
         return 0.0;
-    } else if delta > cap {
-        delta = cap;
+    } else if epl > cap {
+        epl = cap;
     }
-    let wep_delta_mult = std::f64::consts::E.powf(WEAPON_DELTA_EXPONENT * (delta as f64));
-
+    let wep_delta_mult = match epl {
+        -50..=50 => {
+            (epl as f64) * 0.00683343 + (0.5 * 0.0000441279650846838 * (epl as f64).powi(2)) + 1.0
+        }
+        _ => std::f64::consts::E.powf(WEAPON_DELTA_EXPONENT * (epl as f64)),
+    };
+    crate::logging::log(
+        format!("wep_delta: {}", wep_delta_mult).as_str(),
+        logging::LogLevel::Debug.into(),
+    );
     let curve = difficulty_data.table;
-    let gear_delta_mult = curve.evaluate(delta as f64);
+    let gear_delta_mult = curve.evaluate(epl as f64);
+    crate::logging::log(
+        gear_delta_mult.to_string().as_str(),
+        logging::LogLevel::Debug.into(),
+    );
     wep_delta_mult * gear_delta_mult
 }
 
