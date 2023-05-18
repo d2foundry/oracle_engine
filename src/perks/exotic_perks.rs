@@ -952,7 +952,7 @@ pub fn exotic_perks() {
         Perks::FanFire,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
             ReloadModifierResponse {
-                reload_stat_add: 5 * _input.value,
+                reload_stat_add: (5 * _input.value) as i32,
                 ..Default::default()
             }
         }),
