@@ -945,6 +945,6 @@ pub fn exotic_perks() {
                 crit_scale: 1.0,
 
             }
-        })
-    )
+        }),
+    );
 }
