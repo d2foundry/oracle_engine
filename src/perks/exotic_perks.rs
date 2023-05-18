@@ -934,7 +934,7 @@ pub fn exotic_perks() {
             }
         }),
     );
-    
+
     //TODO: FAN FIRE AFFECTING ACCURACY CONE
 
     add_dmr(
@@ -948,7 +948,7 @@ pub fn exotic_perks() {
         }),
     );
 
-    add_rmr(
+    add_rsmr(
         Perks::FanFire,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
             ReloadModifierResponse {
