@@ -389,6 +389,7 @@ pub enum Perks {
     Roadborn = 1658733671,
     MarkovChain = 2814973067,
     MementoMori = 647617635,
+    FanFire = 2770223582,
 
     //energy exotic
     LagragianSight = 2881100038,
