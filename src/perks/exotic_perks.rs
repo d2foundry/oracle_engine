@@ -943,7 +943,6 @@ pub fn exotic_perks() {
                 impact_dmg_scale: 1.38,
                 explosive_dmg_scale: 1.38,
                 crit_scale: 1.0,
-
             }
         }),
     );
