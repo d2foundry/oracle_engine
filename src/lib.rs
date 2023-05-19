@@ -292,6 +292,7 @@ pub fn get_weapon_firing_data(
     } else {
         response = weapon.calc_firing_data(None, None, _pvp);
     };
+    crate::logging::log(format!("{:?}", response).as_str(), LogLevel::Debug.into());
     PERS_DATA.with(|perm_data| {
         response.apply_pve_bonuses(
             perm_data.borrow().activity.get_rpl_mult(),
@@ -341,18 +342,20 @@ pub fn get_misc_data(_dynamic_traits: bool, _pvp: bool) -> Result<JsValue, JsVal
 
 #[wasm_bindgen(js_name = "setEncounter")]
 pub fn set_encounter(
-    _reccomended_pl: u32,
+    _recommend_pl: u32,
     _player_pl: u32,
+    _weapon_pl: u32,
     _override_cap: i32,
     _difficulty: JsDifficultyOptions,
     _enemy_type: JsEnemyType,
 ) -> Result<(), JsValue> {
     PERS_DATA.with(|perm_data| {
         let mut activity = &mut perm_data.borrow_mut().activity;
-        activity.rpl = _reccomended_pl;
+        activity.rpl = _recommend_pl;
         activity.cap = _override_cap;
         activity.difficulty = _difficulty.into();
-        activity.player.pl = _player_pl;
+        activity.player.power = _player_pl;
+        activity.player.wep_power = _weapon_pl;
     });
     PERS_DATA.with(|perm_data| {
         let mut enemy = &mut perm_data.borrow_mut().enemy;
