@@ -84,7 +84,7 @@
             "Rapid-Fire":  {"damage": 13.41, "crit_mult": 0,  "burst_delay": 2.5, "burst_size": 1, "inner_burst_delay": 0},
             "High-Impact": {"damage": 22.00, "crit_mult": 5,  "burst_delay": 5,   "burst_size": 1, "inner_burst_delay": 0},
             "Adaptive":    {"damage": 14.24, "crit_mult": 5,  "burst_delay": 3,   "burst_size": 1, "inner_burst_delay": 0},
-            "Precision":   {"damage": 20.00, "crit_mult": 5,  "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0},
+            "Precision":   {"damage": 20.00, "crit_mult": 3,  "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0},
             "Cerberus":    {"damage": 18.0, "crit_mult": 10, "burst_delay": 5,   "burst_size": 4, "inner_burst_delay": 0},
             "SweetBuiss":  {"damage": 15.0, "crit_mult": -5, "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0}
         },
@@ -715,12 +715,12 @@
             }
         },
         "subFam": {
-            "High-Impact": {"damage":40.0022, "crit_mult":13, "burst_delay":12, "burst_size":1, "inner_burst_delay":0},
-            "Rapid-Fire":  {"damage":27.5047, "crit_mult":10, "burst_delay":7,  "burst_size":1, "inner_burst_delay":0},
-            "Lightweight": {"damage":30.4957, "crit_mult":13, "burst_delay":9,  "burst_size":1, "inner_burst_delay":0},
-            "Precision":   {"damage":38.0034,   "crit_mult":5,  "burst_delay":10, "burst_size":1, "inner_burst_delay":0},
-            "Aggressive":  {"damage":53.9949, "crit_mult":-1, "burst_delay":15, "burst_size":1, "inner_burst_delay":0},
-            "DeadMans":  {"damage":65.1115, "crit_mult":13, "burst_delay":15, "burst_size":1, "inner_burst_delay":0}
+            "High-Impact": {"damage":40.00, "crit_mult":13, "burst_delay":12, "burst_size":1, "inner_burst_delay":0},
+            "Rapid-Fire":  {"damage":27.50, "crit_mult":10, "burst_delay":7,  "burst_size":1, "inner_burst_delay":0},
+            "Lightweight": {"damage":30.50, "crit_mult":13, "burst_delay":9,  "burst_size":1, "inner_burst_delay":0},
+            "Precision":   {"damage":38.00,   "crit_mult":5,  "burst_delay":10, "burst_size":1, "inner_burst_delay":0},
+            "Aggressive":  {"damage":54.00, "crit_mult":-1, "burst_delay":15, "burst_size":1, "inner_burst_delay":0},
+            "DeadMans":  {"damage":65.11, "crit_mult":-9.18, "burst_delay":15, "burst_size":1, "inner_burst_delay":0}
         },
         "magProf": {
             "default": {
@@ -801,7 +801,7 @@
             "Rapid-Fire":  {"damage":16.67,  "crit_mult":-20, "burst_delay":13, "burst_size":12, "inner_burst_delay":0, "one_ammo": true},
             "Precision":   {"damage":19.08,  "crit_mult":-20, "burst_delay":27, "burst_size":12, "inner_burst_delay":0, "one_ammo": true},
             "Aggressive":  {"damage":22.25,  "crit_mult":-20, "burst_delay":33, "burst_size":12, "inner_burst_delay":0, "one_ammo": true},
-            "Slug":        {"damage":151.2, "crit_mult":13,  "burst_delay":27, "burst_size":1,  "inner_burst_delay":0, "one_ammo": true},
+            "Slug":        {"damage":150.2, "crit_mult":13,  "burst_delay":27, "burst_size":1,  "inner_burst_delay":0, "one_ammo": true},
             "LoW":         {"damage":39.0,  "crit_mult":-3,  "burst_delay":6,  "burst_size":5,  "inner_burst_delay":2},
             "Lightweight": {"damage":18.33, "crit_mult":-20, "burst_delay":22, "burst_size":12, "inner_burst_delay":0, "one_ammo": true},
             "FourthHorse": {"damage":16.67,  "crit_mult":-20, "burst_delay":5,  "burst_size":12, "inner_burst_delay":0, "one_ammo": true}
@@ -855,12 +855,12 @@
             }
         },
         "subFam": {
-            "Rapid-Fire":       {"damage":25.0024,   "crit_mult":-5, "burst_delay":4, "burst_size":1, "inner_burst_delay":0},
-            "Precision":        {"damage":40.0022,   "crit_mult":-5, "burst_delay":7, "burst_size":1, "inner_burst_delay":0},
-            "Aggressive_Burst": {"damage":32.0062,   "crit_mult":-5, "burst_delay":8, "burst_size":2, "inner_burst_delay":3},
-            "Adaptive_Burst":   {"damage":36.0041,   "crit_mult":5,  "burst_delay":7, "burst_size":3, "inner_burst_delay":2},
-            "Adaptive":         {"damage":36.0041,   "crit_mult":-5, "burst_delay":6, "burst_size":1, "inner_burst_delay":0},
-            "Lightweight":      {"damage":30.9994,   "crit_mult":-5, "burst_delay":5, "burst_size":1, "inner_burst_delay":0},
+            "Rapid-Fire":       {"damage":25.00,   "crit_mult":-5, "burst_delay":4, "burst_size":1, "inner_burst_delay":0},
+            "Precision":        {"damage":40.00,   "crit_mult":-5, "burst_delay":7, "burst_size":1, "inner_burst_delay":0},
+            "Aggressive_Burst": {"damage":32.01,   "crit_mult":-5, "burst_delay":8, "burst_size":2, "inner_burst_delay":3},
+            "Adaptive_Burst":   {"damage":20.00,   "crit_mult":5,  "burst_delay":7, "burst_size":3, "inner_burst_delay":2},
+            "Adaptive":         {"damage":36.00,   "crit_mult":-5, "burst_delay":6, "burst_size":1, "inner_burst_delay":0},
+            "Lightweight":      {"damage":31.00,   "crit_mult":-5, "burst_delay":5, "burst_size":1, "inner_burst_delay":0},
             "Forerunner":       {"damage":36.9, "crit_mult":15, "burst_delay":9, "burst_size":1, "inner_burst_delay":0}
         },
         "magProf": {
