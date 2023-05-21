@@ -2,6 +2,7 @@
 #![allow(unused_imports)]
 
 use logging::LogLevel;
+use perks::lib::CalculationInput;
 pub mod abilities;
 pub mod activity;
 pub mod d2_enums;
@@ -285,26 +286,26 @@ pub fn get_weapon_firing_data(
     _pvp: bool,
     _use_rpl: bool,
 ) -> Result<JsFiringResponse, JsValue> {
-    let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
+    let persistent = PERS_DATA.with(|_perm_data| _perm_data.borrow().clone());
     let mut response: types::rs_types::FiringResponse;
-    if _dynamic_traits {
-        response = weapon.calc_firing_data(Some(weapon.static_calc_input()), None, _pvp);
+    let calc_input: Option<CalculationInput> = if _dynamic_traits {
+        let mut buffer = persistent.weapon.static_calc_input();
+        buffer.enemy_type = &persistent.enemy.type_;
+        Some(buffer)
     } else {
-        response = weapon.calc_firing_data(None, None, _pvp);
+        None
     };
+    response = persistent.weapon.calc_firing_data(calc_input, None, _pvp);
+    response.apply_pve_bonuses(
+        persistent.activity.get_rpl_mult(),
+        persistent.activity.get_pl_delta(),
+        persistent.weapon.damage_mods.pve,
+        persistent
+            .weapon
+            .damage_mods
+            .get_mod(&persistent.enemy.type_),
+    );
     crate::logging::log(format!("{:?}", response).as_str(), LogLevel::Debug.into());
-    PERS_DATA.with(|perm_data| {
-        response.apply_pve_bonuses(
-            perm_data.borrow().activity.get_rpl_mult(),
-            perm_data.borrow().activity.get_pl_delta(),
-            perm_data.borrow().weapon.damage_mods.pve,
-            perm_data
-                .borrow()
-                .weapon
-                .damage_mods
-                .get_mod(&perm_data.borrow().enemy.type_),
-        )
-    });
     Ok(response.into())
 }
 
