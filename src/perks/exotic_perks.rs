@@ -934,4 +934,22 @@ pub fn exotic_perks() {
             }
         }),
     );
+
+    add_dmr(
+        Perks::HarmonicLaser,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let mut buff = 1.0;
+            if _input.value == 1 {
+                buff = if _input.pvp { 1.03 } else { 1.323 };
+            }
+            else if _input.value == 2 {
+                buff = if _input.pvp { 1.0625 } else { 1.687 };
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
 }

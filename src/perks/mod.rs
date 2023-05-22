@@ -412,6 +412,7 @@ pub enum Perks {
         3081173348, //borealis
     ])]
     Fundamentals = 2620589274,
+    HarmonicLaser = 459441288,
 
     //heavy exotic
     ReignHavoc = 4148158229,
