@@ -412,10 +412,12 @@ pub enum Perks {
         3081173348, //borealis
     ])]
     Fundamentals = 2620589274,
+    HarmonicLaser = 459441288,
 
     //heavy exotic
     ReignHavoc = 4148158229,
-    WormsHunger = 2812324400,
+    WormsHunger = 1174163613,
+    WormByproduct = 1679262379,
     WhisperCatalyst = 1340292993,
     DarkDescent = 3333994164,
     TargetAquired = 939227542,

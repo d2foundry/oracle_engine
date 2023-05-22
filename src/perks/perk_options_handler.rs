@@ -287,6 +287,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::LagragianSight => Some(PerkOptionData::toggle()),
         Perks::StringofCurses => Some(PerkOptionData::stacking(5)),
         Perks::WormsHunger => Some(PerkOptionData::stacking(20)),
+        Perks::WormByproduct => Some(PerkOptionData::toggle()),
         Perks::RocketTracers => Some(PerkOptionData::static_()),
         Perks::ParacausalShot => Some(PerkOptionData::stacking(7)),
         Perks::CorruptionSpreads => Some(PerkOptionData::static_()),
@@ -332,8 +333,8 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::NobleRounds => Some(PerkOptionData::toggle()),
         Perks::MementoMori => Some(PerkOptionData::toggle()),
         Perks::TractorCannon => Some(PerkOptionData::toggle()),
+        Perks::HarmonicLaser => Some(PerkOptionData::stacking(2)),
         Perks::MarksmanSights => Some(PerkOptionData::static_()),
-
         Perks::DexterityMod => Some(PerkOptionData::stacking(3)),
         Perks::ReserveMod => Some(PerkOptionData::stacking(3)),
         Perks::LoaderMod => Some(PerkOptionData::stacking(3)),

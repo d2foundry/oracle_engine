@@ -2,6 +2,7 @@
 #![allow(unused_imports)]
 
 use logging::LogLevel;
+use perks::lib::CalculationInput;
 pub mod abilities;
 pub mod activity;
 pub mod d2_enums;
@@ -285,25 +286,26 @@ pub fn get_weapon_firing_data(
     _pvp: bool,
     _use_rpl: bool,
 ) -> Result<JsFiringResponse, JsValue> {
-    let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
+    let persistent = PERS_DATA.with(|_perm_data| _perm_data.borrow().clone());
     let mut response: types::rs_types::FiringResponse;
-    if _dynamic_traits {
-        response = weapon.calc_firing_data(Some(weapon.static_calc_input()), None, _pvp);
+    let calc_input: Option<CalculationInput> = if _dynamic_traits {
+        let mut buffer = persistent.weapon.static_calc_input();
+        buffer.enemy_type = &persistent.enemy.type_;
+        Some(buffer)
     } else {
-        response = weapon.calc_firing_data(None, None, _pvp);
+        None
     };
-    PERS_DATA.with(|perm_data| {
-        response.apply_pve_bonuses(
-            perm_data.borrow().activity.get_rpl_mult(),
-            perm_data.borrow().activity.get_pl_delta(),
-            perm_data.borrow().weapon.damage_mods.pve,
-            perm_data
-                .borrow()
-                .weapon
-                .damage_mods
-                .get_mod(&perm_data.borrow().enemy.type_),
-        )
-    });
+    response = persistent.weapon.calc_firing_data(calc_input, None, _pvp);
+    response.apply_pve_bonuses(
+        persistent.activity.get_rpl_mult(),
+        persistent.activity.get_pl_delta(),
+        persistent.weapon.damage_mods.pve,
+        persistent
+            .weapon
+            .damage_mods
+            .get_mod(&persistent.enemy.type_),
+    );
+    crate::logging::log(format!("{:?}", response).as_str(), LogLevel::Debug.into());
     Ok(response.into())
 }
 
@@ -341,18 +343,20 @@ pub fn get_misc_data(_dynamic_traits: bool, _pvp: bool) -> Result<JsValue, JsVal
 
 #[wasm_bindgen(js_name = "setEncounter")]
 pub fn set_encounter(
-    _reccomended_pl: u32,
+    _recommend_pl: u32,
     _player_pl: u32,
+    _weapon_pl: u32,
     _override_cap: i32,
     _difficulty: JsDifficultyOptions,
     _enemy_type: JsEnemyType,
 ) -> Result<(), JsValue> {
     PERS_DATA.with(|perm_data| {
         let mut activity = &mut perm_data.borrow_mut().activity;
-        activity.rpl = _reccomended_pl;
+        activity.rpl = _recommend_pl;
         activity.cap = _override_cap;
         activity.difficulty = _difficulty.into();
-        activity.player.pl = _player_pl;
+        activity.player.power = _player_pl;
+        activity.player.wep_power = _weapon_pl;
     });
     PERS_DATA.with(|perm_data| {
         let mut enemy = &mut perm_data.borrow_mut().enemy;

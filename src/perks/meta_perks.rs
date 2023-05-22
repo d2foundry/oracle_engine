@@ -149,7 +149,7 @@ pub fn meta_perks() {
                 //ensures not exotic
                 {
                     return ExplosivePercentResponse {
-                        percent: 0.28,
+                        percent: 0.778,
                         delyed: 0.0,
                         retain_base_total: true,
                     };

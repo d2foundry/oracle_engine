@@ -143,18 +143,18 @@ pub fn year_3_perks() {
         Perks::Vorpal,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let mut buff = 1.0;
-            if *_input.calc_data.enemy_type == EnemyType::BOSS
+            if (*_input.calc_data.enemy_type == EnemyType::BOSS
                 || *_input.calc_data.enemy_type == EnemyType::MINIBOSS
                 || *_input.calc_data.enemy_type == EnemyType::CHAMPION
-                || *_input.calc_data.enemy_type == EnemyType::VEHICLE
+                || *_input.calc_data.enemy_type == EnemyType::VEHICLE)
+                && _input.pvp == false
             {
-                if *_input.calc_data.ammo_type == AmmoType::PRIMARY {
-                    buff = 1.2;
-                } else if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
-                    buff = 1.15;
-                } else if *_input.calc_data.ammo_type == AmmoType::HEAVY {
-                    buff = 1.1;
-                }
+                buff = match *_input.calc_data.ammo_type {
+                    AmmoType::HEAVY => 1.1,
+                    AmmoType::SPECIAL => 1.15,
+                    AmmoType::PRIMARY => 1.2,
+                    AmmoType::UNKNOWN => 0.0, //this should make someone point out a bug? whats error handling lol
+                };
             }
             DamageModifierResponse {
                 impact_dmg_scale: buff,
