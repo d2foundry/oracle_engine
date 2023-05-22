@@ -197,6 +197,17 @@ pub fn buff_perks() {
         }),
     );
 
+    add_dmr(
+        Perks::WormByproduct,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            DamageModifierResponse {
+                impact_dmg_scale: 1.15,
+                explosive_dmg_scale: 1.15,
+                ..Default::default()
+            }
+        }),
+    );
+
     //
     // DEBUFFS
     //
