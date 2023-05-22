@@ -87,7 +87,8 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         //intrinsics
         Perks::RapidFireFrame => Some(PerkOptionData::toggle()),
-
+        Perks::Lightweights => Some(PerkOptionData::static_()),
+        Perks::MidaSynergy => Some(PerkOptionData::toggle()),
         //armor
 
         //parts
@@ -280,9 +281,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
-        Perks::DarkForgedTrigger => Some(PerkOptionData::options_raw(
-            ["Hip-Fire", "ADS"].to_vec()
-        )),
+        Perks::DarkForgedTrigger => Some(PerkOptionData::options_raw(["Hip-Fire", "ADS"].to_vec())),
         Perks::AgersCall => Some(PerkOptionData::toggle()),
         Perks::LagragianSight => Some(PerkOptionData::toggle()),
         Perks::StringofCurses => Some(PerkOptionData::stacking(5)),
@@ -332,7 +331,10 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::RideTheBull => Some(PerkOptionData::stacking(2)),
         Perks::NobleRounds => Some(PerkOptionData::toggle()),
         Perks::MementoMori => Some(PerkOptionData::toggle()),
-        Perks::TractorCannon => Some(PerkOptionData::toggle()),
+        Perks::RepulsorForce => Some(PerkOptionData::toggle()),
+        Perks::MidaMT => Some(PerkOptionData::static_()),
+        Perks::HarshTruths => Some(PerkOptionData::toggle()),
+        Perks::LastStand => Some(PerkOptionData::toggle()),
 
         Perks::DexterityMod => Some(PerkOptionData::stacking(3)),
         Perks::ReserveMod => Some(PerkOptionData::stacking(3)),
@@ -343,8 +345,6 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::OnYourMark => Some(PerkOptionData::stacking(3)),
         Perks::Frequency => Some(PerkOptionData::toggle()),
         Perks::Tempering => Some(PerkOptionData::toggle()),
-        Perks::DragonShadow => Some(PerkOptionData::toggle()),
-        Perks::OphidianAspect => Some(PerkOptionData::static_()),
         Perks::Hedrons => Some(PerkOptionData::toggle()),
         Perks::HeatRises => Some(PerkOptionData::toggle()),
         Perks::FlowState => Some(PerkOptionData::toggle()),
@@ -358,6 +358,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::BannerShield => Some(PerkOptionData::static_()),
         Perks::DeadFall => Some(PerkOptionData::toggle()),
         Perks::MoebiusQuiver => Some(PerkOptionData::toggle()),
+        Perks::Dilation => Some(PerkOptionData::toggle()),
 
         Perks::PathOfTheBurningSteps => Some(PerkOptionData::stacking(4)),
         Perks::MantleOfBattleHarmony => Some(PerkOptionData::static_()),
@@ -387,6 +388,10 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Gyrfalcon => Some(PerkOptionData::toggle()),
         Perks::AeonInsight => Some(PerkOptionData::toggle()),
         Perks::Felwinters => Some(PerkOptionData::toggle()),
+        Perks::Transversives => Some(PerkOptionData::static_()),
+        Perks::Dunemarchers => Some(PerkOptionData::static_()),
+        Perks::DragonShadow => Some(PerkOptionData::toggle()),
+        Perks::OphidianAspect => Some(PerkOptionData::static_()),
 
         //misc
         Perks::UmbralSharpening => Some(PerkOptionData::stacking(5)),
@@ -394,8 +399,6 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Demolitionist => Some(PerkOptionData::static_()),
         Perks::FullStop => Some(PerkOptionData::static_()),
         Perks::HakkeHeavyBurst => Some(PerkOptionData::static_()),
-
-
 
         Perks::Ignore => None,
     }

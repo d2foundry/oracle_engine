@@ -390,6 +390,33 @@ impl Default for DamageResistModifierResponse {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct MovementSpeedModifierResponse {
+    // if mult isn't in the var name its additive
+    // exception for the crouch speed since all things
+    // that affect crouch speed just set it to a value as far as I could tell
+    pub sprint_speed: f64,
+    pub crouch_speed: f64,
+    pub slide_distance_mult: f64,
+    pub base_jump_height_mult: f64,
+    pub strafe_speed_mult: f64,
+    pub extra_mobility: i32,
+    pub ads_scalar: f64,
+}
+impl Default for MovementSpeedModifierResponse {
+    fn default() -> Self {
+        Self {
+            sprint_speed: 0.0,
+            crouch_speed: 0.0,
+            slide_distance_mult: 1.0,
+            base_jump_height_mult: 1.0,
+            strafe_speed_mult: 1.0,
+            extra_mobility: 0,
+            ads_scalar: 1.0,
+        }
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct ModifierResponseSummary {
     pub rmr: Option<RangeModifierResponse>,
     pub dmr: Option<DamageModifierResponse>,
@@ -401,6 +428,7 @@ pub struct ModifierResponseSummary {
     pub imr: Option<InventoryModifierResponse>,
     pub drmr: Option<DamageResistModifierResponse>,
     pub statbump: Option<HashMap<BungieHash, StatBump>>,
+    pub msmr: Option<MovementSpeedModifierResponse>,
 }
 
 impl Default for ModifierResponseSummary {
@@ -416,6 +444,7 @@ impl Default for ModifierResponseSummary {
             imr: None,
             drmr: None,
             statbump: None,
+            msmr: None,
         }
     }
 }

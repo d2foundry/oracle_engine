@@ -861,11 +861,12 @@ fn construct_enhance_perk_mapping(formula_file: &mut File, cached: &mut CachedBu
                     (902, vec!["VEIST Rapid-Fire", "Rapid-Fire Frame"]),
                     (903, vec!["Adaptive Frame", "Adaptive Glaive"]),
                     (904, vec!["Aggressive Frame", "Aggressive Glaive"]),
-                    (905, vec!["Lightweight Frame", "MIDA Synergy"]),
+                    (905, vec!["Lightweight Frame"]),
                     (906, vec!["Precision Frame", "Häkke Precision Frame"]),
                     (907, vec!["Double Fire"]),
                     (908, vec!["Wave Frame"]),
                     (911, vec!["Legacy PR-55 Frame"]),
+                    (912, vec!["MIDA Synergy"]),
                 ]);
                 let content_paths = manifest_json["Response"]["jsonWorldComponentContentPaths"]
                     ["en"]

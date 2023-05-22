@@ -8,13 +8,13 @@ use crate::{
 };
 
 use super::{
-    add_dmr, add_epr, add_fmr, add_hmr, add_imr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr,
+    add_dmr, add_epr, add_fmr, add_hmr, add_imr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr, add_msmr,
     clamp,
     lib::{
         CalculationInput, DamageModifierResponse, ExtraDamageResponse, FiringModifierResponse,
         FlinchModifierResponse, HandlingModifierResponse, InventoryModifierResponse,
         MagazineModifierResponse, RangeModifierResponse, RefundResponse, ReloadModifierResponse,
-        ReloadOverrideResponse,
+        ReloadOverrideResponse, MovementSpeedModifierResponse
     },
     ModifierResponseInput, Perks,
 };
@@ -574,6 +574,69 @@ pub fn other_perks() {
                 }
             } else {
                 ReloadModifierResponse::default()
+            }
+        }),
+    );
+
+    add_msmr(
+        Perks::Lightweights,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            MovementSpeedModifierResponse {
+                sprint_speed: 0.5,
+                extra_mobility: 20,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_msmr(
+        Perks::MidaSynergy,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            let speed_bonus = if _input.value > 0 { 0.8 } else { 0.5 }; // mida synergy bonus is 10%, unsure if my number is accurate
+            MovementSpeedModifierResponse {
+                sprint_speed: speed_bonus,
+                extra_mobility: 20,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_msmr(
+        Perks::Dilation,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            if _input.value > 0 {
+                MovementSpeedModifierResponse {
+                    // crouch speed is set to 4.0 and cannot be lowered by slows
+                    crouch_speed: 4.0,
+                    ..Default::default()
+                }
+            }
+            else {
+                MovementSpeedModifierResponse::default()
+            }
+        }),
+    );
+
+    add_msmr(
+        Perks::Amplified,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            // Speed boosted
+            if _input.value > 0 {
+                MovementSpeedModifierResponse {
+                    sprint_speed: 1.0, // this number may be incorrect
+                    slide_distance_mult: 1.5,
+                    extra_mobility: 50,
+                    base_jump_height_mult: 1.5,
+                    ..Default::default()
+                }
+            }
+            // normal amplified
+            else {
+                MovementSpeedModifierResponse {
+                    slide_distance_mult: 1.33,
+                    extra_mobility: 50,
+                    ..Default::default()
+                }
             }
         }),
     );

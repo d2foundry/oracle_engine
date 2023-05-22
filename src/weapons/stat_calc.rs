@@ -5,18 +5,18 @@ use crate::{
     d2_enums::{MetersPerSecond, Seconds, StatHashes, WeaponType},
     perks::{
         get_dmg_modifier, get_explosion_data, get_firing_modifier, get_flinch_modifier,
-        get_handling_modifier, get_magazine_modifier, get_range_modifier, get_reload_modifier,
-        get_reserve_modifier, get_velocity_modifier,
+        get_handling_modifier, get_magazine_modifier, get_movement_modifier, get_range_modifier,
+        get_reload_modifier, get_reserve_modifier, get_velocity_modifier,
         lib::{
             CalculationInput, DamageModifierResponse, FiringModifierResponse,
             HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
-            RangeModifierResponse, ReloadModifierResponse,
+            MovementSpeedModifierResponse, RangeModifierResponse, ReloadModifierResponse,
         },
         Perks,
     },
     types::rs_types::{
-        AmmoFormula, AmmoResponse, FiringResponse, HandlingFormula, HandlingResponse, RangeFormula,
-        RangeResponse, ReloadFormula, ReloadResponse,
+        AmmoFormula, AmmoResponse, FiringResponse, HandlingFormula, HandlingResponse,
+        MovementResponse, RangeFormula, RangeResponse, ReloadFormula, ReloadResponse,
     },
 };
 
@@ -221,7 +221,13 @@ impl AmmoFormula {
 
         let mut reserve_size = 1;
         if _calc_inv {
-            reserve_size = calc_reserves(raw_mag_size, _mag_stat as i32, inv_stat as i32, _inv_id, _inv_modifiers.inv_scale);
+            reserve_size = calc_reserves(
+                raw_mag_size,
+                _mag_stat as i32,
+                inv_stat as i32,
+                _inv_id,
+                _inv_modifiers.inv_scale,
+            );
         }
         AmmoResponse {
             mag_size,
@@ -590,6 +596,44 @@ impl Weapon {
         if self.weapon_type == WeaponType::BOW {
             buffer.insert("perfect_draw".to_string(), self.calc_perfect_draw());
         }
+
+        buffer
+    }
+}
+
+impl Weapon {
+    pub fn calc_movement_speed(
+        &self,
+        _calc_input: Option<CalculationInput>,
+        _mobility: i32,
+        _pvp: bool,
+        _ads: bool,
+        _cached_data: Option<&mut HashMap<String, f64>>,
+    ) -> MovementResponse {
+        let mut default_cached_data = HashMap::new();
+        let cached_data = _cached_data.unwrap_or(&mut default_cached_data);
+        let mut buffer = MovementResponse::default();
+        let modifiers = get_movement_modifier(
+            self.list_perks(),
+            &self.static_calc_input(),
+            _pvp,
+            cached_data,
+        );
+
+        let mobility = (_mobility + modifiers.extra_mobility).clamp(0, 100);
+        let ads_scalar = if _ads {
+            0.75 * modifiers.ads_scalar
+        } else {
+            1.0
+        };
+
+        let scalar = 1.0 + (mobility / 10) as f64 * 0.04 * ads_scalar;
+        buffer.crouch_speed *= scalar;
+        buffer.strafe_speed *= scalar;
+        buffer.walk_speed *= scalar;
+        buffer.sprint_speed += modifiers.sprint_speed.clamp(0.0, 1.0);
+
+
 
         buffer
     }

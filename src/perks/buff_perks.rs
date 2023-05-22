@@ -226,7 +226,7 @@ pub fn buff_perks() {
     );
 
     add_dmr(
-        Perks::TractorCannon,
+        Perks::RepulsorForce,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let des_debuff = if _input.pvp { 1.5 } else { 1.3 };
             let debuff = gbl_debuff(_input.cached_data, des_debuff);

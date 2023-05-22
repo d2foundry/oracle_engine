@@ -6,12 +6,12 @@ use crate::{
 };
 
 use super::{
-    add_dmr, add_epr, add_flmr, add_fmr, add_hmr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr,
+    add_dmr, add_epr, add_flmr, add_fmr, add_hmr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr, add_msmr,
     clamp,
     lib::{
         CalculationInput, DamageModifierResponse, ExtraDamageResponse, FiringModifierResponse,
         FlinchModifierResponse, HandlingModifierResponse, RangeModifierResponse, RefundResponse,
-        ReloadModifierResponse, ReloadOverrideResponse,
+        ReloadModifierResponse, ReloadOverrideResponse, MovementSpeedModifierResponse,
     },
     ModifierResponseInput, Perks,
 };
@@ -557,6 +557,57 @@ pub fn exotic_armor() {
                 };
             }
             RangeModifierResponse::default()
+        }),
+    );
+
+    add_msmr(
+        Perks::Transversives,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            MovementSpeedModifierResponse {
+                sprint_speed: 0.5,
+                crouch_speed: 4.0,
+                slide_distance_mult: 1.33,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_msmr(
+        Perks::Stompees,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            MovementSpeedModifierResponse {
+                sprint_speed: 0.5,
+                slide_distance_mult: 1.33,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_msmr(
+        Perks::Dunemarchers,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            MovementSpeedModifierResponse {
+                sprint_speed: 0.5,
+                slide_distance_mult: 1.33,
+                ..Default::default()
+            }
+        })
+    );
+
+    add_msmr(
+        Perks::Peacekeepers,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            if _input.calc_data.weapon_type == &WeaponType::SUBMACHINEGUN {
+                MovementSpeedModifierResponse {
+                    sprint_speed: 0.5,
+                    slide_distance_mult: 1.33,
+                    strafe_speed_mult: 1.09,
+                    ..Default::default()
+                }
+            }
+            else {
+                MovementSpeedModifierResponse::default()
+            }
         }),
     );
 }

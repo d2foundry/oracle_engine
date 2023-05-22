@@ -4,12 +4,13 @@ use std::collections::HashMap;
 use crate::{d2_enums::StatHashes, enemies::EnemyType, weapons::Stat};
 
 use super::{
-    add_dmr, add_edr, add_epr, add_fmr, add_hmr, add_mmr, add_rmr, add_rr, add_rsmr, add_sbr,
-    add_vmr, clamp,
+    add_dmr, add_edr, add_epr, add_fmr, add_hmr, add_mmr, add_msmr, add_rmr, add_rr, add_rsmr,
+    add_sbr, add_vmr, clamp,
     lib::{
         CalculationInput, DamageModifierResponse, ExtraDamageResponse, FiringModifierResponse,
         HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
-        RangeModifierResponse, RefundResponse, ReloadModifierResponse, ReloadOverrideResponse,
+        MovementSpeedModifierResponse, RangeModifierResponse, RefundResponse,
+        ReloadModifierResponse, ReloadOverrideResponse,
     },
     ModifierResponseInput, Perks,
 };
@@ -931,6 +932,60 @@ pub fn exotic_perks() {
                 }
             } else {
                 FiringModifierResponse::default()
+            }
+        }),
+    );
+
+    add_msmr(
+        Perks::RepulsorForce,
+        Box::new(
+            |_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+                MovementSpeedModifierResponse {
+                    sprint_speed: 1.0,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+
+    add_msmr(
+        Perks::MidaMT,
+        Box::new(
+            |_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+                MovementSpeedModifierResponse {
+                    sprint_speed: 0.8,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+
+    add_msmr(Perks::HarshTruths,
+             Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            if _input.value > 0 {
+                MovementSpeedModifierResponse {
+                    sprint_speed: 0.5,
+                    slide_distance_mult: 1.33,
+                    extra_mobility: 20,
+                    ..Default::default()
+                }
+            }
+            else {
+                MovementSpeedModifierResponse::default()
+            }
+        }),
+    );
+
+    add_rsmr(Perks::LastStand,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value > 0 {
+                ReloadModifierResponse {
+                    reload_stat_add: 30,
+                    ..Default::default()
+                }
+            }
+            else {
+                ReloadModifierResponse::default()
             }
         }),
     );

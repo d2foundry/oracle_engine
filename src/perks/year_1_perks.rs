@@ -7,12 +7,12 @@ use crate::{
 
 use super::{
     add_dmr, add_edr, add_epr, add_fmr, add_hmr, add_imr, add_mmr, add_rmr, add_rr, add_rsmr,
-    add_sbr, add_vmr, clamp, lerp,
+    add_sbr, add_vmr, add_msmr, clamp, lerp,
     lib::{
         CalculationInput, DamageModifierResponse, ExplosivePercentResponse, ExtraDamageResponse,
         FiringModifierResponse, HandlingModifierResponse, InventoryModifierResponse,
         MagazineModifierResponse, RangeModifierResponse, RefundResponse, ReloadModifierResponse,
-        VelocityModifierResponse,
+        VelocityModifierResponse, MovementSpeedModifierResponse,
     },
     ModifierResponseInput, Perks,
 };
@@ -826,4 +826,15 @@ pub fn year_1_perks() {
             },
         ),
     );
+
+    add_msmr(
+        Perks::MovingTarget,
+        Box::new(|_input: ModifierResponseInput| -> MovementSpeedModifierResponse {
+            MovementSpeedModifierResponse {
+                ads_scalar: 1.025,
+                ..Default::default()
+            }
+        }),
+    );
+
 }

@@ -32,8 +32,8 @@ use self::{
         CalculationInput, DamageModifierResponse, ExplosivePercentResponse, ExtraDamageResponse,
         FiringModifierResponse, FlinchModifierResponse, HandlingModifierResponse,
         InventoryModifierResponse, MagazineModifierResponse, ModifierResponseSummary,
-        RangeModifierResponse, RefundResponse, ReloadModifierResponse, ReloadOverrideResponse,
-        VelocityModifierResponse,
+        MovementSpeedModifierResponse, RangeModifierResponse, RefundResponse,
+        ReloadModifierResponse, ReloadOverrideResponse, VelocityModifierResponse,
     },
     meta_perks::*,
     origin_perks::*,
@@ -104,6 +104,8 @@ pub enum Perks {
 
     //intrinsics
     RapidFireFrame = 902,
+    MidaSynergy = 912,
+    Lightweights = 905,
 
     //armor
     DexterityMod = 1001,
@@ -141,6 +143,8 @@ pub enum Perks {
     Gyrfalcon = 3809192347,
     AeonInsight = 3651607301,
     Felwinters = 622433369,
+    Transversives = 2954558333,
+    Dunemarchers = 1160559849,
 
     //parts
     ImpactCasing = 3796465595,
@@ -361,6 +365,7 @@ pub enum Perks {
     Tempering = 362132290,
     ThreadOfAscent = 4208512216,
     Amplified = 880704824,
+    Dilation = 2272984656,
 
     //kinetic exotic
     CranialSpike = 1319823571,
@@ -389,6 +394,9 @@ pub enum Perks {
     Roadborn = 1658733671,
     MarkovChain = 2814973067,
     MementoMori = 647617635,
+    MidaMT = 1331482397,
+    HarshTruths = 2307143135,
+    LastStand = 4146729347,
 
     //energy exotic
     LagragianSight = 2881100038,
@@ -421,7 +429,7 @@ pub enum Perks {
     DarkDescent = 3333994164,
     TargetAquired = 939227542,
     SleeperCatalyst = 2142466730,
-    TractorCannon = 1210807262,
+    RepulsorForce = 1210807262,
 
     #[num_enum(default)]
     Ignore = 69420,
@@ -450,6 +458,7 @@ pub struct PersistentModifierResponses {
     pub epr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> ExplosivePercentResponse>>,
     pub mmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> MagazineModifierResponse>>,
     pub imr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> InventoryModifierResponse>>,
+    pub msmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> MovementSpeedModifierResponse>>,
 }
 impl PersistentModifierResponses {
     fn is_empty(&self) -> bool {
@@ -571,6 +580,13 @@ impl PersistentModifierResponses {
             InventoryModifierResponse::default()
         }
     }
+    fn get_msmr(&self, perk: Perks, input: ModifierResponseInput) -> MovementSpeedModifierResponse {
+        if let Some(func) = self.msmr.get(&perk) {
+            func(input)
+        } else {
+            MovementSpeedModifierResponse::default()
+        }
+    }
 }
 
 fn add_sbr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> HashMap<BungieHash, StatBump>>) {
@@ -636,6 +652,14 @@ fn add_mmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> MagazineModif
 fn add_imr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> InventoryModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().imr.insert(perk, func);
+    });
+}
+fn add_msmr(
+    perk: Perks,
+    func: Box<dyn Fn(ModifierResponseInput) -> MovementSpeedModifierResponse>,
+) {
+    PERK_FUNC_MAP.with(|map| {
+        map.borrow_mut().msmr.insert(perk, func);
     });
 }
 
@@ -990,6 +1014,34 @@ pub fn get_velocity_modifier(
         velocity.velocity_scaler *= tmp.velocity_scaler;
     }
     velocity
+}
+
+pub fn get_movement_modifier(
+    _perks: Vec<Perk>,
+    _input_data: &CalculationInput,
+    _pvp: bool,
+    _cached_data: &mut HashMap<String, f64>,
+) -> MovementSpeedModifierResponse {
+    let mut buffer = MovementSpeedModifierResponse::default();
+    for perk in _perks {
+        let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
+            let inp = ModifierResponseInput {
+                is_enhanced: perk.enhanced,
+                value: perk.value,
+                calc_data: &_input_data,
+                pvp: _pvp,
+                cached_data: _cached_data,
+            };
+            pers_modifier.borrow().get_msmr(perk.hash.into(), inp)
+        });
+        buffer.crouch_speed += tmp.crouch_speed;
+        buffer.extra_mobility += tmp.extra_mobility;
+        buffer.sprint_speed += tmp.sprint_speed;
+        buffer.base_jump_height_mult *= buffer.base_jump_height_mult;
+        buffer.slide_distance_mult *= buffer.slide_distance_mult;
+        buffer.strafe_speed_mult *= buffer.strafe_speed_mult;
+    }
+    buffer
 }
 
 impl Weapon {
