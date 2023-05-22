@@ -934,4 +934,27 @@ pub fn exotic_perks() {
             }
         }),
     );
+
+    //TODO: FAN FIRE AFFECTING ACCURACY CONE
+
+    add_dmr(
+        Perks::FanFire,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            DamageModifierResponse {
+                impact_dmg_scale: 1.3,
+                explosive_dmg_scale: 1.3,
+                crit_scale: 1.0,
+            }
+        }),
+    );
+
+    add_rsmr(
+        Perks::FanFire,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            ReloadModifierResponse {
+                reload_stat_add: (5 * _input.value) as i32,
+                ..Default::default()
+            }
+        }),
+    );
 }
