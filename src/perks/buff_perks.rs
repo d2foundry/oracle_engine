@@ -200,10 +200,14 @@ pub fn buff_perks() {
     add_dmr(
         Perks::WormByproduct,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            DamageModifierResponse {
-                impact_dmg_scale: 1.15,
-                explosive_dmg_scale: 1.15,
-                ..Default::default()
+            if _input.value > 0 {
+                DamageModifierResponse {
+                    impact_dmg_scale: 1.15,
+                    explosive_dmg_scale: 1.15,
+                    ..Default::default()
+                }
+            } else {
+                DamageModifierResponse::default()
             }
         }),
     );
