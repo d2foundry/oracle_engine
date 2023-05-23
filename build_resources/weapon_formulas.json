@@ -944,7 +944,7 @@
             }
         },
         "subFam": {
-            "Aggressive": {"damage":15.01,  "crit_mult":-3, "burst_delay":2.5, "burst_size":1, "inner_burst_delay":0},
+            "Aggressive": {"damage":14.00,  "crit_mult":0, "burst_delay":2.5, "burst_size":1, "inner_burst_delay":0},
             "Lightweight":{"damage":10.86, "crit_mult":8,  "burst_delay":2.0, "burst_size":1, "inner_burst_delay":0},
             "Precision":  {"damage":17.01,  "crit_mult":-5, "burst_delay":3.0, "burst_size":1, "inner_burst_delay":0},
             "Adaptive":   {"damage":11.25, "crit_mult":0,  "burst_delay":2.0, "burst_size":1, "inner_burst_delay":0},
