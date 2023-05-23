@@ -221,7 +221,13 @@ impl AmmoFormula {
 
         let mut reserve_size = 1;
         if _calc_inv {
-            reserve_size = calc_reserves(raw_mag_size, _mag_stat as i32, inv_stat as i32, _inv_id, _inv_modifiers.inv_scale);
+            reserve_size = calc_reserves(
+                raw_mag_size,
+                _mag_stat as i32,
+                inv_stat as i32,
+                _inv_id,
+                _inv_modifiers.inv_scale,
+            );
         }
         AmmoResponse {
             mag_size,
@@ -314,13 +320,13 @@ impl Weapon {
                 self.list_perks(),
                 &_calc_input.clone().unwrap(),
                 true,
-                cached_data,
+                &mut cached_data.clone(),
             );
             pve_damage_modifiers = get_dmg_modifier(
                 self.list_perks(),
                 &_calc_input.clone().unwrap(),
                 false,
-                cached_data,
+                &mut cached_data.clone(),
             );
         } else {
             firing_modifiers = FiringModifierResponse::default();
