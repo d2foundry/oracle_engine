@@ -986,7 +986,7 @@ pub fn exotic_perks() {
             if _input.value >= 41 {
                 ReloadModifierResponse {
                     reload_stat_add: 100,
-                    ..Default::default(),
+                    ..Default::default()
                 }
             }
             else {
@@ -1001,7 +1001,7 @@ pub fn exotic_perks() {
             if _input.value > 0 {
                 ReloadModifierResponse {
                     reload_stat_add: 20,
-                    ..Default::default(),
+                    ..Default::default()
                 }
             }
             else {
