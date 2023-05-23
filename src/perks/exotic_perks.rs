@@ -973,8 +973,8 @@ pub fn exotic_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let buff = 1.0 + (0.0195 * clamp(_input.value, 0, 41));
             DamageModifierResponse {
-                impact_dmg_scale: buff
-                explosive_dmg_scale: buff.
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
                 ..Default::default() 
             }
         }),
