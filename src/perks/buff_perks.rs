@@ -169,12 +169,16 @@ pub fn buff_perks() {
     add_dmr(
         Perks::AeonInsight,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let des_buff = if _input.pvp { 1.0 } else { 1.35 };
-            let buff = emp_buff(_input.cached_data, des_buff);
-            DamageModifierResponse {
-                impact_dmg_scale: buff,
-                explosive_dmg_scale: buff,
-                ..Default::default()
+            if _input.value > 0 {
+                let des_buff = if _input.pvp { 1.0 } else { 1.35 };
+                let buff = emp_buff(_input.cached_data, des_buff);
+                DamageModifierResponse {
+                    impact_dmg_scale: buff,
+                    explosive_dmg_scale: buff,
+                    ..Default::default()
+                }
+            } else {
+                DamageModifierResponse::default()
             }
         }),
     );
