@@ -994,4 +994,19 @@ pub fn exotic_perks() {
             }
         }),
     );
+
+    add_rsmr(
+        Perks::ColdheartCatalyst,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value > 0 {
+                ReloadModifierResponse {
+                    reload_stat_add: 20,
+                    ..Default::default(),
+                }
+            }
+            else {
+                ReloadModifierResponse::default()
+            }
+        }),
+    );
 }
