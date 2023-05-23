@@ -356,36 +356,5 @@ pub fn meta_perks() {
         }),
     );
 
-    add_dmr(
-        Perks::SurgeMod,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let damage_mod;
-            if _input.pvp {
-                if _input.value == 1 {
-                    damage_mod = 1.03;
-                } else if _input.value == 2 {
-                    damage_mod = 1.045;
-                } else if _input.value > 2 {
-                    damage_mod = 1.055;
-                } else {
-                    damage_mod = 1.0;
-                }
-            } else {
-                if _input.value == 1 {
-                    damage_mod = 1.10;
-                } else if _input.value == 2 {
-                    damage_mod = 1.17;
-                } else if _input.value > 2 {
-                    damage_mod = 1.22;
-                } else {
-                    damage_mod = 1.0;
-                }
-            }
-            DamageModifierResponse {
-                explosive_dmg_scale: damage_mod,
-                impact_dmg_scale: damage_mod,
-                ..Default::default()
-            }
-        }),
-    );
+    
 }

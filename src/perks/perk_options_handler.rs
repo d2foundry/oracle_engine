@@ -360,7 +360,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         Perks::PathOfTheBurningSteps => Some(PerkOptionData::stacking(4)),
         Perks::MantleOfBattleHarmony => Some(PerkOptionData::static_()),
-        Perks::MaskOfBakris => Some(PerkOptionData::options(["one buff", "both buffs"].to_vec())),
+        Perks::MaskOfBakris => Some(PerkOptionData::toggle()),
         Perks::BallindorseWrathweavers => Some(PerkOptionData::toggle()),
         Perks::LunaFaction => Some(PerkOptionData::options(
             ["Heal Rift", "Empowering Rift / Well"].to_vec(),
@@ -393,6 +393,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Demolitionist => Some(PerkOptionData::static_()),
         Perks::FullStop => Some(PerkOptionData::static_()),
         Perks::HakkeHeavyBurst => Some(PerkOptionData::static_()),
+        Perks::EternalWarrior => Some(PerkOptionData::stacking(4)),
 
         Perks::Ignore => None,
     }

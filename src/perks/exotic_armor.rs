@@ -67,27 +67,6 @@ pub fn exotic_armor() {
         }),
     );
 
-    add_dmr(
-        Perks::MaskOfBakris,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut dmr = DamageModifierResponse::default();
-            let modifier = if _input.value > 0 && !_input.pvp {
-                1.1
-            } else {
-                1.0
-            };
-
-            if _input.calc_data.damage_type == &DamageType::ARC {
-                dmr.impact_dmg_scale = modifier * modifier;
-                dmr.explosive_dmg_scale = modifier * modifier;
-            } else {
-                dmr.impact_dmg_scale = modifier;
-                dmr.explosive_dmg_scale = modifier;
-            }
-            dmr
-        }),
-    );
-
     add_sbr(
         Perks::TomeOfDawn,
         Box::new(
