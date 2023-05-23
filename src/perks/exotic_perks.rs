@@ -958,7 +958,7 @@ pub fn exotic_perks() {
             if _input.value > 0 {
                 DamageModifierResponse {
                     impact_dmg_scale: 1.8,
-                    explosive_dmg_scale 1.8,
+                    explosive_dmg_scale: 1.8,
                     ..Default::default()
                 }
             }
