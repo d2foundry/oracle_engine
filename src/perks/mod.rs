@@ -365,7 +365,7 @@ pub enum Perks {
     //kinetic exotic
     CranialSpike = 1319823571,
     DarkForgedTrigger = 1301843770,
-    AgersCall = 970163821,
+    AgersCall = 3164944314,
     RatPack = 2121086290,
     StringofCurses = 4004944400,
     RocketTracers = 3602718766,

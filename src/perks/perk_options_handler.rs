@@ -336,7 +336,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::HarmonicLaser => Some(PerkOptionData::stacking(2)),
         Perks::AgersScepterCatalyst => Some(PerkOptionData::toggle()),
         Perks::ColdFusion => Some(PerkOptionData::stacking(41)),
-        Perks::ColdheartCatalyst =>(PerkOptionData::toggle()),
+        Perks::ColdheartCatalyst =>Some(PerkOptionData::toggle()),
 
         Perks::DexterityMod => Some(PerkOptionData::stacking(3)),
         Perks::ReserveMod => Some(PerkOptionData::stacking(3)),
