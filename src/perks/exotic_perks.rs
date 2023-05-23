@@ -967,4 +967,31 @@ pub fn exotic_perks() {
             }
         }),
     );
+
+    add_dmr(
+        Perks::ColdFusion,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = 1.0 + (0.0195 * _input.value);
+            DamageModifierResponse {
+                impact_dmg_scale: buff
+                explosive_dmg_scale: buff.
+                ..Default::default() 
+            }
+        }),
+    );
+
+    add_rsmr(
+        Perks::ColdFusion,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value >= 41 {
+                ReloadModifierResponse {
+                    reload_stat_add: 100,
+                    ..Default::default(),
+                }
+            }
+            else {
+                ReloadModifierResponse::default()
+            }
+        }),
+    );
 }
