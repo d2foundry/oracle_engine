@@ -280,9 +280,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
-        Perks::DarkForgedTrigger => Some(PerkOptionData::options_raw(
-            ["Hip-Fire", "ADS"].to_vec()
-        )),
+        Perks::DarkForgedTrigger => Some(PerkOptionData::options_raw(["Hip-Fire", "ADS"].to_vec())),
         Perks::AgersCall => Some(PerkOptionData::toggle()),
         Perks::LagragianSight => Some(PerkOptionData::toggle()),
         Perks::StringofCurses => Some(PerkOptionData::stacking(5)),
@@ -388,6 +386,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Gyrfalcon => Some(PerkOptionData::toggle()),
         Perks::AeonInsight => Some(PerkOptionData::toggle()),
         Perks::Felwinters => Some(PerkOptionData::toggle()),
+        Perks::SanguineAlchemy => Some(PerkOptionData::toggle()),
 
         //misc
         Perks::UmbralSharpening => Some(PerkOptionData::stacking(5)),
@@ -395,8 +394,6 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Demolitionist => Some(PerkOptionData::static_()),
         Perks::FullStop => Some(PerkOptionData::static_()),
         Perks::HakkeHeavyBurst => Some(PerkOptionData::static_()),
-
-
 
         Perks::Ignore => None,
     }

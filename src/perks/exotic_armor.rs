@@ -559,4 +559,18 @@ pub fn exotic_armor() {
             RangeModifierResponse::default()
         }),
     );
+    add_dmr(
+        Perks::SanguineAlchemy,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = if _input.pvp { 1.045 } else { 1.17 };
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: buff,
+                    explosive_dmg_scale: buff,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
+        }),
+    );
 }

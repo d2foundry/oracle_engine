@@ -141,6 +141,7 @@ pub enum Perks {
     Gyrfalcon = 3809192347,
     AeonInsight = 3651607301,
     Felwinters = 622433369,
+    SanguineAlchemy = 1420473289,
 
     //parts
     ImpactCasing = 3796465595,
