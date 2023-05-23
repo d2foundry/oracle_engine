@@ -273,7 +273,7 @@ pub fn buff_perks() {
     add_dmr(
         Perks::Felwinters,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value > 1 {
+            if _input.value > 0 {
                 let debuff = gbl_debuff(_input.cached_data, 1.3);
                 DamageModifierResponse {
                     impact_dmg_scale: debuff,
