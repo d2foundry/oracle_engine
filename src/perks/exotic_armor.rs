@@ -275,15 +275,6 @@ pub fn exotic_armor() {
     );
 
     add_sbr(
-        Perks::Stompees,
-        Box::new(
-            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                HashMap::from([(StatHashes::AIRBORNE.into(), -50)])
-            },
-        ),
-    );
-
-    add_sbr(
         Perks::NoBackupPlans,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {

@@ -122,7 +122,6 @@ pub enum Perks {
     Oathkeeper = 1449897496,
     SealedAhamkaraGrasps = 2805134531,
     LuckyPants = 1694242448,
-    Stompees = 1694242450,
     NoBackupPlans = 569260333,
     ActiumWarRig = 1667892711,
     HallowfireHeart = 1667892708,
