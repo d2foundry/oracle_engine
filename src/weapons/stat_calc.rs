@@ -108,6 +108,9 @@ impl Weapon {
         _cached_data: Option<&mut HashMap<String, f64>>,
         _pvp: bool,
     ) -> RangeResponse {
+        let mut default_chd_dt = HashMap::new();
+        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
+
         let range_stat = self
             .stats
             .get(&StatHashes::RANGE.into())
@@ -118,25 +121,19 @@ impl Weapon {
             .get(&StatHashes::ZOOM.into())
             .unwrap_or(&Stat::new())
             .val();
-        let mut default_chd_dt = HashMap::new();
-        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
-        if _calc_input.is_some() {
-            let modifiers =
-                get_range_modifier(self.list_perks(), &_calc_input.unwrap(), _pvp, cached_data);
-            self.range_formula.calc_range_falloff_formula(
-                range_stat,
-                zoom_stat,
-                modifiers,
-                self.range_formula.floor_percent,
-            )
+
+        let modifiers = if let Some(calc_input) = _calc_input {
+            get_range_modifier(self.list_perks(), &calc_input, _pvp, cached_data)
         } else {
-            self.range_formula.calc_range_falloff_formula(
-                range_stat,
-                zoom_stat,
-                RangeModifierResponse::default(),
-                self.range_formula.floor_percent,
-            )
-        }
+            RangeModifierResponse::default()
+        };
+
+        self.range_formula.calc_range_falloff_formula(
+            range_stat,
+            zoom_stat,
+            modifiers,
+            self.range_formula.floor_percent,
+        )
     }
 }
 
