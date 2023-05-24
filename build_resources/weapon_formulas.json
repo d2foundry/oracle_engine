@@ -46,6 +46,7 @@
         "3610814281": {"name": "Hard Light",         "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
         "3755070117": {"name": "Sweet Business",     "cat": "default",  "subFam": "SweetBuiss",  "magProf": "sweet_buiss", "pve":1.16},
         "3602718766": {"name": "Quicksilver Storm",  "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
+        "1385166695": {"name": "Centrifuse",         "cat": "default",  "subFam": "Precision",   "magProf": "small"},
 
         "cat": {
             "default": {
@@ -876,14 +877,14 @@
         }
     },
     "Sniper Rifle": {
-        "281315705":  {"name": "Whisper of the Worm", "cat": "default", "subFam": "Whisper",    "magProf": "default"},
-        "878286503":  {"name": "Rapid-Fire Frame",    "cat": "default", "subFam": "Rapid-Fire", "magProf": "default"},
-        "938999636":  {"name": "D.A.R.C.I.",          "cat": "default", "subFam": "Rapid-Fire", "magProf": "default"},
+        "281315705":  {"name": "Whisper of the Worm", "cat": "default", "subFam": "Whisper",    "magProf": "default", "pve": 1.1},
+        "878286503":  {"name": "Rapid-Fire Frame",    "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.1},
+        "938999636":  {"name": "D.A.R.C.I.",          "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.1},
         "1070100196": {"name": "Izanagi's Burden",    "cat": "default", "subFam": "Adaptive",   "magProf": "default"},
-        "1294026524": {"name": "Adaptive Frame",      "cat": "default", "subFam": "Adaptive",   "magProf": "default"},
-        "2909403175": {"name": "Cloudstrike",         "cat": "default", "subFam": "Rapid-Fire", "magProf": "default"},
-        "3081173348": {"name": "Borealis",            "cat": "default", "subFam": "Aggressive", "magProf": "default"},
-        "3468089894": {"name": "Aggressive Frame",    "cat": "default", "subFam": "Aggressive", "magProf": "default"},
+        "1294026524": {"name": "Adaptive Frame",      "cat": "default", "subFam": "Adaptive",   "magProf": "default", "pve": 1.1},
+        "2909403175": {"name": "Cloudstrike",         "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.1},
+        "3081173348": {"name": "Borealis",            "cat": "default", "subFam": "Aggressive", "magProf": "default", "pve": 1.1},
+        "3468089894": {"name": "Aggressive Frame",    "cat": "default", "subFam": "Aggressive", "magProf": "default", "pve": 1.1},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
@@ -944,7 +945,7 @@
             }
         },
         "subFam": {
-            "Aggressive": {"damage":15.01,  "crit_mult":-3, "burst_delay":2.5, "burst_size":1, "inner_burst_delay":0},
+            "Aggressive": {"damage":14.00,  "crit_mult":0, "burst_delay":2.5, "burst_size":1, "inner_burst_delay":0},
             "Lightweight":{"damage":10.86, "crit_mult":8,  "burst_delay":2.0, "burst_size":1, "inner_burst_delay":0},
             "Precision":  {"damage":17.01,  "crit_mult":-5, "burst_delay":3.0, "burst_size":1, "inner_burst_delay":0},
             "Adaptive":   {"damage":11.25, "crit_mult":0,  "burst_delay":2.0, "burst_size":1, "inner_burst_delay":0},

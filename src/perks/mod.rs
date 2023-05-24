@@ -122,7 +122,6 @@ pub enum Perks {
     Oathkeeper = 1449897496,
     SealedAhamkaraGrasps = 2805134531,
     LuckyPants = 1694242448,
-    Stompees = 1694242450,
     NoBackupPlans = 569260333,
     ActiumWarRig = 1667892711,
     HallowfireHeart = 1667892708,
@@ -141,6 +140,8 @@ pub enum Perks {
     Gyrfalcon = 3809192347,
     AeonInsight = 3651607301,
     Felwinters = 622433369,
+    SanguineAlchemy = 1420473289,
+    EternalWarrior = 926976844,
 
     //parts
     ImpactCasing = 3796465595,
