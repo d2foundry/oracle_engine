@@ -22,8 +22,7 @@ use crate::{
 
 impl ReloadFormula {
     fn calc_reload_time_formula(&self, _reload_stat: i32) -> ReloadResponse {
-        let reload_stat = (_reload_stat) as f64;
-        let reload_time = self.reload_data.solve_at(reload_stat);
+        let reload_time = self.reload_data.solve_at(_reload_stat as f64);
         ReloadResponse {
             reload_time,
             ammo_time: reload_time * self.ammo_percent,
@@ -32,31 +31,35 @@ impl ReloadFormula {
     }
 }
 impl Weapon {
+    //TODO: Change this to use piece wise linears instead of approx quadratics
     pub fn calc_reload_time(
         &self,
         _calc_input: Option<CalculationInput>,
         _cached_data: Option<&mut HashMap<String, f64>>,
         _pvp: bool,
     ) -> ReloadResponse {
+        let mut default_chd_dt = HashMap::new();
+        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
+
         let mut reload_stat = self
             .stats
             .get(&StatHashes::RELOAD.into())
             .unwrap_or(&Stat::new())
             .perk_val();
-        let mut default_chd_dt = HashMap::new();
-        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
+
         if self.weapon_type == WeaponType::BOW {
             reload_stat = reload_stat.clamp(0, 80);
         }
-        let mut out;
-        if _calc_input.is_some() {
-            let modifiers =
-                get_reload_modifier(self.list_perks(), &_calc_input.unwrap(), _pvp, cached_data);
-            out = self.reload_formula.calc_reload_time_formula(reload_stat);
-            out.reload_time *= modifiers.reload_time_scale;
+
+        let modifiers = if let Some(calc_input) = _calc_input {
+            get_reload_modifier(self.list_perks(), &calc_input, _pvp, cached_data)
         } else {
-            out = self.reload_formula.calc_reload_time_formula(reload_stat);
-        }
+            ReloadModifierResponse::default()
+        };
+
+        let mut out = self.reload_formula.calc_reload_time_formula(reload_stat);
+        out.reload_time *= modifiers.reload_time_scale;
+
         if self.weapon_type == WeaponType::BOW {
             out.reload_time = out.reload_time.clamp(0.6, 5.0);
         }
