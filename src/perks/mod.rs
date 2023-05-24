@@ -415,7 +415,6 @@ pub enum Perks {
     Fundamentals = 2620589274,
     HarmonicLaser = 459441288,
     ColdFusion = 1036269296,
-    ColdheartCatalyst = 1249968539,
 
     //heavy exotic
     ReignHavoc = 4148158229,
