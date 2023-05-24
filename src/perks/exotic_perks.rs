@@ -971,7 +971,7 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::ColdFusion,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let buff = 1.0 + (0.0195 * (clamp(_input.value, 0, 41)) as f64);
+            let buff = 1.0 + (0.0195 * (clamp(_input.calc_data.times_to_hit, 0, 41)) as f64);
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
@@ -986,21 +986,6 @@ pub fn exotic_perks() {
             if _input.value >= 41 {
                 ReloadModifierResponse {
                     reload_stat_add: 100,
-                    ..Default::default()
-                }
-            }
-            else {
-                ReloadModifierResponse::default()
-            }
-        }),
-    );
-
-    add_rsmr(
-        Perks::ColdheartCatalyst,
-        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value > 0 {
-                ReloadModifierResponse {
-                    reload_stat_add: 20,
                     ..Default::default()
                 }
             }
