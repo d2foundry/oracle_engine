@@ -958,8 +958,17 @@ pub fn exotic_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse{
                 impact_dmg_scale: 1.38,
-                explosive_dmg_scale: 1.38,
-                crit_scale: 1.0,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_fmr(
+        Perks::MarksmanSights,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            FiringModifierResponse {
+                burst_delay_add: 300,
+                ..Default::default()
             }
         }),
     );
