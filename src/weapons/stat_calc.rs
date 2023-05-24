@@ -82,20 +82,16 @@ impl RangeFormula {
             0.1 * zoom_stat - 0.025
         };
 
-        let mut hip_falloff_start = self.start.solve_at(range_stat) * _modifiers.range_all_scale;
-        let mut hip_falloff_end = self.end.solve_at(range_stat) * _modifiers.range_all_scale;
-
-        let ads_falloff_start = hip_falloff_start * zoom_mult * _modifiers.range_zoom_scale;
-        let ads_falloff_end = hip_falloff_end * zoom_mult * _modifiers.range_zoom_scale;
-
-        hip_falloff_start *= _modifiers.range_hip_scale;
-        hip_falloff_end *= _modifiers.range_hip_scale;
+        let start = self.start.solve_at(range_stat) * _modifiers.range_all_scale;
+        let end = self.end.solve_at(range_stat) * _modifiers.range_all_scale;
 
         RangeResponse {
-            hip_falloff_start,
-            hip_falloff_end,
-            ads_falloff_start,
-            ads_falloff_end,
+            hip_falloff_start: start * _modifiers.range_hip_scale,
+            hip_falloff_end: end * _modifiers.range_hip_scale,
+
+            ads_falloff_start: start * zoom_mult * _modifiers.range_zoom_scale,
+            ads_falloff_end: end * zoom_mult * _modifiers.range_zoom_scale,
+
             floor_percent: _floor,
             timestamp: self.timestamp,
         }
