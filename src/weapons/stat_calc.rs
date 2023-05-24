@@ -144,13 +144,10 @@ impl HandlingFormula {
     ) -> HandlingResponse {
         let handling_stat = (_handling_stat + _modifiers.stat_add).clamp(0, 100) as f64;
         let ready_time = self.ready.solve_at(handling_stat) * _modifiers.draw_scale;
-        let mut stow_time = self.stow.solve_at(handling_stat) * _modifiers.stow_scale;
+        let stow_time = (self.stow.solve_at(handling_stat) * _modifiers.stow_scale)
+            .max(self.stow.solve_at(100.0));
         let ads_time = self.ads.solve_at(handling_stat) * _modifiers.ads_scale;
-        if stow_time < self.stow.solve_at(100.0)
-            && (self.stow.vpp < 0_f64 && self.stow.evpp < 0_f64)
-        {
-            stow_time = self.stow.solve_at(100.0);
-        }
+
         HandlingResponse {
             ready_time,
             stow_time,
@@ -166,22 +163,23 @@ impl Weapon {
         _cached_data: Option<&mut HashMap<String, f64>>,
         _pvp: bool,
     ) -> HandlingResponse {
+        let mut default_chd_dt = HashMap::new();
+        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
+
         let handling_stat = self
             .stats
             .get(&StatHashes::HANDLING.into())
             .unwrap_or(&Stat::new())
             .val();
-        let mut default_chd_dt = HashMap::new();
-        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
-        if _calc_input.is_some() {
-            let modifiers =
-                get_handling_modifier(self.list_perks(), &_calc_input.unwrap(), _pvp, cached_data);
-            self.handling_formula
-                .calc_handling_times_formula(handling_stat, modifiers)
+
+        let modifiers = if let Some(calc_input) = _calc_input {
+            get_handling_modifier(self.list_perks(), &calc_input, _pvp, cached_data)
         } else {
-            self.handling_formula
-                .calc_handling_times_formula(handling_stat, HandlingModifierResponse::default())
-        }
+            HandlingModifierResponse::default()
+        };
+
+        self.handling_formula
+            .calc_handling_times_formula(handling_stat, modifiers)
     }
 }
 
