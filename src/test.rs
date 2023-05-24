@@ -28,11 +28,11 @@ fn setup_pulse() {
         }
     }
     let mut new_weapon = Weapon::generate_weapon(
-        hash,                         //bozo as u32 :)
-        13,          //pulse
-        69420,       //test pulse
-        1,             //primary
-        3373582085,  //kinetic
+        hash,       //bozo as u32 :)
+        13,         //pulse
+        69420,      //test pulse
+        1,          //primary
+        3373582085, //kinetic
     )
     .unwrap();
     let mut stats = HashMap::new();
@@ -150,24 +150,23 @@ fn test_pulse_firing_data() {
             )
         });
         assert!(
-            cmp_floats(response.pvp_impact_damage, 10.0),
+            cmp_floats(response.impact_damage, 10.0),
             "impact damage: {}",
-            response.pvp_impact_damage
+            response.impact_damage
         );
         assert!(
-            cmp_floats(response.pvp_explosion_damage, 0.0),
+            cmp_floats(response.explosion_damage, 0.0),
             "explosive damage: {}",
-            response.pvp_explosion_damage
+            response.explosion_damage
         );
         assert!(cmp_floats(response.rpm, 900.0), "rpm: {}", response.rpm);
         assert!(
-            cmp_floats(response.pvp_crit_mult, 2.0),
+            cmp_floats(response.crit_mult, 2.0),
             "crit mult: {}",
-            response.pvp_crit_mult
+            response.crit_mult
         );
     });
 }
-
 
 fn setup_bow() {
     let vec = Vec::<u8>::from("harm".to_string());
@@ -179,11 +178,11 @@ fn setup_bow() {
         }
     }
     let mut new_weapon = Weapon::generate_weapon(
-        hash,                         //harm turned himslf into a u32! Funniest shit I've ever seen
-        31,          //bow
-        696969,      //test bow
-        2,             //special
-        3949783978,  //strand
+        hash,       //harm turned himslf into a u32! Funniest shit I've ever seen
+        31,         //bow
+        696969,     //test bow
+        2,          //special
+        3949783978, //strand
     )
     .unwrap();
     let mut stats = HashMap::new();
@@ -291,20 +290,24 @@ fn test_bow_firing_data() {
             )
         });
         assert!(
-            cmp_floats(response.pvp_impact_damage, 100.0),
+            cmp_floats(response.impact_damage, 100.0),
             "impact damage: {}",
-            response.pvp_impact_damage
+            response.impact_damage
         );
         assert!(
-            cmp_floats(response.pvp_explosion_damage, 0.0),
+            cmp_floats(response.explosion_damage, 0.0),
             "explosive damage: {}",
-            response.pvp_explosion_damage
+            response.explosion_damage
         );
-        assert!(cmp_floats(response.burst_delay, 20.0/30.0), "draw time: {}", response.burst_delay);
         assert!(
-            cmp_floats(response.pvp_crit_mult, 1.5 + (2.0/51.0)),
+            cmp_floats(response.burst_delay, 20.0 / 30.0),
+            "draw time: {}",
+            response.burst_delay
+        );
+        assert!(
+            cmp_floats(response.crit_mult, 1.5 + (2.0 / 51.0)),
             "crit mult: {}",
-            response.pvp_crit_mult
+            response.crit_mult
         );
     });
 }

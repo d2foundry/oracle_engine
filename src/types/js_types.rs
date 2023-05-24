@@ -227,19 +227,12 @@ impl From<ResillienceSummary> for JsResillienceSummary {
 #[derive(Debug, Clone, Default, Serialize)]
 #[wasm_bindgen(js_name = "FiringResponse", inspectable)]
 pub struct JsFiringResponse {
-    #[wasm_bindgen(js_name = "pvpImpactDamage", readonly)]
-    pub pvp_impact_damage: f64,
-    #[wasm_bindgen(js_name = "pvpExplosionDamage", readonly)]
-    pub pvp_explosion_damage: f64,
-    #[wasm_bindgen(js_name = "pvpCritMult", readonly)]
-    pub pvp_crit_mult: f64,
-
-    #[wasm_bindgen(js_name = "pveImpactDamage", readonly)]
-    pub pve_impact_damage: f64,
-    #[wasm_bindgen(js_name = "pveExplosionDamage", readonly)]
-    pub pve_explosion_damage: f64,
-    #[wasm_bindgen(js_name = "pveCritMult", readonly)]
-    pub pve_crit_mult: f64,
+    #[wasm_bindgen(js_name = "ImpactDamage", readonly)]
+    pub impact_damage: f64,
+    #[wasm_bindgen(js_name = "ExplosionDamage", readonly)]
+    pub explosion_damage: f64,
+    #[wasm_bindgen(js_name = "CritMult", readonly)]
+    pub crit_mult: f64,
 
     #[wasm_bindgen(js_name = "burstDelay", readonly)]
     pub burst_delay: f64,
@@ -255,12 +248,9 @@ pub struct JsFiringResponse {
 impl From<FiringResponse> for JsFiringResponse {
     fn from(firing: FiringResponse) -> Self {
         JsFiringResponse {
-            pvp_impact_damage: firing.pvp_impact_damage,
-            pvp_explosion_damage: firing.pvp_explosion_damage,
-            pvp_crit_mult: firing.pvp_crit_mult,
-            pve_impact_damage: firing.pve_impact_damage,
-            pve_explosion_damage: firing.pve_explosion_damage,
-            pve_crit_mult: firing.pve_crit_mult,
+            impact_damage: firing.impact_damage,
+            explosion_damage: firing.explosion_damage,
+            crit_mult: firing.crit_mult,
             burst_delay: firing.burst_delay,
             inner_burst_delay: firing.inner_burst_delay,
             burst_size: firing.burst_size,
