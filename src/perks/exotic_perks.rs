@@ -971,7 +971,7 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::ColdFusion,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let buff = 1.0 + (0.0195 * (clamp(_input.calc_data.total_shots_hit, 0, 41)) as f64);
+            let buff = 1.0 + (0.0195 * (clamp(_input.calc_data.total_shots_hit, 0.0, 41.0)) as f64);
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
