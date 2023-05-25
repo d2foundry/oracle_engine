@@ -287,7 +287,6 @@ pub fn get_weapon_firing_data(
     _use_rpl: bool,
 ) -> Result<JsFiringResponse, JsValue> {
     let persistent = PERS_DATA.with(|_perm_data| _perm_data.borrow().clone());
-    let mut response: types::rs_types::FiringResponse;
     let calc_input: Option<CalculationInput> = if _dynamic_traits {
         let mut buffer = persistent.weapon.static_calc_input();
         buffer.enemy_type = &persistent.enemy.type_;
@@ -295,16 +294,7 @@ pub fn get_weapon_firing_data(
     } else {
         None
     };
-    response = persistent.weapon.calc_firing_data(calc_input, None, _pvp);
-    response.apply_pve_bonuses(
-        persistent.activity.get_rpl_mult(),
-        persistent.activity.get_pl_delta(),
-        persistent.weapon.damage_mods.pve,
-        persistent
-            .weapon
-            .damage_mods
-            .get_mod(&persistent.enemy.type_),
-    );
+    let response = persistent.weapon.calc_firing_data(calc_input, None, _pvp);
     crate::logging::log(format!("{:?}", response).as_str(), LogLevel::Debug.into());
     Ok(response.into())
 }
