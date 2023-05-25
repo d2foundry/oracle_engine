@@ -332,6 +332,8 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::MementoMori => Some(PerkOptionData::toggle()),
         Perks::TractorCannon => Some(PerkOptionData::toggle()),
         Perks::HarmonicLaser => Some(PerkOptionData::stacking(2)),
+        Perks::AgersScepterCatalyst => Some(PerkOptionData::toggle()),
+        Perks::ColdFusion => Some(PerkOptionData::toggle()),
 
         Perks::DexterityMod => Some(PerkOptionData::stacking(3)),
         Perks::ReserveMod => Some(PerkOptionData::stacking(3)),

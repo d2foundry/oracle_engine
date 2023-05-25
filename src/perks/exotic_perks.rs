@@ -938,17 +938,55 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::HarmonicLaser,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut buff = 1.0;
-            if _input.value == 1 {
-                buff = if _input.pvp { 1.03 } else { 1.323 };
-            } else if _input.value >= 2 {
-                buff = if _input.pvp { 1.0625 } else { 1.687 };
-            }
+            let buff =
+            match (_input.value, _input.pvp) {
+                (0, _) => 1.0,
+                (1,true) => 1.03,
+                (1, false) => 1.323,
+                (2.., true) => 1.0625,
+                (2.., false) => 1.687,
+            };
             DamageModifierResponse {
                 impact_dmg_scale: buff,
-                explosive_dmg_scale: buff,
                 ..Default::default()
             }
+        }),
+    );
+
+    add_dmr(
+        Perks::AgersScepterCatalyst,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: 1.8,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
+        }),
+    );
+
+    add_dmr(
+        Perks::ColdFusion,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = 0.0195 * clamp(_input.calc_data.total_shots_hit, 0.0, 41.0);
+            DamageModifierResponse {
+                impact_dmg_scale: 1.0 + buff,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_rsmr(
+        Perks::ColdFusion,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value > 0 || _input.calc_data.total_shots_hit > 41.0 {
+                return ReloadModifierResponse {
+                    reload_stat_add: 100,
+                    ..Default::default()
+                };
+            }
+            ReloadModifierResponse::default()
         }),
     );
 }
