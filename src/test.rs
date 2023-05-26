@@ -136,19 +136,7 @@ fn test_pulse_firing_data() {
     setup_pulse();
     PERS_DATA.with(|perm_data| {
         let weapon = perm_data.borrow_mut().weapon.clone();
-        let mut response = weapon.calc_firing_data(None, None, true);
-        PERS_DATA.with(|perm_data| {
-            response.apply_pve_bonuses(
-                perm_data.borrow().activity.get_rpl_mult(),
-                perm_data.borrow().activity.get_pl_delta(),
-                perm_data.borrow().weapon.damage_mods.pve,
-                perm_data
-                    .borrow()
-                    .weapon
-                    .damage_mods
-                    .get_mod(&perm_data.borrow().enemy.type_),
-            )
-        });
+        let response = weapon.calc_firing_data(None, None, true);
         assert!(
             cmp_floats(response.impact_damage, 10.0),
             "impact damage: {}",
@@ -276,19 +264,7 @@ fn test_bow_firing_data() {
     setup_bow();
     PERS_DATA.with(|perm_data| {
         let weapon = perm_data.borrow_mut().weapon.clone();
-        let mut response = weapon.calc_firing_data(None, None, true);
-        PERS_DATA.with(|perm_data| {
-            response.apply_pve_bonuses(
-                perm_data.borrow().activity.get_rpl_mult(),
-                perm_data.borrow().activity.get_pl_delta(),
-                perm_data.borrow().weapon.damage_mods.pve,
-                perm_data
-                    .borrow()
-                    .weapon
-                    .damage_mods
-                    .get_mod(&perm_data.borrow().enemy.type_),
-            )
-        });
+        let response = weapon.calc_firing_data(None, None, true);
         assert!(
             cmp_floats(response.impact_damage, 100.0),
             "impact damage: {}",
