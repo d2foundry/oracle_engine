@@ -353,6 +353,9 @@ pub enum Perks {
     ParacausalAffinity = 3215448563,
     EnviousAssasin = 968510818,
 
+    //season 21 | year 6
+    CollectiveAction = 3324494224,
+
     //subclass
     OnYourMark = 3066103999,
     Hedrons = 3469412970,
