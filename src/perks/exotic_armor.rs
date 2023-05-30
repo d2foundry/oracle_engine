@@ -266,6 +266,22 @@ pub fn exotic_armor() {
         ),
     );
 
+    add_dmr(
+        Perks::NoBackupPlans,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if *_input.calc_data.weapon_type != WeaponType::SHOTGUN || _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            
+            let buff = if _input.pvp { 1.10 } else { 1.35 };
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
+
     add_sbr(
         Perks::ActiumWarRig,
         Box::new(

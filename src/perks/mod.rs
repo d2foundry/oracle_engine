@@ -353,6 +353,9 @@ pub enum Perks {
     ParacausalAffinity = 3215448563,
     EnviousAssasin = 968510818,
 
+    //season 21 | year 6
+    CollectiveAction = 3324494224,
+
     //subclass
     OnYourMark = 3066103999,
     Hedrons = 3469412970,
@@ -366,7 +369,7 @@ pub enum Perks {
     //kinetic exotic
     CranialSpike = 1319823571,
     DarkForgedTrigger = 1301843770,
-    AgersCall = 970163821,
+    AgersCall = 3164944314,
     RatPack = 2121086290,
     StringofCurses = 4004944400,
     RocketTracers = 3602718766,
@@ -390,6 +393,7 @@ pub enum Perks {
     Roadborn = 1658733671,
     MarkovChain = 2814973067,
     MementoMori = 647617635,
+    AgersScepterCatalyst = 970163821,
 
     //energy exotic
     LagragianSight = 2881100038,
@@ -414,6 +418,7 @@ pub enum Perks {
     ])]
     Fundamentals = 2620589274,
     HarmonicLaser = 459441288,
+    ColdFusion = 1036269296,
 
     //heavy exotic
     ReignHavoc = 4148158229,

@@ -563,18 +563,18 @@
         "1019291327": {"name": "High-Impact Frame",      "cat": "default",   "subFam": "High-Impact",   "magProf": "default"},
         "1294026524": {"name": "Adaptive Frame",         "cat": "default",   "subFam": "Adaptive",      "magProf": "default"},
         "1458010786": {"name": "Lightweight Frame",      "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
-        "2307143135": {"name": "Vigilance Wing",         "cat": "default",   "subFam": "VigilanceWing", "magProf": "default", "pve":1.26},
-        "2874284214": {"name": "Aggressive Burst",       "cat": "default",   "subFam": "Aggressive",    "magProf": "default"},
+        "2307143135": {"name": "Vigilance Wing",         "cat": "default",   "subFam": "VigilanceWing", "magProf": "vigilance", "pve":1.26},
+        "2874284214": {"name": "Aggressive Burst",       "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
         "3837077246": {"name": "No Time to Explain",     "cat": "default",   "subFam": "High-Impact",   "magProf": "default"},
         "3905543891": {"name": "Graviton Lance",         "cat": "default",   "subFam": "GravitonLance", "magProf": "default"},
         "4004944400": {"name": "Bad Juju",               "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
         "4208418110": {"name": "Outbreak Perfected",     "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
         "4172222323": {"name": "Legacy PR-55 Frame",     "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
         "3441203855": {"name": "Collective Obligation",  "cat": "default",   "subFam": "Adaptive",      "magProf": "default"},
-        "891750160":  {"name": "Revision Zero IV",       "cat": "default",   "subFam": "Aggressive",    "magProf": "default"},
-        "891750167":  {"name": "Revision Zero III",      "cat": "default",   "subFam": "Aggressive",    "magProf": "default"},
-        "891750166":  {"name": "Revision Zero II",       "cat": "default",   "subFam": "Aggressive",    "magProf": "default"},
-        "3834106778": {"name": "Revision Zero I",        "cat": "default",   "subFam": "Aggressive",    "magProf": "default"},
+        "891750160":  {"name": "Revision Zero IV",       "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
+        "891750167":  {"name": "Revision Zero III",      "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
+        "891750166":  {"name": "Revision Zero II",       "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
+        "3834106778": {"name": "Revision Zero I",        "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
         "69420":      {"name": "test_weapon",            "cat": "test",      "subFam": "test",          "magProf": "test"},
         "cat": {
             "default": {
@@ -611,6 +611,16 @@
         "magProf": {
             "default": {
                 "mag": {"evpp": 0.0, "vpp": 0.3, "offset": 17.5},
+                "reserve_id": 0
+            },
+            "aggressive": {
+                "mag": {"evpp": 0.0, "vpp": 0.42, "offset": 21},
+                "round_to": 4,
+                "reserve_id": 0
+            },
+            "vigilance": {
+                "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 50},
+                "round_to": 1,
                 "reserve_id": 0
             },
             "test": {
@@ -819,7 +829,7 @@
         }
     },
     "Sidearm": {
-        "31057037":   {"name": "Omolon Adaptive Frame", "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "small"},
+        "31057037":   {"name": "Omolon Adaptive Frame", "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst"},
         "334466122":  {"name": "Devil's Ruin",          "cat": "default"   , "subFam": "Adaptive",         "magProf": "small"},
         "806997698":  {"name": "SUROS Rapid-Fire",      "cat": "default"   , "subFam": "Rapid-Fire",       "magProf": "small"},
         "975429949":  {"name": "Traveler's Chosen",     "cat": "default"   , "subFam": "Adaptive",         "magProf": "small"},
@@ -829,9 +839,9 @@
         "1458010786": {"name": "Lightweight Frame",     "cat": "default"   , "subFam": "Lightweight",      "magProf": "small", "pve": 1.291},
         "1636108362": {"name": "Precision Frame",       "cat": "default"   , "subFam": "Precision",        "magProf": "small"},
         "2121086290": {"name": "Rat King",              "cat": "default"   , "subFam": "Adaptive",         "magProf": "small"},
-        "3330548924": {"name": "Aggressive Burst",      "cat": "default"   , "subFam": "Aggressive_Burst", "magProf": "small"},
-        "3449390870": {"name": "Adaptive Frame",        "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "small"},
-        "2641107734": {"name": "Trespasser",            "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "small"},
+        "3330548924": {"name": "Aggressive Burst",      "cat": "default"   , "subFam": "Aggressive_Burst", "magProf": "aggressive_burst"},
+        "3449390870": {"name": "Adaptive Frame",        "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst"},
+        "2641107734": {"name": "Trespasser",            "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst"},
         "2984682260": {"name": "Forerunner",            "cat": "Forerunner", "subFam": "Forerunner",       "magProf": "forerunner"},
         "cat": {
             "default": {
@@ -868,6 +878,16 @@
             "small": {
                 "mag": {"evpp": 0.0, "vpp": 0.11942675159235666, "offset": 5.289808917197453},
                 "round_to": 3,
+                "reserve_id": 0
+            },
+            "adaptive_burst": {
+                "mag": {"evpp": 0.0, "vpp": 0.3, "offset": 9.0},
+                "round_to": 3,
+                "reserve_id": 0
+            },
+            "aggressive_burst": {
+                "mag": {"evpp": 0.0, "vpp": 0.2, "offset": 18},
+                "round_to": 1,
                 "reserve_id": 0
             },
             "forerunner": {
@@ -972,6 +992,7 @@
         "2898674463": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default"},
         "2898674462": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default"},
         "2898674457": {"name": "Vexcaliber",          "cat": "default", "subFam": "Vexcaliber",  "magProf": "default"},
+        "1956005708": {"name": "Rapid-Fire Glaive",   "cat": "default", "subFam": "Lightweight", "magProf": "default"},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0546,"offset_start": 15.0,"vpp_end": 0.198,"offset_end": 30.33, "floor_percent": 0.33},

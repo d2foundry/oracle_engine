@@ -276,7 +276,11 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::KeepAway => Some(PerkOptionData::toggle()),
         Perks::ParacausalAffinity => Some(PerkOptionData::toggle()),
         Perks::EnviousAssasin => Some(PerkOptionData::stacking(15)),
-        // Perks::FieldTested => Some(PerkOptionData::stacking(5)),
+        
+        //season 21 | year 6
+        Perks::CollectiveAction => Some(PerkOptionData::toggle()),
+
+
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
@@ -330,8 +334,10 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::RideTheBull => Some(PerkOptionData::stacking(2)),
         Perks::NobleRounds => Some(PerkOptionData::toggle()),
         Perks::MementoMori => Some(PerkOptionData::toggle()),
-        Perks::TractorCannon => Some(PerkOptionData::toggle()),
+        Perks::TractorCannon => Some(PerkOptionData::static_()),
         Perks::HarmonicLaser => Some(PerkOptionData::stacking(2)),
+        Perks::AgersScepterCatalyst => Some(PerkOptionData::toggle()),
+        Perks::ColdFusion => Some(PerkOptionData::toggle()),
 
         Perks::DexterityMod => Some(PerkOptionData::stacking(3)),
         Perks::ReserveMod => Some(PerkOptionData::stacking(3)),
@@ -342,12 +348,9 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::OnYourMark => Some(PerkOptionData::stacking(3)),
         Perks::Frequency => Some(PerkOptionData::toggle()),
         Perks::Tempering => Some(PerkOptionData::toggle()),
-        Perks::DragonShadow => Some(PerkOptionData::toggle()),
-        Perks::OphidianAspect => Some(PerkOptionData::static_()),
         Perks::Hedrons => Some(PerkOptionData::toggle()),
         Perks::HeatRises => Some(PerkOptionData::toggle()),
         Perks::FlowState => Some(PerkOptionData::toggle()),
-        Perks::TomeOfDawn => Some(PerkOptionData::toggle()),
         Perks::ThreadOfAscent => Some(PerkOptionData::toggle()),
         Perks::WellOfRadiance => Some(PerkOptionData::static_()),
         Perks::Amplified => Some(PerkOptionData::static_()),
@@ -355,9 +358,12 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Weaken => Some(PerkOptionData::static_()),
         Perks::WardOfDawn => Some(PerkOptionData::static_()),
         Perks::BannerShield => Some(PerkOptionData::static_()),
-        Perks::DeadFall => Some(PerkOptionData::toggle()),
-        Perks::MoebiusQuiver => Some(PerkOptionData::toggle()),
+        Perks::DeadFall => Some(PerkOptionData::static_()),
+        Perks::MoebiusQuiver => Some(PerkOptionData::static_()),
 
+        Perks::DragonShadow => Some(PerkOptionData::toggle()),
+        Perks::OphidianAspect => Some(PerkOptionData::static_()),
+        Perks::TomeOfDawn => Some(PerkOptionData::toggle()),
         Perks::PathOfTheBurningSteps => Some(PerkOptionData::stacking(4)),
         Perks::MantleOfBattleHarmony => Some(PerkOptionData::static_()),
         Perks::MaskOfBakris => Some(PerkOptionData::toggle()),
@@ -370,7 +376,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Oathkeeper => Some(PerkOptionData::static_()),
         Perks::SealedAhamkaraGrasps => Some(PerkOptionData::toggle()),
         Perks::LuckyPants => Some(PerkOptionData::toggle()),
-        Perks::NoBackupPlans => Some(PerkOptionData::static_()),
+        Perks::NoBackupPlans => Some(PerkOptionData::toggle()),
         Perks::ActiumWarRig => Some(PerkOptionData::static_()),
         Perks::HallowfireHeart => Some(PerkOptionData::static_()),
         Perks::LionRampart => Some(PerkOptionData::toggle()),

@@ -74,6 +74,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
             persistent_data.insert("health%".to_string(), (health - opt_damage_dealt) / 70.0);
             persistent_data.insert("empowering".to_string(), 1.0);
             persistent_data.insert("debuff".to_string(), 1.0);
+            persistent_data.insert("surge".to_string(), 1.0);
             let calc_input = _weapon.pvp_calc_input(
                 opt_bullets_fired,
                 opt_bullets_hit,
@@ -125,7 +126,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
 
             let ammo_fired;
             if _weapon.firing_data.one_ammo {
-                ammo_fired = opt_bullets_fired/shot_burst_size;
+                ammo_fired = opt_bullets_fired / shot_burst_size;
             } else {
                 ammo_fired = opt_bullets_fired;
             }
@@ -183,7 +184,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
         let optimal_ttk = OptimalKillData {
             headshots: opt_timeline_headshots,
             bodyshots: opt_timeline_bodyshots,
-            time_taken: opt_time_taken
+            time_taken: opt_time_taken,
         };
 
         let mut bdy_bullets_hit = 0.0;
@@ -195,6 +196,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
             persistent_data.insert("health%".to_string(), (health - bdy_damage_dealt) / 70.0);
             persistent_data.insert("empowering".to_string(), 1.0);
             persistent_data.insert("debuff".to_string(), 1.0);
+            persistent_data.insert("surge".to_string(), 1.0);
             let calc_input = _weapon.pvp_calc_input(
                 bdy_bullets_fired,
                 bdy_bullets_hit,
@@ -247,7 +249,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
 
             let ammo_fired;
             if _weapon.firing_data.one_ammo {
-                ammo_fired = opt_bullets_fired/shot_burst_size;
+                ammo_fired = opt_bullets_fired / shot_burst_size;
             } else {
                 ammo_fired = opt_bullets_fired;
             }
