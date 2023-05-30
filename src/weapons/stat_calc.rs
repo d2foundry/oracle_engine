@@ -145,7 +145,7 @@ impl HandlingFormula {
         let handling_stat = (_handling_stat + _modifiers.stat_add).clamp(0, 100) as f64;
         let ready_time = self.ready.solve_at(handling_stat) * _modifiers.draw_scale;
         let stow_time = (self.stow.solve_at(handling_stat) * _modifiers.stow_scale)
-            .max(self.stow.solve_at(100.0));
+            .clamp(self.stow.solve_at(100.0), f64::INFINITY);
         let ads_time = self.ads.solve_at(handling_stat) * _modifiers.ads_scale;
 
         HandlingResponse {
