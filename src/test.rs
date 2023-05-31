@@ -85,17 +85,17 @@ fn test_pulse_handling() {
         let weapon = perm_data.borrow_mut().weapon.clone();
         let response = weapon.calc_handling_times(None, None, true);
         assert!(
-            cmp_floats(response.ads_time, 5.0),
+            cmp_floats(response.ads_time, 3.0),
             "ads time: {}",
             response.ads_time
         );
         assert!(
-            cmp_floats(response.ready_time, 5.0),
+            cmp_floats(response.ready_time, 5.5),
             "ready time: {}",
             response.ready_time
         );
         assert!(
-            cmp_floats(response.stow_time, 5.0),
+            cmp_floats(response.stow_time, 1.5),
             "stow time: {}",
             response.stow_time
         );
@@ -223,17 +223,17 @@ fn test_bow_handling() {
         let weapon = perm_data.borrow_mut().weapon.clone();
         let response = weapon.calc_handling_times(None, None, true);
         assert!(
-            cmp_floats(response.ads_time, 5.0),
+            cmp_floats(response.ads_time, 2.45),
             "ads time: {}",
             response.ads_time
         );
         assert!(
-            cmp_floats(response.ready_time, 5.0),
+            cmp_floats(response.ready_time, 4.95),
             "ready time: {}",
             response.ready_time
         );
         assert!(
-            cmp_floats(response.stow_time, 5.0),
+            cmp_floats(response.stow_time, 4.95),
             "stow time: {}",
             response.stow_time
         );
@@ -281,7 +281,12 @@ fn test_bow_firing_data() {
             response.burst_delay
         );
         assert!(
-            cmp_floats(response.crit_mult, 1.5 + (2.0 / 51.0)),
+            cmp_floats(response.burst_delay, 20.0 / 30.0),
+            "draw time: {}",
+            response.burst_delay
+        );
+        assert!(
+            cmp_floats(response.pvp_crit_mult, 1.5 + (2.0 / 51.0)),
             "crit mult: {}",
             response.crit_mult
         );

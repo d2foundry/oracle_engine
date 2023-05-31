@@ -247,21 +247,18 @@ pub fn meta_perks() {
     add_rsmr(
         Perks::LoaderMod,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value > 0 {
-                let mut reload_stat_buff = 10;
-                if _input.value > 1 {
-                    reload_stat_buff += 5;
-                };
-                if _input.value > 2 {
-                    reload_stat_buff += 5;
-                };
-                return ReloadModifierResponse {
-                    reload_stat_add: reload_stat_buff,
-                    reload_time_scale: 0.85,
-                };
-            } else {
-                return ReloadModifierResponse::default();
+            let stat = match _input.value {
+                0 => 0,
+                1 => 10,
+                2 => 15,
+                3.. => 18,
             };
+            let mult = if _input.value > 0 { 0.85 } else { 1.0 };
+            
+            ReloadModifierResponse{
+                reload_stat_add: stat,
+                reload_time_scale: mult,
+            }
         }),
     );
 
@@ -269,16 +266,13 @@ pub fn meta_perks() {
         Perks::LoaderMod,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
-            if _input.value > 0 {
-                let mut reload_stat_buff = 10;
-                if _input.value > 1 {
-                    reload_stat_buff += 5;
-                };
-                if _input.value > 2 {
-                    reload_stat_buff += 5;
-                };
-                stats.insert(StatHashes::RELOAD.into(), reload_stat_buff);
+            let buff = match _input.value {
+                0 => 0,
+                1 => 10,
+                2 => 15,
+                3.. => 18,
             };
+            stats.insert(StatHashes::RELOAD.into(), buff);
             stats
         }),
     );
@@ -355,6 +349,4 @@ pub fn meta_perks() {
             }
         }),
     );
-
-    
 }
