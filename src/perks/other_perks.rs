@@ -154,8 +154,8 @@ pub fn other_perks() {
                 if _input.value >= 1 {
                     HandlingModifierResponse {
                         stat_add: 100,
-                        draw_scale: 0.95,
-                        stow_scale: 0.95,
+                        draw_scale: 0.7,
+                        stow_scale: 0.7,
                         ..Default::default()
                     }
                 } else {
