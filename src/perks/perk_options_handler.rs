@@ -392,6 +392,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::AeonInsight => Some(PerkOptionData::toggle()),
         Perks::Felwinters => Some(PerkOptionData::toggle()),
         Perks::SanguineAlchemy => Some(PerkOptionData::toggle()),
+        Perks::TritonVice => Some(PerkOptionData::toggle()),
 
         //misc
         Perks::UmbralSharpening => Some(PerkOptionData::stacking(5)),

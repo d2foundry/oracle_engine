@@ -545,4 +545,11 @@ pub fn exotic_armor() {
             RangeModifierResponse::default()
         }),
     );
+    add_sbr(Perks::TritonVice, Box::new(|_input| -> HashMap<BungieHash, StatBump> {
+        let mut stats = HashMap::new();
+        if _input.value > 0 && *_input.calc_data.weapon_type == WeaponType::GLAIVE {
+            stats.insert(StatHashes::RELOAD.into(), 50);
+        }
+        stats
+    }))
 }

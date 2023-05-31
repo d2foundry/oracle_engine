@@ -142,6 +142,7 @@ pub enum Perks {
     Felwinters = 622433369,
     SanguineAlchemy = 1420473289,
     EternalWarrior = 926976844,
+    TritonVice = 187957397,
 
     //parts
     ImpactCasing = 3796465595,
