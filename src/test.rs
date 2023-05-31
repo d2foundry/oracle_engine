@@ -286,7 +286,7 @@ fn test_bow_firing_data() {
             response.burst_delay
         );
         assert!(
-            cmp_floats(response.pvp_crit_mult, 1.5 + (2.0 / 51.0)),
+            cmp_floats(response.crit_mult, 1.5 + (2.0 / 51.0)),
             "crit mult: {}",
             response.crit_mult
         );
