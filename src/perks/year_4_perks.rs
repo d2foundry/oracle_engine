@@ -268,8 +268,8 @@ pub fn year_4_perks() {
     add_rsmr(
         Perks::ImpulseAmplifier,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            let reload = if _input.is_enhanced { 15 } else { 10 };
-            let reload_mult = if _input.is_enhanced { 0.77 } else { 0.8 };
+            let reload = if _input.is_enhanced { 25 } else { 20 };
+            let reload_mult = if *_input.calc_data.weapon_type == WeaponType::ROCKET { 0.8 } else { 0.85 };
             ReloadModifierResponse {
                 reload_stat_add: reload,
                 reload_time_scale: reload_mult,
@@ -280,7 +280,7 @@ pub fn year_4_perks() {
     add_sbr(
         Perks::ImpulseAmplifier,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
-            let reload = if _input.is_enhanced { 15 } else { 10 };
+            let reload = if _input.is_enhanced { 25 } else { 20 };
             let mut out = HashMap::new();
             out.insert(StatHashes::RELOAD.into(), reload);
             out
