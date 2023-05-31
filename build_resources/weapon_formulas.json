@@ -146,9 +146,9 @@
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
                 "reload":   {"evpp": 0.0, "vpp": -0.1, "offset": 10.0},
                 "handling": {
-                    "ready":{"vpp": 0.0, "offset": 5.0},
-                    "stow": {"vpp": 0.1,  "offset": 0.0},
-                    "ads":  {"vpp": 0.05, "offset": 2.5}
+                    "ready":{"vpp": -0.001, "offset": 5.0},
+                    "stow": {"vpp": -0.001,  "offset": 5.0},
+                    "ads":  {"vpp": -0.001, "offset": 2.5}
                 },
                 "combatant_scalars": {"vehicle": 1.0, "boss": 1.0, "champion": 1.0, "miniboss": 1.0, "elite": 1.9, "minor": 1.0}
             }
@@ -591,9 +591,9 @@
                 "range": {"vpp_start": 0.1, "offset_start": 10.0, "vpp_end": 0.2, "offset_end": 20.0, "floor_percent": 0.5},
                 "reload": {"evpp": 0.0, "vpp": -0.1, "offset": 10.0},
                 "handling": {
-                    "ready": {"vpp": 0.0, "offset": 5.0},
-                    "stow": {"vpp": 0.1, "offset": 0.0},
-                    "ads": {"vpp": 0.05, "offset": 2.5}
+                    "ready": {"vpp": -0.01, "offset": 6.0},
+                    "stow": {"vpp": -0.01, "offset": 2.0},
+                    "ads": {"vpp": -0.01, "offset": 3.5}
                 },
                 "combatant_scalars": {"vehicle": 1.0, "boss": 1.0, "champion": 1.0, "miniboss": 1.0, "elite": 1.0, "minor": 1.0}
             }
