@@ -989,4 +989,32 @@ pub fn exotic_perks() {
             ReloadModifierResponse::default()
         }),
     );
+
+    add_fmr(
+        Perks::TemporalUnlimiter,
+        Box::new(_input: ModifierResponseInput| -> FiringModifierResponse {
+            if _input.value > 0 {
+                return FiringModifierResponse {
+                    burst_delay_add: 
+                    inner_burst_scale:
+                };
+            }
+            DamageModifierResponse::default()
+        }),
+    );
+
+    add_dmr(
+        Perks::TemporalUnlimiter,
+        Box::new(_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = if _input.pvp { 7.545 } else { 14.0 };
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: buff,
+                    crit_scale: 3.0,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
+        }),
+    );
 }
