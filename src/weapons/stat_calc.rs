@@ -194,11 +194,7 @@ impl AmmoFormula {
         _inv_id: u32,
     ) -> AmmoResponse {
         let mag_stat = (_mag_stat + _mag_modifiers.magazine_stat_add).clamp(0, 100) as f64;
-        let inv_stat = if (_reserve_stat + _inv_modifiers.inv_stat_add) > 100 {
-            100
-        } else {
-            _reserve_stat + _inv_modifiers.inv_stat_add
-        } as f64;
+        let inv_stat = (_reserve_stat + _inv_modifiers.inv_stat_add).clamp(0, 100) as f64;
 
         let raw_mag_size =
             (self.mag.evpp * (mag_stat.powi(2))) + (self.mag.vpp * mag_stat) + self.mag.offset;

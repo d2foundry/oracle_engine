@@ -336,7 +336,7 @@
                 "reserve_id": 231
             },
             "special": {
-                "mag": {"evpp": -0.000233 ,"vpp": 0.09785, "offset": -0.031468},
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 1.0},
                 "reserve_id": 232
             },
             "adaptive": {

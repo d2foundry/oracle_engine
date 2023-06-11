@@ -156,17 +156,17 @@ pub fn year_6_perks() {
         Perks::EnviousAssasin,
         Box::new(
             |_input: ModifierResponseInput| -> MagazineModifierResponse {
-                let val = clamp(_input.value, 0, 15) as f64;
+                let val = _input.value as f64;
+                //i dont know why this if is here? - harm
                 if _input.calc_data.total_shots_fired == 0.0 {
-                    let mut mag_mult = 1.0;
-                    if *_input.calc_data.ammo_type == AmmoType::PRIMARY {
-                        mag_mult += 0.1 * val;
+                    let mag_mult = if *_input.calc_data.ammo_type == AmmoType::PRIMARY {
+                        0.1 * val
                     } else {
-                        mag_mult += 0.2 * val;
+                        0.2 * val
                     };
                     return MagazineModifierResponse {
                         magazine_stat_add: 0,
-                        magazine_scale: clamp(mag_mult, 1.0, 2.5),
+                        magazine_scale: 1.0 + clamp(mag_mult, 0.0, 1.5),
                         magazine_add: 0.0,
                     };
                 };
