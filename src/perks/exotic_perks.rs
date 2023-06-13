@@ -1010,7 +1010,7 @@ pub fn exotic_perks() {
             if _input.value > 0 {
                 return DamageModifierResponse {
                     impact_dmg_scale: buff,
-                    crit_scale: 3.0,
+                    crit_scale: 1.875,
                     ..Default::default()
                 };
             }
