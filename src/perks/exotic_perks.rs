@@ -995,7 +995,7 @@ pub fn exotic_perks() {
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
             if _input.value > 0 {
                 return FiringModifierResponse {
-                    burst_delay_add: (1800.0 / 60000.0 / 633.0), // temp charge time value
+                    burst_delay_add: (1800.0 / (60000.0 / 633.0)), // temp charge time value
                     ..Default::default()
                 };
             }
