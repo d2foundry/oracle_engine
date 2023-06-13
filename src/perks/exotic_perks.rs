@@ -992,7 +992,7 @@ pub fn exotic_perks() {
         Perks::MarksmanSights,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
             FiringModifierResponse {
-                burst_delay_add: (1800.0 / 60000.0 / 333.0), // 300 + 333 = 633 ,
+                burst_delay_add: (1800.0 / (60000.0 / 333.0)), // 300 + 333 = 633 ,
                 ..Default::default()
             }
           }),
