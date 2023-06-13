@@ -67,27 +67,6 @@ pub fn exotic_armor() {
         }),
     );
 
-    add_dmr(
-        Perks::MaskOfBakris,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut dmr = DamageModifierResponse::default();
-            let modifier = if _input.value > 0 && !_input.pvp {
-                1.1
-            } else {
-                1.0
-            };
-
-            if _input.calc_data.damage_type == &DamageType::ARC {
-                dmr.impact_dmg_scale = modifier * modifier;
-                dmr.explosive_dmg_scale = modifier * modifier;
-            } else {
-                dmr.impact_dmg_scale = modifier;
-                dmr.explosive_dmg_scale = modifier;
-            }
-            dmr
-        }),
-    );
-
     add_sbr(
         Perks::TomeOfDawn,
         Box::new(
@@ -275,15 +254,6 @@ pub fn exotic_armor() {
     );
 
     add_sbr(
-        Perks::Stompees,
-        Box::new(
-            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                HashMap::from([(StatHashes::AIRBORNE.into(), -50)])
-            },
-        ),
-    );
-
-    add_sbr(
         Perks::NoBackupPlans,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
@@ -294,6 +264,22 @@ pub fn exotic_armor() {
                 stats
             },
         ),
+    );
+
+    add_dmr(
+        Perks::NoBackupPlans,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if *_input.calc_data.weapon_type != WeaponType::SHOTGUN || _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            
+            let buff = if _input.pvp { 1.10 } else { 1.35 };
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
     );
 
     add_sbr(
@@ -559,4 +545,11 @@ pub fn exotic_armor() {
             RangeModifierResponse::default()
         }),
     );
+    add_sbr(Perks::TritonVice, Box::new(|_input| -> HashMap<BungieHash, StatBump> {
+        let mut stats = HashMap::new();
+        if _input.value > 0 && *_input.calc_data.weapon_type == WeaponType::GLAIVE {
+            stats.insert(StatHashes::RELOAD.into(), 50);
+        }
+        stats
+    }))
 }
