@@ -6,11 +6,11 @@ use crate::{
     perks::{
         get_dmg_modifier, get_explosion_data, get_firing_modifier, get_flinch_modifier,
         get_handling_modifier, get_magazine_modifier, get_range_modifier, get_reload_modifier,
-        get_reserve_modifier, get_velocity_modifier,
+        get_reserve_modifier, get_velocity_modifier, get_extra_damage,
         lib::{
             CalculationInput, DamageModifierResponse, FiringModifierResponse,
             HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
-            RangeModifierResponse, ReloadModifierResponse,
+            RangeModifierResponse, ReloadModifierResponse, ExtraDamageResponse,
         },
         Perks,
     },
@@ -374,11 +374,12 @@ impl Weapon {
 }
 
 impl Weapon {
-    pub fn get_damage_profile(&self) -> (f64, f64, f64, f64) {
+    pub fn get_damage_profile(&self) -> (f64, f64, f64, f64, f64) {
         let impact;
         let mut explosion = 0.0_f64;
         let mut crit = 1.0_f64;
         let delay;
+        let mut tick = self.get_extra_damage.extra_damage;
 
         let epr = get_explosion_data(self.list_perks(), &self.static_calc_input(), false);
         if epr.percent <= 0.0 {
@@ -393,7 +394,7 @@ impl Weapon {
             }
             delay = epr.delyed;
         }
-        (impact, explosion, crit, delay)
+        (impact, explosion, crit, delay, tick)
     }
 }
 
