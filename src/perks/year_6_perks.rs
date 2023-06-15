@@ -181,8 +181,12 @@ pub fn year_6_perks() {
 
     add_dmr(
         Perks::CollectiveAction,
-        Box::new(|_input| -> DamageModifierResponse {
-            let buff = if _input.value > 0 { 1.1 } else { 1.0 };
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = match (_input.pvp, _input.value){
+                (_,0) => 1.0,
+                (true, 1..) => 1.1,
+                (false, 1..) => 1.2,
+            };
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
