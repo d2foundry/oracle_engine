@@ -1,5 +1,3 @@
-#![cfg(feature = "wasm")]
-
 use std::collections::HashMap;
 
 use crate::{
@@ -316,7 +314,6 @@ pub struct JsMetaData {
 }
 
 #[derive(Debug, Clone, Default)]
-#[cfg(feature = "foundry")]
 #[wasm_bindgen(js_name = "ScalarResponseSummary", inspectable)]
 pub struct JsScalarResponse {
     #[wasm_bindgen(js_name = "reloadScalar", readonly)]

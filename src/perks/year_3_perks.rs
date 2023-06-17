@@ -143,24 +143,79 @@ pub fn year_3_perks() {
         Perks::Vorpal,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let mut buff = 1.0;
-            if *_input.calc_data.enemy_type == EnemyType::BOSS
+            if (*_input.calc_data.enemy_type == EnemyType::BOSS
                 || *_input.calc_data.enemy_type == EnemyType::MINIBOSS
                 || *_input.calc_data.enemy_type == EnemyType::CHAMPION
-                || *_input.calc_data.enemy_type == EnemyType::VEHICLE
+                || *_input.calc_data.enemy_type == EnemyType::VEHICLE)
+                && _input.pvp == false
             {
-                if *_input.calc_data.ammo_type == AmmoType::PRIMARY {
-                    buff = 1.2;
-                } else if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
-                    buff = 1.15;
-                } else if *_input.calc_data.ammo_type == AmmoType::HEAVY {
-                    buff = 1.1;
-                }
+                buff = match *_input.calc_data.ammo_type {
+                    AmmoType::HEAVY => 1.1,
+                    AmmoType::SPECIAL => 1.15,
+                    AmmoType::PRIMARY => 1.2,
+                    AmmoType::UNKNOWN => 0.0, //this should make someone point out a bug? whats error handling lol
+                };
             }
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
                 crit_scale: 1.0,
             }
+        }),
+    );
+
+    add_sbr(
+        Perks::TrenchBarrel,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut buffer: HashMap<u32, i32> = HashMap::new();
+            if _input.value > 0 {
+                buffer.insert(StatHashes::HANDLING.into(), 30);
+                //reload unknown
+                buffer.insert(StatHashes::RELOAD.into(), 0);
+            }
+            buffer
+        }),
+    );
+
+    add_hmr(
+        Perks::TrenchBarrel,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value > 0 {
+                    return HandlingModifierResponse {
+                        stat_add: 30,
+                        ..Default::default()
+                    };
+                }
+                HandlingModifierResponse::default()
+            },
+        ),
+    );
+
+    //ready for when someone finds the reload information
+    add_rsmr(
+        Perks::TrenchBarrel,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value > 0 {
+                return ReloadModifierResponse {
+                    ..Default::default()
+                };
+            }
+            ReloadModifierResponse::default()
+        }),
+    );
+
+    add_dmr(
+        Perks::TrenchBarrel,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: 1.5,
+                    explosive_dmg_scale: 1.5,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
         }),
     );
 }

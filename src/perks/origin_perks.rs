@@ -148,17 +148,19 @@ pub fn origin_perks() {
 
     add_hmr(
         Perks::Ambush,
-        Box::new(|_input: ModifierResponseInput| -> HandlingModifierResponse {
-            let handling_add = if _input.is_enhanced { 40 } else { 20 };
-            if _input.calc_data.time_total < 2.0 && _input.value > 0 {
-                HandlingModifierResponse {
-                    stat_add: handling_add,
-                    ..Default::default()
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                let handling_add = if _input.is_enhanced { 40 } else { 20 };
+                if _input.calc_data.time_total < 2.0 && _input.value > 0 {
+                    HandlingModifierResponse {
+                        stat_add: handling_add,
+                        ..Default::default()
+                    }
+                } else {
+                    HandlingModifierResponse::default()
                 }
-            } else {
-                HandlingModifierResponse::default()
-            }
-        }),
+            },
+        ),
     );
 
     add_dmr(
@@ -332,9 +334,13 @@ pub fn origin_perks() {
         Perks::SearchParty,
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                HandlingModifierResponse {
-                    ads_scale: 0.85,
-                    ..Default::default()
+                if _input.value > 0 {
+                    HandlingModifierResponse {
+                        ads_scale: 0.85,
+                        ..Default::default()
+                    }
+                } else {
+                    HandlingModifierResponse::default()
                 }
             },
         ),

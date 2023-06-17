@@ -122,7 +122,6 @@ pub enum Perks {
     Oathkeeper = 1449897496,
     SealedAhamkaraGrasps = 2805134531,
     LuckyPants = 1694242448,
-    Stompees = 1694242450,
     NoBackupPlans = 569260333,
     ActiumWarRig = 1667892711,
     HallowfireHeart = 1667892708,
@@ -141,6 +140,9 @@ pub enum Perks {
     Gyrfalcon = 3809192347,
     AeonInsight = 3651607301,
     Felwinters = 622433369,
+    SanguineAlchemy = 1420473289,
+    EternalWarrior = 926976844,
+    TritonVice = 187957397,
 
     //parts
     ImpactCasing = 3796465595,
@@ -352,6 +354,9 @@ pub enum Perks {
     ParacausalAffinity = 3215448563,
     EnviousAssasin = 968510818,
 
+    //season 21 | year 6
+    CollectiveAction = 3324494224,
+
     //subclass
     OnYourMark = 3066103999,
     Hedrons = 3469412970,
@@ -365,7 +370,7 @@ pub enum Perks {
     //kinetic exotic
     CranialSpike = 1319823571,
     DarkForgedTrigger = 1301843770,
-    AgersCall = 970163821,
+    AgersCall = 3164944314,
     RatPack = 2121086290,
     StringofCurses = 4004944400,
     RocketTracers = 3602718766,
@@ -386,9 +391,10 @@ pub enum Perks {
     HuntersTrance = 383825919,
     NobleRounds = 2144092201,
     StormAndStress = 2238035098,
-    Roadborn = 3413860062,
+    Roadborn = 1658733671,
     MarkovChain = 2814973067,
     MementoMori = 647617635,
+    AgersScepterCatalyst = 970163821,
 
     //energy exotic
     LagragianSight = 2881100038,
@@ -412,10 +418,13 @@ pub enum Perks {
         3081173348, //borealis
     ])]
     Fundamentals = 2620589274,
+    HarmonicLaser = 459441288,
+    ColdFusion = 1036269296,
 
     //heavy exotic
     ReignHavoc = 4148158229,
-    WormsHunger = 2812324400,
+    WormsHunger = 1174163613,
+    WormByproduct = 1679262379,
     WhisperCatalyst = 1340292993,
     DarkDescent = 3333994164,
     TargetAquired = 939227542,

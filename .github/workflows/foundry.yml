@@ -23,9 +23,9 @@ jobs:
     - name: Install Wasm-Pack
       run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
     - name: Build
-      run: cargo build --features wasm,foundry
+      run: cargo build
     - name: Test
-      run: cargo test --features wasm,foundry
+      run: cargo test
     - name: Build Wasm target
-      run: wasm-pack build --target web --features wasm,foundry
+      run: wasm-pack build --target web
 

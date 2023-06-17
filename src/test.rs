@@ -28,11 +28,11 @@ fn setup_pulse() {
         }
     }
     let mut new_weapon = Weapon::generate_weapon(
-        hash,                         //bozo as u32 :)
-        13,          //pulse
-        69420,       //test pulse
-        1,             //primary
-        3373582085,  //kinetic
+        hash,       //bozo as u32 :)
+        13,         //pulse
+        69420,      //test pulse
+        1,          //primary
+        3373582085, //kinetic
     )
     .unwrap();
     let mut stats = HashMap::new();
@@ -85,17 +85,17 @@ fn test_pulse_handling() {
         let weapon = perm_data.borrow_mut().weapon.clone();
         let response = weapon.calc_handling_times(None, None, true);
         assert!(
-            cmp_floats(response.ads_time, 5.0),
+            cmp_floats(response.ads_time, 3.0),
             "ads time: {}",
             response.ads_time
         );
         assert!(
-            cmp_floats(response.ready_time, 5.0),
+            cmp_floats(response.ready_time, 5.5),
             "ready time: {}",
             response.ready_time
         );
         assert!(
-            cmp_floats(response.stow_time, 5.0),
+            cmp_floats(response.stow_time, 1.5),
             "stow time: {}",
             response.stow_time
         );
@@ -168,7 +168,6 @@ fn test_pulse_firing_data() {
     });
 }
 
-
 fn setup_bow() {
     let vec = Vec::<u8>::from("harm".to_string());
     let mut hash = 0;
@@ -179,11 +178,11 @@ fn setup_bow() {
         }
     }
     let mut new_weapon = Weapon::generate_weapon(
-        hash,                         //harm turned himslf into a u32! Funniest shit I've ever seen
-        31,          //bow
-        696969,      //test bow
-        2,             //special
-        3949783978,  //strand
+        hash,       //harm turned himslf into a u32! Funniest shit I've ever seen
+        31,         //bow
+        696969,     //test bow
+        2,          //special
+        3949783978, //strand
     )
     .unwrap();
     let mut stats = HashMap::new();
@@ -236,17 +235,17 @@ fn test_bow_handling() {
         let weapon = perm_data.borrow_mut().weapon.clone();
         let response = weapon.calc_handling_times(None, None, true);
         assert!(
-            cmp_floats(response.ads_time, 5.0),
+            cmp_floats(response.ads_time, 2.45),
             "ads time: {}",
             response.ads_time
         );
         assert!(
-            cmp_floats(response.ready_time, 5.0),
+            cmp_floats(response.ready_time, 4.95),
             "ready time: {}",
             response.ready_time
         );
         assert!(
-            cmp_floats(response.stow_time, 5.0),
+            cmp_floats(response.stow_time, 4.95),
             "stow time: {}",
             response.stow_time
         );
@@ -300,9 +299,13 @@ fn test_bow_firing_data() {
             "explosive damage: {}",
             response.pvp_explosion_damage
         );
-        assert!(cmp_floats(response.burst_delay, 20.0/30.0), "draw time: {}", response.burst_delay);
         assert!(
-            cmp_floats(response.pvp_crit_mult, 1.5 + (2.0/51.0)),
+            cmp_floats(response.burst_delay, 20.0 / 30.0),
+            "draw time: {}",
+            response.burst_delay
+        );
+        assert!(
+            cmp_floats(response.pvp_crit_mult, 1.5 + (2.0 / 51.0)),
             "crit mult: {}",
             response.pvp_crit_mult
         );

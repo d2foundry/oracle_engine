@@ -22,8 +22,7 @@ use crate::{
 
 impl ReloadFormula {
     fn calc_reload_time_formula(&self, _reload_stat: i32) -> ReloadResponse {
-        let reload_stat = (_reload_stat) as f64;
-        let reload_time = self.reload_data.solve_at(reload_stat);
+        let reload_time = self.reload_data.solve_at(_reload_stat as f64);
         ReloadResponse {
             reload_time,
             ammo_time: reload_time * self.ammo_percent,
@@ -32,31 +31,35 @@ impl ReloadFormula {
     }
 }
 impl Weapon {
+    //TODO: Change this to use piece wise linears instead of approx quadratics
     pub fn calc_reload_time(
         &self,
         _calc_input: Option<CalculationInput>,
         _cached_data: Option<&mut HashMap<String, f64>>,
         _pvp: bool,
     ) -> ReloadResponse {
+        let mut default_chd_dt = HashMap::new();
+        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
+
         let mut reload_stat = self
             .stats
             .get(&StatHashes::RELOAD.into())
             .unwrap_or(&Stat::new())
             .perk_val();
-        let mut default_chd_dt = HashMap::new();
-        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
+
         if self.weapon_type == WeaponType::BOW {
             reload_stat = reload_stat.clamp(0, 80);
         }
-        let mut out;
-        if _calc_input.is_some() {
-            let modifiers =
-                get_reload_modifier(self.list_perks(), &_calc_input.unwrap(), _pvp, cached_data);
-            out = self.reload_formula.calc_reload_time_formula(reload_stat);
-            out.reload_time *= modifiers.reload_time_scale;
+
+        let modifiers = if let Some(calc_input) = _calc_input {
+            get_reload_modifier(self.list_perks(), &calc_input, _pvp, cached_data)
         } else {
-            out = self.reload_formula.calc_reload_time_formula(reload_stat);
-        }
+            ReloadModifierResponse::default()
+        };
+
+        let mut out = self.reload_formula.calc_reload_time_formula(reload_stat);
+        out.reload_time *= modifiers.reload_time_scale;
+
         if self.weapon_type == WeaponType::BOW {
             out.reload_time = out.reload_time.clamp(0.6, 5.0);
         }
@@ -82,20 +85,16 @@ impl RangeFormula {
             0.1 * zoom_stat - 0.025
         };
 
-        let mut hip_falloff_start = self.start.solve_at(range_stat) * _modifiers.range_all_scale;
-        let mut hip_falloff_end = self.end.solve_at(range_stat) * _modifiers.range_all_scale;
-
-        let ads_falloff_start = hip_falloff_start * zoom_mult * _modifiers.range_zoom_scale;
-        let ads_falloff_end = hip_falloff_end * zoom_mult * _modifiers.range_zoom_scale;
-
-        hip_falloff_start *= _modifiers.range_hip_scale;
-        hip_falloff_end *= _modifiers.range_hip_scale;
+        let start = self.start.solve_at(range_stat) * _modifiers.range_all_scale;
+        let end = self.end.solve_at(range_stat) * _modifiers.range_all_scale;
 
         RangeResponse {
-            hip_falloff_start,
-            hip_falloff_end,
-            ads_falloff_start,
-            ads_falloff_end,
+            hip_falloff_start: start * _modifiers.range_hip_scale,
+            hip_falloff_end: end * _modifiers.range_hip_scale,
+
+            ads_falloff_start: start * zoom_mult * _modifiers.range_zoom_scale,
+            ads_falloff_end: end * zoom_mult * _modifiers.range_zoom_scale,
+
             floor_percent: _floor,
             timestamp: self.timestamp,
         }
@@ -108,6 +107,9 @@ impl Weapon {
         _cached_data: Option<&mut HashMap<String, f64>>,
         _pvp: bool,
     ) -> RangeResponse {
+        let mut default_chd_dt = HashMap::new();
+        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
+
         let range_stat = self
             .stats
             .get(&StatHashes::RANGE.into())
@@ -118,25 +120,19 @@ impl Weapon {
             .get(&StatHashes::ZOOM.into())
             .unwrap_or(&Stat::new())
             .val();
-        let mut default_chd_dt = HashMap::new();
-        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
-        if _calc_input.is_some() {
-            let modifiers =
-                get_range_modifier(self.list_perks(), &_calc_input.unwrap(), _pvp, cached_data);
-            self.range_formula.calc_range_falloff_formula(
-                range_stat,
-                zoom_stat,
-                modifiers,
-                self.range_formula.floor_percent,
-            )
+
+        let modifiers = if let Some(calc_input) = _calc_input {
+            get_range_modifier(self.list_perks(), &calc_input, _pvp, cached_data)
         } else {
-            self.range_formula.calc_range_falloff_formula(
-                range_stat,
-                zoom_stat,
-                RangeModifierResponse::default(),
-                self.range_formula.floor_percent,
-            )
-        }
+            RangeModifierResponse::default()
+        };
+
+        self.range_formula.calc_range_falloff_formula(
+            range_stat,
+            zoom_stat,
+            modifiers,
+            self.range_formula.floor_percent,
+        )
     }
 }
 
@@ -148,13 +144,10 @@ impl HandlingFormula {
     ) -> HandlingResponse {
         let handling_stat = (_handling_stat + _modifiers.stat_add).clamp(0, 100) as f64;
         let ready_time = self.ready.solve_at(handling_stat) * _modifiers.draw_scale;
-        let mut stow_time = self.stow.solve_at(handling_stat) * _modifiers.stow_scale;
+        let stow_time = (self.stow.solve_at(handling_stat) * _modifiers.stow_scale)
+            .clamp(self.stow.solve_at(100.0), f64::INFINITY);
         let ads_time = self.ads.solve_at(handling_stat) * _modifiers.ads_scale;
-        if stow_time < self.stow.solve_at(100.0)
-            && (self.stow.vpp < 0_f64 && self.stow.evpp < 0_f64)
-        {
-            stow_time = self.stow.solve_at(100.0);
-        }
+
         HandlingResponse {
             ready_time,
             stow_time,
@@ -170,22 +163,23 @@ impl Weapon {
         _cached_data: Option<&mut HashMap<String, f64>>,
         _pvp: bool,
     ) -> HandlingResponse {
+        let mut default_chd_dt = HashMap::new();
+        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
+
         let handling_stat = self
             .stats
             .get(&StatHashes::HANDLING.into())
             .unwrap_or(&Stat::new())
             .val();
-        let mut default_chd_dt = HashMap::new();
-        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
-        if _calc_input.is_some() {
-            let modifiers =
-                get_handling_modifier(self.list_perks(), &_calc_input.unwrap(), _pvp, cached_data);
-            self.handling_formula
-                .calc_handling_times_formula(handling_stat, modifiers)
+
+        let modifiers = if let Some(calc_input) = _calc_input {
+            get_handling_modifier(self.list_perks(), &calc_input, _pvp, cached_data)
         } else {
-            self.handling_formula
-                .calc_handling_times_formula(handling_stat, HandlingModifierResponse::default())
-        }
+            HandlingModifierResponse::default()
+        };
+
+        self.handling_formula
+            .calc_handling_times_formula(handling_stat, modifiers)
     }
 }
 
@@ -200,11 +194,7 @@ impl AmmoFormula {
         _inv_id: u32,
     ) -> AmmoResponse {
         let mag_stat = (_mag_stat + _mag_modifiers.magazine_stat_add).clamp(0, 100) as f64;
-        let inv_stat = if (_reserve_stat + _inv_modifiers.inv_stat_add) > 100 {
-            100
-        } else {
-            _reserve_stat + _inv_modifiers.inv_stat_add
-        } as f64;
+        let inv_stat = (_reserve_stat + _inv_modifiers.inv_stat_add).clamp(0, 100) as f64;
 
         let raw_mag_size =
             (self.mag.evpp * (mag_stat.powi(2))) + (self.mag.vpp * mag_stat) + self.mag.offset;
@@ -221,7 +211,13 @@ impl AmmoFormula {
 
         let mut reserve_size = 1;
         if _calc_inv {
-            reserve_size = calc_reserves(raw_mag_size, _mag_stat as i32, inv_stat as i32, _inv_id, _inv_modifiers.inv_scale);
+            reserve_size = calc_reserves(
+                raw_mag_size,
+                _mag_stat as i32,
+                inv_stat as i32,
+                _inv_id,
+                _inv_modifiers.inv_scale,
+            );
         }
         AmmoResponse {
             mag_size,
@@ -284,8 +280,9 @@ impl Weapon {
         if mag_stat > 90 && self.weapon_type == WeaponType::SNIPER {
             out.mag_size += 1;
         }
-        if self.weapon_type == WeaponType::SIDEARM {
-            out.mag_size = ((out.mag_size as f64 / 3.0).round() * 3.0) as i32;
+        if self.ammo_formula.round_to != i32::default() {
+            out.mag_size = ((out.mag_size as f64 / self.ammo_formula.round_to as f64).ceil()
+                * self.ammo_formula.round_to as f64) as i32;
         }
         out
     }
@@ -314,13 +311,13 @@ impl Weapon {
                 self.list_perks(),
                 &_calc_input.clone().unwrap(),
                 true,
-                cached_data,
+                &mut cached_data.clone(),
             );
             pve_damage_modifiers = get_dmg_modifier(
                 self.list_perks(),
                 &_calc_input.clone().unwrap(),
                 false,
-                cached_data,
+                &mut cached_data.clone(),
             );
         } else {
             firing_modifiers = FiringModifierResponse::default();
