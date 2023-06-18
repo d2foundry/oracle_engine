@@ -18,7 +18,7 @@ pub mod year_6_perks;
 use std::borrow::BorrowMut;
 use std::collections::HashMap;
 
-use num_enum::FromPrimitive;
+use num_enum::{FromPrimitive, IntoPrimitive};
 use serde::{Deserialize, Serialize};
 
 use crate::d2_enums::{BungieHash, StatBump, StatHashes, WeaponType};
@@ -86,7 +86,7 @@ pub fn enhanced_check(_hash: u32) -> (u32, bool) {
 
 // all armor pekrs are for the future but wanted to started to compile them now
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, FromPrimitive)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, FromPrimitive, IntoPrimitive)]
 #[repr(u32)]
 pub enum Perks {
     //Meta perks
