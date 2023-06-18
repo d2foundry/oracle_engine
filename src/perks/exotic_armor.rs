@@ -48,21 +48,28 @@ pub fn exotic_armor() {
     add_dmr(
         Perks::LuckyPants,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut modifier = 1.0;
-            let special_multiplier = if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
-                0.5
-            } else {
-                1.0
-            };
+            let perks = _input.calc_data.perk_value_map.clone();
 
-            if !_input.pvp {
-                modifier += special_multiplier * 0.6 * _input.value.clamp(0, 10) as f64;
+            let perk_check =
+                |hash: Perks| -> bool { matches!(perks.get(&hash.into()), Some(x) if x > &0) };
+            //I hate this
+            if perk_check(Perks::ParacausalShot)
+            || perk_check(Perks::StormAndStress)
+            //|| perk_check(Perks::ExplosiveShadow) //needs a way to remove only EDR?
+            || _input.pvp
+            {
+                return DamageModifierResponse::default();
             }
 
+            let mult = if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
+                0.3
+            } else {
+                0.6
+            };
+
             DamageModifierResponse {
-                impact_dmg_scale: modifier,
-                explosive_dmg_scale: modifier,
-                crit_scale: 1.0,
+                impact_dmg_scale: 1.0 + mult * _input.value.clamp(0, 10) as f64,
+                ..Default::default()
             }
         }),
     );
@@ -272,7 +279,7 @@ pub fn exotic_armor() {
             if *_input.calc_data.weapon_type != WeaponType::SHOTGUN || _input.value == 0 {
                 return DamageModifierResponse::default();
             }
-            
+
             let buff = if _input.pvp { 1.10 } else { 1.35 };
             DamageModifierResponse {
                 impact_dmg_scale: buff,
@@ -545,11 +552,14 @@ pub fn exotic_armor() {
             RangeModifierResponse::default()
         }),
     );
-    add_sbr(Perks::TritonVice, Box::new(|_input| -> HashMap<BungieHash, StatBump> {
-        let mut stats = HashMap::new();
-        if _input.value > 0 && *_input.calc_data.weapon_type == WeaponType::GLAIVE {
-            stats.insert(StatHashes::RELOAD.into(), 50);
-        }
-        stats
-    }))
+    add_sbr(
+        Perks::TritonVice,
+        Box::new(|_input| -> HashMap<BungieHash, StatBump> {
+            let mut stats = HashMap::new();
+            if _input.value > 0 && *_input.calc_data.weapon_type == WeaponType::GLAIVE {
+                stats.insert(StatHashes::RELOAD.into(), 50);
+            }
+            stats
+        }),
+    )
 }
