@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use serde::__private::de;
+
 use crate::d2_enums::{AmmoType, StatHashes, WeaponType};
 
 use super::{
@@ -29,11 +31,14 @@ pub fn year_2_perks() {
     add_fmr(
         Perks::ArchersTempo,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            let delay = match (_input.value, _input.calc_data.intrinsic_hash) {
+                (0, _) => 1.0,
+                (1.., 1699724249) => 0.5625, //levi breath
+                (1.., _) => 0.75,
+            };
             FiringModifierResponse {
-                burst_delay_scale: if _input.value > 0 { 0.75 } else { 1.0 },
-                burst_delay_add: 0.0,
-                inner_burst_scale: 1.0,
-                burst_size_add: 0.0,
+                burst_delay_scale: delay,
+                ..Default::default()
             }
         }),
     );
