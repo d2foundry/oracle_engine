@@ -163,4 +163,59 @@ pub fn year_3_perks() {
             }
         }),
     );
+
+    add_sbr(
+        Perks::TrenchBarrel,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut buffer: HashMap<u32, i32> = HashMap::new();
+            if _input.value > 0 {
+                buffer.insert(StatHashes::HANDLING.into(), 30);
+                //reload unknown
+                buffer.insert(StatHashes::RELOAD.into(), 0);
+            }
+            buffer
+        }),
+    );
+
+    add_hmr(
+        Perks::TrenchBarrel,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value > 0 {
+                    return HandlingModifierResponse {
+                        stat_add: 30,
+                        ..Default::default()
+                    };
+                }
+                HandlingModifierResponse::default()
+            },
+        ),
+    );
+
+    //ready for when someone finds the reload information
+    add_rsmr(
+        Perks::TrenchBarrel,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value > 0 {
+                return ReloadModifierResponse {
+                    ..Default::default()
+                };
+            }
+            ReloadModifierResponse::default()
+        }),
+    );
+
+    add_dmr(
+        Perks::TrenchBarrel,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: 1.5,
+                    explosive_dmg_scale: 1.5,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
+        }),
+    );
 }

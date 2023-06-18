@@ -356,6 +356,7 @@ pub enum Perks {
 
     //season 21 | year 6
     CollectiveAction = 3324494224,
+    Bipod = 1439600632,
 
     //subclass
     OnYourMark = 3066103999,
@@ -403,6 +404,7 @@ pub enum Perks {
     FirstGlance = 3174300811,
     ConserveMomentum = 656200654,
     Broadside = 407549716,
+    FourthHorsemanCatalyst = 2826187530,
     Impetus = 2333607307,
     Stormbringer = 3117514172,
     PerfectFith = 1000724343,
