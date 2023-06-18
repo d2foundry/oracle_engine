@@ -404,6 +404,7 @@ pub enum Perks {
     FirstGlance = 3174300811,
     ConserveMomentum = 656200654,
     Broadside = 407549716,
+    FourthHorsemanCatalyst = 2826187530,
     Impetus = 2333607307,
     Stormbringer = 3117514172,
     PerfectFith = 1000724343,

@@ -989,4 +989,33 @@ pub fn exotic_perks() {
             ReloadModifierResponse::default()
         }),
     );
+
+    add_dmr(
+        Perks::Broadside,
+        Box::new(|_input: ModifierResponseInput | -> DamageModifierResponse {
+            let buff = 
+            match _input.value {
+                0 => 1.0,
+                1 => 1.18,
+                2 => 1.39,
+                3 => 1.59,
+                4.. => 1.81,
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_mmr(
+        Perks:: FourthHorsemanCatalyst,
+        Box::new(|_input: ModifierResponseInput | -> MagazineModifierResponse {
+            MagazineModifierResponse {
+            magazine_stat_add: 1,
+            ..Default::default()
+            }
+        }),
+    );
+
 }
