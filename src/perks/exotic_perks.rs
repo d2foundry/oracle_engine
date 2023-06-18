@@ -1012,7 +1012,7 @@ pub fn exotic_perks() {
         Perks:: FourthHorsemanCatalyst,
         Box::new(|_input: ModifierResponseInput | -> MagazineModifierResponse {
             MagazineModifierResponse {
-            magazine_stat_add: 1,
+            magazine_add: 1,
             ..Default::default()
             }
         }),
