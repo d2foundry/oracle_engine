@@ -764,14 +764,15 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::StormAndStress,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut damage_mult = 1.0;
-            if _input.value > 0 {
-                damage_mult = if _input.pvp { 3.62 } else { 1.8 };
-            };
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+
+            let damage_mult = if _input.pvp { 1.8 } else { 3.62 };
             DamageModifierResponse {
                 explosive_dmg_scale: damage_mult,
                 impact_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -938,10 +939,9 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::HarmonicLaser,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let buff =
-            match (_input.value, _input.pvp) {
+            let buff = match (_input.value, _input.pvp) {
                 (0, _) => 1.0,
-                (1,true) => 1.03,
+                (1, true) => 1.03,
                 (1, false) => 1.323,
                 (2.., true) => 1.0625,
                 (2.., false) => 1.687,
