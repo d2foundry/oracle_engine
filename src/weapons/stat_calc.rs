@@ -16,8 +16,9 @@ use crate::{
     },
     types::rs_types::{
         AmmoFormula, AmmoResponse, FiringResponse, HandlingFormula, HandlingResponse, RangeFormula,
-        RangeResponse, ReloadFormula, ReloadResponse,
+        RangeResponse, ReloadFormula, ReloadResponse, EDR,
     },
+    Perk,
 };
 
 impl ReloadFormula {
@@ -374,12 +375,13 @@ impl Weapon {
 }
 
 impl Weapon {
-    pub fn get_damage_profile(&self) -> (f64, f64, f64, f64, f64) {
+    pub fn get_damage_profile(
+        &self
+        ) -> (f64, f64, f64, f64) {
         let impact;
         let mut explosion = 0.0_f64;
         let mut crit = 1.0_f64;
         let delay;
-        let mut tick = self.get_extra_damage.extra_damage;
 
         let epr = get_explosion_data(self.list_perks(), &self.static_calc_input(), false);
         if epr.percent <= 0.0 {
@@ -394,7 +396,7 @@ impl Weapon {
             }
             delay = epr.delyed;
         }
-        (impact, explosion, crit, delay, tick)
+        (impact, explosion, crit, delay)
     }
 }
 
@@ -590,5 +592,85 @@ impl Weapon {
         }
 
         buffer
+    }
+}
+
+impl Weapon {
+    pub fn calc_extra_damage(
+        &self,
+        _perks: Vec<Perk>,
+        _calc_input: Option<CalculationInput>,
+        _cached_data: Option<&mut HashMap<String, f64>>,
+        _pvp: bool,
+    ) -> EDR {
+            let mut default_cached_data = HashMap::new();
+            let cached_data = _cached_data.unwrap_or(&mut default_cached_data);
+            let pve_damage_modifiers: DamageModifierResponse;
+            let pvp_damage_modifiers: DamageModifierResponse;
+            let pvp_extra_damage: Vec<ExtraDamageResponse>;
+            let pve_extra_damage: Vec<ExtraDamageResponse>;
+
+            if _calc_input.is_some() {
+                pvp_damage_modifiers = get_dmg_modifier(
+                    self.list_perks(),
+                    &_calc_input.clone().unwrap(),
+                    true,
+                    &mut cached_data.clone(),
+                );
+                pve_damage_modifiers = get_dmg_modifier(
+                    self.list_perks(),
+                    &_calc_input.clone().unwrap(),
+                    false,
+                    &mut cached_data.clone(),
+                );
+
+                pvp_extra_damage = get_extra_damage(
+                    self.list_perks(),
+                    &_calc_input.clone().unwrap(),
+                    true,
+                    &mut cached_data.clone(),
+                );
+                pve_extra_damage = get_extra_damage(
+                    self.list_perks(),
+                    &_calc_input.clone().unwrap(),
+                    false,
+                    &mut cached_data.clone(),
+                );
+            }
+            else {
+                pvp_damage_modifiers = DamageModifierResponse::default();
+                pve_damage_modifiers = DamageModifierResponse::default();
+                pvp_extra_damage = vec![ExtraDamageResponse::default()];
+                pve_extra_damage = vec![ExtraDamageResponse::default()];
+            }
+
+
+            let mut pvp_average_tick_damage = 0.0;
+            // goes thru the vec to find the avg tick damage
+            for pvp_edr in pvp_extra_damage {
+                pvp_average_tick_damage += pvp_edr.additive_damage;
+            }
+            pvp_average_tick_damage /= pvp_extra_damage.len() as f64;
+
+            let mut pve_average_tick_damage = 0.0;
+            for pve_edr in pve_extra_damage {
+                pve_average_tick_damage += pve_edr.additive_damage;
+            }
+            pve_average_tick_damage /= pve_extra_damage.len() as f64;
+
+            let output = EDR {
+                pvp_first_tick_damage: pvp_extra_damage[0].additive_damage * pvp_damage_modifiers.impact_dmg_scale,
+                pvp_tick_duration: pvp_extra_damage[0].time_for_additive_damage,
+                pvp_num_ticks: pvp_extra_damage[0].times_to_hit,
+                pvp_last_tick_damage: pvp_extra_damage[pvp_extra_damage.len()].additive_damage * pvp_damage_modifiers.impact_dmg_scale,
+                pvp_avg_tick_damage: pvp_average_tick_damage * pvp_damage_modifiers.impact_dmg_scale,
+
+                pve_first_tick_damage: pve_extra_damage[0].additive_damage * pve_damage_modifiers.impact_dmg_scale,
+                pve_tick_duration: pve_extra_damage[0].time_for_additive_damage,
+                pve_num_ticks: pve_extra_damage[0].times_to_hit,
+                pve_last_tick_damage: pve_extra_damage[pve_extra_damage.len()].additive_damage * pve_damage_modifiers.impact_dmg_scale,
+                pve_avg_tick_damage: pve_average_tick_damage * pve_damage_modifiers.impact_dmg_scale,
+            };
+            output
     }
 }

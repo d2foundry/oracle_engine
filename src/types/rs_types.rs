@@ -216,3 +216,19 @@ impl FiringResponse {
         self.pve_explosion_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
     }
 }
+
+#[derive(Debug, Clone, Default)]
+pub struct EDR {
+    pub pvp_first_tick_damage: f64,
+    pub pvp_avg_tick_damage: f64,
+    pub pvp_last_tick_damage: f64,
+    pub pvp_tick_duration: f64,
+    pub pvp_num_ticks: i32,
+
+    pub pve_first_tick_damage: f64,
+    pub pve_avg_tick_damage: f64,
+    pub pve_last_tick_damage: f64,
+    pub pve_tick_duration: f64,
+    pub pve_num_ticks: i32,
+}
+
