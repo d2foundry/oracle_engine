@@ -375,7 +375,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::MechaneersTricksleeves => Some(PerkOptionData::toggle()),
         Perks::Oathkeeper => Some(PerkOptionData::static_()),
         Perks::SealedAhamkaraGrasps => Some(PerkOptionData::toggle()),
-        Perks::LuckyPants => Some(PerkOptionData::toggle()),
+        Perks::LuckyPants => Some(PerkOptionData::stacking(10)),
         Perks::NoBackupPlans => Some(PerkOptionData::toggle()),
         Perks::ActiumWarRig => Some(PerkOptionData::static_()),
         Perks::HallowfireHeart => Some(PerkOptionData::static_()),
