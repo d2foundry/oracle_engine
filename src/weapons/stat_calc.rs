@@ -644,16 +644,15 @@ impl Weapon {
                 pve_extra_damage = vec![ExtraDamageResponse::default()];
             }
 
-
             let mut pvp_average_tick_damage = 0.0;
             // goes thru the vec to find the avg tick damage
-            for pvp_edr in pvp_extra_damage {
+            for pvp_edr in &pvp_extra_damage {
                 pvp_average_tick_damage += pvp_edr.additive_damage;
             }
             pvp_average_tick_damage /= pvp_extra_damage.len() as f64;
 
             let mut pve_average_tick_damage = 0.0;
-            for pve_edr in pve_extra_damage {
+            for pve_edr in &pve_extra_damage {
                 pve_average_tick_damage += pve_edr.additive_damage;
             }
             pve_average_tick_damage /= pve_extra_damage.len() as f64;
