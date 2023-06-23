@@ -596,7 +596,7 @@ impl Weapon {
 }
 
 impl Weapon {
-    pub fn calc_extra_damage(
+    pub fn get_EDR(
         &self,
         _perks: Vec<Perk>,
         _calc_input: Option<CalculationInput>,
@@ -669,6 +669,7 @@ impl Weapon {
                 pve_num_ticks: pve_extra_damage[0].times_to_hit,
                 pve_last_tick_damage: pve_extra_damage[pve_extra_damage.len()].additive_damage * pve_damage_modifiers.impact_dmg_scale,
                 pve_avg_tick_damage: pve_average_tick_damage * pve_damage_modifiers.impact_dmg_scale,
+                
             };
             output
     }
