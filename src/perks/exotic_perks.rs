@@ -129,36 +129,6 @@ pub fn exotic_perks() {
         }),
     );
 
-    add_dmr(
-        Perks::AgersCall,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut damage_buff = 1.0;
-            if _input.value > 0 && _input.calc_data.num_reloads == 0.0 {
-                damage_buff = 1.8;
-            };
-            DamageModifierResponse {
-                impact_dmg_scale: damage_buff,
-                explosive_dmg_scale: damage_buff,
-                crit_scale: 1.0,
-            }
-        }),
-    );
-    add_mmr(
-        Perks::AgersCall,
-        Box::new(
-            |_input: ModifierResponseInput| -> MagazineModifierResponse {
-                let mut mag_buff = 1.0;
-                if _input.value > 0 && _input.calc_data.total_shots_fired == 0.0 {
-                    mag_buff = 2.0;
-                };
-                MagazineModifierResponse {
-                    magazine_scale: mag_buff,
-                    ..Default::default()
-                }
-            },
-        ),
-    );
-
     add_sbr(
         Perks::Roadborn,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
@@ -964,6 +934,23 @@ pub fn exotic_perks() {
             }
             DamageModifierResponse::default()
         }),
+    );
+
+    add_mmr(
+        Perks::AgersScepterCatalyst,
+        Box::new(
+            |_input: ModifierResponseInput| -> MagazineModifierResponse {
+                let mag_buff = if _input.value > 0 && _input.calc_data.total_shots_fired == 0.0 {
+                    2.0
+                } else {
+                    1.0
+                };
+                MagazineModifierResponse {
+                    magazine_scale: mag_buff,
+                    ..Default::default()
+                }
+            },
+        ),
     );
 
     add_dmr(
