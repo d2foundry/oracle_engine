@@ -225,6 +225,16 @@ pub struct EDR {
     pub pvp_tick_duration: f64,
     pub pvp_num_ticks: i32,
 
+    pub pvp_first_explo_damage: f64,
+    pub pvp_avg_explo_damage: f64,
+    pub pvp_last_explo_damage: f64,
+    
+    //delay before the explosion goes off
+    pub explo_delay: f64,
+    //delay between explosions if there are multiple
+    pub multiple_explo_delay: f64,
+    pub explo_num: i32,
+
     pub pve_first_tick_damage: f64,
     pub pve_avg_tick_damage: f64,
     pub pve_last_tick_damage: f64,
