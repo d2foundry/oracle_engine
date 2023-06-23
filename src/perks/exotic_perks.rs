@@ -940,9 +940,10 @@ pub fn exotic_perks() {
         Perks::AgersScepterCatalyst,
         Box::new(
             |_input: ModifierResponseInput| -> MagazineModifierResponse {
-                let mut mag_buff = 1.0;
-                if _input.value > 0 && _input.calc_data.total_shots_fired == 0.0 {
-                    mag_buff = 2.0;
+                let mag_buff = if _input.value > 0 && _input.calc_data.total_shots_fired == 0.0 {
+                    2.0
+                } else {
+                    1.0
                 };
                 MagazineModifierResponse {
                     magazine_scale: mag_buff,
