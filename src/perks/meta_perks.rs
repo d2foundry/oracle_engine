@@ -37,7 +37,7 @@ pub fn meta_perks() {
             if matches!(
                 _input.calc_data.weapon_type,
                 WeaponType::FUSIONRIFLE | WeaponType::LINEARFUSIONRIFLE
-            ) {
+            ) && _input.calc_data.intrinsic_hash != 3610750208 {
                 let stat = _input
                     .calc_data
                     .stats
