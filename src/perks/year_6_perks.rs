@@ -1,9 +1,10 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, default};
 
 use crate::d2_enums::{AmmoType, BungieHash, DamageType, StatBump, StatHashes, WeaponType};
 
 use super::{
-    add_dmr, add_epr, add_fmr, add_hmr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr, clamp,
+    add_dmr, add_epr, add_fmr, add_hmr, add_imr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr,
+    clamp,
     lib::{
         CalculationInput, DamageModifierResponse, ExplosivePercentResponse, ExtraDamageResponse,
         FiringModifierResponse, HandlingModifierResponse, InventoryModifierResponse,
@@ -181,13 +182,62 @@ pub fn year_6_perks() {
 
     add_dmr(
         Perks::CollectiveAction,
-        Box::new(|_input| -> DamageModifierResponse {
-            let buff = if _input.value > 0 { 1.2 } else { 1.0 };
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = match (_input.pvp, _input.value) {
+                (_, 0) => 1.0,
+                (true, 1..) => 1.1,
+                (false, 1..) => 1.2,
+            };
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
                 ..Default::default()
             }
         }),
-    )
+    );
+
+    add_dmr(
+        Perks::Bipod,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            return DamageModifierResponse {
+                impact_dmg_scale: 0.6,
+                explosive_dmg_scale: 0.6,
+                ..Default::default()
+            };
+        }),
+    );
+
+    add_mmr(
+        Perks::Bipod,
+        Box::new(
+            |_input: ModifierResponseInput| -> MagazineModifierResponse {
+                MagazineModifierResponse {
+                    magazine_scale: 2.0,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+
+    add_imr(
+        Perks::Bipod,
+        Box::new(
+            |_input: ModifierResponseInput| -> InventoryModifierResponse {
+                InventoryModifierResponse {
+                    inv_add: 5.0,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+
+    add_fmr(
+        Perks::Bipod,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            FiringModifierResponse {
+                burst_delay_scale: 0.75,
+                ..Default::default()
+            }
+        }),
+    );
 }

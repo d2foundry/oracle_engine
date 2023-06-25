@@ -129,36 +129,6 @@ pub fn exotic_perks() {
         }),
     );
 
-    add_dmr(
-        Perks::AgersCall,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut damage_buff = 1.0;
-            if _input.value > 0 && _input.calc_data.num_reloads == 0.0 {
-                damage_buff = 1.8;
-            };
-            DamageModifierResponse {
-                impact_dmg_scale: damage_buff,
-                explosive_dmg_scale: damage_buff,
-                crit_scale: 1.0,
-            }
-        }),
-    );
-    add_mmr(
-        Perks::AgersCall,
-        Box::new(
-            |_input: ModifierResponseInput| -> MagazineModifierResponse {
-                let mut mag_buff = 1.0;
-                if _input.value > 0 && _input.calc_data.total_shots_fired == 0.0 {
-                    mag_buff = 2.0;
-                };
-                MagazineModifierResponse {
-                    magazine_scale: mag_buff,
-                    ..Default::default()
-                }
-            },
-        ),
-    );
-
     add_sbr(
         Perks::Roadborn,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
@@ -764,14 +734,15 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::StormAndStress,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut damage_mult = 1.0;
-            if _input.value > 0 {
-                damage_mult = if _input.pvp { 3.62 } else { 1.8 };
-            };
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+
+            let damage_mult = if _input.pvp { 1.8 } else { 3.62 };
             DamageModifierResponse {
                 explosive_dmg_scale: damage_mult,
                 impact_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -938,10 +909,9 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::HarmonicLaser,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let buff =
-            match (_input.value, _input.pvp) {
+            let buff = match (_input.value, _input.pvp) {
                 (0, _) => 1.0,
-                (1,true) => 1.03,
+                (1, true) => 1.03,
                 (1, false) => 1.323,
                 (2.., true) => 1.0625,
                 (2.., false) => 1.687,
@@ -966,6 +936,23 @@ pub fn exotic_perks() {
         }),
     );
 
+    add_mmr(
+        Perks::AgersScepterCatalyst,
+        Box::new(
+            |_input: ModifierResponseInput| -> MagazineModifierResponse {
+                let mag_buff = if _input.value > 0 && _input.calc_data.total_shots_fired == 0.0 {
+                    2.0
+                } else {
+                    1.0
+                };
+                MagazineModifierResponse {
+                    magazine_scale: mag_buff,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+
     add_dmr(
         Perks::ColdFusion,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
@@ -987,7 +974,7 @@ pub fn exotic_perks() {
             }
         }),
     );
-
+  
     add_fmr(
         Perks::MarksmanSights,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
@@ -996,5 +983,33 @@ pub fn exotic_perks() {
                 ..Default::default()
             }
           }),
+    );
+  
+    add_dmr(
+        Perks::Broadside,
+        Box::new(|_input: ModifierResponseInput | -> DamageModifierResponse {
+            let buff = 
+            match _input.value {
+                0 => 1.0,
+                1 => 1.18,
+                2 => 1.39,
+                3 => 1.59,
+                4.. => 1.81,
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_mmr(
+        Perks:: FourthHorsemanCatalyst,
+        Box::new(|_input: ModifierResponseInput | -> MagazineModifierResponse {
+            MagazineModifierResponse {
+            magazine_add: 1.0,
+            ..Default::default()
+            }
+        }),
     );
 }

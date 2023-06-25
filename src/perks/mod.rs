@@ -18,7 +18,7 @@ pub mod year_6_perks;
 use std::borrow::BorrowMut;
 use std::collections::HashMap;
 
-use num_enum::FromPrimitive;
+use num_enum::{FromPrimitive, IntoPrimitive};
 use serde::{Deserialize, Serialize};
 
 use crate::d2_enums::{BungieHash, StatBump, StatHashes, WeaponType};
@@ -86,7 +86,7 @@ pub fn enhanced_check(_hash: u32) -> (u32, bool) {
 
 // all armor pekrs are for the future but wanted to started to compile them now
 
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, FromPrimitive)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, FromPrimitive, IntoPrimitive)]
 #[repr(u32)]
 pub enum Perks {
     //Meta perks
@@ -356,6 +356,7 @@ pub enum Perks {
 
     //season 21 | year 6
     CollectiveAction = 3324494224,
+    Bipod = 1439600632,
 
     //subclass
     OnYourMark = 3066103999,
@@ -403,6 +404,7 @@ pub enum Perks {
     FirstGlance = 3174300811,
     ConserveMomentum = 656200654,
     Broadside = 407549716,
+    FourthHorsemanCatalyst = 2826187530,
     Impetus = 2333607307,
     Stormbringer = 3117514172,
     PerfectFith = 1000724343,
