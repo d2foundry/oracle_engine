@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{arch::x86_64::_MM_MASK_INEXACT, collections::HashMap};
 
 use crate::{
     d2_enums::{AmmoType, DamageType, Seconds, StatHashes, WeaponType},
@@ -37,13 +37,18 @@ pub fn meta_perks() {
             if matches!(
                 _input.calc_data.weapon_type,
                 WeaponType::FUSIONRIFLE | WeaponType::LINEARFUSIONRIFLE
-            ) {
-                let stat = _input
+            ) && _input.calc_data.intrinsic_hash < 1000
+            {
+                let charge_time = _input
                     .calc_data
                     .stats
                     .get(&StatHashes::CHARGE_TIME.into())
                     .unwrap();
-                dmg_scale *= 1.0 - (0.002 * (stat.perk_val() - stat.base_value) as f64);
+                //source: https://docs.google.com/spreadsheets/d/1QaUwtOW2_RJCTK1uaIGkbCoEXDa8UStvjDQSHSDxLOM/edit#gid=497378026
+                let total_damage = _input.calc_data.curr_firing_data.damage
+                    * _input.calc_data.curr_firing_data.burst_size as f64;
+                let stat = (charge_time.perk_val() - charge_time.base_value) as f64;
+                dmg_scale *= 1.0 - (0.5 * stat) / total_damage;
             }
 
             DamageModifierResponse {
@@ -60,13 +65,22 @@ pub fn meta_perks() {
             #[allow(unused_mut)]
             let mut delay_add = 0.0;
 
-            if let Some(x) = _input.calc_data.stats.get(&StatHashes::CHARGE_TIME.into()) {
-                let stat = (x.perk_val() - x.base_value) as f64;
+            if matches!(
+                _input.calc_data.weapon_type,
+                WeaponType::FUSIONRIFLE | WeaponType::LINEARFUSIONRIFLE
+            ) && _input.calc_data.intrinsic_hash < 1000
+            {
+                let charge_time = _input
+                    .calc_data
+                    .stats
+                    .get(&StatHashes::CHARGE_TIME.into())
+                    .unwrap();
+                let stat = (charge_time.perk_val() - charge_time.base_value) as f64;
                 delay_add -= match _input.calc_data.weapon_type {
-                    WeaponType::LINEARFUSIONRIFLE => stat * 0.0033,
                     WeaponType::FUSIONRIFLE => stat * 0.0040,
+                    WeaponType::LINEARFUSIONRIFLE => stat * 0.0033,
                     _ => 0.0,
-                };
+                }
             }
 
             if _input.calc_data.weapon_type == &WeaponType::BOW {
