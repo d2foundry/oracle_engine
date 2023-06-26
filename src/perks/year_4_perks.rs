@@ -661,13 +661,12 @@ pub fn year_4_perks() {
     add_dmr(
         Perks::Recombination, 
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            // let buff = if _input.pvp { 1.0 + (0.05 * (_input.value as f64)) } else { 1.0 + (0.1 * (_input.value as f64)) };
-            let buff = match (_input.is_enhanced, _input.pvp) {
+            let buff =  if _input.calc_data.total_shots_fired == 0.0 { match (_input.is_enhanced, _input.pvp) {
                 (false, false) => 1.0 + (0.1 * (_input.value as f64)),
                 (false, true) => 1.0 + (0.05 * (_input.value as f64)),
                 (true, false) => 1.0 + (0.125 * (_input.value as f64)),
                 (true, true) => 1.0 + (0.0625 * (_input.value as f64)),
-            };
+            } } else { 1.0 };
             DamageModifierResponse { 
                 impact_dmg_scale: buff,
                 ..Default::default()     
