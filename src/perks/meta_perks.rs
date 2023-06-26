@@ -1,4 +1,4 @@
-use std::{arch::x86_64::_MM_MASK_INEXACT, collections::HashMap};
+use std::collections::HashMap;
 
 use crate::{
     d2_enums::{AmmoType, DamageType, Seconds, StatHashes, WeaponType},
