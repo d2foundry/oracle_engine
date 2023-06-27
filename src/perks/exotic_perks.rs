@@ -996,11 +996,21 @@ pub fn exotic_perks() {
     );
 
     add_mmr(
-        Perks:: FourthHorsemanCatalyst,
+        Perks::FourthHorsemanCatalyst,
         Box::new(|_input: ModifierResponseInput | -> MagazineModifierResponse {
             MagazineModifierResponse {
-            magazine_add: 1.0,
-            ..Default::default()
+                magazine_add: 1.0,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_dmr(
+        Perks::Impetus,
+        Box::new(|_input: ModifierResponseInput | -> DamageModifierResponse {
+            DamageModifierResponse {
+                impact_dmg_scale: 1.5,
+                ..Default::default()
             }
         }),
     );
