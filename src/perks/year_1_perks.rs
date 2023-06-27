@@ -102,7 +102,7 @@ pub fn year_1_perks() {
         Perks::AmbitiousAssassin,
         Box::new(
             |_input: ModifierResponseInput| -> MagazineModifierResponse {
-                let val = clamp(_input.value, 0, 15) as f64;
+                let val = if *_input.calc_data.ammo_type == AmmoType::PRIMARY { clamp (_input.value, 0, 8) as f64 } else { clamp(_input.value, 0, 15) as f64 };
                 if _input.calc_data.total_shots_fired == 0.0 {
                     let mut mag_mult = 1.0;
                     if *_input.calc_data.ammo_type == AmmoType::PRIMARY {
