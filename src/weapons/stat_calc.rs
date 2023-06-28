@@ -221,7 +221,7 @@ impl AmmoFormula {
         }
         AmmoResponse {
             mag_size,
-            reserve_size,
+            reserve_size: reserve_size + _inv_modifiers.inv_add,
             timestamp: self.timestamp,
         }
     }

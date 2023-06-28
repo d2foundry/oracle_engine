@@ -224,7 +224,7 @@ pub fn year_6_perks() {
         Box::new(
             |_input: ModifierResponseInput| -> InventoryModifierResponse {
                 InventoryModifierResponse {
-                    inv_add: 5.0,
+                    inv_add: 5,
                     ..Default::default()
                 }
             },
