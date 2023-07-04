@@ -382,7 +382,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::LionRampart => Some(PerkOptionData::toggle()),
         Perks::Peacekeepers => Some(PerkOptionData::static_()),
         Perks::EyeOfAnotherWorld => Some(PerkOptionData::static_()),
-        Perks::AstrocyteVerse => Some(PerkOptionData::static_()),
+        Perks::AstrocyteVerse => Some(PerkOptionData::toggle()),
         Perks::NecroticGrips => Some(PerkOptionData::static_()),
         Perks::BootsOfTheAssembler => Some(PerkOptionData::static_()),
         Perks::RainOfFire => Some(PerkOptionData::static_()),

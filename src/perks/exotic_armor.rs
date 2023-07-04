@@ -395,6 +395,9 @@ pub fn exotic_armor() {
         Perks::AstrocyteVerse,
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
                 HandlingModifierResponse {
                     stat_add: 100,
                     ..Default::default()
