@@ -21,9 +21,10 @@ pub fn year_6_perks() {
             let mut map = HashMap::new();
             let mut range_bonus = 0;
             let mut reload_bonus = 0;
+            let ev = if _input.is_enhanced { 2 } else { 0 };
             if _input.value > 0 {
-                range_bonus = 10;
-                reload_bonus = 30;
+                range_bonus = 10 + ev;
+                reload_bonus = 30 + ev;
             };
             map.insert(StatHashes::RANGE.into(), range_bonus);
             map.insert(StatHashes::RELOAD.into(), reload_bonus);
@@ -34,7 +35,8 @@ pub fn year_6_perks() {
     add_rmr(
         Perks::KeepAway,
         Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
-            let range_bonus = if _input.value > 0 { 10 } else { 0 };
+            let ev = if _input.is_enhanced { 2 } else { 0 };
+            let range_bonus = if _input.value > 0 { 10 + ev } else { 0 };
             RangeModifierResponse {
                 range_stat_add: range_bonus,
                 ..Default::default()
@@ -45,7 +47,8 @@ pub fn year_6_perks() {
     add_rsmr(
         Perks::KeepAway,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            let reload_bonus = if _input.value > 0 { 30 } else { 0 };
+            let ev = if _input.is_enhanced { 2 } else { 0 };
+            let reload_bonus = if _input.value > 0 { 30 + ev } else { 0 };
             ReloadModifierResponse {
                 reload_stat_add: reload_bonus,
                 ..Default::default()
