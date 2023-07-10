@@ -431,7 +431,7 @@ impl Weapon {
             WeaponType::SIDEARM => 0.2,
             WeaponType::MACHINEGUN => 0.2,
             WeaponType::HANDCANNON => 0.15,
-            WeaponType::TRACERIFLE => 0.15,
+            WeaponType::TRACERIFLE => 0.25,
             WeaponType::FUSIONRIFLE => 0.1,
             WeaponType::SHOTGUN => 0.1,
             WeaponType::SNIPER => 0.1,
