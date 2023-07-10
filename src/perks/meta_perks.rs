@@ -216,7 +216,7 @@ pub fn meta_perks() {
                 InventoryModifierResponse {
                     inv_stat_add: inv_buff,
                     inv_scale: 1.0,
-                    inv_add: 0.0,
+                    ..Default::default()
                 }
             },
         ),

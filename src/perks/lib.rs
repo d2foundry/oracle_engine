@@ -297,14 +297,14 @@ impl Default for MagazineModifierResponse {
 pub struct InventoryModifierResponse {
     pub inv_stat_add: i32,
     pub inv_scale: f64,
-    pub inv_add: f64,
+    pub inv_add: i32,
 }
 impl Default for InventoryModifierResponse {
     fn default() -> Self {
         Self {
             inv_stat_add: 0,
             inv_scale: 1.0,
-            inv_add: 0.0,
+            inv_add: 0,
         }
     }
 }

@@ -216,7 +216,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         //season 12 | year 4
         Perks::DualLoader => Some(PerkOptionData::toggle()),
         Perks::OneForAll => Some(PerkOptionData::toggle()),
-        Perks::Recombination => Some(PerkOptionData::toggle()),
+        Perks::Recombination => Some(PerkOptionData::stacking(10)),
         Perks::Reconstruction => Some(PerkOptionData::toggle()),
         Perks::Surplus => Some(PerkOptionData::stacking(3)),
 
@@ -383,7 +383,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::LionRampart => Some(PerkOptionData::toggle()),
         Perks::Peacekeepers => Some(PerkOptionData::static_()),
         Perks::EyeOfAnotherWorld => Some(PerkOptionData::static_()),
-        Perks::AstrocyteVerse => Some(PerkOptionData::static_()),
+        Perks::AstrocyteVerse => Some(PerkOptionData::toggle()),
         Perks::NecroticGrips => Some(PerkOptionData::static_()),
         Perks::BootsOfTheAssembler => Some(PerkOptionData::static_()),
         Perks::RainOfFire => Some(PerkOptionData::static_()),
