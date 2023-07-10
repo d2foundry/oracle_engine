@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use crate::{
     d2_enums::{AmmoType, DamageType, Seconds, StatHashes, WeaponType},
+    enemies::EnemyType,
     weapons::Stat,
 };
 
@@ -33,6 +34,14 @@ pub fn meta_perks() {
                     dmg_scale *= 1.15;
                 };
             };
+
+            if *_input.calc_data.ammo_type == AmmoType::PRIMARY
+                && _input.calc_data.intrinsic_hash > 1000
+                && *_input.calc_data.enemy_type == EnemyType::MINOR
+                && _input.pvp == false
+            {
+                dmg_scale *= 1.4;
+            }
 
             if matches!(
                 _input.calc_data.weapon_type,
