@@ -722,7 +722,7 @@ pub fn exotic_perks() {
         Perks::MarkovChain,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let val = clamp(_input.value, 0, 5);
-            let damage_mult = (1.0 / 15.0) * val as f64;
+            let damage_mult = (1.0 / 15.0) * val as f64 * if _input.pvp { 1.0 } else { 2.0 };
             DamageModifierResponse {
                 explosive_dmg_scale: 1.0 + damage_mult,
                 impact_dmg_scale: 1.0 + damage_mult,
