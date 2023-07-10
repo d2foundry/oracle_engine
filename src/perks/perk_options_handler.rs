@@ -216,7 +216,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         //season 12 | year 4
         Perks::DualLoader => Some(PerkOptionData::toggle()),
         Perks::OneForAll => Some(PerkOptionData::toggle()),
-        Perks::Recombination => Some(PerkOptionData::toggle()),
+        Perks::Recombination => Some(PerkOptionData::stacking(10)),
         Perks::Reconstruction => Some(PerkOptionData::toggle()),
         Perks::Surplus => Some(PerkOptionData::stacking(3)),
 
