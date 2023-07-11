@@ -732,6 +732,26 @@ pub fn exotic_perks() {
     );
 
     add_dmr(
+        Perks::StringofCurses,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let val = clamp(_input.value, 0, 5);
+            let mut damage_mult = 0.2 * val as f64;
+            if _input.pvp {
+                damage_mult = ((damage_mult * 100.0 / 2.0) / 4.0).ceil() * 0.04;
+            }
+            let duration = 3.5;
+            if _input.calc_data.time_total > duration {
+                damage_mult = 0.0;
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: 1.0 + damage_mult,
+                explosive_dmg_scale: 1.0 + damage_mult,
+                crit_scale: 1.0,
+            }
+        }),
+    );
+
+    add_dmr(
         Perks::StormAndStress,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             if _input.value == 0 {

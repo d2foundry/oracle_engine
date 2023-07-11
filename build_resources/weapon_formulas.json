@@ -566,7 +566,7 @@
         "2307143135": {"name": "Vigilance Wing",         "cat": "default",   "subFam": "VigilanceWing", "magProf": "vigilance", "pve":1.26},
         "2874284214": {"name": "Aggressive Burst",       "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
         "3837077246": {"name": "No Time to Explain",     "cat": "default",   "subFam": "High-Impact",   "magProf": "default"},
-        "3905543891": {"name": "Graviton Lance",         "cat": "default",   "subFam": "GravitonLance", "magProf": "default"},
+        "3905543891": {"name": "Graviton Lance",         "cat": "default",   "subFam": "GravitonLance", "magProf": "graviton"},
         "4004944400": {"name": "Bad Juju",               "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
         "4208418110": {"name": "Outbreak Perfected",     "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
         "4172222323": {"name": "Legacy PR-55 Frame",     "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
@@ -617,6 +617,11 @@
                 "mag": {"evpp": 0.0, "vpp": 0.42, "offset": 21},
                 "round_to": 4,
                 "reserve_id": 0
+            },
+            "graviton": {
+              "mag": { "evpp": 0.0, "vpp": 0.0, "offset": 30 },
+              "round_to": 1,
+              "reserve_id": 0
             },
             "vigilance": {
                 "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 50},
@@ -1026,6 +1031,7 @@
         "1797707170": {"name": "Divinity",        "cat": "default", "subFam": "Adaptive", "magProf": "default"},
         "1294026524": {"name": "Adaptive Frame",  "cat": "default", "subFam": "Adaptive", "magProf": "default"},
         "3164944314": {"name": "Ager's Scepter",  "cat": "default", "subFam": "Adaptive", "magProf": "default"},
+        "3172115769": {"name": "The Navigator",   "cat": "default", "subFam": "Adaptive", "magProf": "default"},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.1017,"offset_start": 14.756,"vpp_end": 0.0,"offset_end": 35.9, "floor_percent": 0.4},
