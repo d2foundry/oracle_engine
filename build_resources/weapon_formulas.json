@@ -437,9 +437,9 @@
     "Linear Fusion Rifle": {
         "1531126198": {"name": "The Queenbreaker", "cat": "exotic",   "subFam": "QueenBreaker", "magProf": "default", "pve":1.101},
         "2057203855": {"name": "Precision Frame",  "cat": "default",  "subFam": "Precision",    "magProf": "default", "pve":1.101},
-        "2564164194": {"name": "Arbalest",         "cat": "arbalest", "subFam": "Precision",    "magProf": "default", "pve":1.101},
+        "2564164194": {"name": "Arbalest",         "cat": "arbalest", "subFam": "Special",      "magProf": "default", "pve":1.101},
         "3884127242": {"name": "Sleeper Simulant", "cat": "exotic",   "subFam": "SleeperSim",   "magProf": "default" },
-        "2881100038": {"name": "Lorentz Driver",   "cat": "default",  "subFam": "Precision",    "magProf": "default", "pve":1.101},
+        "2881100038": {"name": "Lorentz Driver",   "cat": "default",  "subFam": "Special",      "magProf": "default", "pve":1.101},
         "3530948111": {"name": "Aggressive Frame", "cat": "default",  "subFam": "Aggressive",   "magProf": "default", "pve":1.101},
 
         "cat": {
@@ -477,6 +477,7 @@
 
         "subFam": {
             "Precision":    {"damage": 166.0, "crit_mult": 99,  "burst_delay": 16, "burst_size": 1, "inner_burst_delay": 0},
+            "Special":      {"damage": 133.0, "crit_mult": 114,  "burst_delay": 16, "burst_size": 1, "inner_burst_delay": 0},
             "Aggressive":   {"damage": 79.0, "crit_mult": 99,  "burst_delay": 16, "burst_size": 3, "inner_burst_delay": 5, "one_ammo": true},
             "QueenBreaker": {"damage": 131,    "crit_mult": 51,  "burst_delay": 9,  "burst_size": 1, "inner_burst_delay": 0},
             "SleeperSim":   {"damage": 726,    "crit_mult": -15, "burst_delay": 31, "burst_size": 1, "inner_burst_delay": 0}
