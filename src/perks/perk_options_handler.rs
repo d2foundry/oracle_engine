@@ -87,6 +87,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         //intrinsics
         Perks::RapidFireFrame => Some(PerkOptionData::toggle()),
+        Perks::PrecisionFrame => Some(PerkOptionData::static_()),
 
         //armor
 

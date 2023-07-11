@@ -104,6 +104,7 @@ pub enum Perks {
 
     //intrinsics
     RapidFireFrame = 902,
+    PrecisionFrame = 906,
 
     //armor
     DexterityMod = 1001,
@@ -278,6 +279,7 @@ pub enum Perks {
     //season 9 | year 3
     ClownCartridge = 2284787283,
     ElementalCapacitor = 3511092054,
+    #[num_enum(alternatives = [3547298847, ])] // grav lance cat
     Vorpal = 1546637391,
 
     //season 10 | year 3
