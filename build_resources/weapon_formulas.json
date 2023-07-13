@@ -124,7 +124,7 @@
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
-                "reload":   {"evpp": 0.00008, "vpp": -0.0124, "offset": 1.08},
+                "reload":   {"evpp": 0.00005, "vpp": -0.0091, "offset": 1.0693},
                 "handling": {
                     "ready":{"vpp": -0.002909930716, "offset": 0.7364549654},
                     "stow": {"vpp": -0.00179330254,  "offset": 0.5396466513},
@@ -134,7 +134,7 @@
             },
             "exotic": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
-                "reload":   {"evpp": 0.0, "vpp": -0.00033, "offset": 0.866},
+                "reload":   {"evpp": 0.00005, "vpp": -0.0091, "offset": 1.0693},
                 "handling": {
                     "ready":{"vpp": -0.002909930716, "offset": 0.7364549654},
                     "stow": {"vpp": -0.00179330254,  "offset": 0.5396466513},
