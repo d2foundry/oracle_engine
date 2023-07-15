@@ -409,7 +409,7 @@
         "subFam": {
             "Precision":  {"damage": 40.0, "crit_mult": 0,  "burst_delay": 10, "burst_size": 1, "inner_burst_delay": 0},
             "Aggressive": {"damage": 50.0, "crit_mult": 5,  "burst_delay": 15, "burst_size": 1, "inner_burst_delay": 0},
-            "Adaptive":   {"damage": 46.5, "crit_mult": 0,  "burst_delay": 13, "burst_size": 1, "inner_burst_delay": 0},
+            "Adaptive":   {"damage": 46.502, "crit_mult": 0,  "burst_delay": 13, "burst_size": 1, "inner_burst_delay": 0},
             "Lightweight":{"damage": 42.0, "crit_mult": 5,  "burst_delay": 12, "burst_size": 1, "inner_burst_delay": 0},
             "Crimson":    {"damage": 19.0, "crit_mult": 5,  "burst_delay": 7,  "burst_size": 3, "inner_burst_delay": 3},
             "Eriana":     {"damage": 78.0, "crit_mult": 5,  "burst_delay": 20, "burst_size": 1, "inner_burst_delay": 0},
