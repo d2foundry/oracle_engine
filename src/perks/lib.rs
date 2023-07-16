@@ -226,6 +226,11 @@ impl Default for FiringModifierResponse {
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct HandlingModifierResponse {
     pub stat_add: i32,
+    //separated stats
+    pub stow_add: i32,
+    pub draw_add: i32,
+    pub ads_add: i32,
+    
     pub stow_scale: f64,
     pub draw_scale: f64,
     // pub handling_swap_scale: f64,
@@ -235,6 +240,9 @@ impl Default for HandlingModifierResponse {
     fn default() -> Self {
         Self {
             stat_add: 0,
+            stow_add: 0,
+            draw_add: 0,
+            ads_add: 0,
             stow_scale: 1.0,
             draw_scale: 1.0,
             ads_scale: 1.0,

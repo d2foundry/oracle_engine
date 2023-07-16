@@ -77,6 +77,7 @@ pub fn year_1_perks() {
                     draw_scale: time_scale,
                     stow_scale: time_scale,
                     ads_scale: time_scale,
+                    ..Default::default()
                 }
             },
         ),
@@ -730,7 +731,7 @@ pub fn year_1_perks() {
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 if _input.value > 0 {
                     HandlingModifierResponse {
-                        stat_add: 100,
+                        draw_add: 100,
                         draw_scale: 0.95,
                         ..Default::default()
                     }

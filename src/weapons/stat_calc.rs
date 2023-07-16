@@ -142,11 +142,17 @@ impl HandlingFormula {
         _handling_stat: i32,
         _modifiers: HandlingModifierResponse,
     ) -> HandlingResponse {
-        let handling_stat = (_handling_stat + _modifiers.stat_add).clamp(0, 100) as f64;
-        let ready_time = self.ready.solve_at(handling_stat) * _modifiers.draw_scale;
-        let stow_time = (self.stow.solve_at(handling_stat) * _modifiers.stow_scale)
+        let handling_stat = _handling_stat + _modifiers.stat_add;
+
+        let ready_time =
+            self.ready.solve_at_i(handling_stat + _modifiers.draw_add) * _modifiers.draw_scale;
+
+        let stow_time = (self.stow.solve_at_i(handling_stat + _modifiers.stow_add)
+            * _modifiers.stow_scale)
             .clamp(self.stow.solve_at(100.0), f64::INFINITY);
-        let ads_time = self.ads.solve_at(handling_stat) * _modifiers.ads_scale;
+
+        let ads_time =
+            self.ads.solve_at_i(handling_stat + _modifiers.ads_add) * _modifiers.ads_scale;
 
         HandlingResponse {
             ready_time,
