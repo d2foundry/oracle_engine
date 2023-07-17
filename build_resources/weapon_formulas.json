@@ -840,7 +840,7 @@
         "806997698":  {"name": "SUROS Rapid-Fire",      "cat": "default"   , "subFam": "Rapid-Fire",       "magProf": "small"},
         "975429949":  {"name": "Traveler's Chosen",     "cat": "default"   , "subFam": "Adaptive",         "magProf": "small"},
         "986191425":  {"name": "Cryosthesia 77K",       "cat": "default"   , "subFam": "Precision",        "magProf": "small"},
-        "1282254042": {"name": "Together Forever",      "cat": "default"   , "subFam": "Adaptive",         "magProf": "small"},
+        "1282254042": {"name": "Together Forever",      "cat": "default"   , "subFam": "Adaptive",         "magProf": "drang"},
         "1294026524": {"name": "Adaptive Frame",        "cat": "default"   , "subFam": "Adaptive",         "magProf": "small"},
         "1458010786": {"name": "Lightweight Frame",     "cat": "default"   , "subFam": "Lightweight",      "magProf": "small", "pve": 1.291},
         "1636108362": {"name": "Precision Frame",       "cat": "default"   , "subFam": "Precision",        "magProf": "small"},
@@ -883,6 +883,11 @@
         "magProf": {
             "small": {
                 "mag": {"evpp": 0.0, "vpp": 0.11942675159235666, "offset": 5.289808917197453},
+                "round_to": 3,
+                "reserve_id": 0
+            },
+            "drang": {
+                "mag": {"evpp": 0.0, "vpp": 0.2, "offset": 0.0},
                 "round_to": 3,
                 "reserve_id": 0
             },
