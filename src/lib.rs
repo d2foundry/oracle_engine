@@ -407,7 +407,7 @@ pub fn get_scalar_response(_pvp: bool) -> Result<JsScalarResponse, JsValue> {
         global_range_scalar: rmr.range_all_scale,
         hipfire_range_scalar: rmr.range_hip_scale,
         ads_scalar: hmr.ads_scale,
-        draw_scalar: hmr.draw_scale,
+        draw_scalar: hmr.ready_scale,
         stow_scalar: hmr.stow_scale,
         reload_scalar: rsmr.reload_time_scale,
         mag_size_scalar: mmr.magazine_scale,

@@ -145,7 +145,7 @@ impl HandlingFormula {
         let handling_stat = _handling_stat + _modifiers.stat_add;
 
         let ready_time =
-            self.ready.solve_at_i(handling_stat + _modifiers.draw_add) * _modifiers.draw_scale;
+            self.ready.solve_at_i(handling_stat + _modifiers.ready_add) * _modifiers.ready_scale;
 
         let stow_time = (self.stow.solve_at_i(handling_stat + _modifiers.stow_add)
             * _modifiers.stow_scale)
