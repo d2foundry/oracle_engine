@@ -1028,7 +1028,7 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::BlackHole,
         Box::new(|_input: ModifierResponseInput | -> DamageModifierResponse {
-            let buff = if _input.calc_data.total_shots_hit % 2.0 == 1.0 { 1.34 } else { 1.0 };
+            let buff = if _input.calc_data.total_shots_hit % 2.0 == 1.0 { 1.35 } else { 1.0 };
                 DamageModifierResponse {
                     impact_dmg_scale: buff,
                     ..Default::default()

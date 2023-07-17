@@ -606,7 +606,7 @@
             "Adaptive":      {"damage": 19.01, "crit_mult": 8,    "burst_delay": 10, "burst_size": 3, "inner_burst_delay": 2},
             "Lightweight":   {"damage": 16.00, "crit_mult": 8,    "burst_delay": 8,  "burst_size": 3, "inner_burst_delay": 2},
             "VigilanceWing": {"damage": 15.75, "crit_mult": -2,   "burst_delay": 9,  "burst_size": 5, "inner_burst_delay": 2},
-            "GravitonLance": {"damage": 25.67, "crit_mult": 8,    "burst_delay": 10, "burst_size": 2, "inner_burst_delay": 2},
+            "GravitonLance": {"damage": 19.018, "crit_mult": 8,    "burst_delay": 10, "burst_size": 2, "inner_burst_delay": 2},
             "test":          {"damage": 10.0, "crit_mult": 25.5, "burst_delay": 2,  "burst_size": 5, "inner_burst_delay": 2}
         },
         "magProf": {
