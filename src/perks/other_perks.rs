@@ -80,7 +80,7 @@ pub fn other_perks() {
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 HandlingModifierResponse {
-                    ready_scale: 0.9,
+                    draw_scale: 0.9,
                     stow_scale: 0.9,
                     ..Default::default()
                 }
@@ -93,7 +93,7 @@ pub fn other_perks() {
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 HandlingModifierResponse {
-                    ready_scale: 0.9,
+                    draw_scale: 0.9,
                     stow_scale: 0.9,
                     ..Default::default()
                 }
@@ -106,7 +106,7 @@ pub fn other_perks() {
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 HandlingModifierResponse {
-                    ready_scale: 0.95,
+                    draw_scale: 0.95,
                     ..Default::default()
                 }
             },
@@ -165,7 +165,7 @@ pub fn other_perks() {
                 if _input.value >= 1 {
                     HandlingModifierResponse {
                         stat_add: 100,
-                        ready_scale: 0.7,
+                        draw_scale: 0.7,
                         stow_scale: 0.7,
                         ..Default::default()
                     }
@@ -205,7 +205,7 @@ pub fn other_perks() {
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 HandlingModifierResponse {
                     stat_add: 40,
-                    ready_scale: 0.95,
+                    draw_scale: 0.95,
                     stow_scale: 0.95,
                     ..Default::default()
                 }
@@ -565,7 +565,7 @@ pub fn other_perks() {
                 if _input.value > 0 {
                     HandlingModifierResponse {
                         stat_add: 40,
-                        ready_scale: 0.925,
+                        draw_scale: 0.925,
                         stow_scale: 0.925,
                         ..Default::default()
                     }

@@ -74,7 +74,7 @@ pub fn year_1_perks() {
                 let time_scale = 0.9_f64.powi(val);
                 HandlingModifierResponse {
                     stat_add: stat,
-                    ready_scale: time_scale,
+                    draw_scale: time_scale,
                     stow_scale: time_scale,
                     ads_scale: time_scale,
                     ..Default::default()
@@ -271,7 +271,7 @@ pub fn year_1_perks() {
                 if _input.value >= 1 {
                     HandlingModifierResponse {
                         stow_scale: 0.8,
-                        ready_scale: 0.8,
+                        draw_scale: 0.8,
                         ..Default::default()
                     }
                 } else {
@@ -731,8 +731,8 @@ pub fn year_1_perks() {
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 if _input.value > 0 {
                     HandlingModifierResponse {
-                        ready_add: 100,
-                        ready_scale: 0.95,
+                        draw_add: 100,
+                        draw_scale: 0.95,
                         ..Default::default()
                     }
                 } else {
@@ -762,7 +762,7 @@ pub fn year_1_perks() {
                 if _input.value > 0 {
                     HandlingModifierResponse {
                         stat_add: 50,
-                        ready_scale: 0.95,
+                        draw_scale: 0.95,
                         stow_scale: 0.95,
                         ..Default::default()
                     }

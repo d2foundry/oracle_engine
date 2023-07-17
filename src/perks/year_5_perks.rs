@@ -119,7 +119,7 @@ pub fn year_5_perks() {
                 WeaponType::AUTORIFLE,
                 WeaponType::HANDCANNON,
                 WeaponType::BOW,
-                WeaponType::SCOUTRIFLE,
+                WeaponType::SCOUTRIFLE
             ];
             let dmg_scale: f64;
             let crit_scale: f64;
@@ -177,7 +177,7 @@ pub fn year_5_perks() {
                 HandlingModifierResponse {
                     stat_add: 100,
                     stow_scale: 1.0,
-                    ready_scale: 0.95,
+                    draw_scale: 0.95,
                     ..Default::default()
                 }
             },
@@ -294,7 +294,7 @@ pub fn year_5_perks() {
                 HandlingModifierResponse {
                     stat_add: handling,
                     stow_scale: handling_mult,
-                    ready_scale: handling_mult,
+                    draw_scale: handling_mult,
                     ..Default::default()
                 }
             },
@@ -496,10 +496,10 @@ pub fn year_5_perks() {
                     handling = 100;
                 };
                 HandlingModifierResponse {
-                    ready_add: handling,
+                    draw_add: handling,
                     stow_add: handling,
                     stow_scale: handling_mult,
-                    ready_scale: handling_mult,
+                    draw_scale: handling_mult,
                     ..Default::default()
                 }
             },

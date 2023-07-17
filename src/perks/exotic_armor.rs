@@ -249,8 +249,8 @@ pub fn exotic_armor() {
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 if _input.value > 0 && _input.calc_data.weapon_type == &WeaponType::HANDCANNON {
                     return HandlingModifierResponse {
-                        ready_add: 100,
-                        ready_scale: 0.6,
+                        draw_add: 100,
+                        draw_scale: 0.6,
                         ..Default::default()
                     };
                 }
@@ -349,7 +349,7 @@ pub fn exotic_armor() {
                     return HandlingModifierResponse {
                         stat_add: 100,
                         ads_scale: 1.0,
-                        ready_scale: 0.6,
+                        draw_scale: 0.6,
                         stow_scale: 0.6,
                         ..Default::default()
                     };
@@ -399,7 +399,7 @@ pub fn exotic_armor() {
                     return HandlingModifierResponse::default();
                 }
                 HandlingModifierResponse {
-                    ready_add: 100,
+                    draw_add: 100,
                     ..Default::default()
                 }
             },
