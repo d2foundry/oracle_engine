@@ -777,8 +777,11 @@ pub fn get_handling_modifier(
             pers_modifier.borrow().get_hmr(perk.hash.into(), inp)
         });
         handling_modifier.stat_add += tmp.stat_add;
+        handling_modifier.stow_add += tmp.stow_add;
+        handling_modifier.draw_add += tmp.draw_add;
+        handling_modifier.ads_add += tmp.ads_add;
         handling_modifier.stow_scale *= tmp.stow_scale;
-        handling_modifier.ready_scale *= tmp.ready_scale;
+        handling_modifier.draw_scale *= tmp.draw_scale;
         handling_modifier.ads_scale *= tmp.ads_scale;
     }
     handling_modifier

@@ -177,7 +177,7 @@ pub fn meta_perks() {
                 };
                 HandlingModifierResponse {
                     stow_scale: swap_scale,
-                    ready_scale: swap_scale,
+                    draw_scale: swap_scale,
                     ..Default::default()
                 }
             },
