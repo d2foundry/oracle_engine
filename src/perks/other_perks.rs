@@ -516,9 +516,9 @@ pub fn other_perks() {
         Perks::AcceleratedCoils,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
-                impact_dmg_scale: 0.982,
-                explosive_dmg_scale: 0.982,
-                crit_scale: 1.0,
+                impact_dmg_scale: 0.98,
+                explosive_dmg_scale: 0.98,
+                ..Default::default()
             }
         }),
     );
