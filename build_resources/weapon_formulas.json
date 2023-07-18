@@ -709,6 +709,7 @@
         "4185339856": {"name": "Symmetry",          "cat": "default",   "subFam": "Rapid-Fire",  "magProf": "default"},
         "3468089894": {"name": "Aggressive Frame",  "cat": "aggresive", "subFam": "Aggressive",  "magProf": "default"},
         "2724693746": {"name": "Touch Of Malice",   "cat": "default",   "subFam": "Rapid-Fire",  "magProf": "default"},
+        "1266604956": {"name": "Wicked Implement",   "cat": "default",   "subFam": "Precision",   "magProf": "default"},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.1568, "offset_start": 30.25, "vpp_end": 0.0, "offset_end": 60.75, "floor_percent": 0.5},
