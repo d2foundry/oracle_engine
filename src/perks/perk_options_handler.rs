@@ -179,7 +179,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::RapidHit => Some(PerkOptionData::stacking(5)),
 
         //season 5 | year 2
-        Perks::ResevoirBurst => Some(PerkOptionData::toggle()),
+        Perks::ResevoirBurst => Some(PerkOptionData::static_()),
         Perks::Surrounded => Some(PerkOptionData::toggle()),
         Perks::AirAssault => Some(PerkOptionData::stacking(2)),
 
