@@ -361,6 +361,7 @@ pub enum Perks {
     Bipod = 1439600632,
     ControlledBurst = 2594592626,
     InvisibleHand = 3018146897,
+    UnsatedHunger = 2053642371,
 
     //subclass
     OnYourMark = 3066103999,

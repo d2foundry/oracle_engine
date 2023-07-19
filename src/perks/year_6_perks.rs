@@ -269,4 +269,43 @@ pub fn year_6_perks() {
             stats
         }),
     );
+    add_sbr(
+        Perks::UnsatedHunger,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            if _input.value > 0 {
+                stats.insert(StatHashes::STABILITY.into(), 20);
+                stats.insert(StatHashes::HANDLING.into(), 60);
+                stats.insert(StatHashes::RELOAD.into(), 60);
+            }
+            stats
+        }),
+    );
+
+    add_rsmr(
+        Perks::UnsatedHunger,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value > 0 {
+                return ReloadModifierResponse {
+                    reload_stat_add: 60,
+                    ..Default::default()
+                };
+            }
+            ReloadModifierResponse::default()
+        }),
+    );
+    add_hmr(
+        Perks::UnsatedHunger,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value > 0 {
+                    return HandlingModifierResponse {
+                        stat_add: 60,
+                        ..Default::default()
+                    };
+                }
+                HandlingModifierResponse::default()
+            },
+        ),
+    );
 }
