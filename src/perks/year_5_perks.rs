@@ -306,7 +306,7 @@ pub fn year_5_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let nerf = 0.625; //patch 7.1.5
             let enh_increase = if _input.is_enhanced { 1.2 } else { 1.0 };
-            let low_end_dmg = 9.34 * enh_increase * nerf;
+            let low_end_dmg = 0.0934 * enh_increase * nerf;
             let high_end_dmg = 0.4005 * enh_increase * nerf;
 
             let formula_start = -0.35;
