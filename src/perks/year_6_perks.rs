@@ -259,4 +259,14 @@ pub fn year_6_perks() {
             DamageModifierResponse::default()
         }),
     );
+    add_sbr(
+        Perks::InvisibleHand,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            if _input.value > 0 {
+                stats.insert(StatHashes::STABILITY.into(), 25);
+            }
+            stats
+        }),
+    );
 }

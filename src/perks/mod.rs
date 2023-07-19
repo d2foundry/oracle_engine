@@ -360,6 +360,7 @@ pub enum Perks {
     CollectiveAction = 3324494224,
     Bipod = 1439600632,
     ControlledBurst = 2594592626,
+    InvisibleHand = 3018146897,
 
     //subclass
     OnYourMark = 3066103999,
