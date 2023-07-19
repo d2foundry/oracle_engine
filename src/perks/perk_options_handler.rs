@@ -87,6 +87,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         //intrinsics
         Perks::RapidFireFrame => Some(PerkOptionData::toggle()),
+        Perks::PrecisionFrame => Some(PerkOptionData::static_()),
 
         //armor
 
@@ -178,7 +179,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::RapidHit => Some(PerkOptionData::stacking(5)),
 
         //season 5 | year 2
-        Perks::ResevoirBurst => Some(PerkOptionData::toggle()),
+        Perks::ResevoirBurst => Some(PerkOptionData::static_()),
         Perks::Surrounded => Some(PerkOptionData::toggle()),
         Perks::AirAssault => Some(PerkOptionData::stacking(2)),
 
@@ -216,7 +217,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         //season 12 | year 4
         Perks::DualLoader => Some(PerkOptionData::toggle()),
         Perks::OneForAll => Some(PerkOptionData::toggle()),
-        Perks::Recombination => Some(PerkOptionData::toggle()),
+        Perks::Recombination => Some(PerkOptionData::stacking(10)),
         Perks::Reconstruction => Some(PerkOptionData::toggle()),
         Perks::Surplus => Some(PerkOptionData::stacking(3)),
 
@@ -338,6 +339,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::HarmonicLaser => Some(PerkOptionData::stacking(2)),
         Perks::AgersScepterCatalyst => Some(PerkOptionData::toggle()),
         Perks::ColdFusion => Some(PerkOptionData::toggle()),
+        Perks::BlackHole => Some(PerkOptionData::static_()),
 
         Perks::DexterityMod => Some(PerkOptionData::stacking(3)),
         Perks::ReserveMod => Some(PerkOptionData::stacking(3)),
@@ -382,7 +384,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::LionRampart => Some(PerkOptionData::toggle()),
         Perks::Peacekeepers => Some(PerkOptionData::static_()),
         Perks::EyeOfAnotherWorld => Some(PerkOptionData::static_()),
-        Perks::AstrocyteVerse => Some(PerkOptionData::static_()),
+        Perks::AstrocyteVerse => Some(PerkOptionData::toggle()),
         Perks::NecroticGrips => Some(PerkOptionData::static_()),
         Perks::BootsOfTheAssembler => Some(PerkOptionData::static_()),
         Perks::RainOfFire => Some(PerkOptionData::static_()),

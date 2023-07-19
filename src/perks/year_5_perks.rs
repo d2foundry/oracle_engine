@@ -495,7 +495,8 @@ pub fn year_5_perks() {
                     handling = 100;
                 };
                 HandlingModifierResponse {
-                    stat_add: handling,
+                    draw_add: handling,
+                    stow_add: handling,
                     stow_scale: handling_mult,
                     draw_scale: handling_mult,
                     ..Default::default()

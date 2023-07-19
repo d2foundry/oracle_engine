@@ -362,11 +362,12 @@ pub fn buff_perks() {
     add_dmr(
         Perks::SanguineAlchemy,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let buff = if _input.value > 0 {
-                surge_buff(_input.cached_data, 2, _input.pvp)
-            } else {
-                1.0
-            };
+            if _input.value == 0 || *_input.calc_data.damage_type == DamageType::KINETIC {
+                return DamageModifierResponse::default();
+            }
+
+            let buff = surge_buff(_input.cached_data, 2, _input.pvp);
+
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,

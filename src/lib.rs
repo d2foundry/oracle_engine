@@ -178,6 +178,12 @@ pub fn add_perk(_stats: JsValue, _value: u32, _hash: u32) -> Result<(), JsValue>
     Ok(())
 }
 
+#[wasm_bindgen(js_name = "resetTraits")]
+pub fn reset_perks() -> Result<(), JsValue> {
+    PERS_DATA.with(|perm_data| perm_data.borrow_mut().weapon.reset_perks());
+    Ok(())
+}
+
 #[wasm_bindgen(js_name = "getTraitHashes")]
 pub fn query_perks() -> Vec<u32> {
     PERS_DATA.with(|perm_data| perm_data.borrow_mut().weapon.list_perk_ids())
