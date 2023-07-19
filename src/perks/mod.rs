@@ -359,6 +359,7 @@ pub enum Perks {
     //season 21 | year 6
     CollectiveAction = 3324494224,
     Bipod = 1439600632,
+    ControlledBurst = 2594592626,
 
     //subclass
     OnYourMark = 3066103999,

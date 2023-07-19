@@ -233,4 +233,30 @@ pub fn year_6_perks() {
             }
         }),
     );
+
+    add_fmr(
+        Perks::ControlledBurst,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            if _input.value > 0 {
+                return FiringModifierResponse {
+                    burst_delay_scale: 0.9,
+                    ..Default::default()
+                };
+            }
+            FiringModifierResponse::default()
+        }),
+    );
+    add_dmr(
+        Perks::ControlledBurst,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: 1.2,
+                    explosive_dmg_scale: 1.2,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
+        }),
+    );
 }

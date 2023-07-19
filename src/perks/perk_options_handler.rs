@@ -281,6 +281,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         //season 21 | year 6
         Perks::CollectiveAction => Some(PerkOptionData::toggle()),
         Perks::Bipod => Some(PerkOptionData::static_()),
+        Perks::ControlledBurst => Some(PerkOptionData::toggle()),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
