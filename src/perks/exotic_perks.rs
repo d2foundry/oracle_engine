@@ -370,7 +370,6 @@ pub fn exotic_perks() {
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
             FiringModifierResponse {
                 burst_size_add: -2.0,
-                burst_delay_add: -1.0 / 30.0,
                 ..Default::default()
             }
         }),
@@ -999,9 +998,8 @@ pub fn exotic_perks() {
 
     add_dmr(
         Perks::Broadside,
-        Box::new(|_input: ModifierResponseInput | -> DamageModifierResponse {
-            let buff = 
-            match _input.value {
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = match _input.value {
                 0 => 1.0,
                 1 => 1.18,
                 2 => 1.39,
@@ -1016,24 +1014,29 @@ pub fn exotic_perks() {
     );
 
     add_mmr(
-        Perks:: FourthHorsemanCatalyst,
-        Box::new(|_input: ModifierResponseInput | -> MagazineModifierResponse {
-            MagazineModifierResponse {
-            magazine_add: 1.0,
-            ..Default::default()
-            }
-        }),
+        Perks::FourthHorsemanCatalyst,
+        Box::new(
+            |_input: ModifierResponseInput| -> MagazineModifierResponse {
+                MagazineModifierResponse {
+                    magazine_add: 1.0,
+                    ..Default::default()
+                }
+            },
+        ),
     );
 
     add_dmr(
         Perks::BlackHole,
-        Box::new(|_input: ModifierResponseInput | -> DamageModifierResponse {
-            let buff = if _input.calc_data.total_shots_hit % 2.0 == 1.0 { 1.35 } else { 1.0 };
-                DamageModifierResponse {
-                    impact_dmg_scale: buff,
-                    ..Default::default()
-                }
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = if _input.calc_data.total_shots_hit % 2.0 == 1.0 {
+                1.35
+            } else {
+                1.0
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                ..Default::default()
+            }
         }),
     );
-
 }
