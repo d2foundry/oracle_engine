@@ -308,4 +308,30 @@ pub fn year_6_perks() {
             },
         ),
     );
+
+    add_hmr(
+        Perks::Discord,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value > 0 {
+                    return HandlingModifierResponse {
+                        ads_scale: 0.75,
+                        ..Default::default()
+                    };
+                }
+                HandlingModifierResponse::default()
+            },
+        ),
+    );
+
+    add_sbr(
+        Perks::Discord,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            if _input.value > 0 {
+                stats.insert(StatHashes::AIRBORNE.into(), 30);
+            }
+            stats
+        }),
+    );
 }

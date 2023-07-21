@@ -284,6 +284,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::ControlledBurst => Some(PerkOptionData::toggle()),
         Perks::InvisibleHand => Some(PerkOptionData::toggle()),
         Perks::UnsatedHunger => Some(PerkOptionData::toggle()),
+        Perks::Discord => Some(PerkOptionData::toggle()),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),

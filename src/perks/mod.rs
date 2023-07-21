@@ -362,6 +362,7 @@ pub enum Perks {
     ControlledBurst = 2594592626,
     InvisibleHand = 3018146897,
     UnsatedHunger = 2053642371,
+    Discord = 3978468247,
 
     //subclass
     OnYourMark = 3066103999,
