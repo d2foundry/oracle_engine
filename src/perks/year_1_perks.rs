@@ -827,4 +827,30 @@ pub fn year_1_perks() {
             },
         ),
     );
+    add_fmr(
+        Perks::PhaseMag,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            FiringModifierResponse {
+                burst_delay_add: 1.0 / 30.0,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_dmr(
+        Perks::PhaseMag,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let lightweight_body = 10.86;
+            let lightweight_crit = 8.0;
+
+            let precision_body = 17.01;
+            let precision_crit = -5.0;
+
+            DamageModifierResponse {
+                impact_dmg_scale: precision_body / lightweight_body,
+                explosive_dmg_scale: precision_body / lightweight_body,
+                crit_scale: (precision_crit / 51.0 + 1.5) / (lightweight_crit / 51.0 + 1.5), //converting mult using simplified numbers (annoying)
+            }
+        }),
+    );
 }

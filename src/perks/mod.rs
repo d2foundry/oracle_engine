@@ -156,6 +156,7 @@ pub enum Perks {
     ChargetimeMW = 3128594062,
     DisorientingGrenades = 3032599245,
     AssaultMag = 791862061,
+    PhaseMag = 830282363,
     //bow strings
     SlowerStringT1 = 3371775011,
     FasterStringT2 = 2801223209,

@@ -4,6 +4,7 @@ use num_traits::{Float, Zero};
 
 use crate::{
     d2_enums::{AmmoType, DamageType, StatHashes, WeaponType},
+    perks::{map_perks, Perk, Perks},
     weapons::{Stat, Weapon},
     PERS_DATA,
 };
@@ -310,4 +311,39 @@ fn test_bow_firing_data() {
             response.pvp_crit_mult
         );
     });
+}
+
+#[test]
+fn test_phase_mag() {
+    //setup weapons
+    let mut lightweight = Weapon::generate_weapon(
+        2272470786, 24,         //smg
+        1458010786, //lightweight
+        1,          //primary
+        3949783978, //strand
+    )
+    .unwrap();
+    let precision = Weapon::generate_weapon(
+        3240434620, 24,         //smg
+        1636108362, //lightweight
+        1,          //primary
+        3949783978, //strand
+    )
+    .unwrap();
+
+    //setup perks
+    map_perks();
+
+    lightweight.add_perk(Perk {
+        hash: Perks::PhaseMag.into(),
+        raw_hash: Perks::PhaseMag.into(),
+        value: 1,
+        ..Default::default()
+    });
+
+    let lw_data = lightweight.calc_firing_data(Some(lightweight.static_calc_input()), None, true);
+    let p_data = precision.calc_firing_data(Some(precision.static_calc_input()), None, true);
+    assert_eq!(lw_data.burst_delay, p_data.burst_delay);
+    assert_eq!(lw_data.pvp_crit_mult, p_data.pvp_crit_mult);
+    assert_eq!(lw_data.pvp_impact_damage, p_data.pvp_impact_damage);
 }

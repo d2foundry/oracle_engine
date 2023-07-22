@@ -103,6 +103,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::DisorientingGrenades => Some(PerkOptionData::static_()),
         Perks::AssaultMag => Some(PerkOptionData::static_()),
         Perks::AdeptChargeTime => Some(PerkOptionData::static_()),
+        Perks::PhaseMag => Some(PerkOptionData::static_()),
         //bow strings
         Perks::SlowerStringT1 => Some(PerkOptionData::static_()),
         Perks::FasterStringT1 => Some(PerkOptionData::static_()),
