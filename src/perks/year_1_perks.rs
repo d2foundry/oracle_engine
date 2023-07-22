@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use crate::{
     d2_enums::{AmmoType, BungieHash, DamageType, StatBump, StatHashes, WeaponType},
     logging::extern_log,
+    weapons::Weapon,
 };
 
 use super::{
@@ -840,16 +841,26 @@ pub fn year_1_perks() {
     add_dmr(
         Perks::PhaseMag,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let lightweight_body = 10.86;
-            let lightweight_crit = 8.0;
+            //set up precision smg to get damage values from
+            let precision = Weapon::generate_weapon(
+                0, 24,         //smg
+                1636108362, //precision
+                1,          //primary
+                3949783978, //strand
+            )
+            .unwrap();
 
-            let precision_body = 17.01;
-            let precision_crit = -5.0;
+            let p_data = precision.get_damage_profile();
 
+            let lightweight_body = _input.calc_data.curr_firing_data.damage;
+            let lightweight_crit = _input.calc_data.curr_firing_data.crit_mult;
+
+            let precision_body = p_data.0;
+            let precision_crit = p_data.2;
             DamageModifierResponse {
                 impact_dmg_scale: precision_body / lightweight_body,
                 explosive_dmg_scale: precision_body / lightweight_body,
-                crit_scale: (precision_crit / 51.0 + 1.5) / (lightweight_crit / 51.0 + 1.5), //converting mult using simplified numbers (annoying)
+                crit_scale: precision_crit / lightweight_crit,
             }
         }),
     );

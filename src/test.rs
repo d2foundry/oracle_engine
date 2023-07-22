@@ -325,7 +325,7 @@ fn test_phase_mag() {
     .unwrap();
     let precision = Weapon::generate_weapon(
         3240434620, 24,         //smg
-        1636108362, //lightweight
+        1636108362, //precision
         1,          //primary
         3949783978, //strand
     )
