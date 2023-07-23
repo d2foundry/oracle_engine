@@ -48,7 +48,7 @@ impl Weapon {
             .perk_val();
 
         if self.weapon_type == WeaponType::BOW {
-            reload_stat = reload_stat.clamp(0, 80);
+            reload_stat = reload_stat.clamp(0, 85);
         }
 
         let modifiers = if let Some(calc_input) = _calc_input {

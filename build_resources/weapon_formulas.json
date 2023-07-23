@@ -124,7 +124,7 @@
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
-                "reload":   {"evpp": 0.00005, "vpp": -0.0091, "offset": 1.0693},
+                "reload":   {"evpp": 0.0000535476056419958, "vpp": -0.0102410419405799, "offset": 1.10091136388022},
                 "handling": {
                     "ready":{"vpp": -0.002909930716, "offset": 0.7364549654},
                     "stow": {"vpp": -0.00179330254,  "offset": 0.5396466513},
@@ -134,7 +134,7 @@
             },
             "exotic": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
-                "reload":   {"evpp": 0.00005, "vpp": -0.0091, "offset": 1.0693},
+                "reload":   {"evpp": 0.0000535476056419958, "vpp": -0.0102410419405799, "offset": 1.10091136388022},
                 "handling": {
                     "ready":{"vpp": -0.002909930716, "offset": 0.7364549654},
                     "stow": {"vpp": -0.00179330254,  "offset": 0.5396466513},
@@ -699,7 +699,7 @@
         "377257911":  {"name": "MIDA Multi-Tool",   "cat": "default",   "subFam": "Lightweight", "magProf": "default"},
         "1000724343": {"name": "Polaris Lance",     "cat": "default",   "subFam": "High-Impact", "magProf": "default"},
         "1019291327": {"name": "High-Impact Frame", "cat": "default",   "subFam": "High-Impact", "magProf": "default"},
-        "1319823571": {"name": "Dead Man's Tale",   "cat": "aggresive", "subFam": "DeadMans",  "magProf": "default", "pve":0.85},
+        "1319823571": {"name": "Dead Man's Tale",   "cat": "aggresive", "subFam": "Aggressive",  "magProf": "default", "pve":0.85},
         "1458010786": {"name": "Lightweight Frame", "cat": "default",   "subFam": "Lightweight", "magProf": "default"},
         "1636108362": {"name": "Precision Frame",   "cat": "default",   "subFam": "Precision",   "magProf": "default"},
         "2741975068": {"name": "Skyburner's Oath",  "cat": "default",   "subFam": "High-Impact", "magProf": "default"},
@@ -737,8 +737,7 @@
             "Rapid-Fire":  {"damage":27.50, "crit_mult":10, "burst_delay":7,  "burst_size":1, "inner_burst_delay":0},
             "Lightweight": {"damage":30.50, "crit_mult":13, "burst_delay":9,  "burst_size":1, "inner_burst_delay":0},
             "Precision":   {"damage":38.00,   "crit_mult":5,  "burst_delay":10, "burst_size":1, "inner_burst_delay":0},
-            "Aggressive":  {"damage":54.00, "crit_mult":-1, "burst_delay":15, "burst_size":1, "inner_burst_delay":0},
-            "DeadMans":  {"damage":65.11, "crit_mult":-9.18, "burst_delay":15, "burst_size":1, "inner_burst_delay":0}
+            "Aggressive":  {"damage":54.00, "crit_mult":-1, "burst_delay":15, "burst_size":1, "inner_burst_delay":0}
         },
         "magProf": {
             "default": {
