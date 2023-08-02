@@ -1015,6 +1015,34 @@ pub fn exotic_perks() {
         }),
     );
 
+    add_fmr(
+        Perks::TemporalUnlimiter,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            if _input.value > 0 {
+                return FiringModifierResponse {
+                    burst_delay_add: 0.383,
+                    ..Default::default()
+                };
+            }
+            FiringModifierResponse::default()
+        }),
+    );
+
+    add_dmr(
+        Perks::TemporalUnlimiter,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = if _input.pvp { 7.545 } else { 14.0 };
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: buff,
+                    crit_scale: 1.875,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
+        }),
+    );
+
     add_mmr(
         Perks::FourthHorsemanCatalyst,
         Box::new(

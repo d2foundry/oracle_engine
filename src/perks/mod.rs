@@ -430,6 +430,7 @@ pub enum Perks {
     HarmonicLaser = 459441288,
     ColdFusion = 1036269296,
     BlackHole = 3905543891,
+    TemporalUnlimiter = 806917387,
 
     //heavy exotic
     ReignHavoc = 4148158229,
