@@ -168,10 +168,11 @@ pub fn year_3_perks() {
         Perks::TrenchBarrel,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut buffer: HashMap<u32, i32> = HashMap::new();
+            let bump = if _input.is_enhanced { 35 } else { 30 };
             if _input.value > 0 {
-                buffer.insert(StatHashes::HANDLING.into(), 30);
+                buffer.insert(StatHashes::HANDLING.into(), bump);
                 //reload unknown
-                buffer.insert(StatHashes::RELOAD.into(), 0);
+                buffer.insert(StatHashes::RELOAD.into(), bump);
             }
             buffer
         }),
@@ -181,13 +182,13 @@ pub fn year_3_perks() {
         Perks::TrenchBarrel,
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                if _input.value > 0 {
-                    return HandlingModifierResponse {
-                        stat_add: 30,
-                        ..Default::default()
-                    };
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
                 }
-                HandlingModifierResponse::default()
+                HandlingModifierResponse {
+                    stat_add: if _input.is_enhanced { 35 } else { 30 },
+                    ..Default::default()
+                }
             },
         ),
     );
@@ -196,12 +197,13 @@ pub fn year_3_perks() {
     add_rsmr(
         Perks::TrenchBarrel,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value > 0 {
-                return ReloadModifierResponse {
-                    ..Default::default()
-                };
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
             }
-            ReloadModifierResponse::default()
+            ReloadModifierResponse {
+                reload_stat_add: if _input.is_enhanced { 35 } else { 30 },
+                ..Default::default()
+            }
         }),
     );
 

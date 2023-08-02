@@ -104,6 +104,7 @@ pub enum Perks {
 
     //intrinsics
     RapidFireFrame = 902,
+    PrecisionFrame = 906,
 
     //armor
     DexterityMod = 1001,
@@ -155,6 +156,7 @@ pub enum Perks {
     ChargetimeMW = 3128594062,
     DisorientingGrenades = 3032599245,
     AssaultMag = 791862061,
+    PhaseMag = 830282363,
     //bow strings
     SlowerStringT1 = 3371775011,
     FasterStringT2 = 2801223209,
@@ -278,6 +280,7 @@ pub enum Perks {
     //season 9 | year 3
     ClownCartridge = 2284787283,
     ElementalCapacitor = 3511092054,
+    #[num_enum(alternatives = [3547298847, ])] // grav lance cat
     Vorpal = 1546637391,
 
     //season 10 | year 3
@@ -357,6 +360,10 @@ pub enum Perks {
     //season 21 | year 6
     CollectiveAction = 3324494224,
     Bipod = 1439600632,
+    ControlledBurst = 2594592626,
+    InvisibleHand = 3018146897,
+    UnsatedHunger = 2053642371,
+    Discord = 3978468247,
 
     //subclass
     OnYourMark = 3066103999,
@@ -422,6 +429,8 @@ pub enum Perks {
     Fundamentals = 2620589274,
     HarmonicLaser = 459441288,
     ColdFusion = 1036269296,
+    BlackHole = 3905543891,
+    TemporalUnlimiter = 806917387,
 
     //heavy exotic
     ReignHavoc = 4148158229,
@@ -432,6 +441,8 @@ pub enum Perks {
     TargetAquired = 939227542,
     SleeperCatalyst = 2142466730,
     TractorCannon = 1210807262,
+    MarksmanSights = 1408087975,
+
 
     #[num_enum(default)]
     Ignore = 69420,
@@ -774,6 +785,9 @@ pub fn get_handling_modifier(
             pers_modifier.borrow().get_hmr(perk.hash.into(), inp)
         });
         handling_modifier.stat_add += tmp.stat_add;
+        handling_modifier.stow_add += tmp.stow_add;
+        handling_modifier.draw_add += tmp.draw_add;
+        handling_modifier.ads_add += tmp.ads_add;
         handling_modifier.stow_scale *= tmp.stow_scale;
         handling_modifier.draw_scale *= tmp.draw_scale;
         handling_modifier.ads_scale *= tmp.ads_scale;

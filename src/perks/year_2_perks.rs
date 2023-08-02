@@ -243,14 +243,15 @@ pub fn year_2_perks() {
     add_dmr(
         Perks::ResevoirBurst,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut damage_mult = 1.0;
-            if _input.calc_data.curr_mag >= _input.calc_data.base_mag {
-                damage_mult = 1.25;
+            let damage_mult = if _input.calc_data.curr_mag >= _input.calc_data.base_mag {
+                1.25
+            } else {
+                1.0
             };
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );

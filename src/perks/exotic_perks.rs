@@ -1,6 +1,8 @@
 //This also includes intrinsic perks, not just exotic
 use std::collections::HashMap;
 
+use serde::__private::de;
+
 use crate::{d2_enums::StatHashes, enemies::EnemyType, weapons::Stat};
 
 use super::{
@@ -127,36 +129,6 @@ pub fn exotic_perks() {
                 crit_scale: 1.0,
             }
         }),
-    );
-
-    add_dmr(
-        Perks::AgersCall,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut damage_buff = 1.0;
-            if _input.value > 0 && _input.calc_data.num_reloads == 0.0 {
-                damage_buff = 1.8;
-            };
-            DamageModifierResponse {
-                impact_dmg_scale: damage_buff,
-                explosive_dmg_scale: damage_buff,
-                crit_scale: 1.0,
-            }
-        }),
-    );
-    add_mmr(
-        Perks::AgersCall,
-        Box::new(
-            |_input: ModifierResponseInput| -> MagazineModifierResponse {
-                let mut mag_buff = 1.0;
-                if _input.value > 0 && _input.calc_data.total_shots_fired == 0.0 {
-                    mag_buff = 2.0;
-                };
-                MagazineModifierResponse {
-                    magazine_scale: mag_buff,
-                    ..Default::default()
-                }
-            },
-        ),
     );
 
     add_sbr(
@@ -400,7 +372,6 @@ pub fn exotic_perks() {
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
             FiringModifierResponse {
                 burst_size_add: -2.0,
-                burst_delay_add: -1.0 / 30.0,
                 ..Default::default()
             }
         }),
@@ -752,10 +723,30 @@ pub fn exotic_perks() {
         Perks::MarkovChain,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let val = clamp(_input.value, 0, 5);
-            let damage_mult = (1.0 / 15.0) * val as f64;
+            let damage_mult = (1.0 / 15.0) * val as f64 * if _input.pvp { 1.0 } else { 2.0 };
             DamageModifierResponse {
                 explosive_dmg_scale: 1.0 + damage_mult,
                 impact_dmg_scale: 1.0 + damage_mult,
+                crit_scale: 1.0,
+            }
+        }),
+    );
+
+    add_dmr(
+        Perks::StringofCurses,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let val = clamp(_input.value, 0, 5);
+            let mut damage_mult = 0.2 * val as f64;
+            if _input.pvp {
+                damage_mult = ((damage_mult * 100.0 / 2.0) / 4.0).ceil() * 0.04;
+            }
+            let duration = 3.5;
+            if _input.calc_data.time_total > duration {
+                damage_mult = 0.0;
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: 1.0 + damage_mult,
+                explosive_dmg_scale: 1.0 + damage_mult,
                 crit_scale: 1.0,
             }
         }),
@@ -966,6 +957,23 @@ pub fn exotic_perks() {
         }),
     );
 
+    add_mmr(
+        Perks::AgersScepterCatalyst,
+        Box::new(
+            |_input: ModifierResponseInput| -> MagazineModifierResponse {
+                let mag_buff = if _input.value > 0 && _input.calc_data.total_shots_fired == 0.0 {
+                    2.0
+                } else {
+                    1.0
+                };
+                MagazineModifierResponse {
+                    magazine_scale: mag_buff,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+
     add_dmr(
         Perks::ColdFusion,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
@@ -977,24 +985,31 @@ pub fn exotic_perks() {
         }),
     );
 
-    add_rsmr(
-        Perks::ColdFusion,
-        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value > 0 || _input.calc_data.total_shots_hit > 41.0 {
-                return ReloadModifierResponse {
-                    reload_stat_add: 100,
-                    ..Default::default()
-                };
+    //Queenbreaker's sights
+    add_dmr(
+        Perks::MarksmanSights,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            DamageModifierResponse {
+                impact_dmg_scale: 1.38,
+                ..Default::default()
             }
-            ReloadModifierResponse::default()
+        }),
+    );
+
+    add_fmr(
+        Perks::MarksmanSights,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            FiringModifierResponse {
+                burst_delay_add: (1800.0 / (60000.0 / 333.0)), // 300 + 333 = 633 ,
+                ..Default::default()
+            }
         }),
     );
 
     add_dmr(
         Perks::Broadside,
-        Box::new(|_input: ModifierResponseInput | -> DamageModifierResponse {
-            let buff = 
-            match _input.value {
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = match _input.value {
                 0 => 1.0,
                 1 => 1.18,
                 2 => 1.39,
@@ -1008,14 +1023,81 @@ pub fn exotic_perks() {
         }),
     );
 
+    add_fmr(
+        Perks::TemporalUnlimiter,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            if _input.value > 0 {
+                return FiringModifierResponse {
+                    burst_delay_add: 0.383,
+                    ..Default::default()
+                };
+            }
+            FiringModifierResponse::default()
+        }),
+    );
+
+    add_dmr(
+        Perks::TemporalUnlimiter,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = if _input.pvp { 7.545 } else { 14.0 };
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: buff,
+                    crit_scale: 1.875,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
+        }),
+    );
+
     add_mmr(
-        Perks:: FourthHorsemanCatalyst,
-        Box::new(|_input: ModifierResponseInput | -> MagazineModifierResponse {
-            MagazineModifierResponse {
-            magazine_add: 1.0,
-            ..Default::default()
+        Perks::FourthHorsemanCatalyst,
+        Box::new(
+            |_input: ModifierResponseInput| -> MagazineModifierResponse {
+                MagazineModifierResponse {
+                    magazine_add: 1.0,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+
+    add_dmr(
+        Perks::BlackHole,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = if _input.calc_data.total_shots_hit % 2.0 == 1.0 {
+                1.35
+            } else {
+                1.0
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                ..Default::default()
             }
         }),
     );
 
+    add_dmr(
+        Perks::Impetus,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: 1.5,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
+        }),
+    );
+
+    add_fmr(
+        Perks::MarksmanSights,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            FiringModifierResponse {
+                burst_delay_add: 0.333, // 300 + 333 = 633 ,
+                ..Default::default()
+            }
+        }),
+    );
 }

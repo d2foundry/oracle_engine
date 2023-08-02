@@ -657,4 +657,23 @@ pub fn year_4_perks() {
             }
         }),
     );
+
+    add_dmr(
+        Perks::Recombination, 
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            //to make sure it doesn't go over the max stacks
+            let val = if _input.is_enhanced {clamp(_input.value, 0, 8) as f64 } else { clamp(_input.value, 0, 10) as f64};
+            //dmg buff per stack depends on enhancement and pvp
+            let buff =  1.0 + if _input.calc_data.total_shots_fired == 0.0 { match (_input.is_enhanced, _input.pvp) {
+                (false, false) => 0.1 * val,
+                (false, true) =>  0.05 * val,
+                (true, false) => 0.125 * val,
+                (true, true) => 0.0625 * val,
+            } } else { 0.0 };
+            DamageModifierResponse { 
+                impact_dmg_scale: buff,
+                ..Default::default()     
+            }
+        }),
+    );
 }

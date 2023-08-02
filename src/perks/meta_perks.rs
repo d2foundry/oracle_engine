@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use crate::{
     d2_enums::{AmmoType, DamageType, Seconds, StatHashes, WeaponType},
+    enemies::EnemyType,
     weapons::Stat,
 };
 
@@ -33,28 +34,32 @@ pub fn meta_perks() {
                     dmg_scale *= 1.15;
                 };
             };
-            if *_input
-                .calc_data
-                .perk_value_map
-                .get(&_input.calc_data.intrinsic_hash)
-                .unwrap_or(&0)
-                > 1
-                && _input.calc_data.intrinsic_hash < 1000
+
+            if *_input.calc_data.ammo_type == AmmoType::PRIMARY
+                && _input.calc_data.intrinsic_hash > 1000
+                && *_input.calc_data.enemy_type == EnemyType::MINOR
+                && _input.pvp == false
             {
-                let stat_bump_id: StatHashes = _input
-                    .calc_data
-                    .perk_value_map
-                    .get(&_input.calc_data.intrinsic_hash)
-                    .unwrap()
-                    .to_owned()
-                    .into();
-                if stat_bump_id == StatHashes::CHARGE_TIME
-                    && _input.calc_data.weapon_type == &WeaponType::FUSIONRIFLE
-                {
-                    // dmg_scale *=
-                    //     dmr_chargetime_mw(_input, _input.value, is_enhanced, _pvp, _cached_data).impact_dmg_scale;
-                }
+                dmg_scale *= 1.4;
             }
+
+            if matches!(
+                _input.calc_data.weapon_type,
+                WeaponType::FUSIONRIFLE | WeaponType::LINEARFUSIONRIFLE
+            ) && _input.calc_data.intrinsic_hash < 1000
+            {
+                let charge_time = _input
+                    .calc_data
+                    .stats
+                    .get(&StatHashes::CHARGE_TIME.into())
+                    .unwrap();
+                //source: https://docs.google.com/spreadsheets/d/1QaUwtOW2_RJCTK1uaIGkbCoEXDa8UStvjDQSHSDxLOM/edit#gid=497378026
+                let total_damage = _input.calc_data.curr_firing_data.damage
+                    * _input.calc_data.curr_firing_data.burst_size as f64;
+                let stat = (charge_time.perk_val() - charge_time.base_value) as f64;
+                dmg_scale *= 1.0 - (0.5 * stat) / total_damage;
+            }
+
             DamageModifierResponse {
                 crit_scale,
                 impact_dmg_scale: dmg_scale,
@@ -68,24 +73,22 @@ pub fn meta_perks() {
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
             #[allow(unused_mut)]
             let mut delay_add = 0.0;
-            if *_input
-                .calc_data
-                .perk_value_map
-                .get(&_input.calc_data.intrinsic_hash)
-                .unwrap_or(&0)
-                > 1
-                && _input.calc_data.intrinsic_hash < 1000
+
+            if matches!(
+                _input.calc_data.weapon_type,
+                WeaponType::FUSIONRIFLE | WeaponType::LINEARFUSIONRIFLE
+            ) && _input.calc_data.intrinsic_hash < 1000
             {
-                let stat_bump_id: StatHashes = _input
+                let charge_time = _input
                     .calc_data
-                    .perk_value_map
-                    .get(&_input.calc_data.intrinsic_hash)
-                    .unwrap()
-                    .to_owned()
-                    .into();
-                if stat_bump_id == StatHashes::CHARGE_TIME {
-                    // delay_add += fmr_accelerated_coils(_input, _input.value, is_enhanced, _pvp, _cached_data)
-                    //     .burst_delay_add;
+                    .stats
+                    .get(&StatHashes::CHARGE_TIME.into())
+                    .unwrap();
+                let stat = (charge_time.perk_val() - charge_time.base_value) as f64;
+                delay_add -= match _input.calc_data.weapon_type {
+                    WeaponType::FUSIONRIFLE => stat * 0.0040,
+                    WeaponType::LINEARFUSIONRIFLE => stat * 0.0033,
+                    _ => 0.0,
                 }
             }
 
@@ -222,7 +225,7 @@ pub fn meta_perks() {
                 InventoryModifierResponse {
                     inv_stat_add: inv_buff,
                     inv_scale: 1.0,
-                    inv_add: 0.0,
+                    ..Default::default()
                 }
             },
         ),
@@ -254,8 +257,8 @@ pub fn meta_perks() {
                 3.. => 18,
             };
             let mult = if _input.value > 0 { 0.85 } else { 1.0 };
-            
-            ReloadModifierResponse{
+
+            ReloadModifierResponse {
                 reload_stat_add: stat,
                 reload_time_scale: mult,
             }
@@ -328,23 +331,15 @@ pub fn meta_perks() {
             }
         }),
     );
-
-    add_dmr(
-        Perks::ChargetimeMW,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            fn down5(x: i32) -> f64 {
-                (x as f64 - 5.0) / x as f64
-            }
-            let damage_mod = match _input.calc_data.intrinsic_hash {
-                901 => down5(330), //high impact
-                906 => down5(280),
-                903 => down5(270),
-                902 => down5(245), //rapid fire
-                _ => 1.0,
-            };
-            DamageModifierResponse {
-                explosive_dmg_scale: damage_mod,
-                impact_dmg_scale: damage_mod,
+    add_fmr(
+        Perks::AdeptChargeTime,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            FiringModifierResponse {
+                burst_delay_add: match *_input.calc_data.weapon_type {
+                    WeaponType::FUSIONRIFLE => -0.040,
+                    WeaponType::LINEARFUSIONRIFLE => -0.033,
+                    _ => 0.0,
+                },
                 ..Default::default()
             }
         }),
