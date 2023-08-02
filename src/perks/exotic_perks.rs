@@ -1020,7 +1020,7 @@ pub fn exotic_perks() {
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
             if _input.value > 0 {
                 return FiringModifierResponse {
-                    burst_delay_add: (1800.0 / (60000.0 / 533.0)),
+                    burst_delay_add: 0.383,
                     ..Default::default()
                 };
             }
