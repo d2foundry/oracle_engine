@@ -48,7 +48,7 @@ impl Weapon {
             .perk_val();
 
         if self.weapon_type == WeaponType::BOW {
-            reload_stat = reload_stat.clamp(0, 80);
+            reload_stat = reload_stat.clamp(0, 85);
         }
 
         let modifiers = if let Some(calc_input) = _calc_input {
@@ -142,11 +142,17 @@ impl HandlingFormula {
         _handling_stat: i32,
         _modifiers: HandlingModifierResponse,
     ) -> HandlingResponse {
-        let handling_stat = (_handling_stat + _modifiers.stat_add).clamp(0, 100) as f64;
-        let ready_time = self.ready.solve_at(handling_stat) * _modifiers.draw_scale;
-        let stow_time = (self.stow.solve_at(handling_stat) * _modifiers.stow_scale)
+        let handling_stat = _handling_stat + _modifiers.stat_add;
+
+        let ready_time =
+            self.ready.solve_at_i(handling_stat + _modifiers.draw_add) * _modifiers.draw_scale;
+
+        let stow_time = (self.stow.solve_at_i(handling_stat + _modifiers.stow_add)
+            * _modifiers.stow_scale)
             .clamp(self.stow.solve_at(100.0), f64::INFINITY);
-        let ads_time = self.ads.solve_at(handling_stat) * _modifiers.ads_scale;
+
+        let ads_time =
+            self.ads.solve_at_i(handling_stat + _modifiers.ads_add) * _modifiers.ads_scale;
 
         HandlingResponse {
             ready_time,
@@ -194,11 +200,7 @@ impl AmmoFormula {
         _inv_id: u32,
     ) -> AmmoResponse {
         let mag_stat = (_mag_stat + _mag_modifiers.magazine_stat_add).clamp(0, 100) as f64;
-        let inv_stat = if (_reserve_stat + _inv_modifiers.inv_stat_add) > 100 {
-            100
-        } else {
-            _reserve_stat + _inv_modifiers.inv_stat_add
-        } as f64;
+        let inv_stat = (_reserve_stat + _inv_modifiers.inv_stat_add).clamp(0, 100) as f64;
 
         let raw_mag_size =
             (self.mag.evpp * (mag_stat.powi(2))) + (self.mag.vpp * mag_stat) + self.mag.offset;
@@ -225,7 +227,7 @@ impl AmmoFormula {
         }
         AmmoResponse {
             mag_size,
-            reserve_size,
+            reserve_size: reserve_size + _inv_modifiers.inv_add,
             timestamp: self.timestamp,
         }
     }
@@ -435,7 +437,7 @@ impl Weapon {
             WeaponType::SIDEARM => 0.2,
             WeaponType::MACHINEGUN => 0.2,
             WeaponType::HANDCANNON => 0.15,
-            WeaponType::TRACERIFLE => 0.15,
+            WeaponType::TRACERIFLE => 0.25,
             WeaponType::FUSIONRIFLE => 0.1,
             WeaponType::SHOTGUN => 0.1,
             WeaponType::SNIPER => 0.1,

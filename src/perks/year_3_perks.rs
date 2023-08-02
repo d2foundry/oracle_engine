@@ -163,4 +163,61 @@ pub fn year_3_perks() {
             }
         }),
     );
+
+    add_sbr(
+        Perks::TrenchBarrel,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut buffer: HashMap<u32, i32> = HashMap::new();
+            let bump = if _input.is_enhanced { 35 } else { 30 };
+            if _input.value > 0 {
+                buffer.insert(StatHashes::HANDLING.into(), bump);
+                //reload unknown
+                buffer.insert(StatHashes::RELOAD.into(), bump);
+            }
+            buffer
+        }),
+    );
+
+    add_hmr(
+        Perks::TrenchBarrel,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
+                HandlingModifierResponse {
+                    stat_add: if _input.is_enhanced { 35 } else { 30 },
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+
+    //ready for when someone finds the reload information
+    add_rsmr(
+        Perks::TrenchBarrel,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
+            ReloadModifierResponse {
+                reload_stat_add: if _input.is_enhanced { 35 } else { 30 },
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_dmr(
+        Perks::TrenchBarrel,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: 1.5,
+                    explosive_dmg_scale: 1.5,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
+        }),
+    );
 }

@@ -1,9 +1,10 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, default};
 
 use crate::d2_enums::{AmmoType, BungieHash, DamageType, StatBump, StatHashes, WeaponType};
 
 use super::{
-    add_dmr, add_epr, add_fmr, add_hmr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr, clamp,
+    add_dmr, add_epr, add_fmr, add_hmr, add_imr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr,
+    clamp,
     lib::{
         CalculationInput, DamageModifierResponse, ExplosivePercentResponse, ExtraDamageResponse,
         FiringModifierResponse, HandlingModifierResponse, InventoryModifierResponse,
@@ -20,9 +21,10 @@ pub fn year_6_perks() {
             let mut map = HashMap::new();
             let mut range_bonus = 0;
             let mut reload_bonus = 0;
+            let ev = if _input.is_enhanced { 2 } else { 0 };
             if _input.value > 0 {
-                range_bonus = 10;
-                reload_bonus = 30;
+                range_bonus = 10 + ev;
+                reload_bonus = 30 + ev;
             };
             map.insert(StatHashes::RANGE.into(), range_bonus);
             map.insert(StatHashes::RELOAD.into(), reload_bonus);
@@ -33,7 +35,8 @@ pub fn year_6_perks() {
     add_rmr(
         Perks::KeepAway,
         Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
-            let range_bonus = if _input.value > 0 { 10 } else { 0 };
+            let ev = if _input.is_enhanced { 2 } else { 0 };
+            let range_bonus = if _input.value > 0 { 10 + ev } else { 0 };
             RangeModifierResponse {
                 range_stat_add: range_bonus,
                 ..Default::default()
@@ -44,7 +47,8 @@ pub fn year_6_perks() {
     add_rsmr(
         Perks::KeepAway,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            let reload_bonus = if _input.value > 0 { 30 } else { 0 };
+            let ev = if _input.is_enhanced { 2 } else { 0 };
+            let reload_bonus = if _input.value > 0 { 30 + ev } else { 0 };
             ReloadModifierResponse {
                 reload_stat_add: reload_bonus,
                 ..Default::default()
@@ -156,38 +160,178 @@ pub fn year_6_perks() {
         Perks::EnviousAssasin,
         Box::new(
             |_input: ModifierResponseInput| -> MagazineModifierResponse {
-                let val = clamp(_input.value, 0, 15) as f64;
+                let val = _input.value as f64;
+                //i dont know why this if is here? - harm
                 if _input.calc_data.total_shots_fired == 0.0 {
-                    let mut mag_mult = 1.0;
-                    if *_input.calc_data.ammo_type == AmmoType::PRIMARY {
-                        mag_mult += 0.1 * val;
-                    } else {
-                        mag_mult += 0.2 * val;
-                    };
                     return MagazineModifierResponse {
-                        magazine_stat_add: 0,
-                        magazine_scale: clamp(mag_mult, 1.0, 2.5),
-                        magazine_add: 0.0,
+                        magazine_scale: 1.0 + clamp(0.1 * val, 0.0, 1.5),
+                        ..Default::default()
                     };
                 };
-                MagazineModifierResponse {
-                    magazine_stat_add: 0,
-                    magazine_scale: 1.0,
-                    magazine_add: 0.0,
-                }
+                MagazineModifierResponse::default()
             },
         ),
     );
 
     add_dmr(
         Perks::CollectiveAction,
-        Box::new(|_input| -> DamageModifierResponse {
-            let buff = if _input.value > 0 { 1.2 } else { 1.0 };
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = match (_input.pvp, _input.value) {
+                (_, 0) => 1.0,
+                (true, 1..) => 1.1,
+                (false, 1..) => 1.2,
+            };
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
                 ..Default::default()
             }
         }),
-    )
+    );
+
+    add_dmr(
+        Perks::Bipod,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            return DamageModifierResponse {
+                impact_dmg_scale: 0.6,
+                explosive_dmg_scale: 0.6,
+                ..Default::default()
+            };
+        }),
+    );
+
+    add_mmr(
+        Perks::Bipod,
+        Box::new(
+            |_input: ModifierResponseInput| -> MagazineModifierResponse {
+                MagazineModifierResponse {
+                    magazine_scale: 2.0,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+
+    add_imr(
+        Perks::Bipod,
+        Box::new(
+            |_input: ModifierResponseInput| -> InventoryModifierResponse {
+                InventoryModifierResponse {
+                    inv_add: 5,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+
+    add_fmr(
+        Perks::Bipod,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            FiringModifierResponse {
+                burst_delay_scale: 0.75,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_fmr(
+        Perks::ControlledBurst,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            if _input.value > 0 {
+                return FiringModifierResponse {
+                    burst_delay_scale: 0.9,
+                    ..Default::default()
+                };
+            }
+            FiringModifierResponse::default()
+        }),
+    );
+    add_dmr(
+        Perks::ControlledBurst,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: 1.2,
+                    explosive_dmg_scale: 1.2,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
+        }),
+    );
+    add_sbr(
+        Perks::InvisibleHand,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            if _input.value > 0 {
+                stats.insert(StatHashes::STABILITY.into(), 25);
+            }
+            stats
+        }),
+    );
+    add_sbr(
+        Perks::UnsatedHunger,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            if _input.value > 0 {
+                stats.insert(StatHashes::STABILITY.into(), 20);
+                stats.insert(StatHashes::HANDLING.into(), 60);
+                stats.insert(StatHashes::RELOAD.into(), 60);
+            }
+            stats
+        }),
+    );
+
+    add_rsmr(
+        Perks::UnsatedHunger,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value > 0 {
+                return ReloadModifierResponse {
+                    reload_stat_add: 60,
+                    ..Default::default()
+                };
+            }
+            ReloadModifierResponse::default()
+        }),
+    );
+    add_hmr(
+        Perks::UnsatedHunger,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value > 0 {
+                    return HandlingModifierResponse {
+                        stat_add: 60,
+                        ..Default::default()
+                    };
+                }
+                HandlingModifierResponse::default()
+            },
+        ),
+    );
+
+    add_hmr(
+        Perks::Discord,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value > 0 {
+                    return HandlingModifierResponse {
+                        ads_scale: 0.75,
+                        ..Default::default()
+                    };
+                }
+                HandlingModifierResponse::default()
+            },
+        ),
+    );
+
+    add_sbr(
+        Perks::Discord,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            if _input.value > 0 {
+                stats.insert(StatHashes::AIRBORNE.into(), 30);
+            }
+            stats
+        }),
+    );
 }

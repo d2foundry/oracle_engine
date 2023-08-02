@@ -87,6 +87,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         //intrinsics
         Perks::RapidFireFrame => Some(PerkOptionData::toggle()),
+        Perks::PrecisionFrame => Some(PerkOptionData::static_()),
 
         //armor
 
@@ -102,6 +103,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::DisorientingGrenades => Some(PerkOptionData::static_()),
         Perks::AssaultMag => Some(PerkOptionData::static_()),
         Perks::AdeptChargeTime => Some(PerkOptionData::static_()),
+        Perks::PhaseMag => Some(PerkOptionData::static_()),
         //bow strings
         Perks::SlowerStringT1 => Some(PerkOptionData::static_()),
         Perks::FasterStringT1 => Some(PerkOptionData::static_()),
@@ -178,7 +180,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::RapidHit => Some(PerkOptionData::stacking(5)),
 
         //season 5 | year 2
-        Perks::ResevoirBurst => Some(PerkOptionData::toggle()),
+        Perks::ResevoirBurst => Some(PerkOptionData::static_()),
         Perks::Surrounded => Some(PerkOptionData::toggle()),
         Perks::AirAssault => Some(PerkOptionData::stacking(2)),
 
@@ -216,7 +218,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         //season 12 | year 4
         Perks::DualLoader => Some(PerkOptionData::toggle()),
         Perks::OneForAll => Some(PerkOptionData::toggle()),
-        Perks::Recombination => Some(PerkOptionData::toggle()),
+        Perks::Recombination => Some(PerkOptionData::stacking(10)),
         Perks::Reconstruction => Some(PerkOptionData::toggle()),
         Perks::Surplus => Some(PerkOptionData::stacking(3)),
 
@@ -276,16 +278,19 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::KeepAway => Some(PerkOptionData::toggle()),
         Perks::ParacausalAffinity => Some(PerkOptionData::toggle()),
         Perks::EnviousAssasin => Some(PerkOptionData::stacking(15)),
-        
+
         //season 21 | year 6
         Perks::CollectiveAction => Some(PerkOptionData::toggle()),
-
-
+        Perks::Bipod => Some(PerkOptionData::static_()),
+        Perks::ControlledBurst => Some(PerkOptionData::toggle()),
+        Perks::InvisibleHand => Some(PerkOptionData::toggle()),
+        Perks::UnsatedHunger => Some(PerkOptionData::toggle()),
+        Perks::Discord => Some(PerkOptionData::toggle()),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
         Perks::DarkForgedTrigger => Some(PerkOptionData::options_raw(["Hip-Fire", "ADS"].to_vec())),
-        Perks::AgersCall => Some(PerkOptionData::toggle()),
+        Perks::AgersCall => Some(PerkOptionData::static_()),
         Perks::LagragianSight => Some(PerkOptionData::toggle()),
         Perks::StringofCurses => Some(PerkOptionData::stacking(5)),
         Perks::WormsHunger => Some(PerkOptionData::stacking(20)),
@@ -302,6 +307,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::FirstGlance => Some(PerkOptionData::toggle()),
         Perks::PerfectFith => Some(PerkOptionData::static_()),
         Perks::Broadside => Some(PerkOptionData::stacking(4)),
+        Perks::FourthHorsemanCatalyst => Some(PerkOptionData::toggle()),
         Perks::Stormbringer => Some(PerkOptionData::static_()),
         Perks::PrismaticInferno => Some(PerkOptionData::static_()),
         Perks::ReignHavoc => Some(PerkOptionData::toggle()),
@@ -338,6 +344,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::HarmonicLaser => Some(PerkOptionData::stacking(2)),
         Perks::AgersScepterCatalyst => Some(PerkOptionData::toggle()),
         Perks::ColdFusion => Some(PerkOptionData::toggle()),
+        Perks::BlackHole => Some(PerkOptionData::static_()),
         Perks::TemporalUnlimiter => Some(PerkOptionData::toggle()),
 
         Perks::DexterityMod => Some(PerkOptionData::stacking(3)),
@@ -376,14 +383,14 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::MechaneersTricksleeves => Some(PerkOptionData::toggle()),
         Perks::Oathkeeper => Some(PerkOptionData::static_()),
         Perks::SealedAhamkaraGrasps => Some(PerkOptionData::toggle()),
-        Perks::LuckyPants => Some(PerkOptionData::toggle()),
+        Perks::LuckyPants => Some(PerkOptionData::stacking(10)),
         Perks::NoBackupPlans => Some(PerkOptionData::toggle()),
         Perks::ActiumWarRig => Some(PerkOptionData::static_()),
         Perks::HallowfireHeart => Some(PerkOptionData::static_()),
         Perks::LionRampart => Some(PerkOptionData::toggle()),
         Perks::Peacekeepers => Some(PerkOptionData::static_()),
         Perks::EyeOfAnotherWorld => Some(PerkOptionData::static_()),
-        Perks::AstrocyteVerse => Some(PerkOptionData::static_()),
+        Perks::AstrocyteVerse => Some(PerkOptionData::toggle()),
         Perks::NecroticGrips => Some(PerkOptionData::static_()),
         Perks::BootsOfTheAssembler => Some(PerkOptionData::static_()),
         Perks::RainOfFire => Some(PerkOptionData::static_()),

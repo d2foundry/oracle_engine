@@ -84,6 +84,10 @@ impl Weapon {
         self.perks.remove(&_perk_hash);
         self.update_stats();
     }
+    pub fn reset_perks(&mut self) {
+        self.perks = HashMap::new();
+        self.update_stats();
+    }
     pub fn list_perk_ids(&self) -> Vec<u32> {
         self.perks.keys().cloned().collect()
     }
