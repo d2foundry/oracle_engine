@@ -114,7 +114,7 @@
         "1470121888": {"name": "Wish-Ender",         "cat": "exotic",  "subFam": "Precision",   "magProf": "default"},
         "1573888036": {"name": "Trinity Ghoul",      "cat": "exotic",  "subFam": "Trinity",     "magProf": "default"},
         "1699724249": {"name": "Leviathan's Breath", "cat": "exotic",  "subFam": "leviathan",   "magProf": "leviathan"},
-        "2108556049": {"name": "Lightweight Frame",  "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 6.9},
+        "2108556049": {"name": "Lightweight Frame",  "cat": "default", "subFam": "Lightweight", "magProf": "default"},
         "2186532310": {"name": "Le Monarque",        "cat": "exotic",  "subFam": "Precision",   "magProf": "default"},
         "3239299468": {"name": "Ticuu's Divination", "cat": "exotic",  "subFam": "Precision",   "magProf": "default"},
         "2226793914": {"name": "Hierarchy Of Needs", "cat": "exotic",  "subFam": "Hierarchy",   "magProf": "default"},
@@ -124,7 +124,7 @@
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
-                "reload":   {"evpp": 0.00008, "vpp": -0.0124, "offset": 1.08},
+                "reload":   {"evpp": 0.0000535476056419958, "vpp": -0.0102410419405799, "offset": 1.10091136388022},
                 "handling": {
                     "ready":{"vpp": -0.002909930716, "offset": 0.7364549654},
                     "stow": {"vpp": -0.00179330254,  "offset": 0.5396466513},
@@ -134,7 +134,7 @@
             },
             "exotic": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
-                "reload":   {"evpp": 0.0, "vpp": -0.00033, "offset": 0.866},
+                "reload":   {"evpp": 0.0000535476056419958, "vpp": -0.0102410419405799, "offset": 1.10091136388022},
                 "handling": {
                     "ready":{"vpp": -0.002909930716, "offset": 0.7364549654},
                     "stow": {"vpp": -0.00179330254,  "offset": 0.5396466513},
@@ -156,7 +156,7 @@
         "subFam": {
             "Precision":   {"damage": 100.74, "crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "Lightweight": {"damage": 85.61, "crit_mult": 5, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
-            "Trinity":     {"damage": 34.3,  "crit_mult": 0, "burst_delay": 0, "burst_size": 3, "inner_burst_delay": 0},
+            "Trinity":     {"damage": 34.3,  "crit_mult": 0, "burst_delay": 0, "burst_size": 3, "inner_burst_delay": 0, "one_ammo":true},
             "Hierarchy":   {"damage": 100.74,  "crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "leviathan":   {"damage": 345.6, "crit_mult": 5, "burst_delay": 0,   "burst_size": 1, "inner_burst_delay": 0},
             "test" :       {"damage": 100,   "crit_mult": 2, "burst_delay": 20,   "burst_size": 2, "inner_burst_delay": 0}
@@ -409,7 +409,7 @@
         "subFam": {
             "Precision":  {"damage": 40.0, "crit_mult": 0,  "burst_delay": 10, "burst_size": 1, "inner_burst_delay": 0},
             "Aggressive": {"damage": 50.0, "crit_mult": 5,  "burst_delay": 15, "burst_size": 1, "inner_burst_delay": 0},
-            "Adaptive":   {"damage": 46.5, "crit_mult": 0,  "burst_delay": 13, "burst_size": 1, "inner_burst_delay": 0},
+            "Adaptive":   {"damage": 46.502, "crit_mult": 0,  "burst_delay": 13, "burst_size": 1, "inner_burst_delay": 0},
             "Lightweight":{"damage": 42.0, "crit_mult": 5,  "burst_delay": 12, "burst_size": 1, "inner_burst_delay": 0},
             "Crimson":    {"damage": 19.0, "crit_mult": 5,  "burst_delay": 7,  "burst_size": 3, "inner_burst_delay": 3},
             "Eriana":     {"damage": 78.0, "crit_mult": 5,  "burst_delay": 20, "burst_size": 1, "inner_burst_delay": 0},
@@ -437,9 +437,9 @@
     "Linear Fusion Rifle": {
         "1531126198": {"name": "The Queenbreaker", "cat": "exotic",   "subFam": "QueenBreaker", "magProf": "default", "pve":1.101},
         "2057203855": {"name": "Precision Frame",  "cat": "default",  "subFam": "Precision",    "magProf": "default", "pve":1.101},
-        "2564164194": {"name": "Arbalest",         "cat": "arbalest", "subFam": "Precision",    "magProf": "default", "pve":1.101},
+        "2564164194": {"name": "Arbalest",         "cat": "arbalest", "subFam": "Special",      "magProf": "default", "pve":1.101},
         "3884127242": {"name": "Sleeper Simulant", "cat": "exotic",   "subFam": "SleeperSim",   "magProf": "default" },
-        "2881100038": {"name": "Lorentz Driver",   "cat": "default",  "subFam": "Precision",    "magProf": "default", "pve":1.101},
+        "2881100038": {"name": "Lorentz Driver",   "cat": "default",  "subFam": "Special",      "magProf": "default", "pve":1.101},
         "3530948111": {"name": "Aggressive Frame", "cat": "default",  "subFam": "Aggressive",   "magProf": "default", "pve":1.101},
 
         "cat": {
@@ -477,6 +477,7 @@
 
         "subFam": {
             "Precision":    {"damage": 166.0, "crit_mult": 99,  "burst_delay": 16, "burst_size": 1, "inner_burst_delay": 0},
+            "Special":      {"damage": 133.0, "crit_mult": 114,  "burst_delay": 16, "burst_size": 1, "inner_burst_delay": 0},
             "Aggressive":   {"damage": 79.0, "crit_mult": 99,  "burst_delay": 16, "burst_size": 3, "inner_burst_delay": 5, "one_ammo": true},
             "QueenBreaker": {"damage": 131,    "crit_mult": 51,  "burst_delay": 9,  "burst_size": 1, "inner_burst_delay": 0},
             "SleeperSim":   {"damage": 726,    "crit_mult": -15, "burst_delay": 31, "burst_size": 1, "inner_burst_delay": 0}
@@ -566,7 +567,7 @@
         "2307143135": {"name": "Vigilance Wing",         "cat": "default",   "subFam": "VigilanceWing", "magProf": "vigilance", "pve":1.26},
         "2874284214": {"name": "Aggressive Burst",       "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
         "3837077246": {"name": "No Time to Explain",     "cat": "default",   "subFam": "High-Impact",   "magProf": "default"},
-        "3905543891": {"name": "Graviton Lance",         "cat": "default",   "subFam": "GravitonLance", "magProf": "default"},
+        "3905543891": {"name": "Graviton Lance",         "cat": "default",   "subFam": "GravitonLance", "magProf": "graviton", "pve": 1.67},
         "4004944400": {"name": "Bad Juju",               "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
         "4208418110": {"name": "Outbreak Perfected",     "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
         "4172222323": {"name": "Legacy PR-55 Frame",     "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
@@ -605,7 +606,7 @@
             "Adaptive":      {"damage": 19.01, "crit_mult": 8,    "burst_delay": 10, "burst_size": 3, "inner_burst_delay": 2},
             "Lightweight":   {"damage": 16.00, "crit_mult": 8,    "burst_delay": 8,  "burst_size": 3, "inner_burst_delay": 2},
             "VigilanceWing": {"damage": 15.75, "crit_mult": -2,   "burst_delay": 9,  "burst_size": 5, "inner_burst_delay": 2},
-            "GravitonLance": {"damage": 23.0, "crit_mult": 8,    "burst_delay": 12, "burst_size": 2, "inner_burst_delay": 2},
+            "GravitonLance": {"damage": 19.018, "crit_mult": 8,    "burst_delay": 10, "burst_size": 2, "inner_burst_delay": 2},
             "test":          {"damage": 10.0, "crit_mult": 25.5, "burst_delay": 2,  "burst_size": 5, "inner_burst_delay": 2}
         },
         "magProf": {
@@ -617,6 +618,11 @@
                 "mag": {"evpp": 0.0, "vpp": 0.42, "offset": 21},
                 "round_to": 4,
                 "reserve_id": 0
+            },
+            "graviton": {
+              "mag": { "evpp": 0.0, "vpp": 0.0, "offset": 30 },
+              "round_to": 1,
+              "reserve_id": 0
             },
             "vigilance": {
                 "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 50},
@@ -693,7 +699,7 @@
         "377257911":  {"name": "MIDA Multi-Tool",   "cat": "default",   "subFam": "Lightweight", "magProf": "default"},
         "1000724343": {"name": "Polaris Lance",     "cat": "default",   "subFam": "High-Impact", "magProf": "default"},
         "1019291327": {"name": "High-Impact Frame", "cat": "default",   "subFam": "High-Impact", "magProf": "default"},
-        "1319823571": {"name": "Dead Man's Tale",   "cat": "aggresive", "subFam": "DeadMans",  "magProf": "default", "pve":0.85},
+        "1319823571": {"name": "Dead Man's Tale",   "cat": "aggresive", "subFam": "Aggressive",  "magProf": "default", "pve":0.85},
         "1458010786": {"name": "Lightweight Frame", "cat": "default",   "subFam": "Lightweight", "magProf": "default"},
         "1636108362": {"name": "Precision Frame",   "cat": "default",   "subFam": "Precision",   "magProf": "default"},
         "2741975068": {"name": "Skyburner's Oath",  "cat": "default",   "subFam": "High-Impact", "magProf": "default"},
@@ -703,6 +709,7 @@
         "4185339856": {"name": "Symmetry",          "cat": "default",   "subFam": "Rapid-Fire",  "magProf": "default"},
         "3468089894": {"name": "Aggressive Frame",  "cat": "aggresive", "subFam": "Aggressive",  "magProf": "default"},
         "2724693746": {"name": "Touch Of Malice",   "cat": "default",   "subFam": "Rapid-Fire",  "magProf": "default"},
+        "1266604956": {"name": "Wicked Implement",   "cat": "default",   "subFam": "Precision",   "magProf": "default"},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.1568, "offset_start": 30.25, "vpp_end": 0.0, "offset_end": 60.75, "floor_percent": 0.5},
@@ -730,8 +737,7 @@
             "Rapid-Fire":  {"damage":27.50, "crit_mult":10, "burst_delay":7,  "burst_size":1, "inner_burst_delay":0},
             "Lightweight": {"damage":30.50, "crit_mult":13, "burst_delay":9,  "burst_size":1, "inner_burst_delay":0},
             "Precision":   {"damage":38.00,   "crit_mult":5,  "burst_delay":10, "burst_size":1, "inner_burst_delay":0},
-            "Aggressive":  {"damage":54.00, "crit_mult":-1, "burst_delay":15, "burst_size":1, "inner_burst_delay":0},
-            "DeadMans":  {"damage":65.11, "crit_mult":-9.18, "burst_delay":15, "burst_size":1, "inner_burst_delay":0}
+            "Aggressive":  {"damage":54.00, "crit_mult":-1, "burst_delay":15, "burst_size":1, "inner_burst_delay":0}
         },
         "magProf": {
             "default": {
@@ -834,7 +840,7 @@
         "806997698":  {"name": "SUROS Rapid-Fire",      "cat": "default"   , "subFam": "Rapid-Fire",       "magProf": "small"},
         "975429949":  {"name": "Traveler's Chosen",     "cat": "default"   , "subFam": "Adaptive",         "magProf": "small"},
         "986191425":  {"name": "Cryosthesia 77K",       "cat": "default"   , "subFam": "Precision",        "magProf": "small"},
-        "1282254042": {"name": "Together Forever",      "cat": "default"   , "subFam": "Adaptive",         "magProf": "small"},
+        "1282254042": {"name": "Together Forever",      "cat": "default"   , "subFam": "Adaptive",         "magProf": "drang"},
         "1294026524": {"name": "Adaptive Frame",        "cat": "default"   , "subFam": "Adaptive",         "magProf": "small"},
         "1458010786": {"name": "Lightweight Frame",     "cat": "default"   , "subFam": "Lightweight",      "magProf": "small", "pve": 1.291},
         "1636108362": {"name": "Precision Frame",       "cat": "default"   , "subFam": "Precision",        "magProf": "small"},
@@ -877,6 +883,11 @@
         "magProf": {
             "small": {
                 "mag": {"evpp": 0.0, "vpp": 0.11942675159235666, "offset": 5.289808917197453},
+                "round_to": 3,
+                "reserve_id": 0
+            },
+            "drang": {
+                "mag": {"evpp": 0.0, "vpp": 0.2, "offset": 0.0},
                 "round_to": 3,
                 "reserve_id": 0
             },
@@ -1026,6 +1037,7 @@
         "1797707170": {"name": "Divinity",        "cat": "default", "subFam": "Adaptive", "magProf": "default"},
         "1294026524": {"name": "Adaptive Frame",  "cat": "default", "subFam": "Adaptive", "magProf": "default"},
         "3164944314": {"name": "Ager's Scepter",  "cat": "default", "subFam": "Adaptive", "magProf": "default"},
+        "3172115769": {"name": "The Navigator",   "cat": "default", "subFam": "Adaptive", "magProf": "default"},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.1017,"offset_start": 14.756,"vpp_end": 0.0,"offset_end": 35.9, "floor_percent": 0.4},
