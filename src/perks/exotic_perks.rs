@@ -1045,10 +1045,13 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::Impetus,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            DamageModifierResponse {
-                impact_dmg_scale: 1.5,
-                ..Default::default()
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: 1.5,
+                    ..Default::default()
+                };
             }
+            DamageModifierResponse::default()
         }),
     );
 }
