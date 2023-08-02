@@ -985,16 +985,24 @@ pub fn exotic_perks() {
         }),
     );
 
-    add_rsmr(
-        Perks::ColdFusion,
-        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value > 0 || _input.calc_data.total_shots_hit > 41.0 {
-                return ReloadModifierResponse {
-                    reload_stat_add: 100,
-                    ..Default::default()
-                };
+    //Queenbreaker's sights
+    add_dmr(
+        Perks::MarksmanSights,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            DamageModifierResponse {
+                impact_dmg_scale: 1.38,
+                ..Default::default()
             }
-            ReloadModifierResponse::default()
+        }),
+    );
+
+    add_fmr(
+        Perks::MarksmanSights,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            FiringModifierResponse {
+                burst_delay_add: (1800.0 / (60000.0 / 333.0)), // 300 + 333 = 633 ,
+                ..Default::default()
+            }
         }),
     );
 
@@ -1080,6 +1088,16 @@ pub fn exotic_perks() {
                 };
             }
             DamageModifierResponse::default()
+        }),
+    );
+
+    add_fmr(
+        Perks::MarksmanSights,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            FiringModifierResponse {
+                burst_delay_add: 0.333, // 300 + 333 = 633 ,
+                ..Default::default()
+            }
         }),
     );
 }
