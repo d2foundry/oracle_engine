@@ -1,6 +1,8 @@
 //This also includes intrinsic perks, not just exotic
 use std::collections::HashMap;
 
+use serde::__private::de;
+
 use crate::{d2_enums::StatHashes, enemies::EnemyType, weapons::Stat};
 
 use super::{
@@ -1037,6 +1039,19 @@ pub fn exotic_perks() {
                 impact_dmg_scale: buff,
                 ..Default::default()
             }
+        }),
+    );
+
+    add_dmr(
+        Perks::Impetus,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value > 0 {
+                return DamageModifierResponse {
+                    impact_dmg_scale: 1.5,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
         }),
     );
 }
