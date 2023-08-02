@@ -996,6 +996,16 @@ pub fn exotic_perks() {
         }),
     );
 
+    add_fmr(
+        Perks::MarksmanSights,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            FiringModifierResponse {
+                burst_delay_add: (1800.0 / (60000.0 / 333.0)), // 300 + 333 = 633 ,
+                ..Default::default()
+            }
+        }),
+    );
+
     add_dmr(
         Perks::Broadside,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
@@ -1085,7 +1095,7 @@ pub fn exotic_perks() {
         Perks::MarksmanSights,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
             FiringModifierResponse {
-                burst_delay_add: (1800.0 / (60000.0 / 333.0)), // 300 + 333 = 633 ,
+                burst_delay_add: 0.333, // 300 + 333 = 633 ,
                 ..Default::default()
             }
         }),
