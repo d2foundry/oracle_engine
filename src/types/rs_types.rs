@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use crate::enemies::EnemyType;
+use crate::{enemies::EnemyType, perks::clamp};
 
 #[derive(Debug, Clone)]
 pub struct DataPointers {
@@ -88,6 +88,11 @@ pub struct StatQuadraticFormula {
 impl StatQuadraticFormula {
     pub fn solve_at(&self, _x: f64) -> f64 {
         self.evpp * _x * _x + self.vpp * _x + self.offset
+    }
+
+    pub fn solve_at_i(&self, x: i32) -> f64 {
+        let x = x.clamp(0, 100) as f64;
+        self.evpp * x * x + self.vpp * x + self.offset
     }
 }
 

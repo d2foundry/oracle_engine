@@ -119,7 +119,7 @@ pub fn year_5_perks() {
                 WeaponType::AUTORIFLE,
                 WeaponType::HANDCANNON,
                 WeaponType::BOW,
-                WeaponType::SCOUTRIFLE
+                WeaponType::SCOUTRIFLE,
             ];
             let dmg_scale: f64;
             let crit_scale: f64;
@@ -304,26 +304,25 @@ pub fn year_5_perks() {
     add_dmr(
         Perks::TargetLock,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let buff;
+            let nerf = 0.625; //patch 7.1.5
+            let enh_increase = if _input.is_enhanced { 1.2 } else { 1.0 };
+            let low_end_dmg = 0.0934 * enh_increase * nerf;
+            let high_end_dmg = 0.4005 * enh_increase * nerf;
 
-            let enh_increase = if _input.is_enhanced { 1.125 } else { 1.0 };
-            let low_end_dmg = 0.28 / 3.0 * enh_increase;
-            let high_end_dmg = 0.40 * enh_increase;
-
-            let formula_start = -0.3505;
-            let formula_end = 1.1395;
+            let formula_start = -0.35;
+            let formula_end = 1.1350;
 
             let percent_of_mag = _input.calc_data.shots_fired_this_mag / _input.calc_data.base_mag;
 
-            if percent_of_mag < 0.125 {
-                buff = 0.0;
+            let buff = if percent_of_mag < 0.125 {
+                0.0
             } else if percent_of_mag > formula_end {
-                buff = high_end_dmg;
+                high_end_dmg
             } else {
                 let x = (percent_of_mag - formula_start) / (formula_end - formula_start);
                 let smoothstep = 3.0 * (x.powf(2.0)) - 2.0 * (x.powf(3.0));
-                buff = low_end_dmg + (high_end_dmg - low_end_dmg) * smoothstep;
-            }
+                low_end_dmg + (high_end_dmg - low_end_dmg) * smoothstep
+            };
 
             DamageModifierResponse {
                 impact_dmg_scale: buff + 1.0,
@@ -496,7 +495,8 @@ pub fn year_5_perks() {
                     handling = 100;
                 };
                 HandlingModifierResponse {
-                    stat_add: handling,
+                    draw_add: handling,
+                    stow_add: handling,
                     stow_scale: handling_mult,
                     draw_scale: handling_mult,
                     ..Default::default()

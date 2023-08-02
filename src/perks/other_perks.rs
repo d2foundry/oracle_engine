@@ -64,6 +64,17 @@ pub fn other_perks() {
         ),
     );
 
+    add_sbr(
+        Perks::PrecisionFrame,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            if _input.calc_data.weapon_type == &WeaponType::HANDCANNON {
+                stats.insert(StatHashes::AIRBORNE.into(), 25);
+            }
+            stats
+        }),
+    );
+
     add_hmr(
         Perks::SwapMag,
         Box::new(
@@ -505,9 +516,9 @@ pub fn other_perks() {
         Perks::AcceleratedCoils,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
-                impact_dmg_scale: 0.982,
-                explosive_dmg_scale: 0.982,
-                crit_scale: 1.0,
+                impact_dmg_scale: 0.98,
+                explosive_dmg_scale: 0.98,
+                ..Default::default()
             }
         }),
     );
