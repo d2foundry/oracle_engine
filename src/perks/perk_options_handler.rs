@@ -379,6 +379,9 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::LunaFaction => Some(PerkOptionData::options(
             ["Heal Rift", "Empowering Rift / Well"].to_vec(),
         )),
+        Perks::MarkofTheDevourer => Some(PerkOptionData::static_()),
+        Perks::SoulDevourer => Some(PerkOptionData::toggle()),
+        Perks::ToxicOverload => Some(PerkOptionData::static_()),
         Perks::Foetracer => Some(PerkOptionData::toggle()),
         Perks::MechaneersTricksleeves => Some(PerkOptionData::toggle()),
         Perks::Oathkeeper => Some(PerkOptionData::static_()),

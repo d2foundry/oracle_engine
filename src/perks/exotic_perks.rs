@@ -1102,4 +1102,43 @@ pub fn exotic_perks() {
             }
         }),
     );
+
+    add_edr(
+        Perks::MarkofTheDevourer,
+        Box::new(|_input: ModifierResponseInput| -> ExtraDamageResponse {
+            let perks = _input.calc_data.perk_value_map.clone();
+            let perk_check =
+                |hash: Perks| -> bool { matches!(perks.get(&hash.into()), Some(x) if x > &0) };
+            let mut buff = 1.0;
+            if perk_check(Perks::SoulDevourer) {
+                buff = if _input.pvp { 17.5 } else { 2.0 }
+            };
+            let dmg = if _input.pvp { 0.4 } else { 8.5 };
+            ExtraDamageResponse {
+                additive_damage: dmg * buff,
+                time_for_additive_damage: 2.05,
+                times_to_hit: 4,
+                hit_at_same_time: true,
+                is_dot: true,
+                explosive_percent: 0.0,
+                ..Default::default()
+            }
+        }),
+    )
+
+    // add_edr(
+    //     Perks::ToxicOverload,
+    //     Box::new(|_input: ModifierResponseInput| -> ExtraDamageResponse {
+    //         if _input.calc_data.total_shots_hit > 14 {
+    //             let time = if _input.pvp { 0.7 } else { 0.5 };
+    //             let ticks = if _input.pvp { 0 } else { 19 };
+    //             let dmg = if _input.pvp { 5.0 } else { 34 };
+    //             ExtraDamageResponse {
+    //                 additive_damage: dmg + (0.077 * _input.calc_data.s),
+    //                 time_for_additive_damage: time * ticks,
+    //             }
+    //         }
+    //         ExtraDamageResponse::default()
+    //     }),
+    // );
 }

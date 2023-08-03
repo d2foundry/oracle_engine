@@ -403,6 +403,9 @@ pub enum Perks {
     MarkovChain = 2814973067,
     MementoMori = 647617635,
     AgersScepterCatalyst = 970163821,
+    MarkofTheDevourer = 1863355414,
+    SoulDevourer = 2921090754,
+    ToxicOverload = 4015745376,
 
     //energy exotic
     LagragianSight = 2881100038,

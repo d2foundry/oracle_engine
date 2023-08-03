@@ -631,29 +631,36 @@ impl Weapon {
         }
 
         let mut average_tick_damage = 0.0;
+        let mut average_explosive_percent = 0.0;
         // goes thru the vec to find the avg tick damage
         for edr in &extra_damage {
             average_tick_damage += edr.additive_damage;
+            average_explosive_percent += edr.explosive_percent;
         }
         let length = extra_damage.len() - 1;
         average_tick_damage /= length as f64 + 1.0;
+        average_explosive_percent /= length as f64 + 1.0;
 
         return EDR {
             first_tick_damage: (extra_damage[0].additive_damage
                 * extra_damage[0].explosive_percent
                 * damage_modifiers.explosive_dmg_scale)
-                + (extra_damage[0].additive_damage
-                    * (1.0 - extra_damage[0].explosive_percent)
-                    * damage_modifiers.impact_dmg_scale),
+                + (extra_damage[0].additive_damage * (1.0 - extra_damage[0].explosive_percent)/* damage_modifiers.impact_dmg_scale*/),
+
             tick_duration: extra_damage[0].time_for_additive_damage,
+
             num_ticks: extra_damage[0].times_to_hit,
+
             last_tick_damage: (extra_damage[length].additive_damage
                 * extra_damage[length].explosive_percent
                 * damage_modifiers.explosive_dmg_scale)
                 + (extra_damage[length].additive_damage
-                    * (1.0 - extra_damage[length].explosive_percent)
-                    * damage_modifiers.impact_dmg_scale),
-            avg_tick_damage: average_tick_damage * damage_modifiers.impact_dmg_scale,
+                    * (1.0 - extra_damage[length].explosive_percent)/* damage_modifiers.impact_dmg_scale*/),
+
+            avg_tick_damage: (average_tick_damage
+                * average_explosive_percent
+                * damage_modifiers.explosive_dmg_scale)
+                + (average_tick_damage * (1.0 - average_explosive_percent)), /*damage_modifiers.impact_dmg_scale*/
         };
     }
 }
