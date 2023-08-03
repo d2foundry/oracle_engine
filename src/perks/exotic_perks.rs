@@ -237,6 +237,7 @@ pub fn exotic_perks() {
                 weapon_scale: true,
                 crit_scale: false,
                 combatant_scale: true,
+                ..Default::default()
             }
         }),
     );
@@ -313,6 +314,7 @@ pub fn exotic_perks() {
                 weapon_scale: true,
                 crit_scale: false,
                 combatant_scale: true,
+                ..Default::default()
             }
         }),
     );

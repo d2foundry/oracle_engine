@@ -700,10 +700,12 @@ pub fn year_1_perks() {
                 crit_scale: false,
                 increment_total_time: false,
                 time_for_additive_damage: 0.8,
-                times_to_hit: 6,
+                times_to_hit: 8,
                 weapon_scale: true,
                 hit_at_same_time: true,
                 is_dot: false,
+                explosive_percent: 1.0,
+                ..Default::default()
             }
         }),
     );

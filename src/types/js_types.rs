@@ -21,6 +21,7 @@ use wasm_bindgen::{
 use super::rs_types::{
     AmmoFormula, AmmoResponse, DamageMods, DpsResponse, FiringData, FiringResponse,
     HandlingFormula, HandlingResponse, RangeFormula, RangeResponse, ReloadFormula, ReloadResponse,
+    EDR,
 };
 
 #[derive(Debug, Clone, Copy, Serialize)]
@@ -111,6 +112,32 @@ impl From<AmmoResponse> for JsAmmoResponse {
             mag_size: ammo.mag_size,
             reserve_size: ammo.reserve_size,
             timestamp: ammo.timestamp as u32,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, Serialize)]
+#[wasm_bindgen(js_name = "ExtraDamageResponse", inspectable)]
+pub struct JsEDR {
+    #[wasm_bindgen(js_name = "firstTick", readonly)]
+    pub first_tick: f64,
+    #[wasm_bindgen(js_name = "lastTick", readonly)]
+    pub last_tick: f64,
+    #[wasm_bindgen(js_name = "avgTick", readonly)]
+    pub avg_tick: f64,
+    #[wasm_bindgen(js_name = "numTicks", readonly)]
+    pub num_ticks: i32,
+    #[wasm_bindgen(js_name = "tickDuration", readonly)]
+    pub tick_duration: f64,
+}
+impl From<EDR> for JsEDR {
+    fn from(edr: EDR) -> Self {
+        JsEDR {
+            first_tick: edr.first_tick_damage,
+            last_tick: edr.last_tick_damage,
+            avg_tick: edr.avg_tick_damage,
+            num_ticks: edr.num_ticks,
+            tick_duration: edr.tick_duration,
         }
     }
 }

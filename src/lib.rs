@@ -35,7 +35,7 @@ mod database {
 //JavaScript
 
 use crate::types::js_types::{
-    JsAmmoResponse, JsDifficultyOptions, JsDpsResponse, JsEnemyType, JsFiringResponse,
+    JsAmmoResponse, JsDifficultyOptions, JsDpsResponse, JsEDR, JsEnemyType, JsFiringResponse,
     JsHandlingResponse, JsMetaData, JsRangeResponse, JsReloadResponse, JsResillienceSummary,
     JsStat,
 };
@@ -271,6 +271,17 @@ pub fn get_weapon_ttk(_overshield: f64) -> Result<JsValue, JsValue> {
     Ok(serde_wasm_bindgen::to_value(&js_ttk_data).unwrap())
 }
 
+#[wasm_bindgen(js_name = "getExtraDamage")]
+pub fn get_weapon_extra_damage(_dynamic_traits: bool, _pvp: bool) -> Result<JsEDR, JsValue> {
+    let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
+    if _dynamic_traits {
+        Ok(weapon
+            .get_edr(Some(weapon.static_calc_input()), None, _pvp)
+            .into())
+    } else {
+        Ok(weapon.get_edr(None, None, _pvp).into())
+    }
+}
 ///DEPRECATED for now
 //
 // #[wasm_bindgen(js_name = "getWeaponDps")]

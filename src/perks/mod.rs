@@ -443,7 +443,6 @@ pub enum Perks {
     TractorCannon = 1210807262,
     MarksmanSights = 1408087975,
 
-
     #[num_enum(default)]
     Ignore = 69420,
 }

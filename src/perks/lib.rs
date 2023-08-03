@@ -174,6 +174,7 @@ pub struct ExtraDamageResponse {
     pub weapon_scale: bool,
     pub crit_scale: bool,
     pub combatant_scale: bool,
+    pub explosive_percent: f64,
 }
 impl Default for ExtraDamageResponse {
     fn default() -> Self {
@@ -187,6 +188,7 @@ impl Default for ExtraDamageResponse {
             weapon_scale: false,
             crit_scale: false,
             combatant_scale: false,
+            explosive_percent: 0.0,
         }
     }
 }
