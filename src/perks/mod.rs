@@ -403,6 +403,9 @@ pub enum Perks {
     MarkovChain = 2814973067,
     MementoMori = 647617635,
     AgersScepterCatalyst = 970163821,
+    MarkofTheDevourer = 1863355414,
+    SoulDevourer = 2921090754,
+    ToxicOverload = 4015745376,
 
     //energy exotic
     LagragianSight = 2881100038,
@@ -431,6 +434,9 @@ pub enum Perks {
     ColdFusion = 1036269296,
     BlackHole = 3905543891,
     TemporalUnlimiter = 806917387,
+    PoisonArrows = 2186532310,
+    ChargeShot = 1656957541,
+    Penance = 1185480639,
 
     //heavy exotic
     ReignHavoc = 4148158229,
@@ -442,7 +448,6 @@ pub enum Perks {
     SleeperCatalyst = 2142466730,
     TractorCannon = 1210807262,
     MarksmanSights = 1408087975,
-
 
     #[num_enum(default)]
     Ignore = 69420,

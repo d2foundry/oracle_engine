@@ -4,11 +4,11 @@ use super::{reserve_calc::calc_reserves, Stat, Weapon};
 use crate::{
     d2_enums::{MetersPerSecond, Seconds, StatHashes, WeaponType},
     perks::{
-        get_dmg_modifier, get_explosion_data, get_firing_modifier, get_flinch_modifier,
-        get_handling_modifier, get_magazine_modifier, get_range_modifier, get_reload_modifier,
-        get_reserve_modifier, get_velocity_modifier,
+        get_dmg_modifier, get_explosion_data, get_extra_damage, get_firing_modifier,
+        get_flinch_modifier, get_handling_modifier, get_magazine_modifier, get_range_modifier,
+        get_reload_modifier, get_reserve_modifier, get_velocity_modifier,
         lib::{
-            CalculationInput, DamageModifierResponse, FiringModifierResponse,
+            CalculationInput, DamageModifierResponse, ExtraDamageResponse, FiringModifierResponse,
             HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
             RangeModifierResponse, ReloadModifierResponse,
         },
@@ -16,8 +16,9 @@ use crate::{
     },
     types::rs_types::{
         AmmoFormula, AmmoResponse, FiringResponse, HandlingFormula, HandlingResponse, RangeFormula,
-        RangeResponse, ReloadFormula, ReloadResponse,
+        RangeResponse, ReloadFormula, ReloadResponse, EDR,
     },
+    Perk,
 };
 
 impl ReloadFormula {
@@ -595,5 +596,71 @@ impl Weapon {
         }
 
         buffer
+    }
+}
+
+impl Weapon {
+    pub fn get_edr(
+        &self,
+        _calc_input: Option<CalculationInput>,
+        _cached_data: Option<&mut HashMap<String, f64>>,
+        _pvp: bool,
+    ) -> EDR {
+        let mut default_cached_data = HashMap::new();
+        let cached_data = _cached_data.unwrap_or(&mut default_cached_data);
+        let damage_modifiers: DamageModifierResponse;
+        let extra_damage: Vec<ExtraDamageResponse>;
+
+        if _calc_input.is_some() {
+            damage_modifiers = get_dmg_modifier(
+                self.list_perks(),
+                &_calc_input.clone().unwrap(),
+                _pvp,
+                &mut cached_data.clone(),
+            );
+
+            extra_damage = get_extra_damage(
+                self.list_perks(),
+                &_calc_input.clone().unwrap(),
+                _pvp,
+                &mut cached_data.clone(),
+            );
+        } else {
+            damage_modifiers = DamageModifierResponse::default();
+            extra_damage = vec![ExtraDamageResponse::default()];
+        }
+
+        let mut average_tick_damage = 0.0;
+        let mut average_explosive_percent = 0.0;
+        // goes thru the vec to find the avg tick damage
+        for edr in &extra_damage {
+            average_tick_damage += edr.additive_damage;
+            average_explosive_percent += edr.explosive_percent;
+        }
+        let length = extra_damage.len() - 1;
+        average_tick_damage /= length as f64 + 1.0;
+        average_explosive_percent /= length as f64 + 1.0;
+
+        return EDR {
+            first_tick_damage: (extra_damage[0].additive_damage
+                * extra_damage[0].explosive_percent
+                * damage_modifiers.explosive_dmg_scale)
+                + (extra_damage[0].additive_damage * (1.0 - extra_damage[0].explosive_percent)/* damage_modifiers.impact_dmg_scale*/),
+
+            tick_duration: extra_damage[0].time_for_additive_damage,
+
+            num_ticks: extra_damage[0].times_to_hit,
+
+            last_tick_damage: (extra_damage[length].additive_damage
+                * extra_damage[length].explosive_percent
+                * damage_modifiers.explosive_dmg_scale)
+                + (extra_damage[length].additive_damage
+                    * (1.0 - extra_damage[length].explosive_percent)/* damage_modifiers.impact_dmg_scale*/),
+
+            avg_tick_damage: (average_tick_damage
+                * average_explosive_percent
+                * damage_modifiers.explosive_dmg_scale)
+                + (average_tick_damage * (1.0 - average_explosive_percent)), /*damage_modifiers.impact_dmg_scale*/
+        };
     }
 }

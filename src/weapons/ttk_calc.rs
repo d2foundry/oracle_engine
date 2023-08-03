@@ -5,10 +5,10 @@ use serde::Serialize;
 use crate::{
     d2_enums::WeaponType,
     logging::extern_log,
-    perks::{get_dmg_modifier, get_firing_modifier, lib::CalculationInput},
+    perks::{get_dmg_modifier, get_firing_modifier, get_extra_damage, lib::CalculationInput},
 };
 
-use super::{FiringData, Weapon};
+use super::{FiringData, Weapon, dps_calc::calc_extra_dmg};
 
 //just to make code cleaner for now
 fn ceil(x: f64) -> f64 {
@@ -89,6 +89,12 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
                 &mut persistent_data,
             );
             let firing_mods = get_firing_modifier(
+                _weapon.list_perks().clone(),
+                &calc_input,
+                true,
+                &mut persistent_data,
+            );
+            let extra_damage = get_extra_damage(
                 _weapon.list_perks().clone(),
                 &calc_input,
                 true,

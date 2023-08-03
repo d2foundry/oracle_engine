@@ -347,6 +347,13 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::BlackHole => Some(PerkOptionData::static_()),
         Perks::TemporalUnlimiter => Some(PerkOptionData::toggle()),
         Perks::MarksmanSights => Some(PerkOptionData::static_()),
+        Perks::MarkofTheDevourer => Some(PerkOptionData::static_()),
+        Perks::SoulDevourer => Some(PerkOptionData::toggle()),
+        Perks::ToxicOverload => Some(PerkOptionData::static_()),
+        Perks::PoisonArrows => Some(PerkOptionData::static_()),
+        Perks::ChargeShot => Some(PerkOptionData::static_()),
+        Perks::Penance => Some(PerkOptionData::static_()),
+
         Perks::DexterityMod => Some(PerkOptionData::stacking(3)),
         Perks::ReserveMod => Some(PerkOptionData::stacking(3)),
         Perks::LoaderMod => Some(PerkOptionData::stacking(3)),
