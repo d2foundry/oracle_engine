@@ -1142,6 +1142,22 @@ pub fn exotic_perks() {
         }),
     );
 
+    add_edr(
+        Perks::ChargeShot,
+        Box::new(|_input: ModifierResponseInput| -> ExtraDamageResponse {
+            let dmg = if _input.pvp { 8.0 } else { 0.0 }; //NEED PVE VALUE
+            ExtraDamageResponse {
+                additive_damage: dmg,
+                time_for_additive_damage: 1.75,
+                times_to_hit: 7,
+                hit_at_same_time: false,
+                is_dot: true,
+                explosive_percent: 0.0,
+                ..Default::default()
+            }
+        }),
+    );
+
     // add_edr(
     //     Perks::ToxicOverload,
     //     Box::new(|_input: ModifierResponseInput| -> ExtraDamageResponse {

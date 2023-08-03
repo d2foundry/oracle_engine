@@ -694,7 +694,7 @@ pub fn year_1_perks() {
     add_edr(
         Perks::ClusterBomb,
         Box::new(|_input: ModifierResponseInput| -> ExtraDamageResponse {
-            let dmg = if _input.pvp { 0.0 } else { 51.0 };
+            let dmg = if _input.pvp { 0.0 } else { 51.0 }; //NEED PVP VALUE
             ExtraDamageResponse {
                 additive_damage: dmg,
                 combatant_scale: true,

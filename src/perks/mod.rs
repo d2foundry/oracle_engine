@@ -406,7 +406,6 @@ pub enum Perks {
     MarkofTheDevourer = 1863355414,
     SoulDevourer = 2921090754,
     ToxicOverload = 4015745376,
-    PoisonArrows = 2186532310,
 
     //energy exotic
     LagragianSight = 2881100038,
@@ -435,6 +434,8 @@ pub enum Perks {
     ColdFusion = 1036269296,
     BlackHole = 3905543891,
     TemporalUnlimiter = 806917387,
+    PoisonArrows = 2186532310,
+    ChargeShot = 1656957541,
 
     //heavy exotic
     ReignHavoc = 4148158229,
