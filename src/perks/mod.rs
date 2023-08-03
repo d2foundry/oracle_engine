@@ -406,6 +406,7 @@ pub enum Perks {
     MarkofTheDevourer = 1863355414,
     SoulDevourer = 2921090754,
     ToxicOverload = 4015745376,
+    PoisonArrows = 2186532310,
 
     //energy exotic
     LagragianSight = 2881100038,
