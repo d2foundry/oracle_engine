@@ -436,6 +436,7 @@ pub enum Perks {
     TemporalUnlimiter = 806917387,
     PoisonArrows = 2186532310,
     ChargeShot = 1656957541,
+    Penance = 1185480639,
 
     //heavy exotic
     ReignHavoc = 4148158229,

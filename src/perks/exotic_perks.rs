@@ -1158,6 +1158,22 @@ pub fn exotic_perks() {
         }),
     );
 
+    add_edr(
+        Perks::Penance,
+        Box::new(|_input: ModifierResponseInput| -> ExtraDamageResponse {
+            let dmg = if _input.pvp { 520.0 } else { 1060.0 };
+            ExtraDamageResponse {
+                additive_damage: dmg,
+                time_for_additive_damage: 3.75,
+                times_to_hit: 1,
+                hit_at_same_time: true,
+                is_dot: false,
+                explosive_percent: 0.0,
+                ..Default::default()
+            }
+        }),
+    )
+
     // add_edr(
     //     Perks::ToxicOverload,
     //     Box::new(|_input: ModifierResponseInput| -> ExtraDamageResponse {
