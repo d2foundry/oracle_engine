@@ -1100,4 +1100,13 @@ pub fn exotic_perks() {
             }
         }),
     );
+
+    add_dmr(
+        Perks::Broadhead,
+        Box::new(|_input:ModifierResponseInput| -> DamageModifierResponse {
+            let broadhead_scalar = 1.4239;
+            let broadhead_damage:f64  = if _input.pvp {broadhead_scalar} else {broadhead_scalar * 2.0};
+            return DamageModifierResponse { impact_dmg_scale: broadhead_damage, ..Default::default()}
+        })
+    )
 }
