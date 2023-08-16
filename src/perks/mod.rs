@@ -403,6 +403,7 @@ pub enum Perks {
     MarkovChain = 2814973067,
     MementoMori = 647617635,
     AgersScepterCatalyst = 970163821,
+    Broadhead = 2287699930,
 
     //energy exotic
     LagragianSight = 2881100038,

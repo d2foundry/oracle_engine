@@ -1100,4 +1100,23 @@ pub fn exotic_perks() {
             }
         }),
     );
+
+    add_dmr(
+        Perks::Broadhead,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let broadhead_damage = if _input.pvp { 30.0 } else { 60.0 };
+            let impact_damage = _input.calc_data.curr_firing_data.damage;
+            let crit_mult = _input.calc_data.curr_firing_data.crit_mult;
+
+            let impact_dmg_scale = (broadhead_damage + impact_damage) / impact_damage;
+
+            let crit_scale = (impact_damage * crit_mult + broadhead_damage) / (impact_damage*impact_dmg_scale*crit_mult);
+
+            return DamageModifierResponse {
+                impact_dmg_scale: impact_dmg_scale,
+                crit_scale: crit_scale,
+                ..Default::default()
+            };
+        }),
+    )
 }
