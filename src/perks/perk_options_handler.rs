@@ -178,7 +178,6 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::FeedingFrenzy => Some(PerkOptionData::stacking(5)),
         Perks::FourthTimesTheCharm => Some(PerkOptionData::static_()),
         Perks::RapidHit => Some(PerkOptionData::stacking(5)),
-        Perks::Broadhead => Some(PerkOptionData::static_()),
 
         //season 5 | year 2
         Perks::ResevoirBurst => Some(PerkOptionData::static_()),
@@ -369,6 +368,8 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::BannerShield => Some(PerkOptionData::static_()),
         Perks::DeadFall => Some(PerkOptionData::static_()),
         Perks::MoebiusQuiver => Some(PerkOptionData::static_()),
+        Perks::Broadhead => Some(PerkOptionData::static_()),
+
 
         Perks::DragonShadow => Some(PerkOptionData::toggle()),
         Perks::OphidianAspect => Some(PerkOptionData::static_()),

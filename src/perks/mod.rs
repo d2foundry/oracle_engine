@@ -252,7 +252,6 @@ pub enum Perks {
     #[num_enum(alternatives = [1266037486, ])] //R0
     FourthTimesTheCharm = 1354429876,
     RapidHit = 247725512,
-    Broadhead = 2287699930,
 
     //season 5 | year 2
     ResevoirBurst = 1427256713,
@@ -404,6 +403,7 @@ pub enum Perks {
     MarkovChain = 2814973067,
     MementoMori = 647617635,
     AgersScepterCatalyst = 970163821,
+    Broadhead = 2287699930,
 
     //energy exotic
     LagragianSight = 2881100038,
