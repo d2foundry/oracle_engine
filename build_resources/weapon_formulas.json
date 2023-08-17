@@ -115,7 +115,7 @@
         "1573888036": {"name": "Trinity Ghoul",      "cat": "exotic",  "subFam": "Trinity",     "magProf": "default"},
         "1699724249": {"name": "Leviathan's Breath", "cat": "exotic",  "subFam": "leviathan",   "magProf": "leviathan"},
         "2108556049": {"name": "Lightweight Frame",  "cat": "default", "subFam": "Lightweight", "magProf": "default"},
-        "2186532310": {"name": "Le Monarque",        "cat": "exotic",  "subFam": "Precision",   "magProf": "default"},
+        "2186532310": {"name": "Le Monarque",        "cat": "exotic",  "subFam": "LeMonarque",   "magProf": "default"},
         "3239299468": {"name": "Ticuu's Divination", "cat": "exotic",  "subFam": "Precision",   "magProf": "default"},
         "2226793914": {"name": "Hierarchy Of Needs", "cat": "exotic",  "subFam": "Hierarchy",   "magProf": "default"},
         "2636679416": {"name": "Verglass Curve",     "cat": "exotic",  "subFam": "Lightweight", "magProf": "default"},
@@ -160,6 +160,7 @@
             "Hierarchy":   {"damage": 100.74,  "crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "leviathan":   {"damage": 345.6, "crit_mult": 5, "burst_delay": 0,   "burst_size": 1, "inner_burst_delay": 0},
             "Wish-Ender":  {"damage": 71.775, "crit_mult": 15, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
+            "LeMonarque":  {"damage": 85.00, "crit_mult": 5.1, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "test" :       {"damage": 100,   "crit_mult": 2, "burst_delay": 20,   "burst_size": 2, "inner_burst_delay": 0}
         },
         "magProf": {
