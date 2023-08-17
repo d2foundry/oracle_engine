@@ -250,7 +250,7 @@
             "Aggressive":  {"damage": 46.00, "crit_mult": -25.5, "burst_delay": 20 ,  "burst_size": 7, "inner_burst_delay": 0, "one_ammo": true},
             "Jotunn":      {"damage": 326.0, "crit_mult": -25.5, "burst_delay": 24.5, "burst_size": 1, "inner_burst_delay": 0  },
             "Bastion":     {"damage": 25.93, "crit_mult": -25.5, "burst_delay": 22,   "burst_size": 21,"inner_burst_delay": 0, "one_ammo": true},
-            "Vex":         {"damage": 22.00, "crit_mult": 5,     "burst_delay": 4.5,  "burst_size": 1, "inner_burst_delay": 0  },
+            "Vex":         {"damage": 22.00, "crit_mult": 5,     "burst_delay": 5,  "burst_size": 1, "inner_burst_delay": 0  },
             "1KV":         {"damage": 0,     "crit_mult": -25.5, "burst_delay": 0,    "burst_size": 0, "inner_burst_delay": 0  }
         },
         "magProf": {
