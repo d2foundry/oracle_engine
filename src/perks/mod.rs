@@ -238,7 +238,7 @@ pub enum Perks {
     RangeFinder = 2846385770,
     #[num_enum(alternatives = [1683379515, ])] //Arbalest
     DisruptionBreak = 3871884143,
-    #[num_enum(alternatives = [2360754333, ])] //Acrius
+    #[num_enum(alternatives = [2360754333, 2079505485, ])] //Acrius
     TrenchBarrel = 806159697,
     Desperado = 3047969693,
     BoxBreathing = 2551157718,
