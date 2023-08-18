@@ -72,18 +72,11 @@ impl RangeFormula {
     fn calc_range_falloff_formula(
         &self,
         _range_stat: i32,
-        _zoom_stat: i32,
+        ads_mult: f64,
         _modifiers: RangeModifierResponse,
         _floor: f64,
     ) -> RangeResponse {
         let range_stat = (_range_stat + _modifiers.range_stat_add).clamp(0, 100) as f64;
-        let zoom_stat = _zoom_stat as f64;
-
-        let zoom_mult = if self.fusion {
-            1.0 + 0.02 * zoom_stat
-        } else {
-            0.1 * zoom_stat - 0.025
-        };
 
         let start = self.start.solve_at(range_stat) * _modifiers.range_all_scale;
         let end = self.end.solve_at(range_stat) * _modifiers.range_all_scale;
@@ -92,8 +85,8 @@ impl RangeFormula {
             hip_falloff_start: start * _modifiers.range_hip_scale,
             hip_falloff_end: end * _modifiers.range_hip_scale,
 
-            ads_falloff_start: start * zoom_mult * _modifiers.range_zoom_scale,
-            ads_falloff_end: end * zoom_mult * _modifiers.range_zoom_scale,
+            ads_falloff_start: start * ads_mult * _modifiers.range_zoom_scale,
+            ads_falloff_end: end * ads_mult * _modifiers.range_zoom_scale,
 
             floor_percent: _floor,
             timestamp: self.timestamp,
@@ -115,11 +108,7 @@ impl Weapon {
             .get(&StatHashes::RANGE.into())
             .unwrap_or(&Stat::new())
             .val();
-        let zoom_stat = self
-            .stats
-            .get(&StatHashes::ZOOM.into())
-            .unwrap_or(&Stat::new())
-            .val();
+        let ads_mult = get_ads_multiplier(self.weapon_type, self.intrinsic_hash).unwrap_or(1.0);
 
         let modifiers = if let Some(calc_input) = _calc_input {
             get_range_modifier(self.list_perks(), &calc_input, _pvp, cached_data)
@@ -129,7 +118,7 @@ impl Weapon {
 
         self.range_formula.calc_range_falloff_formula(
             range_stat,
-            zoom_stat,
+            ads_mult,
             modifiers,
             self.range_formula.floor_percent,
         )
@@ -464,6 +453,54 @@ impl Weapon {
 
         total_scaler
     }
+}
+
+//this should be in weapons_formulas
+fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f64, ()> {
+    //EXCEPTIONS
+    const LAST_WORD: u32 = 2770223582;
+    const ACE_OF_SPACEDS: u32 = 647617635; //only during memento
+    const DEVILS_RUIN: u32 = 334466122; //only when laser
+    const REVISION_ZERO: u32 = 2770223582; //only in hunters trance
+    const CRIMSON: u32 = 1030990989;
+    const VEX_MYTHOCLAST: u32 = 3610750208;
+    const FORERUNNER: u32 = 2984682260;
+    const ERIANAS_VOW: u32 = 3174300811;
+
+    Ok(match (weapon_type, intrinsic_hash) {
+        (WeaponType::SIDEARM, FORERUNNER) => 2.0,
+        (WeaponType::SIDEARM, _) => 1.2,
+
+        (WeaponType::SUBMACHINEGUN, _) => 1.4,
+
+        (WeaponType::HANDCANNON, LAST_WORD) => 1.1,
+        (WeaponType::HANDCANNON, CRIMSON) => 1.3,
+        (WeaponType::HANDCANNON, ERIANAS_VOW) => 2.4,
+        (WeaponType::HANDCANNON, _) => 1.5,
+
+        (WeaponType::AUTORIFLE, _) => 1.7,
+
+        (WeaponType::PULSERIFLE, _) => 1.7,
+
+        (WeaponType::BOW, _) => 1.8,
+
+        (WeaponType::SCOUTRIFLE, _) => 2.0,
+        
+        (WeaponType::SHOTGUN, 918679156) => 1.2,
+        (WeaponType::SHOTGUN, _) => 1.0,
+
+        (WeaponType::FUSIONRIFLE, VEX_MYTHOCLAST) => 1.5,
+        (WeaponType::FUSIONRIFLE, _) => 1.3,
+
+        (WeaponType::TRACERIFLE, _) => 1.6,
+
+        (WeaponType::LINEARFUSIONRIFLE, _) => 2.5,
+
+        (WeaponType::SNIPER, _) => 4.5,
+
+        (WeaponType::MACHINEGUN, _) => 1.6, //this is a guess from zoom values
+        (_, _) => return Err(()),
+    })
 }
 
 //returns the m/s of projectile

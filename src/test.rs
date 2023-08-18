@@ -115,7 +115,7 @@ fn test_pulse_range() {
             response.hip_falloff_start
         );
         assert!(
-            cmp_floats(response.ads_falloff_start, 15.0 * (1.5 - 0.025)),
+            cmp_floats(response.ads_falloff_start, 15.0 * 1.7),
             "ads falloff start: {}",
             response.ads_falloff_start
         );
@@ -125,7 +125,7 @@ fn test_pulse_range() {
             response.hip_falloff_end
         );
         assert!(
-            cmp_floats(response.ads_falloff_end, 30.0 * (1.5 - 0.025)),
+            cmp_floats(response.ads_falloff_end, 30.0 * 1.7),
             "ads falloff end: {}",
             response.ads_falloff_end
         );

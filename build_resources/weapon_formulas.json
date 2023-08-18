@@ -50,7 +50,7 @@
 
         "cat": {
             "default": {
-                "range":    {"vpp_start": 0.09615, "offset_start": 11.75, "vpp_end": 0.0, "offset_end": 41.0, "floor_percent": 0.5},
+                "range":    {"vpp_start": 0.125, "offset_start": 10.75, "vpp_end": 0.0, "offset_end": 40.0, "floor_percent": 0.5},
                 "reload":   {"evpp": 0.0000855689, "vpp": -0.0242021, "offset": 2.80673006666667},
                 "handling": {
                     "ready":{"vpp": -0.00279338, "offset": 0.51985381},
@@ -70,7 +70,7 @@
                 "combatant_scalars": {"vehicle": 1.15, "boss": 1.15, "champion": 1.2, "miniboss": 1.2, "elite": 1.3, "minor": 1.3}
             },
             "hard_light": {
-                "range":    {"vpp_start": 0.09615, "offset_start": 11.75, "vpp_end": 0.0, "offset_end": 41.0, "floor_percent": 0.7},
+                "range":    {"vpp_start": 0.125, "offset_start": 10.75, "vpp_end": 0.0, "offset_end": 40.0, "floor_percent": 0.7},
                 "reload":   {"evpp": 0.0000855689, "vpp": -0.0242021, "offset": 2.80673006666667},
                 "handling": {
                     "ready":{"vpp": -0.00279338, "offset": 0.51985381},
@@ -368,7 +368,7 @@
 
         "cat": {
             "default": {
-                "range":    {"vpp_start": 0.0877,"offset_start": 16.83,"vpp_end": 0.0352,"offset_end": 29.67, "floor_percent": 0.33},
+                "range":    {"vpp_start": 0.09,"offset_start": 16.00,"vpp_end": 0.03,"offset_end": 29, "floor_percent": 0.33},
                 "reload":   {"evpp": 0.000129019, "vpp": -0.0363945, "offset": 4.19575, "ammo_percent": 0.71},
                 "handling": {
                     "ready":{"vpp": -0.002942857143, "offset": 0.4782571429},
@@ -378,7 +378,7 @@
                 "combatant_scalars": {"vehicle": 1.2, "boss": 1.3, "champion": 1.4, "miniboss": 1.4, "elite": 2.45, "minor": 2.556}
             },
             "120 RPM": {
-                "range":    {"vpp_start": 0.102,"offset_start": 18.65,"vpp_end": 0.0205,"offset_end": 32.8, "floor_percent": 0.33},
+                "range":    {"vpp_start": 0.09,"offset_start": 18,"vpp_end": 0.02,"offset_end": 32, "floor_percent": 0.33},
                 "reload":   {"evpp": 0.000129019, "vpp": -0.0363945, "offset": 4.19575, "ammo_percent": 0.71},
                 "handling": {
                     "ready":{"vpp": -0.002942857143, "offset": 0.4782571429},
@@ -581,7 +581,7 @@
         "69420":      {"name": "test_weapon",            "cat": "test",      "subFam": "test",          "magProf": "test"},
         "cat": {
             "default": {
-                "range":    {"vpp_start": 0.07378,"offset_start": 16.329,"vpp_end": 0.0,"offset_end": 40.4, "floor_percent": 0.5},
+                "range":    {"vpp_start": 0.085, "offset_start": 15, "vpp_end": 0.0,"offset_end": 40, "floor_percent": 0.5},
                 "reload":   {"evpp": 0.0000926208, "vpp": -0.0256877, "offset": 2.92627266666667},
                 "handling": {
                     "ready":{"vpp": -0.00312085, "offset": 0.54370932},
@@ -853,7 +853,7 @@
         "2984682260": {"name": "Forerunner",            "cat": "Forerunner", "subFam": "Forerunner",       "magProf": "forerunner"},
         "cat": {
             "default": {
-                "range":    {"vpp_start": 0.0295,"offset_start": 11.85,"vpp_end": 0.0287,"offset_end": 22.85, "floor_percent": 0.5},
+                "range":    {"vpp_start": 0.04,"offset_start": 11,"vpp_end": 0.03,"offset_end": 22, "floor_percent": 0.5},
                 "reload":   {"evpp": 0.0000238311, "vpp": -0.0124553, "offset": 2.14667245000000},
                 "handling": {
                     "ready":{"vpp": -0.00264010989, "offset": 0.4232582418},
@@ -957,7 +957,7 @@
         "228577175":  {"name": "The Manticore",     "cat": "default", "subFam": "Lightweight", "magProf": "large"},
         "cat": {
             "default": {
-                "range":    {"vpp_start": 0.07,"offset_start": 9.5,"vpp_end": 0.0,"offset_end": 23.35, "floor_percent": 0.5},
+                "range":    {"vpp_start": 0.065,"offset_start": 10.3,"vpp_end": 0.0,"offset_end": 23, "floor_percent": 0.5},
                 "reload":   {"evpp": 0.0000608642, "vpp": -0.0191345, "offset": 2.62769},
                 "handling": {
                     "ready":{"vpp": -0.002376970528, "offset": 0.4710178204},
