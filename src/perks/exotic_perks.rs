@@ -299,7 +299,7 @@ pub fn exotic_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let mut damage_buff = 1.0;
             if _input.calc_data.curr_mag == 1.0 {
-                damage_buff = 2.0;
+                damage_buff = if _input.pvp { 2.0 } else { 2.4 };
             };
             DamageModifierResponse {
                 impact_dmg_scale: damage_buff,
