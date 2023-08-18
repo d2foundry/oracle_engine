@@ -485,7 +485,7 @@ fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f6
         (WeaponType::BOW, _) => 1.8,
 
         (WeaponType::SCOUTRIFLE, _) => 2.0,
-        
+
         (WeaponType::SHOTGUN, 918679156) => 1.2,
         (WeaponType::SHOTGUN, _) => 1.0,
 

@@ -404,6 +404,8 @@ pub enum Perks {
     MementoMori = 647617635,
     AgersScepterCatalyst = 970163821,
     Broadhead = 2287699930,
+    //#[num_enum(alternatives = [891750166, 891750167, 3834106778])]
+    HuntersTrace = 891750160,
 
     //energy exotic
     LagragianSight = 2881100038,
@@ -443,7 +445,6 @@ pub enum Perks {
     SleeperCatalyst = 2142466730,
     TractorCannon = 1210807262,
     MarksmanSights = 1408087975,
-
 
     #[num_enum(default)]
     Ignore = 69420,

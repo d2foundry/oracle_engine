@@ -116,6 +116,17 @@ pub fn exotic_perks() {
         ),
     );
 
+    add_rmr(
+        Perks::HuntersTrace,
+        Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
+            let range_ads_scale = if _input.value > 0 { 4.5 / 1.7 } else { 1.0 };
+            RangeModifierResponse {
+                range_zoom_scale: range_ads_scale,
+                ..Default::default()
+            }
+        }),
+    );
+
     add_dmr(
         Perks::MementoMori,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
@@ -127,6 +138,21 @@ pub fn exotic_perks() {
                 impact_dmg_scale: damage_buff,
                 explosive_dmg_scale: damage_buff,
                 crit_scale: 1.0,
+            }
+        }),
+    );
+
+    add_rmr(
+        Perks::MementoMori,
+        Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
+            let range_all_scale = if _input.value > 0 && _input.calc_data.total_shots_fired < 7.0 {
+                0.9
+            } else {
+                1.0
+            };
+            RangeModifierResponse {
+                range_all_scale,
+                ..Default::default()
             }
         }),
     );
@@ -1110,7 +1136,8 @@ pub fn exotic_perks() {
 
             let impact_dmg_scale = (broadhead_damage + impact_damage) / impact_damage;
 
-            let crit_scale = (impact_damage * crit_mult + broadhead_damage) / (impact_damage*impact_dmg_scale*crit_mult);
+            let crit_scale = (impact_damage * crit_mult + broadhead_damage)
+                / (impact_damage * impact_dmg_scale * crit_mult);
 
             return DamageModifierResponse {
                 impact_dmg_scale: impact_dmg_scale,
