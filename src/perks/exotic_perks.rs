@@ -146,7 +146,7 @@ pub fn exotic_perks() {
         Perks::MementoMori,
         Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
             let range_all_scale = if _input.value > 0 && _input.calc_data.total_shots_fired < 7.0 {
-                0.9
+                0.85
             } else {
                 1.0
             };
