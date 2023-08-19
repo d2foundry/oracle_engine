@@ -1,5 +1,6 @@
 #![allow(dead_code)]
 #![allow(unused_imports)]
+extern crate alloc;
 
 use logging::LogLevel;
 use perks::lib::CalculationInput;
@@ -24,6 +25,14 @@ use std::cell::RefCell;
 use std::collections::HashMap;
 use std::panic;
 
+#[cfg(target_arch = "wasm32")]
+use lol_alloc::{AssumeSingleThreaded, FreeListAllocator};
+
+// SAFETY: This application is single threaded, so using AssumeSingleThreaded is allowed.
+#[cfg(target_arch = "wasm32")]
+#[global_allocator]
+static ALLOCATOR: AssumeSingleThreaded<FreeListAllocator> =
+    unsafe { AssumeSingleThreaded::new(FreeListAllocator::new()) };
 mod built_info {
     include!(concat!(env!("OUT_DIR"), "/built.rs"));
 }
