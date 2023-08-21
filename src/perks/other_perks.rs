@@ -1,4 +1,7 @@
-use std::{collections::{btree_map::Range, HashMap}, alloc::handle_alloc_error};
+use std::{
+    alloc::handle_alloc_error,
+    collections::{btree_map::Range, HashMap},
+};
 
 use serde::de::value;
 
@@ -117,7 +120,9 @@ pub fn other_perks() {
         Perks::OphidianAspect,
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                if _input.value == 0 {return HandlingModifierResponse::default();}
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
                 HandlingModifierResponse {
                     stat_add: 35,
                     ..Default::default()
@@ -129,7 +134,9 @@ pub fn other_perks() {
     add_rsmr(
         Perks::OphidianAspect,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value == 0 {return ReloadModifierResponse::default();}
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
             ReloadModifierResponse {
                 reload_stat_add: 35,
                 reload_time_scale: 1.0,
@@ -142,9 +149,9 @@ pub fn other_perks() {
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
-            stats.insert(StatHashes::HANDLING.into(), 35);
-            stats.insert(StatHashes::RELOAD.into(), 35);
-            stats.insert(StatHashes::AIRBORNE.into(), 10);
+                stats.insert(StatHashes::HANDLING.into(), 35);
+                stats.insert(StatHashes::RELOAD.into(), 35);
+                stats.insert(StatHashes::AIRBORNE.into(), 10);
             }
             stats
         }),
@@ -166,13 +173,15 @@ pub fn other_perks() {
         Perks::DragonShadow,
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                if _input.value == 0 {return HandlingModifierResponse::default();}
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
                 HandlingModifierResponse {
                     stat_add: 100,
                     draw_scale: 0.7,
                     stow_scale: 0.7,
                     ..Default::default()
-            }
+                }
             },
         ),
     );
@@ -180,7 +189,9 @@ pub fn other_perks() {
     add_rsmr(
         Perks::DragonShadow,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value == 0 {return ReloadModifierResponse::default();}
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
             ReloadModifierResponse {
                 reload_stat_add: 100,
                 reload_time_scale: 1.0,
@@ -203,7 +214,9 @@ pub fn other_perks() {
         Perks::Amplified,
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                if _input.value == 0 {return HandlingModifierResponse::default();}
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
                 HandlingModifierResponse {
                     stat_add: 40,
                     draw_scale: 0.95,
@@ -217,7 +230,9 @@ pub fn other_perks() {
     add_rsmr(
         Perks::Frequency,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value == 0 {return ReloadModifierResponse::default();}
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
             ReloadModifierResponse {
                 reload_stat_add: 50,
                 reload_time_scale: 0.8,
@@ -239,10 +254,12 @@ pub fn other_perks() {
     add_rsmr(
         Perks::FlowState,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value == 0 {return ReloadModifierResponse::default();}
-                ReloadModifierResponse {
-                    reload_stat_add: 50,
-                    reload_time_scale: 0.8,
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
+            ReloadModifierResponse {
+                reload_stat_add: 50,
+                reload_time_scale: 0.8,
             }
         }),
     );
@@ -313,8 +330,8 @@ pub fn other_perks() {
             let mut buff = 20;
             if _input.value > 0 {
                 buff += 50;
-                stats.insert(StatHashes::AIRBORNE.into(), buff);
             };
+            stats.insert(StatHashes::AIRBORNE.into(), buff);
             stats
         }),
     );
@@ -557,7 +574,9 @@ pub fn other_perks() {
         Perks::ThreadOfAscent,
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                if _input.value == 0 {return HandlingModifierResponse::default();}
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
                 HandlingModifierResponse {
                     stat_add: 40,
                     draw_scale: 0.925,
@@ -570,8 +589,10 @@ pub fn other_perks() {
     add_rsmr(
         Perks::ThreadOfAscent,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value == 0 {return ReloadModifierResponse::default();}
-                ReloadModifierResponse {
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
+            ReloadModifierResponse {
                 reload_time_scale: 0.925,
                 reload_stat_add: 40,
             }
