@@ -34,7 +34,9 @@ pub fn exotic_armor() {
     add_dmr(
         Perks::LuckyPants,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value == 0 {return DamageModifierResponse::default();}
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
 
             let perks = _input.calc_data.perk_value_map.clone();
 
@@ -133,12 +135,12 @@ pub fn exotic_armor() {
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 if _input.value == 0 || _input.calc_data.weapon_type != &WeaponType::SIDEARM {
                     return HandlingModifierResponse::default();
-                }                    
+                }
                 HandlingModifierResponse {
                     stat_add: 100,
                     ..Default::default()
                 }
-            } 
+            },
         ),
     );
     add_rsmr(
@@ -366,6 +368,9 @@ pub fn exotic_armor() {
         Perks::EyeOfAnotherWorld,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+                if _input.value == 0 {
+                    return HashMap::new();
+                }
                 HashMap::from([(StatHashes::AIRBORNE.into(), 15)])
             },
         ),
@@ -404,10 +409,12 @@ pub fn exotic_armor() {
         Perks::NecroticGrips,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                if !matches!(
-                    _input.calc_data.intrinsic_hash,
-                    1863355414 | 2965975126 | 2724693746
-                ) {
+                if _input.value == 0
+                    || !matches!(
+                        _input.calc_data.intrinsic_hash,
+                        1863355414 | 2965975126 | 2724693746
+                    )
+                {
                     return HashMap::new();
                 }
 
