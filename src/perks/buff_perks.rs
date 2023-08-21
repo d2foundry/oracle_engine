@@ -105,6 +105,9 @@ pub fn buff_perks() {
     add_dmr(
         Perks::PathOfTheBurningSteps,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
             let buff = surge_buff(_input.cached_data, _input.value, _input.pvp);
             DamageModifierResponse {
                 impact_dmg_scale: buff,
@@ -143,6 +146,9 @@ pub fn buff_perks() {
     add_dmr(
         Perks::WardOfDawn,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
             let buff = emp_buff(_input.cached_data, 1.25);
             DamageModifierResponse {
                 impact_dmg_scale: buff,
@@ -155,6 +161,9 @@ pub fn buff_perks() {
     add_dmr(
         Perks::Gyrfalcon,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
             let des_buff = if _input.pvp { 1.0 } else { 1.35 };
             let buff = emp_buff(_input.cached_data, des_buff);
             DamageModifierResponse {
@@ -168,16 +177,16 @@ pub fn buff_perks() {
     add_dmr(
         Perks::AeonInsight,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value > 0 {
-                let des_buff = if _input.pvp { 1.0 } else { 1.35 };
-                let buff = emp_buff(_input.cached_data, des_buff);
-                DamageModifierResponse {
-                    impact_dmg_scale: buff,
-                    explosive_dmg_scale: buff,
-                    ..Default::default()
-                }
-            } else {
-                DamageModifierResponse::default()
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+
+            let des_buff = if _input.pvp { 1.0 } else { 1.35 };
+            let buff = emp_buff(_input.cached_data, des_buff);
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
             }
         }),
     );
@@ -235,6 +244,9 @@ pub fn buff_perks() {
     add_dmr(
         Perks::TractorCannon,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
             let des_debuff = if _input.pvp { 1.5 } else { 1.3 };
             let debuff = gbl_debuff(_input.cached_data, des_debuff);
             DamageModifierResponse {
@@ -272,15 +284,14 @@ pub fn buff_perks() {
     add_dmr(
         Perks::Felwinters,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value > 0 {
-                let debuff = gbl_debuff(_input.cached_data, 1.3);
-                DamageModifierResponse {
-                    impact_dmg_scale: debuff,
-                    explosive_dmg_scale: debuff,
-                    ..Default::default()
-                }
-            } else {
-                DamageModifierResponse::default()
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let debuff = gbl_debuff(_input.cached_data, 1.3);
+            DamageModifierResponse {
+                impact_dmg_scale: debuff,
+                explosive_dmg_scale: debuff,
+                ..Default::default()
             }
         }),
     );
