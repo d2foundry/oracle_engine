@@ -299,8 +299,10 @@ pub fn meta_perks() {
         Perks::RallyBarricade,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
+            if _input.value > 0 {
             stats.insert(StatHashes::STABILITY.into(), 30);
             stats.insert(StatHashes::RELOAD.into(), 100);
+            }
             stats
         }),
     );
@@ -308,6 +310,7 @@ pub fn meta_perks() {
     add_flmr(
         Perks::RallyBarricade,
         Box::new(|_input: ModifierResponseInput| -> FlinchModifierResponse {
+            if _input.value == 0 {return FlinchModifierResponse::default();}
             FlinchModifierResponse { flinch_scale: 0.5 }
         }),
     );
@@ -315,6 +318,7 @@ pub fn meta_perks() {
     add_rsmr(
         Perks::RallyBarricade,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value == 0 {return ReloadModifierResponse::default();}
             ReloadModifierResponse {
                 reload_stat_add: 100,
                 reload_time_scale: 0.9,
@@ -325,6 +329,7 @@ pub fn meta_perks() {
     add_rmr(
         Perks::RallyBarricade,
         Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
+            if _input.value == 0 {return RangeModifierResponse::default();}
             RangeModifierResponse {
                 range_all_scale: 1.1,
                 ..Default::default()

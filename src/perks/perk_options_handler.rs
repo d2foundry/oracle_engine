@@ -395,7 +395,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         )),
         Perks::Foetracer => Some(PerkOptionData::toggled_on()),
         Perks::MechaneersTricksleeves => Some(PerkOptionData::toggled_on()),
-        Perks::Oathkeeper => Some(PerkOptionData::toggled_on()),
+        Perks::Oathkeeper => Some(PerkOptionData::static_()),
         Perks::SealedAhamkaraGrasps => Some(PerkOptionData::toggled_on()),
         Perks::LuckyPants => Some(PerkOptionData::stacking(10)),
         Perks::NoBackupPlans => Some(PerkOptionData::toggled_on()),

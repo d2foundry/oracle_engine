@@ -63,6 +63,7 @@ pub fn buff_perks() {
     add_dmr(
         Perks::WellOfRadiance,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {return DamageModifierResponse::default();}
             let buff = emp_buff(_input.cached_data, 1.25);
             DamageModifierResponse {
                 impact_dmg_scale: buff,
@@ -91,6 +92,7 @@ pub fn buff_perks() {
     add_dmr(
         Perks::Radiant,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {return DamageModifierResponse::default();}
             let des_buff = if _input.pvp { 1.1 } else { 1.25 };
             let buff = emp_buff(_input.cached_data, des_buff);
             _input.cached_data.insert("radiant".to_string(), 1.0);
@@ -120,6 +122,7 @@ pub fn buff_perks() {
     add_dmr(
         Perks::BannerShield,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {return DamageModifierResponse::default();}
             let des_buff = if _input.pvp { 1.35 } else { 1.4 };
             let buff = emp_buff(_input.cached_data, des_buff);
             DamageModifierResponse {
@@ -133,6 +136,7 @@ pub fn buff_perks() {
     add_dmr(
         Perks::EmpRift,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {return DamageModifierResponse::default();}
             let des_buff = if _input.pvp { 1.15 } else { 1.2 };
             let buff = emp_buff(_input.cached_data, des_buff);
             DamageModifierResponse {
@@ -231,6 +235,7 @@ pub fn buff_perks() {
     add_dmr(
         Perks::Weaken,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {return DamageModifierResponse::default();}
             let des_debuff = if _input.pvp { 1.075 } else { 1.15 };
             let debuff = gbl_debuff(_input.cached_data, des_debuff);
             DamageModifierResponse {
@@ -260,6 +265,7 @@ pub fn buff_perks() {
     add_dmr(
         Perks::MoebiusQuiver,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {return DamageModifierResponse::default();}
             let des_debuff = if _input.pvp { 1.5 } else { 1.3 };
             let debuff = gbl_debuff(_input.cached_data, des_debuff);
             DamageModifierResponse {
@@ -272,6 +278,7 @@ pub fn buff_perks() {
     add_dmr(
         Perks::DeadFall,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {return DamageModifierResponse::default();}
             let des_debuff = if _input.pvp { 1.5 } else { 1.3 };
             let debuff = gbl_debuff(_input.cached_data, des_debuff);
             DamageModifierResponse {
