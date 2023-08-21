@@ -366,7 +366,7 @@ pub fn set_encounter(
     _enemy_type: JsEnemyType,
 ) -> Result<(), JsValue> {
     PERS_DATA.with(|perm_data| {
-        let mut activity = &mut perm_data.borrow_mut().activity;
+        let activity = &mut perm_data.borrow_mut().activity;
         activity.rpl = _recommend_pl;
         activity.cap = _override_cap;
         activity.difficulty = _difficulty.into();
@@ -374,7 +374,7 @@ pub fn set_encounter(
         activity.player.wep_power = _weapon_pl;
     });
     PERS_DATA.with(|perm_data| {
-        let mut enemy = &mut perm_data.borrow_mut().enemy;
+        let enemy = &mut perm_data.borrow_mut().enemy;
         enemy.type_ = _enemy_type.into();
     });
     Ok(())
