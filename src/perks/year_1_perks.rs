@@ -469,18 +469,6 @@ pub fn year_1_perks() {
         }),
     );
 
-    add_rmr(
-        Perks::RangeFinder,
-        Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
-            RangeModifierResponse {
-                range_stat_add: 0,
-                range_all_scale: 1.0,
-                range_hip_scale: 1.0,
-                range_zoom_scale: 1.1,
-            }
-        }),
-    );
-
     add_vmr(
         Perks::RangeFinder,
         Box::new(

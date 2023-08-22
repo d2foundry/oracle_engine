@@ -193,8 +193,8 @@ pub fn year_6_perks() {
         Perks::Bipod,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             return DamageModifierResponse {
-                impact_dmg_scale: 0.6,
-                explosive_dmg_scale: 0.6,
+                impact_dmg_scale: 0.75,
+                explosive_dmg_scale: 0.75,
                 ..Default::default()
             };
         }),
