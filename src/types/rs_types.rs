@@ -56,13 +56,13 @@ impl Default for DamageMods {
 }
 impl DamageMods {
     pub fn get_mod(&self, _type: &EnemyType) -> f64 {
-        match _type {
-            &EnemyType::MINOR => self.minor,
-            &EnemyType::ELITE => self.elite,
-            &EnemyType::MINIBOSS => self.miniboss,
-            &EnemyType::CHAMPION => self.champion,
-            &EnemyType::BOSS => self.boss,
-            &EnemyType::VEHICLE => self.vehicle,
+        match *_type {
+            EnemyType::MINOR => self.minor,
+            EnemyType::ELITE => self.elite,
+            EnemyType::MINIBOSS => self.miniboss,
+            EnemyType::CHAMPION => self.champion,
+            EnemyType::BOSS => self.boss,
+            EnemyType::VEHICLE => self.vehicle,
             _ => 1.0,
         }
     }
