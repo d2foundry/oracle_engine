@@ -355,7 +355,7 @@ fn write_variable(
 ) {
     let res = writeln!(
         writer,
-        "#[doc=r#\"{}\"#]\n#[allow(dead_code)]\npub const {}: {} = {};",
+        "#[doc=r#\"{}\"#]\n#[allow(dead_code)]\n#[allow(clippy::approx_constant)]\npub const {}: {} = {};",
         doc, name, datatype, value
     );
     if res.is_err() {
