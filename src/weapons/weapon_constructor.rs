@@ -34,10 +34,8 @@ impl Weapon {
         _damage_type_id: u32,
     ) -> Result<Weapon, String> {
         let data_pointer_result = get_data_pointers(_weapon_type_id, _intrinsic_hash);
-        if data_pointer_result.is_err() {
-            return Err(data_pointer_result.unwrap_err());
-        }
-        let data_pointer = data_pointer_result.unwrap();
+
+        let data_pointer = data_pointer_result?;
 
         let range_formula: RangeFormula = database::RANGE_DATA[data_pointer.r];
 
