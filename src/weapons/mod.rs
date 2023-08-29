@@ -44,6 +44,13 @@ impl Stat {
         (self.base_value + self.part_value + self.perk_value).clamp(0, 100)
     }
 }
+
+impl Default for Stat {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl From<i32> for Stat {
     fn from(_val: i32) -> Self {
         Stat {
