@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-
 pub mod buff_perks;
 pub mod exotic_armor;
 pub mod exotic_perks;
