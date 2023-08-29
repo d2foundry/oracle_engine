@@ -56,7 +56,8 @@ impl Default for DamageMods {
 }
 impl DamageMods {
     pub fn get_mod(&self, _type: &EnemyType) -> f64 {
-        let combatant_scale = match _type {
+        
+        match _type {
             &EnemyType::MINOR => self.minor,
             &EnemyType::ELITE => self.elite,
             &EnemyType::MINIBOSS => self.miniboss,
@@ -64,8 +65,7 @@ impl DamageMods {
             &EnemyType::BOSS => self.boss,
             &EnemyType::VEHICLE => self.vehicle,
             _ => 1.0,
-        };
-        combatant_scale
+        }
     }
 }
 

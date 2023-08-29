@@ -208,7 +208,7 @@ impl AmmoFormula {
         if _calc_inv {
             reserve_size = calc_reserves(
                 raw_mag_size,
-                _mag_stat as i32,
+                _mag_stat,
                 inv_stat as i32,
                 _inv_id,
                 _inv_modifiers.inv_scale,
@@ -347,7 +347,8 @@ impl Weapon {
         } else {
             rpm = raw_rpm
         };
-        let out = FiringResponse {
+        
+        FiringResponse {
             pvp_impact_damage: impact_dmg * pvp_damage_modifiers.impact_dmg_scale,
             pvp_explosion_damage: explosion_dmg * pvp_damage_modifiers.explosive_dmg_scale,
             pvp_crit_mult: crit_mult * pvp_damage_modifiers.crit_scale,
@@ -363,8 +364,7 @@ impl Weapon {
             rpm,
 
             timestamp: fd.timestamp,
-        };
-        out
+        }
     }
 }
 

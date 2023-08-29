@@ -209,10 +209,10 @@ impl Weapon {
             let a = static_stats.get(key);
             let b = dynamic_stats.get(key);
             if a.is_some() {
-                stat.part_value = a.unwrap().clone();
+                stat.part_value = *a.unwrap();
             }
             if b.is_some() {
-                stat.perk_value = b.unwrap().clone();
+                stat.perk_value = *b.unwrap();
             }
         }
     }

@@ -142,9 +142,9 @@ impl From<u32> for StatHashes {
         }
     }
 }
-impl Into<u32> for StatHashes {
-    fn into(self) -> u32 {
-        match self {
+impl From<StatHashes> for u32 {
+    fn from(val: StatHashes) -> Self {
+        match val {
             StatHashes::ACCURACY => 1591432999,
             StatHashes::AIM_ASSIST => 1345609583,
             StatHashes::AIRBORNE => 2714457168,

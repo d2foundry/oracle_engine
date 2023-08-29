@@ -47,7 +47,7 @@ impl Weapon {
 
         let damage_mods: DamageMods = database::SCALAR_DATA[data_pointer.s].clone();
 
-        let firing_data: FiringData = database::FIRING_DATA[data_pointer.f].clone();
+        let firing_data: FiringData = database::FIRING_DATA[data_pointer.f];
 
         let ammo_formula: AmmoFormula = database::AMMO_DATA[data_pointer.a].clone();
 

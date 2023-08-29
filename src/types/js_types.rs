@@ -343,9 +343,9 @@ pub enum JsDifficultyOptions {
     RAID = 2,
     MASTER = 3,
 }
-impl Into<DifficultyOptions> for JsDifficultyOptions {
-    fn into(self) -> DifficultyOptions {
-        match self {
+impl From<JsDifficultyOptions> for DifficultyOptions {
+    fn from(val: JsDifficultyOptions) -> Self {
+        match val {
             JsDifficultyOptions::NORMAL => DifficultyOptions::NORMAL,
             JsDifficultyOptions::RAID => DifficultyOptions::RAID,
             JsDifficultyOptions::MASTER => DifficultyOptions::MASTER,
@@ -365,9 +365,9 @@ pub enum JsEnemyType {
     PLAYER,
     CHAMPION,
 }
-impl Into<EnemyType> for JsEnemyType {
-    fn into(self) -> EnemyType {
-        match self {
+impl From<JsEnemyType> for EnemyType {
+    fn from(val: JsEnemyType) -> Self {
+        match val {
             JsEnemyType::MINOR => EnemyType::MINOR,
             JsEnemyType::ELITE => EnemyType::ELITE,
             JsEnemyType::MINIBOSS => EnemyType::MINIBOSS,
