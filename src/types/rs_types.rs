@@ -29,7 +29,7 @@ pub struct FiringData {
     pub timestamp: u64,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Copy, Serialize)]
 pub struct DamageMods {
     pub pve: f64,
     pub minor: f64,
@@ -56,7 +56,6 @@ impl Default for DamageMods {
 }
 impl DamageMods {
     pub fn get_mod(&self, _type: &EnemyType) -> f64 {
-        
         match _type {
             &EnemyType::MINOR => self.minor,
             &EnemyType::ELITE => self.elite,
@@ -69,7 +68,7 @@ impl DamageMods {
     }
 }
 
-#[derive(Debug, Clone, Default, Serialize)]
+#[derive(Debug, Clone, Copy, Default, Serialize)]
 pub struct RangeFormula {
     pub start: StatQuadraticFormula,
     pub end: StatQuadraticFormula,
@@ -79,7 +78,7 @@ pub struct RangeFormula {
 }
 
 //even if just linear use this
-#[derive(Debug, Clone, Default, Serialize)]
+#[derive(Debug, Clone, Copy, Default, Serialize)]
 pub struct StatQuadraticFormula {
     pub evpp: f64,
     pub vpp: f64,
@@ -96,14 +95,14 @@ impl StatQuadraticFormula {
     }
 }
 
-#[derive(Debug, Clone, Default, Serialize)]
+#[derive(Debug, Clone, Copy, Default, Serialize)]
 pub struct ReloadFormula {
     pub reload_data: StatQuadraticFormula,
     pub ammo_percent: f64,
     pub timestamp: u64,
 }
 
-#[derive(Debug, Clone, Default, Serialize)]
+#[derive(Debug, Clone, Copy, Default, Serialize)]
 pub struct HandlingFormula {
     pub ready: StatQuadraticFormula,
     pub stow: StatQuadraticFormula,
@@ -111,7 +110,7 @@ pub struct HandlingFormula {
     pub timestamp: u64,
 }
 
-#[derive(Debug, Clone, Default, Serialize)]
+#[derive(Debug, Clone, Copy, Default, Serialize)]
 pub struct AmmoFormula {
     pub mag: StatQuadraticFormula,
     pub round_to: i32,

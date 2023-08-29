@@ -39,17 +39,17 @@ impl Weapon {
         }
         let data_pointer = data_pointer_result.unwrap();
 
-        let range_formula: RangeFormula = database::RANGE_DATA[data_pointer.r].clone();
+        let range_formula: RangeFormula = database::RANGE_DATA[data_pointer.r];
 
-        let handling_formula: HandlingFormula = database::HANDLING_DATA[data_pointer.h].clone();
+        let handling_formula: HandlingFormula = database::HANDLING_DATA[data_pointer.h];
 
-        let reload_formula: ReloadFormula = database::RELOAD_DATA[data_pointer.rl].clone();
+        let reload_formula: ReloadFormula = database::RELOAD_DATA[data_pointer.rl];
 
-        let damage_mods: DamageMods = database::SCALAR_DATA[data_pointer.s].clone();
+        let damage_mods: DamageMods = database::SCALAR_DATA[data_pointer.s];
 
         let firing_data: FiringData = database::FIRING_DATA[data_pointer.f];
 
-        let ammo_formula: AmmoFormula = database::AMMO_DATA[data_pointer.a].clone();
+        let ammo_formula: AmmoFormula = database::AMMO_DATA[data_pointer.a];
 
         let weapon_type = WeaponType::from(_weapon_type_id as u32);
         let ammo_type = AmmoType::from(_ammo_type_id);
