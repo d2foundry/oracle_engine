@@ -17,36 +17,26 @@ pub fn origin_perks() {
     add_rr(
         Perks::VeistStinger,
         Box::new(|_input: ModifierResponseInput| -> RefundResponse {
-            if _input.value <= 0 {
+            let data = _input.cached_data.get("veist_stinger");
+            let last_proc = *data.unwrap_or(&1.0);
+            let time_since_last_proc = _input.calc_data.time_total - last_proc;
+            let max_refund = _input.calc_data.base_mag - _input.calc_data.curr_mag;
+            
+
+            if _input.value == 0 || time_since_last_proc < 4.0 || max_refund == 0.0 {
                 return RefundResponse::default();
             };
-            let data = _input.cached_data.get("veist_stinger");
-            let last_proc;
-            if data.is_none() {
-                last_proc = 0.0;
-            } else {
-                last_proc = *data.unwrap();
-            };
-            let time_since_last_proc = _input.calc_data.time_total - last_proc;
-            if time_since_last_proc >= 4.0 && _input.value > 0 {
-                let max_refund = _input.calc_data.base_mag - _input.calc_data.curr_mag;
-                let refund_amount = (_input.calc_data.base_mag / 4.0).ceil() as i32;
-                if max_refund > 0.0 {
-                    _input
-                        .cached_data
-                        .insert("veist_stinger".to_string(), _input.calc_data.time_total);
-                    let final_refund_ammount = clamp(refund_amount, 0, max_refund as i32);
-                    RefundResponse {
-                        requirement: 1,
-                        crit: false,
-                        refund_mag: refund_amount,
-                        refund_reserves: -final_refund_ammount,
-                    }
-                } else {
-                    RefundResponse::default()
-                }
-            } else {
-                RefundResponse::default()
+
+            _input
+                .cached_data
+                .insert("veist_stinger".to_string(), _input.calc_data.time_total);
+            let refund_amount = (_input.calc_data.base_mag / 4.0).ceil() as i32;
+            let final_refund_ammount = refund_amount.clamp(0, max_refund as i32);
+            RefundResponse {
+                requirement: 1,
+                crit: false,
+                refund_mag: refund_amount,
+                refund_reserves: -final_refund_ammount,
             }
         }),
     );
