@@ -192,11 +192,11 @@ pub fn year_6_perks() {
     add_dmr(
         Perks::Bipod,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            return DamageModifierResponse {
+            DamageModifierResponse {
                 impact_dmg_scale: 0.75,
                 explosive_dmg_scale: 0.75,
                 ..Default::default()
-            };
+            }
         }),
     );
 

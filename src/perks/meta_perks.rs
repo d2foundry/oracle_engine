@@ -38,7 +38,7 @@ pub fn meta_perks() {
             if *_input.calc_data.ammo_type == AmmoType::PRIMARY
                 && _input.calc_data.intrinsic_hash > 1000
                 && *_input.calc_data.enemy_type == EnemyType::MINOR
-                && _input.pvp == false
+                && !_input.pvp
             {
                 dmg_scale *= 1.4;
             }

@@ -147,7 +147,7 @@ pub fn year_3_perks() {
                 || *_input.calc_data.enemy_type == EnemyType::MINIBOSS
                 || *_input.calc_data.enemy_type == EnemyType::CHAMPION
                 || *_input.calc_data.enemy_type == EnemyType::VEHICLE)
-                && _input.pvp == false
+                && !_input.pvp
             {
                 buff = match *_input.calc_data.ammo_type {
                     AmmoType::HEAVY => 1.1,

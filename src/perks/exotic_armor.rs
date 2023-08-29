@@ -26,7 +26,7 @@ pub fn exotic_armor() {
                 modifier.impact_dmg_scale = value;
                 modifier.explosive_dmg_scale = value;
             }
-            return modifier;
+            modifier
         }),
     );
 
@@ -112,16 +112,16 @@ pub fn exotic_armor() {
     add_dmr(
         Perks::Foetracer,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let health_percent = _input.cached_data.get("health%").unwrap_or(&1.0).clone();
+            let health_percent = *_input.cached_data.get("health%").unwrap_or(&1.0);
             if health_percent >= 0.3 || _input.value == 0 {
                 return DamageModifierResponse::default();
             }
             let modifier = 1.0 + (0.3 - health_percent);
-            return DamageModifierResponse {
+            DamageModifierResponse {
                 impact_dmg_scale: modifier,
                 explosive_dmg_scale: modifier,
                 crit_scale: 1.0,
-            };
+            }
         }),
     );
 
@@ -256,7 +256,7 @@ pub fn exotic_armor() {
                         ..Default::default()
                     };
                 }
-                return HandlingModifierResponse::default();
+                HandlingModifierResponse::default()
             },
         ),
     );
@@ -356,7 +356,7 @@ pub fn exotic_armor() {
                         ..Default::default()
                     };
                 }
-                return HandlingModifierResponse::default();
+                HandlingModifierResponse::default()
             },
         ),
     );

@@ -871,7 +871,7 @@ pub fn exotic_perks() {
     add_fmr(
         Perks::RideTheBull,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
-            let extra_value = _input.calc_data.shots_fired_this_mag as f64 / 10.0;
+            let extra_value = _input.calc_data.shots_fired_this_mag / 10.0;
             let val = clamp(_input.value + extra_value as u32, 0, 2);
             FiringModifierResponse {
                 burst_delay_add: val as f64 * (-0.25 / 30.0),
@@ -883,7 +883,7 @@ pub fn exotic_perks() {
     add_fmr(
         Perks::SpinningUp,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
-            let extra_value = _input.calc_data.shots_fired_this_mag as f64 / 12.0;
+            let extra_value = _input.calc_data.shots_fired_this_mag / 12.0;
             let val = clamp(_input.value + extra_value as u32, 0, 2);
             FiringModifierResponse {
                 burst_delay_add: val as f64 * (-0.5 / 30.0),
@@ -1139,11 +1139,11 @@ pub fn exotic_perks() {
             let crit_scale = (impact_damage * crit_mult + broadhead_damage)
                 / (impact_damage * impact_dmg_scale * crit_mult);
 
-            return DamageModifierResponse {
-                impact_dmg_scale: impact_dmg_scale,
-                crit_scale: crit_scale,
+            DamageModifierResponse {
+                impact_dmg_scale,
+                crit_scale,
                 ..Default::default()
-            };
+            }
         }),
     )
 }

@@ -289,8 +289,8 @@ pub fn year_1_perks() {
                 let mut handling = if _input.is_enhanced { 35 } else { 30 };
                 let mut stabiltiy = if _input.is_enhanced { 25 } else { 20 };
                 if *_input.calc_data.weapon_type == WeaponType::FUSIONRIFLE {
-                    handling = handling / 2;
-                    stabiltiy = stabiltiy / 2;
+                    handling /= 2;
+                    stabiltiy /= 2;
                 };
                 let mut out = HashMap::new();
                 if _input.value > 0 {
@@ -308,7 +308,7 @@ pub fn year_1_perks() {
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 let mut handling = if _input.is_enhanced { 35 } else { 30 };
                 if *_input.calc_data.weapon_type == WeaponType::FUSIONRIFLE {
-                    handling = handling / 2;
+                    handling /= 2;
                 };
                 if _input.value > 0 {
                     HandlingModifierResponse {
@@ -565,7 +565,7 @@ pub fn year_1_perks() {
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
                 let mut stability = if _input.is_enhanced { 44 } else { 40 };
                 if *_input.calc_data.weapon_type == WeaponType::FUSIONRIFLE {
-                    stability = stability / 4;
+                    stability /= 4;
                 }
                 let mut out = HashMap::new();
                 if _input.value > 0 {

@@ -5,17 +5,15 @@ use serde::Serialize;
 use super::{enhanced_check, Perk, Perks};
 
 #[derive(Debug, Clone, Serialize)]
+#[derive(Default)]
 pub enum PerkValueVariant {
+    #[default]
     STATIC,
     TOGGLE,
     SLIDER,
     OPTIONS,
 }
-impl Default for PerkValueVariant {
-    fn default() -> Self {
-        PerkValueVariant::STATIC
-    }
-}
+
 
 #[derive(Debug, Clone, Serialize)]
 pub struct PerkOptionData {

@@ -66,7 +66,7 @@ pub fn year_5_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let mut dmg_boost = 1.0;
             let shots_needed;
-            if _input.calc_data.curr_firing_data.one_ammo == false
+            if !_input.calc_data.curr_firing_data.one_ammo
                 || _input.calc_data.curr_firing_data.burst_size == 1
             {
                 shots_needed = _input.calc_data.base_mag / 2.0;
@@ -123,7 +123,7 @@ pub fn year_5_perks() {
             ];
             let dmg_scale: f64;
             let crit_scale: f64;
-            if high_weapons.contains(&_input.calc_data.weapon_type) {
+            if high_weapons.contains(_input.calc_data.weapon_type) {
                 dmg_scale = 1.2;
                 crit_scale = 1.0 / 1.2;
             } else {

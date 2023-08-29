@@ -200,14 +200,12 @@ pub fn year_2_perks() {
     add_rsmr(
         Perks::RapidHit,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            let values = vec![
-                (0, 1.0),
+            let values = [(0, 1.0),
                 (5, 0.99),
                 (30, 0.97),
                 (35, 0.96),
                 (45, 0.94),
-                (60, 0.93),
-            ];
+                (60, 0.93)];
             let entry_to_get = clamp(
                 _input.value + _input.calc_data.shots_fired_this_mag as u32,
                 0,
@@ -223,8 +221,8 @@ pub fn year_2_perks() {
     add_sbr(
         Perks::RapidHit,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
-            let rel_values = vec![0, 5, 30, 35, 45, 60];
-            let stab_values = vec![0, 2, 12, 14, 18, 25];
+            let rel_values = [0, 5, 30, 35, 45, 60];
+            let stab_values = [0, 2, 12, 14, 18, 25];
             let entry_to_get = clamp(
                 _input.value + _input.calc_data.shots_fired_this_mag as u32,
                 0,

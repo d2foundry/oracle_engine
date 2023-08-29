@@ -17,7 +17,7 @@ pub fn origin_perks() {
     add_rr(
         Perks::VeistStinger,
         Box::new(|_input: ModifierResponseInput| -> RefundResponse {
-            if !(_input.value > 0) {
+            if _input.value <= 0 {
                 return RefundResponse::default();
             };
             let data = _input.cached_data.get("veist_stinger");
@@ -36,12 +36,12 @@ pub fn origin_perks() {
                         .cached_data
                         .insert("veist_stinger".to_string(), _input.calc_data.time_total);
                     let final_refund_ammount = clamp(refund_amount, 0, max_refund as i32);
-                    return RefundResponse {
+                    RefundResponse {
                         requirement: 1,
                         crit: false,
                         refund_mag: refund_amount,
                         refund_reserves: -final_refund_ammount,
-                    };
+                    }
                 } else {
                     RefundResponse::default()
                 }

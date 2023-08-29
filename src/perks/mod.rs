@@ -684,7 +684,7 @@ pub fn get_stat_bumps(
             *entry += value;
         }
         for (key, value) in perk.stat_buffs {
-            let entry = static_stats.entry(key.clone()).or_insert(0);
+            let entry = static_stats.entry(key).or_insert(0);
             *entry += value;
         }
     }
@@ -703,7 +703,7 @@ pub fn get_dmg_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -728,7 +728,7 @@ pub fn get_reload_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -752,7 +752,7 @@ pub fn get_firing_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -778,7 +778,7 @@ pub fn get_handling_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -807,7 +807,7 @@ pub fn get_magazine_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -832,7 +832,7 @@ pub fn get_reserve_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -857,7 +857,7 @@ pub fn get_range_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -883,7 +883,7 @@ pub fn get_refund_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -908,7 +908,7 @@ pub fn get_extra_damage(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -957,7 +957,7 @@ pub fn get_explosion_data(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: &mut HashMap::new(),
             };
@@ -982,7 +982,7 @@ pub fn get_flinch_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -1005,7 +1005,7 @@ pub fn get_velocity_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -1153,7 +1153,7 @@ impl Weapon {
                         .or_insert(value);
                 }
                 mod_response.statbump = Some(stat_buffer);
-                return mod_response;
+                mod_response
             });
             buffer.insert(perk.raw_hash, mod_buffer);
         }

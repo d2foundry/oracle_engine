@@ -341,7 +341,7 @@ pub fn other_perks() {
         Perks::BossSpec,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let damage_mult =
-                if *_input.calc_data.enemy_type == EnemyType::BOSS && _input.pvp == false {
+                if *_input.calc_data.enemy_type == EnemyType::BOSS && !_input.pvp {
                     1.077
                 } else {
                     1.0
@@ -361,7 +361,7 @@ pub fn other_perks() {
             if (*_input.calc_data.enemy_type == EnemyType::MINIBOSS
                 || *_input.calc_data.enemy_type == EnemyType::ELITE
                 || *_input.calc_data.enemy_type == EnemyType::CHAMPION)
-                && _input.pvp == false
+                && !_input.pvp
             {
                 damage_mult = 1.077;
             } else {
@@ -383,7 +383,7 @@ pub fn other_perks() {
                 || *_input.calc_data.enemy_type == EnemyType::ELITE
                 || *_input.calc_data.enemy_type == EnemyType::CHAMPION
                 || *_input.calc_data.enemy_type == EnemyType::BOSS)
-                && _input.pvp == false
+                && !_input.pvp
             {
                 damage_mult = 1.077;
             } else {
@@ -401,7 +401,7 @@ pub fn other_perks() {
         Perks::MinorSpec,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let damage_mult =
-                if _input.calc_data.enemy_type == &EnemyType::MINOR && _input.pvp == false {
+                if _input.calc_data.enemy_type == &EnemyType::MINOR && !_input.pvp {
                     1.077
                 } else {
                     1.0

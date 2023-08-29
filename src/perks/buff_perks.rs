@@ -15,10 +15,10 @@ use super::{
 fn emp_buff(_cached_data: &mut HashMap<String, f64>, _desired_buff: f64) -> f64 {
     let current_buff = _cached_data.get("empowering").unwrap_or(&1.0).to_owned();
     if current_buff >= _desired_buff {
-        return 1.0;
+        1.0
     } else {
         _cached_data.insert("empowering".to_string(), _desired_buff);
-        return _desired_buff / current_buff;
+        _desired_buff / current_buff
     }
 }
 
@@ -37,20 +37,20 @@ fn surge_buff(_cached_data: &mut HashMap<String, f64>, _value: u32, _pvp: bool) 
 
     let current_buff = _cached_data.get("surge").unwrap_or(&1.0).to_owned();
     if current_buff >= desired_buff {
-        return 1.0;
+        1.0
     } else {
         _cached_data.insert("surge".to_string(), desired_buff);
-        return desired_buff / current_buff;
+        desired_buff / current_buff
     }
 }
 
 fn gbl_debuff(_cached_data: &mut HashMap<String, f64>, _desired_buff: f64) -> f64 {
     let current_buff = _cached_data.get("debuff").unwrap_or(&1.0).to_owned();
     if current_buff >= _desired_buff {
-        return 1.0;
+        1.0
     } else {
         _cached_data.insert("debuff".to_string(), _desired_buff);
-        return _desired_buff / current_buff;
+        _desired_buff / current_buff
     }
 }
 
