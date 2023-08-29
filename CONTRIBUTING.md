@@ -29,13 +29,13 @@ Please fork the [d2foundry/oracle_engine](https://github.com/d2foundry/oracle_en
 
 ### Code Checklist
 
-* [ ] run the command ```cargo build``` and verify that your changes compile. If adjusting weapon formulas this will also update the timestamps for that given weapon
+* [ ] run the command `cargo build` and verify that your changes compile. If adjusting weapon formulas, this will also update the timestamps for that given weapon
 * [ ] make sure your code is linted via rust-analyzer
 * [ ] use our [commit tags](#commit-tags) to format your commit message
 
 #### Commit Tags
 
-* chore - general maintence
+* chore - general maintenance
 * bungie - addresses a change due to new changes from bungie
 * fix - fixes a bug
 * add - new perks, functionality, etc
@@ -46,4 +46,4 @@ Please fork the [d2foundry/oracle_engine](https://github.com/d2foundry/oracle_en
 
 Contributions of all sizes are what make projects like this possible and able to thrive. We thank you for spending your time to contribute to our project. Your help means the world to us here at Foundry. 
 
-- Eyes up, guardian
+Eyes up, guardian.
