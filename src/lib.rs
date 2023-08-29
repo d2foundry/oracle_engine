@@ -133,17 +133,20 @@ pub fn set_weapon(
             _ammo_type_id,
             _damage_type_id,
         );
-        if new_weapon.is_err() {
-            console_log!(
-                "Could not find weapon data for type: {}, intrinsic: {}, Err: {:?}",
-                _weapon_type_id,
-                _intrinsic_hash,
-                new_weapon
+
+        if let Ok(weapon) = new_weapon {
+            perm_data.borrow_mut().weapon = weapon;
+        } else {
+            logging::log(
+                format!(
+                    "Could not find weapon data for type: {}, intrinsic: {}, Err: {:?}",
+                    _weapon_type_id, _intrinsic_hash, new_weapon
+                )
+                .as_str(),
+                LogLevel::Error.into(),
             );
             perm_data.borrow_mut().weapon = Weapon::default();
-        } else {
-            perm_data.borrow_mut().weapon = new_weapon.unwrap();
-        };
+        }
     });
     Ok(())
 }
