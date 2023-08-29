@@ -107,7 +107,7 @@ impl Weapon {
     }
     pub fn perk_value_map_update(&self) -> HashMap<u32, u32> {
         let mut perk_map: HashMap<u32, u32> = HashMap::new();
-        for (_key, perk) in &self.perks {
+        for perk in self.perks.values() {
             perk_map.insert(perk.hash, perk.value);
         }
         perk_map
