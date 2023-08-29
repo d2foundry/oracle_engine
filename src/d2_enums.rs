@@ -183,33 +183,33 @@ impl From<StatHashes> for u32 {
 }
 impl StatHashes {
     pub fn is_weapon_stat(&self) -> bool {
-        match self {
-            StatHashes::ACCURACY => true,
-            StatHashes::AIM_ASSIST => true,
-            StatHashes::AIRBORNE => true,
-            StatHashes::AMMO_CAPACITY => true,
-            StatHashes::ZOOM => true,
-            StatHashes::RANGE => true,
-            StatHashes::STABILITY => true,
-            StatHashes::RELOAD => true,
-            StatHashes::MAGAZINE => true,
-            StatHashes::HANDLING => true,
-            StatHashes::VELOCITY => true,
-            StatHashes::BLAST_RADIUS => true,
-            StatHashes::CHARGE_TIME => true,
-            StatHashes::INVENTORY_SIZE => true,
-            StatHashes::RECOIL_DIR => true,
-            StatHashes::RPM => true,
-            StatHashes::GUARD_EFFICIENCY => true,
-            StatHashes::GUARD_ENDURANCE => true,
-            StatHashes::GUARD_RESISTANCE => true,
-            StatHashes::DRAW_TIME => true,
-            StatHashes::SWING_SPEED => true,
-            StatHashes::SHIELD_DURATION => true,
-            StatHashes::IMPACT => true,
-            StatHashes::CHARGE_RATE => true,
-            _ => false,
-        }
+        matches!(
+            self,
+            StatHashes::ACCURACY
+                | StatHashes::AIM_ASSIST
+                | StatHashes::AIRBORNE
+                | StatHashes::AMMO_CAPACITY
+                | StatHashes::ZOOM
+                | StatHashes::RANGE
+                | StatHashes::STABILITY
+                | StatHashes::RELOAD
+                | StatHashes::MAGAZINE
+                | StatHashes::HANDLING
+                | StatHashes::VELOCITY
+                | StatHashes::BLAST_RADIUS
+                | StatHashes::CHARGE_TIME
+                | StatHashes::INVENTORY_SIZE
+                | StatHashes::RECOIL_DIR
+                | StatHashes::RPM
+                | StatHashes::GUARD_EFFICIENCY
+                | StatHashes::GUARD_ENDURANCE
+                | StatHashes::GUARD_RESISTANCE
+                | StatHashes::DRAW_TIME
+                | StatHashes::SWING_SPEED
+                | StatHashes::SHIELD_DURATION
+                | StatHashes::IMPACT
+                | StatHashes::CHARGE_RATE
+        )
     }
 }
 
