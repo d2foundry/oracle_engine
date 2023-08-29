@@ -33,14 +33,16 @@ pub fn exotic_armor() {
     add_dmr(
         Perks::MechaneersTricksleeves,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut dmr = DamageModifierResponse::default();
-            if _input.value <= 0 || _input.calc_data.weapon_type != &WeaponType::SIDEARM {
-                return dmr;
+            if _input.value == 0 || *_input.calc_data.weapon_type != WeaponType::SIDEARM {
+                return DamageModifierResponse::default();
             };
+
             let damage_mult = if _input.pvp { 1.35 } else { 2.0 };
-            dmr.explosive_dmg_scale = damage_mult;
-            dmr.impact_dmg_scale = damage_mult;
-            dmr
+            DamageModifierResponse {
+                explosive_dmg_scale: damage_mult,
+                impact_dmg_scale: damage_mult,
+                ..Default::default()
+            }
         }),
     );
 
