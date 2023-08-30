@@ -384,7 +384,6 @@ pub fn origin_perks() {
                 ReloadModifierResponse {
                     reload_stat_add: 20,
                     reload_time_scale: 0.9,
-                    ..Default::default()
                 }
             } else {
                 ReloadModifierResponse::default()
@@ -453,7 +452,6 @@ pub fn origin_perks() {
                 ReloadModifierResponse {
                     reload_stat_add: stat_bump,
                     reload_time_scale: 0.95,
-                    ..Default::default()
                 }
             } else {
                 ReloadModifierResponse::default()
