@@ -347,7 +347,7 @@ impl Weapon {
         } else {
             rpm = raw_rpm
         };
-        
+
         FiringResponse {
             pvp_impact_damage: impact_dmg * pvp_damage_modifiers.impact_dmg_scale,
             pvp_explosion_damage: explosion_dmg * pvp_damage_modifiers.explosive_dmg_scale,
@@ -444,11 +444,9 @@ impl Weapon {
             .clamp(0, 100)
             .into();
         total_scaler *= 1.0 - ((total_stability - 20.0) / 80.0 * stability_percent);
-
-        if _calc_input.is_some() {
+        if let Some(calc_input) = _calc_input {
             total_scaler *=
-                get_flinch_modifier(self.list_perks(), &_calc_input.unwrap(), _pvp, cached_data)
-                    .flinch_scale;
+                get_flinch_modifier(self.list_perks(), &calc_input, _pvp, cached_data).flinch_scale;
         }
 
         total_scaler
@@ -549,10 +547,9 @@ impl Weapon {
             _ => 0.0,
         };
 
-        if _calc_input.is_some() {
-            velocity *=
-                get_velocity_modifier(self.list_perks(), &_calc_input.unwrap(), _pvp, cached_data)
-                    .velocity_scaler;
+        if let Some(calc_input) = _calc_input {
+            velocity *= get_velocity_modifier(self.list_perks(), &calc_input, _pvp, cached_data)
+                .velocity_scaler;
         }
         velocity
     }
