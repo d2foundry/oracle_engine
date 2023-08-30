@@ -290,71 +290,49 @@ impl Weapon {
         _cached_data: Option<&mut HashMap<String, f64>>,
         _pvp: bool,
     ) -> FiringResponse {
-        let pve_damage_modifiers: DamageModifierResponse;
-        let pvp_damage_modifiers: DamageModifierResponse;
-        let firing_modifiers: FiringModifierResponse;
         let mut default_cached_data = HashMap::new();
         let cached_data = _cached_data.unwrap_or(&mut default_cached_data);
-        if _calc_input.is_some() {
-            firing_modifiers = get_firing_modifier(
-                self.list_perks(),
-                &_calc_input.clone().unwrap(),
-                _pvp,
-                cached_data,
-            );
-            pvp_damage_modifiers = get_dmg_modifier(
-                self.list_perks(),
-                &_calc_input.clone().unwrap(),
-                true,
-                &mut cached_data.clone(),
-            );
-            pve_damage_modifiers = get_dmg_modifier(
-                self.list_perks(),
-                &_calc_input.clone().unwrap(),
-                false,
-                &mut cached_data.clone(),
-            );
+        let (firing_modifiers, damage_modifiers) = if let Some(calc_input) = _calc_input {
+            (
+                get_firing_modifier(self.list_perks(), &calc_input, _pvp, cached_data),
+                get_dmg_modifier(self.list_perks(), &calc_input, _pvp, cached_data),
+            )
         } else {
-            firing_modifiers = FiringModifierResponse::default();
-            pvp_damage_modifiers = DamageModifierResponse::default();
-            pve_damage_modifiers = DamageModifierResponse::default();
+            (
+                FiringModifierResponse::default(),
+                DamageModifierResponse::default(),
+            )
         };
         let tmp_dmg_prof = self.get_damage_profile();
         let impact_dmg = tmp_dmg_prof.0;
         let explosion_dmg = tmp_dmg_prof.1;
         let crit_mult = tmp_dmg_prof.2;
 
+        //rpm
         let fd = self.firing_data;
-        let extra_charge_delay = if self.weapon_type == WeaponType::FUSIONRIFLE {
-            0.45
-        } else if self.weapon_type == WeaponType::LINEARFUSIONRIFLE {
-            0.95
-        } else {
-            0.0
+        let extra_charge_delay = match self.weapon_type {
+            WeaponType::LINEARFUSIONRIFLE => 0.95,
+            WeaponType::FUSIONRIFLE => 0.45,
+            _ => 0.0,
         };
+
         let burst_delay = (fd.burst_delay + firing_modifiers.burst_delay_add)
             * firing_modifiers.burst_delay_scale;
         let burst_size = fd.burst_size + firing_modifiers.burst_size_add as i32;
         let inner_burst_delay = fd.inner_burst_delay * firing_modifiers.inner_burst_scale;
         let raw_rpm = 60.0
-            / ((burst_delay
-                + (inner_burst_delay * (burst_size as f64 - 1.0))
-                + extra_charge_delay)
+            / ((burst_delay + (inner_burst_delay * (burst_size - 1) as f64) + extra_charge_delay)
                 / burst_size as f64);
-        let rpm: f64;
-        if self.firing_data.one_ammo {
-            rpm = raw_rpm / burst_size as f64
+        let rpm = if self.firing_data.one_ammo {
+            raw_rpm / burst_size as f64
         } else {
-            rpm = raw_rpm
+            raw_rpm
         };
-        let out = FiringResponse {
-            pvp_impact_damage: impact_dmg * pvp_damage_modifiers.impact_dmg_scale,
-            pvp_explosion_damage: explosion_dmg * pvp_damage_modifiers.explosive_dmg_scale,
-            pvp_crit_mult: crit_mult * pvp_damage_modifiers.crit_scale,
 
-            pve_impact_damage: impact_dmg * pve_damage_modifiers.impact_dmg_scale,
-            pve_explosion_damage: explosion_dmg * pve_damage_modifiers.explosive_dmg_scale,
-            pve_crit_mult: crit_mult * pve_damage_modifiers.crit_scale,
+        let mut out = FiringResponse {
+            impact_damage: impact_dmg * damage_modifiers.impact_dmg_scale,
+            explosion_damage: explosion_dmg * damage_modifiers.explosive_dmg_scale,
+            crit_mult: crit_mult * damage_modifiers.crit_scale,
 
             burst_delay,
             burst_size,
@@ -364,6 +342,20 @@ impl Weapon {
 
             timestamp: fd.timestamp,
         };
+
+        if !_pvp {
+            let persistent = crate::PERS_DATA.with(|_perm_data| _perm_data.borrow().clone());
+            out.apply_pve_bonuses(
+                persistent.activity.get_rpl_mult(),
+                persistent.activity.get_pl_delta(),
+                persistent.weapon.damage_mods.pve,
+                persistent
+                    .weapon
+                    .damage_mods
+                    .get_mod(&persistent.enemy.type_),
+            );
+        }
+
         out
     }
 }

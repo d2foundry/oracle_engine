@@ -185,13 +185,9 @@ impl DpsResponse {
 
 #[derive(Debug, Clone, Default)]
 pub struct FiringResponse {
-    pub pvp_impact_damage: f64,
-    pub pvp_explosion_damage: f64,
-    pub pvp_crit_mult: f64,
-
-    pub pve_impact_damage: f64,
-    pub pve_explosion_damage: f64,
-    pub pve_crit_mult: f64,
+    pub impact_damage: f64,
+    pub explosion_damage: f64,
+    pub crit_mult: f64,
 
     pub burst_delay: f64,
     pub inner_burst_delay: f64,
@@ -217,7 +213,7 @@ impl FiringResponse {
             .as_str(),
             crate::logging::LogLevel::Debug.into(),
         );
-        self.pve_impact_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
-        self.pve_explosion_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
+        self.impact_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
+        self.explosion_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
     }
 }

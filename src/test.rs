@@ -137,34 +137,22 @@ fn test_pulse_firing_data() {
     setup_pulse();
     PERS_DATA.with(|perm_data| {
         let weapon = perm_data.borrow_mut().weapon.clone();
-        let mut response = weapon.calc_firing_data(None, None, true);
-        PERS_DATA.with(|perm_data| {
-            response.apply_pve_bonuses(
-                perm_data.borrow().activity.get_rpl_mult(),
-                perm_data.borrow().activity.get_pl_delta(),
-                perm_data.borrow().weapon.damage_mods.pve,
-                perm_data
-                    .borrow()
-                    .weapon
-                    .damage_mods
-                    .get_mod(&perm_data.borrow().enemy.type_),
-            )
-        });
+        let response = weapon.calc_firing_data(None, None, true);
         assert!(
-            cmp_floats(response.pvp_impact_damage, 10.0),
+            cmp_floats(response.impact_damage, 10.0),
             "impact damage: {}",
-            response.pvp_impact_damage
+            response.impact_damage
         );
         assert!(
-            cmp_floats(response.pvp_explosion_damage, 0.0),
+            cmp_floats(response.explosion_damage, 0.0),
             "explosive damage: {}",
-            response.pvp_explosion_damage
+            response.explosion_damage
         );
         assert!(cmp_floats(response.rpm, 900.0), "rpm: {}", response.rpm);
         assert!(
-            cmp_floats(response.pvp_crit_mult, 2.0),
+            cmp_floats(response.crit_mult, 2.0),
             "crit mult: {}",
-            response.pvp_crit_mult
+            response.crit_mult
         );
     });
 }
@@ -277,28 +265,16 @@ fn test_bow_firing_data() {
     setup_bow();
     PERS_DATA.with(|perm_data| {
         let weapon = perm_data.borrow_mut().weapon.clone();
-        let mut response = weapon.calc_firing_data(None, None, true);
-        PERS_DATA.with(|perm_data| {
-            response.apply_pve_bonuses(
-                perm_data.borrow().activity.get_rpl_mult(),
-                perm_data.borrow().activity.get_pl_delta(),
-                perm_data.borrow().weapon.damage_mods.pve,
-                perm_data
-                    .borrow()
-                    .weapon
-                    .damage_mods
-                    .get_mod(&perm_data.borrow().enemy.type_),
-            )
-        });
+        let response = weapon.calc_firing_data(None, None, true);
         assert!(
-            cmp_floats(response.pvp_impact_damage, 100.0),
+            cmp_floats(response.impact_damage, 100.0),
             "impact damage: {}",
-            response.pvp_impact_damage
+            response.impact_damage
         );
         assert!(
-            cmp_floats(response.pvp_explosion_damage, 0.0),
+            cmp_floats(response.explosion_damage, 0.0),
             "explosive damage: {}",
-            response.pvp_explosion_damage
+            response.explosion_damage
         );
         assert!(
             cmp_floats(response.burst_delay, 20.0 / 30.0),
@@ -306,9 +282,14 @@ fn test_bow_firing_data() {
             response.burst_delay
         );
         assert!(
-            cmp_floats(response.pvp_crit_mult, 1.5 + (2.0 / 51.0)),
+            cmp_floats(response.burst_delay, 20.0 / 30.0),
+            "draw time: {}",
+            response.burst_delay
+        );
+        assert!(
+            cmp_floats(response.crit_mult, 1.5 + (2.0 / 51.0)),
             "crit mult: {}",
-            response.pvp_crit_mult
+            response.crit_mult
         );
     });
 }
