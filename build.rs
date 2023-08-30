@@ -1,3 +1,4 @@
+#![allow(clippy::all)]
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Number, Value};
 use std::collections::{BTreeMap, HashMap};
@@ -28,7 +29,9 @@ impl CachedBuildData {
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap()
             .as_secs();
-        if let std::collections::btree_map::Entry::Vacant(e) = self.perk_formula_timestamps.entry(uuid) {
+        if let std::collections::btree_map::Entry::Vacant(e) =
+            self.perk_formula_timestamps.entry(uuid)
+        {
             e.insert(now);
             now
         } else {
