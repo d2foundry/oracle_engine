@@ -46,7 +46,7 @@ Please fork the [d2foundry/oracle_engine](https://github.com/d2foundry/oracle_en
 * fix - fixes a bug
 * add - new perks, functionality, etc
 * data - we had wrong data
-* feature - generally also dependent on the frontend/needs kat
+* feat - generally also dependent on the frontend/needs kat
 
 # Thank You!
 
