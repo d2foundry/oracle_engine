@@ -32,6 +32,7 @@ pub struct CalculationInput<'a> {
 }
 impl<'a> CalculationInput<'a> {
     //stuff like mag size can use this, not reload, damage, etc.
+    #[allow(clippy::too_many_arguments)]
     pub fn construct_pve_sparse(
         _intrinsic_hash: u32,
         _firing_data: &'a FiringData,
@@ -69,6 +70,7 @@ impl<'a> CalculationInput<'a> {
             has_overshield: false,
         }
     }
+    #[allow(clippy::too_many_arguments)]
     pub fn construct_pvp(
         _intrinsic_hash: u32,
         _firing_data: &'a FiringData,
@@ -105,6 +107,7 @@ impl<'a> CalculationInput<'a> {
             has_overshield: _has_overshield,
         }
     }
+    #[allow(clippy::too_many_arguments)]
     pub fn construct_static(
         _intrinsic_hash: u32,
         _firing_data: &'a FiringData,
@@ -268,8 +271,7 @@ impl Default for RangeModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
-#[derive(Default)]
+#[derive(Debug, Clone, PartialEq, Default)]
 pub struct RefundResponse {
     pub crit: bool,
     pub requirement: i32,
@@ -389,8 +391,7 @@ impl Default for DamageResistModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
-#[derive(Default)]
+#[derive(Debug, Clone, PartialEq, Serialize, Default)]
 pub struct ModifierResponseSummary {
     pub rmr: Option<RangeModifierResponse>,
     pub dmr: Option<DamageModifierResponse>,
@@ -403,5 +404,3 @@ pub struct ModifierResponseSummary {
     pub drmr: Option<DamageResistModifierResponse>,
     pub statbump: Option<HashMap<BungieHash, StatBump>>,
 }
-
-
