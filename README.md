@@ -26,4 +26,4 @@ Once you have this installed you can build the app via this wasm-pack command.
 
 ## Contributing
 
-Looking to help contribute to Foundry? We welcome you to contribute to our project! Please see our [CONTRIBUTING.md](./CONTRIBUTING.md) to learn the various ways you can help us. Thank you for having in interest in contributing! 
+Looking to help contribute to Foundry? We welcome you to contribute to our project! Please see our [CONTRIBUTING.md](./CONTRIBUTING.md) to learn the various ways you can help us. Thank you for having an interest in contributing! 
