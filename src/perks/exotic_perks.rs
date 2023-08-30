@@ -842,12 +842,11 @@ pub fn exotic_perks() {
     add_fmr(
         Perks::RatPack,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
-            let val;
-            if _input.value > 0 {
-                val = clamp(_input.value - 1, 0, 4);
-            } else {
-                val = 0;
+            if _input.value == 0 {
+                return FiringModifierResponse::default();
             }
+            let val = clamp(_input.value - 1, 0, 4);
+
             FiringModifierResponse {
                 burst_delay_add: val as f64 * (-0.625 / 30.0),
                 ..Default::default()
