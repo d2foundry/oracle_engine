@@ -341,11 +341,10 @@ impl Weapon {
                 + (inner_burst_delay * (burst_size as f64 - 1.0))
                 + extra_charge_delay)
                 / burst_size as f64);
-        let rpm: f64;
-        if self.firing_data.one_ammo {
-            rpm = raw_rpm / burst_size as f64
+        let rpm = if self.firing_data.one_ammo {
+            raw_rpm / burst_size as f64
         } else {
-            rpm = raw_rpm
+            raw_rpm
         };
 
         FiringResponse {

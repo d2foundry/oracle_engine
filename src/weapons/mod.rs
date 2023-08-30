@@ -100,7 +100,7 @@ impl Weapon {
     }
     pub fn list_perks(&self) -> Vec<Perk> {
         let mut perk_list: Vec<Perk> = Vec::new();
-        for (_key, perk) in &self.perks {
+        for perk in self.perks.values() {
             perk_list.push(perk.clone());
         }
         perk_list
@@ -114,8 +114,8 @@ impl Weapon {
     }
     pub fn change_perk_val(&mut self, _perk_hash: u32, _val: u32) {
         let perk_opt = self.perks.get_mut(&_perk_hash);
-        if perk_opt.is_some() {
-            perk_opt.unwrap().value = _val;
+        if let Some(perk) = perk_opt {
+            perk.value = _val;
         }
         self.update_stats();
     }
@@ -215,11 +215,11 @@ impl Weapon {
         for (key, stat) in &mut self.stats {
             let a = static_stats.get(key);
             let b = dynamic_stats.get(key);
-            if a.is_some() {
-                stat.part_value = *a.unwrap();
+            if let Some(value) = a {
+                stat.part_value = *value;
             }
-            if b.is_some() {
-                stat.perk_value = *b.unwrap();
+            if let Some(value) = b {
+                stat.perk_value = *value;
             }
         }
     }
