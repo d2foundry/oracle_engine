@@ -795,7 +795,6 @@ pub fn year_1_perks() {
                 ReloadModifierResponse {
                     reload_stat_add: 100,
                     reload_time_scale: 0.9,
-                    ..Default::default()
                 }
             } else {
                 ReloadModifierResponse::default()
