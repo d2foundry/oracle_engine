@@ -456,21 +456,25 @@ pub struct ModifierResponseInput<'a> {
     pvp: bool,
     cached_data: &'a mut HashMap<String, f64>,
 }
+type ModifierFunction<T> = Box<dyn Fn(ModifierResponseInput) -> T>;
+type StatMap = HashMap<BungieHash, StatBump>;
+type ModifierMap<T> = HashMap<Perks, ModifierFunction<T>>;
+
 #[derive(Default)]
 pub struct PersistentModifierResponses {
-    pub sbr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> HashMap<BungieHash, StatBump>>>,
-    pub dmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> DamageModifierResponse>>,
-    pub hmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> HandlingModifierResponse>>,
-    pub rmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> RangeModifierResponse>>,
-    pub rsmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> ReloadModifierResponse>>,
-    pub fmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> FiringModifierResponse>>,
-    pub flmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> FlinchModifierResponse>>,
-    pub edr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> ExtraDamageResponse>>,
-    pub rr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> RefundResponse>>,
-    pub vmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> VelocityModifierResponse>>,
-    pub epr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> ExplosivePercentResponse>>,
-    pub mmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> MagazineModifierResponse>>,
-    pub imr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> InventoryModifierResponse>>,
+    pub sbr: ModifierMap<StatMap>,
+    pub dmr: ModifierMap<DamageModifierResponse>,
+    pub hmr: ModifierMap<HandlingModifierResponse>,
+    pub rmr: ModifierMap<RangeModifierResponse>,
+    pub rsmr: ModifierMap<ReloadModifierResponse>,
+    pub fmr: ModifierMap<FiringModifierResponse>,
+    pub flmr: ModifierMap<FlinchModifierResponse>,
+    pub edr: ModifierMap<ExtraDamageResponse>,
+    pub rr: ModifierMap<RefundResponse>,
+    pub vmr: ModifierMap<VelocityModifierResponse>,
+    pub epr: ModifierMap<ExplosivePercentResponse>,
+    pub mmr: ModifierMap<MagazineModifierResponse>,
+    pub imr: ModifierMap<InventoryModifierResponse>,
 }
 impl PersistentModifierResponses {
     fn is_empty(&self) -> bool {
@@ -594,67 +598,67 @@ impl PersistentModifierResponses {
     }
 }
 
-fn add_sbr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> HashMap<BungieHash, StatBump>>) {
+fn add_sbr(perk: Perks, func: ModifierFunction<StatMap>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().sbr.insert(perk, func);
     });
 }
-fn add_dmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> DamageModifierResponse>) {
+fn add_dmr(perk: Perks, func: ModifierFunction<DamageModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().dmr.insert(perk, func);
     });
 }
-fn add_hmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> HandlingModifierResponse>) {
+fn add_hmr(perk: Perks, func: ModifierFunction<HandlingModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().hmr.insert(perk, func);
     });
 }
-fn add_rmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> RangeModifierResponse>) {
+fn add_rmr(perk: Perks, func: ModifierFunction<RangeModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().rmr.insert(perk, func);
     });
 }
-fn add_rsmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> ReloadModifierResponse>) {
+fn add_rsmr(perk: Perks, func: ModifierFunction<ReloadModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().rsmr.insert(perk, func);
     });
 }
-fn add_fmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> FiringModifierResponse>) {
+fn add_fmr(perk: Perks, func: ModifierFunction<FiringModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().fmr.insert(perk, func);
     });
 }
-fn add_flmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> FlinchModifierResponse>) {
+fn add_flmr(perk: Perks, func: ModifierFunction<FlinchModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().flmr.insert(perk, func);
     });
 }
-fn add_edr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> ExtraDamageResponse>) {
+fn add_edr(perk: Perks, func: ModifierFunction<ExtraDamageResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().edr.insert(perk, func);
     });
 }
-fn add_rr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> RefundResponse>) {
+fn add_rr(perk: Perks, func: ModifierFunction<RefundResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().rr.insert(perk, func);
     });
 }
-fn add_vmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> VelocityModifierResponse>) {
+fn add_vmr(perk: Perks, func: ModifierFunction<VelocityModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().vmr.insert(perk, func);
     });
 }
-fn add_epr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> ExplosivePercentResponse>) {
+fn add_epr(perk: Perks, func: ModifierFunction<ExplosivePercentResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().epr.insert(perk, func);
     });
 }
-fn add_mmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> MagazineModifierResponse>) {
+fn add_mmr(perk: Perks, func: ModifierFunction<MagazineModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().mmr.insert(perk, func);
     });
 }
-fn add_imr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> InventoryModifierResponse>) {
+fn add_imr(perk: Perks, func: ModifierFunction<InventoryModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().imr.insert(perk, func);
     });
