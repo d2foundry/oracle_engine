@@ -10,6 +10,8 @@ Oracle Engine is [Foundry](https://d2foundry.gg)'s Rust and WebAssembly based De
 
 This is also where we plan on having our project board for keeping track of our tasks on a lower level. We hope that this will give insight on what we are spending our time on and what is in the near future. 
 
+If you wish to interact with us on a closer basis, our [Discord Server](https://discord.gg/dzW2DZBBQH) is where you find us and have discussions with like minded guardians. We look forward to seeing you there! 
+
 ## Building Oracle Engine for Foundry
 
 Run `cargo build` to install the dependencies required by Oracle Engine. 
