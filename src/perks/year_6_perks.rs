@@ -431,4 +431,53 @@ pub fn year_6_perks() {
             }
         }),
     );
+    add_sbr(
+        Perks::EnlightendAction,
+        Box::new(
+            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+                let shots_hit = _input.calc_data.total_shots_hit as i32;
+                let value = _input.value as i32;
+                let stat_per_stack = 10;
+                let max_stacks = 5;
+
+                let stat_bump = clamp(value + shots_hit, 0, max_stacks) * stat_per_stack;
+                HashMap::from([
+                    (StatHashes::RELOAD.into(), stat_bump),
+                    (StatHashes::HANDLING.into(), stat_bump),
+                ])
+            },
+        ),
+    );
+    add_hmr(
+        Perks::EnlightendAction,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                let shots_hit = _input.calc_data.total_shots_hit as i32;
+                let value = _input.value as i32;
+                let stat_per_stack = 10;
+                let max_stacks = 5;
+
+                let stat_bump = clamp(value + shots_hit, 0, max_stacks) * stat_per_stack;
+                HandlingModifierResponse {
+                    stat_add: stat_bump,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+    add_rsmr(
+        Perks::EnlightendAction,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            let shots_hit = _input.calc_data.total_shots_hit as i32;
+            let value = _input.value as i32;
+            let stat_per_stack = 10;
+            let max_stacks = 5;
+
+            let stat_bump = clamp(value + shots_hit, 0, max_stacks) * stat_per_stack;
+            ReloadModifierResponse {
+                reload_stat_add: stat_bump,
+                ..Default::default()
+            }
+        }),
+    );
 }

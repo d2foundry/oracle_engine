@@ -370,6 +370,7 @@ pub enum Perks {
     LooseChange = 1119449540,
     HighGround = 2319119708,
     HeadRush = 2565067140,
+    EnlightendAction = 3828510309,
 
     //subclass
     OnYourMark = 3066103999,
