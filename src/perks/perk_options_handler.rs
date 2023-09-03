@@ -289,6 +289,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         //season 22 | year 6
         Perks::PrecisionInstrument => Some(PerkOptionData::stacking(6)),
         Perks::LooseChange => Some(PerkOptionData::toggle()),
+        Perks::HighGround => Some(PerkOptionData::toggle()),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),

@@ -374,5 +374,21 @@ pub fn year_6_perks() {
                 HashMap::from([(StatHashes::RELOAD.into(), 50)])
             },
         ),
+    );
+
+    add_dmr(
+        Perks::HighGround,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let mult = if _input.pvp { 1.1 } else { 1.2 };
+            
+            DamageModifierResponse {
+                impact_dmg_scale: mult,
+                explosive_dmg_scale: mult,
+                ..Default::default()
+            }
+        }),
     )
 }

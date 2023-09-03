@@ -368,7 +368,7 @@ pub enum Perks {
     //seaqson 22 | year 6
     PrecisionInstrument = 555281244,
     LooseChange = 1119449540,
-
+    HighGround = 2319119708,
 
     //subclass
     OnYourMark = 3066103999,
