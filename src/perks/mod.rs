@@ -369,6 +369,7 @@ pub enum Perks {
     PrecisionInstrument = 555281244,
     LooseChange = 1119449540,
     HighGround = 2319119708,
+    HeadRush = 2565067140,
 
     //subclass
     OnYourMark = 3066103999,

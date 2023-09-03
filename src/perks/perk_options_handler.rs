@@ -290,6 +290,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::PrecisionInstrument => Some(PerkOptionData::stacking(6)),
         Perks::LooseChange => Some(PerkOptionData::toggle()),
         Perks::HighGround => Some(PerkOptionData::toggle()),
+        Perks::HeadRush => Some(PerkOptionData::toggle()),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),

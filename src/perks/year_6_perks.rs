@@ -383,12 +383,52 @@ pub fn year_6_perks() {
                 return DamageModifierResponse::default();
             }
             let mult = if _input.pvp { 1.1 } else { 1.2 };
-            
+
             DamageModifierResponse {
                 impact_dmg_scale: mult,
                 explosive_dmg_scale: mult,
                 ..Default::default()
             }
         }),
-    )
+    );
+    add_sbr(
+        Perks::HeadRush,
+        Box::new(
+            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+                if _input.value == 0 {
+                    return HashMap::new();
+                }
+                HashMap::from([
+                    (StatHashes::RELOAD.into(), 10),
+                    (StatHashes::HANDLING.into(), 0),
+                ])
+            },
+        ),
+    );
+    add_hmr(
+        Perks::HeadRush,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
+                //unknown at time
+                HandlingModifierResponse {
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+    add_rsmr(
+        Perks::HeadRush,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
+            ReloadModifierResponse {
+                reload_stat_add: 10,
+                ..Default::default()
+            }
+        }),
+    );
 }
