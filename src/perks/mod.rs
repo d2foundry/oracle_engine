@@ -365,6 +365,10 @@ pub enum Perks {
     UnsatedHunger = 2053642371,
     Discord = 3978468247,
 
+    //seaqson 22 | year 6
+    PrecisionInstrument = 555281244,
+    
+
     //subclass
     OnYourMark = 3066103999,
     Hedrons = 3469412970,
@@ -404,7 +408,6 @@ pub enum Perks {
     MementoMori = 647617635,
     AgersScepterCatalyst = 970163821,
     Broadhead = 2287699930,
-    //#[num_enum(alternatives = [891750166, 891750167, 3834106778])]
     HuntersTrace = 891750160,
 
     //energy exotic

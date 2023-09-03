@@ -334,4 +334,20 @@ pub fn year_6_perks() {
             stats
         }),
     );
+
+    add_dmr(
+        Perks::PrecisionInstrument,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let max_percent = if _input.is_enhanced { 0.26 } else { 0.25 };
+            let max_stacks = 6.0;
+            let shots_hit = _input.calc_data.total_shots_hit;
+
+            let stacks = clamp(_input.value as f64 + shots_hit, 0.0, max_stacks);
+
+            DamageModifierResponse {
+                crit_scale: 1.0 + stacks * max_percent / max_percent,
+                ..Default::default()
+            }
+        }),
+    );
 }

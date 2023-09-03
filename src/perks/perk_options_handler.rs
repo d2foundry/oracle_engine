@@ -286,6 +286,8 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::InvisibleHand => Some(PerkOptionData::toggle()),
         Perks::UnsatedHunger => Some(PerkOptionData::toggle()),
         Perks::Discord => Some(PerkOptionData::toggle()),
+        //season 22 | year 6
+        Perks::PrecisionInstrument => Some(PerkOptionData::stacking(6)),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
