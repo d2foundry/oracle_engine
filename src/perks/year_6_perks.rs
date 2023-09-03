@@ -1,4 +1,4 @@
-use std::{collections::HashMap, default};
+use std::{collections::HashMap, default, hash::Hash};
 
 use crate::d2_enums::{AmmoType, BungieHash, DamageType, StatBump, StatHashes, WeaponType};
 
@@ -350,4 +350,29 @@ pub fn year_6_perks() {
             }
         }),
     );
+
+    add_rsmr(
+        Perks::LooseChange,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
+            ReloadModifierResponse {
+                reload_stat_add: 50,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_sbr(
+        Perks::LooseChange,
+        Box::new(
+            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+                if _input.value == 0 {
+                    return HashMap::new();
+                }
+                HashMap::from([(StatHashes::RELOAD.into(), 50)])
+            },
+        ),
+    )
 }
