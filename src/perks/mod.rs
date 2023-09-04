@@ -118,7 +118,7 @@ pub enum Perks {
     LunaFaction = 3347978672,
     TomeOfDawn = 926349160,
     PathOfTheBurningSteps = 2500502982,
-    Foetracer = 2663272109,
+    KnuckleheadRadar = 2663272111,
     MechaneersTricksleeves = 481860151,
     Oathkeeper = 1449897496,
     SealedAhamkaraGrasps = 2805134531,

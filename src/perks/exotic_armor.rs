@@ -99,7 +99,7 @@ pub fn exotic_armor() {
     );
 
     add_sbr(
-        Perks::Foetracer,
+        Perks::KnuckleheadRadar,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
                 HashMap::from([(StatHashes::AIRBORNE.into(), 20)])
@@ -108,7 +108,7 @@ pub fn exotic_armor() {
     );
 
     add_dmr(
-        Perks::Foetracer,
+        Perks::KnuckleheadRadar,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let health_percent = _input.cached_data.get("health%").unwrap_or(&1.0).clone();
             if health_percent >= 0.3 || _input.value == 0 {

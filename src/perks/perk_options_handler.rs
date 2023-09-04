@@ -387,7 +387,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::LunaFaction => Some(PerkOptionData::options(
             ["Heal Rift", "Empowering Rift / Well"].to_vec(),
         )),
-        Perks::Foetracer => Some(PerkOptionData::toggle()),
+        Perks::KnuckleheadRadar => Some(PerkOptionData::toggle()),
         Perks::MechaneersTricksleeves => Some(PerkOptionData::toggle()),
         Perks::Oathkeeper => Some(PerkOptionData::static_()),
         Perks::SealedAhamkaraGrasps => Some(PerkOptionData::toggle()),
