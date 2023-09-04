@@ -345,7 +345,7 @@ pub fn year_6_perks() {
             let stacks = clamp(_input.value as f64 + shots_hit, 0.0, max_stacks);
 
             DamageModifierResponse {
-                crit_scale: 1.0 + stacks * max_percent / max_percent,
+                crit_scale: 1.0 + stacks * max_percent / max_stacks,
                 ..Default::default()
             }
         }),
