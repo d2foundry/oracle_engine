@@ -375,4 +375,18 @@ pub fn buff_perks() {
             }
         }),
     );
+    add_dmr(
+        Perks::Foetracers,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let mult = surge_buff(_input.cached_data, 4, _input.pvp);
+            DamageModifierResponse {
+                impact_dmg_scale: mult,
+                explosive_dmg_scale: mult,
+                ..Default::default()
+            }
+        }),
+    )
 }

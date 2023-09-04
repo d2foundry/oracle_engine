@@ -119,6 +119,7 @@ pub enum Perks {
     TomeOfDawn = 926349160,
     PathOfTheBurningSteps = 2500502982,
     KnuckleheadRadar = 2663272111,
+    Foetracers = 2663272109,
     MechaneersTricksleeves = 481860151,
     Oathkeeper = 1449897496,
     SealedAhamkaraGrasps = 2805134531,
