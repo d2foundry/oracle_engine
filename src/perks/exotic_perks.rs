@@ -797,21 +797,12 @@ pub fn exotic_perks() {
     add_rmr(
         Perks::DualSpeedReceiver,
         Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
-            let zoom_stat = _input
-                .calc_data
-                .stats
-                .get(&StatHashes::ZOOM.into())
-                .unwrap_or(&Stat::new())
-                .val() as f64;
-            let zoom_mult = (zoom_stat + 3.0) / zoom_stat;
-            if _input.value > 0 {
-                RangeModifierResponse {
-                    range_stat_add: 30,
-                    range_zoom_scale: zoom_mult,
-                    ..Default::default()
-                }
-            } else {
-                RangeModifierResponse::default()
+            if _input.value == 0 {
+                return RangeModifierResponse::default();
+            }
+            RangeModifierResponse {
+                range_stat_add: 30,
+                ..Default::default()
             }
         }),
     );
