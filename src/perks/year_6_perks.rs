@@ -1,4 +1,4 @@
-use std::{collections::HashMap, default};
+use std::{collections::HashMap, default, hash::Hash};
 
 use crate::d2_enums::{AmmoType, BungieHash, DamageType, StatBump, StatHashes, WeaponType};
 
@@ -332,6 +332,152 @@ pub fn year_6_perks() {
                 stats.insert(StatHashes::AIRBORNE.into(), 30);
             }
             stats
+        }),
+    );
+
+    add_dmr(
+        Perks::PrecisionInstrument,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let max_percent = if _input.is_enhanced { 0.26 } else { 0.25 };
+            let max_stacks = 6.0;
+            let shots_hit = _input.calc_data.total_shots_hit;
+
+            let stacks = clamp(_input.value as f64 + shots_hit, 0.0, max_stacks);
+
+            DamageModifierResponse {
+                crit_scale: 1.0 + stacks * max_percent / max_stacks,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_rsmr(
+        Perks::LooseChange,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
+            ReloadModifierResponse {
+                reload_stat_add: 50,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_sbr(
+        Perks::LooseChange,
+        Box::new(
+            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+                if _input.value == 0 {
+                    return HashMap::new();
+                }
+                HashMap::from([(StatHashes::RELOAD.into(), 50)])
+            },
+        ),
+    );
+
+    add_dmr(
+        Perks::HighGround,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let mult = if _input.pvp { 1.1 } else { 1.2 };
+
+            DamageModifierResponse {
+                impact_dmg_scale: mult,
+                explosive_dmg_scale: mult,
+                ..Default::default()
+            }
+        }),
+    );
+    add_sbr(
+        Perks::HeadRush,
+        Box::new(
+            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+                if _input.value == 0 {
+                    return HashMap::new();
+                }
+                HashMap::from([
+                    (StatHashes::RELOAD.into(), 10),
+                    (StatHashes::HANDLING.into(), 0),
+                ])
+            },
+        ),
+    );
+    add_hmr(
+        Perks::HeadRush,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
+                //unknown at time
+                HandlingModifierResponse {
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+    add_rsmr(
+        Perks::HeadRush,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
+            ReloadModifierResponse {
+                reload_stat_add: 10,
+                ..Default::default()
+            }
+        }),
+    );
+    add_sbr(
+        Perks::EnlightendAction,
+        Box::new(
+            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+                let shots_hit = _input.calc_data.total_shots_hit as i32;
+                let value = _input.value as i32;
+                let stat_per_stack = 10;
+                let max_stacks = 5;
+
+                let stat_bump = clamp(value + shots_hit, 0, max_stacks) * stat_per_stack;
+                HashMap::from([
+                    (StatHashes::RELOAD.into(), stat_bump),
+                    (StatHashes::HANDLING.into(), stat_bump),
+                ])
+            },
+        ),
+    );
+    add_hmr(
+        Perks::EnlightendAction,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                let shots_hit = _input.calc_data.total_shots_hit as i32;
+                let value = _input.value as i32;
+                let stat_per_stack = 10;
+                let max_stacks = 5;
+
+                let stat_bump = clamp(value + shots_hit, 0, max_stacks) * stat_per_stack;
+                HandlingModifierResponse {
+                    stat_add: stat_bump,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+    add_rsmr(
+        Perks::EnlightendAction,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            let shots_hit = _input.calc_data.total_shots_hit as i32;
+            let value = _input.value as i32;
+            let stat_per_stack = 10;
+            let max_stacks = 5;
+
+            let stat_bump = clamp(value + shots_hit, 0, max_stacks) * stat_per_stack;
+            ReloadModifierResponse {
+                reload_stat_add: stat_bump,
+                ..Default::default()
+            }
         }),
     );
 }

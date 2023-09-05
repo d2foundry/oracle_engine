@@ -286,6 +286,12 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::InvisibleHand => Some(PerkOptionData::toggle()),
         Perks::UnsatedHunger => Some(PerkOptionData::toggle()),
         Perks::Discord => Some(PerkOptionData::toggle()),
+        //season 22 | year 6
+        Perks::PrecisionInstrument => Some(PerkOptionData::stacking(6)),
+        Perks::LooseChange => Some(PerkOptionData::toggle()),
+        Perks::HighGround => Some(PerkOptionData::toggle()),
+        Perks::HeadRush => Some(PerkOptionData::toggle()),
+        Perks::EnlightendAction => Some(PerkOptionData::stacking(5)),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
@@ -381,7 +387,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::LunaFaction => Some(PerkOptionData::options(
             ["Heal Rift", "Empowering Rift / Well"].to_vec(),
         )),
-        Perks::Foetracer => Some(PerkOptionData::toggle()),
+        Perks::KnuckleheadRadar => Some(PerkOptionData::toggle()),
         Perks::MechaneersTricksleeves => Some(PerkOptionData::toggle()),
         Perks::Oathkeeper => Some(PerkOptionData::static_()),
         Perks::SealedAhamkaraGrasps => Some(PerkOptionData::toggle()),
@@ -403,6 +409,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Felwinters => Some(PerkOptionData::toggle()),
         Perks::SanguineAlchemy => Some(PerkOptionData::toggle()),
         Perks::TritonVice => Some(PerkOptionData::toggle()),
+        Perks::Foetracers => Some(PerkOptionData::toggle()),
 
         //misc
         Perks::UmbralSharpening => Some(PerkOptionData::stacking(5)),

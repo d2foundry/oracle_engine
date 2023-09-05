@@ -43,10 +43,8 @@ pub fn meta_perks() {
                 dmg_scale *= 1.4;
             }
 
-            if matches!(
-                _input.calc_data.weapon_type,
-                WeaponType::FUSIONRIFLE | WeaponType::LINEARFUSIONRIFLE
-            ) && _input.calc_data.intrinsic_hash < 1000
+            if *_input.calc_data.weapon_type == WeaponType::LINEARFUSIONRIFLE
+                && _input.calc_data.intrinsic_hash < 1000
             {
                 let charge_time = _input
                     .calc_data
@@ -54,10 +52,11 @@ pub fn meta_perks() {
                     .get(&StatHashes::CHARGE_TIME.into())
                     .unwrap();
                 //source: https://docs.google.com/spreadsheets/d/1QaUwtOW2_RJCTK1uaIGkbCoEXDa8UStvjDQSHSDxLOM/edit#gid=497378026
+                //damage value updated from harm and stardust during super DR testing
                 let total_damage = _input.calc_data.curr_firing_data.damage
                     * _input.calc_data.curr_firing_data.burst_size as f64;
                 let stat = (charge_time.perk_val() - charge_time.base_value) as f64;
-                dmg_scale *= 1.0 - (0.5 * stat) / total_damage;
+                dmg_scale *= 1.0 - (0.6 * stat) / total_damage;
             }
 
             DamageModifierResponse {

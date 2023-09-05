@@ -118,7 +118,8 @@ pub enum Perks {
     LunaFaction = 3347978672,
     TomeOfDawn = 926349160,
     PathOfTheBurningSteps = 2500502982,
-    Foetracer = 2663272109,
+    KnuckleheadRadar = 2663272111,
+    Foetracers = 2663272109,
     MechaneersTricksleeves = 481860151,
     Oathkeeper = 1449897496,
     SealedAhamkaraGrasps = 2805134531,
@@ -365,6 +366,13 @@ pub enum Perks {
     UnsatedHunger = 2053642371,
     Discord = 3978468247,
 
+    //seaqson 22 | year 6
+    PrecisionInstrument = 555281244,
+    LooseChange = 1119449540,
+    HighGround = 2319119708,
+    HeadRush = 2565067140,
+    EnlightendAction = 3828510309,
+
     //subclass
     OnYourMark = 3066103999,
     Hedrons = 3469412970,
@@ -404,7 +412,6 @@ pub enum Perks {
     MementoMori = 647617635,
     AgersScepterCatalyst = 970163821,
     Broadhead = 2287699930,
-    //#[num_enum(alternatives = [891750166, 891750167, 3834106778])]
     HuntersTrace = 891750160,
 
     //energy exotic
