@@ -9,7 +9,9 @@ use super::{enhanced_check, Perk, Perks};
 pub enum PerkValueVariant {
     Static,
     Toggle,
+    ActiveToggle,
     Slider,
+    ActiveSlider,
     Options,
 }
 impl Default for PerkValueVariant {
@@ -40,6 +42,13 @@ impl PerkOptionData {
             option_type: PerkValueVariant::Toggle,
         }
     }
+    pub fn active_toggle() -> PerkOptionData {
+        PerkOptionData {
+            stacks: (0, 1),
+            options: vec![],
+            option_type: PerkValueVariant::ActiveToggle,
+        }
+    }
     pub fn stacking(_stacks: u32) -> PerkOptionData {
         PerkOptionData {
             stacks: (0, _stacks),
@@ -47,11 +56,25 @@ impl PerkOptionData {
             option_type: PerkValueVariant::Slider,
         }
     }
+    pub fn active_stacking(_stacks: u32) -> PerkOptionData {
+        PerkOptionData {
+            stacks: (0, _stacks),
+            options: vec![],
+            option_type: PerkValueVariant::ActiveSlider,
+        }
+    }
     pub fn stacking_min(_stacks: u32, _min_stacks: u32) -> PerkOptionData {
         PerkOptionData {
             stacks: (_min_stacks, _stacks),
             options: vec![],
             option_type: PerkValueVariant::Slider,
+        }
+    }
+    pub fn active_stacking_min(_stacks: u32, _min_stacks: u32) -> PerkOptionData {
+        PerkOptionData {
+            stacks: (_min_stacks, _stacks),
+            options: vec![],
+            option_type: PerkValueVariant::ActiveSlider,
         }
     }
     pub fn options(_options: Vec<&str>) -> PerkOptionData {
