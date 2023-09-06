@@ -13,6 +13,7 @@ pub enum PerkValueVariant {
     Slider,
     ActiveSlider,
     Options,
+    ActiveOptions,
 }
 impl Default for PerkValueVariant {
     fn default() -> Self {
@@ -88,6 +89,17 @@ impl PerkOptionData {
             option_type: PerkValueVariant::Options,
         }
     }
+    pub fn active_options(_options: Vec<&str>) -> PerkOptionData {
+        let mut options = vec!["None".to_string()];
+        for option in _options {
+            options.push(option.to_string());
+        }
+        PerkOptionData {
+            stacks: (0, options.len() as u32 - 1),
+            options,
+            option_type: PerkValueVariant::ActiveOptions,
+        }
+    }
     pub fn options_raw(_options: Vec<&str>) -> PerkOptionData {
         let mut options = vec![];
         for option in _options {
@@ -97,6 +109,17 @@ impl PerkOptionData {
             stacks: (0, options.len() as u32 - 1),
             options,
             option_type: PerkValueVariant::Options,
+        }
+    }
+    pub fn active_options_raw(_options: Vec<&str>) -> PerkOptionData {
+        let mut options = vec![];
+        for option in _options {
+            options.push(option.to_string());
+        }
+        PerkOptionData {
+            stacks: (0, options.len() as u32 - 1),
+            options,
+            option_type: PerkValueVariant::ActiveOptions,
         }
     }
 }
