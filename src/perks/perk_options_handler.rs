@@ -5,15 +5,16 @@ use serde::Serialize;
 use super::{enhanced_check, Perk, Perks};
 
 #[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum PerkValueVariant {
-    STATIC,
-    TOGGLE,
-    SLIDER,
-    OPTIONS,
+    Static,
+    Toggle,
+    Slider,
+    Options,
 }
 impl Default for PerkValueVariant {
     fn default() -> Self {
-        PerkValueVariant::STATIC
+        PerkValueVariant::Static
     }
 }
 
@@ -29,28 +30,28 @@ impl PerkOptionData {
         PerkOptionData {
             stacks: (0, 0),
             options: vec![],
-            option_type: PerkValueVariant::STATIC,
+            option_type: PerkValueVariant::Static,
         }
     }
     pub fn toggle() -> PerkOptionData {
         PerkOptionData {
             stacks: (0, 1),
             options: vec![],
-            option_type: PerkValueVariant::TOGGLE,
+            option_type: PerkValueVariant::Toggle,
         }
     }
     pub fn stacking(_stacks: u32) -> PerkOptionData {
         PerkOptionData {
             stacks: (0, _stacks),
             options: vec![],
-            option_type: PerkValueVariant::SLIDER,
+            option_type: PerkValueVariant::Slider,
         }
     }
     pub fn stacking_min(_stacks: u32, _min_stacks: u32) -> PerkOptionData {
         PerkOptionData {
             stacks: (_min_stacks, _stacks),
             options: vec![],
-            option_type: PerkValueVariant::SLIDER,
+            option_type: PerkValueVariant::Slider,
         }
     }
     pub fn options(_options: Vec<&str>) -> PerkOptionData {
@@ -61,7 +62,7 @@ impl PerkOptionData {
         PerkOptionData {
             stacks: (0, options.len() as u32 - 1),
             options,
-            option_type: PerkValueVariant::OPTIONS,
+            option_type: PerkValueVariant::Options,
         }
     }
     pub fn options_raw(_options: Vec<&str>) -> PerkOptionData {
@@ -72,7 +73,7 @@ impl PerkOptionData {
         PerkOptionData {
             stacks: (0, options.len() as u32 - 1),
             options,
-            option_type: PerkValueVariant::OPTIONS,
+            option_type: PerkValueVariant::Options,
         }
     }
 }
