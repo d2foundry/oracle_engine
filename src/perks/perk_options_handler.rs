@@ -311,14 +311,14 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::UnsatedHunger => Some(PerkOptionData::toggle()),
         Perks::Discord => Some(PerkOptionData::toggle()),
         //season 22 | year 6
-        Perks::PrecisionInstrument => Some(PerkOptionData::stacking(6)),
+        Perks::PrecisionInstrument => Some(PerkOptionData::active_stacking(6)),
         Perks::LooseChange => Some(PerkOptionData::toggle()),
         Perks::HighGround => Some(PerkOptionData::toggle()),
         Perks::HeadRush => Some(PerkOptionData::toggle()),
-        Perks::EnlightendAction => Some(PerkOptionData::stacking(5)),
+        Perks::EnlightendAction => Some(PerkOptionData::active_stacking(5)),
 
         //exotics
-        Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
+        Perks::CranialSpike => Some(PerkOptionData::active_stacking(5)),
         Perks::DarkForgedTrigger => Some(PerkOptionData::options_raw(["Hip-Fire", "ADS"].to_vec())),
         Perks::AgersCall => Some(PerkOptionData::static_()),
         Perks::LagragianSight => Some(PerkOptionData::toggle()),
