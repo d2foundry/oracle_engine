@@ -145,6 +145,7 @@ pub enum Perks {
     SanguineAlchemy = 1420473289,
     EternalWarrior = 926976844,
     TritonVice = 187957397,
+    GlacialGuard = 185514250,
 
     //parts
     ImpactCasing = 3796465595,
