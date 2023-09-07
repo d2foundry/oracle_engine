@@ -123,29 +123,6 @@ pub fn meta_perks() {
         Perks::BuiltIn,
         Box::new(
             |_input: ModifierResponseInput| -> ExplosivePercentResponse {
-                if *_input.calc_data.weapon_type == WeaponType::GRENADELAUNCHER {
-                    let blast_radius_struct =
-                        _input.calc_data.stats.get(&StatHashes::BLAST_RADIUS.into());
-                    let blast_radius;
-                    if blast_radius_struct.is_none() {
-                        blast_radius = 0;
-                    } else {
-                        blast_radius = blast_radius_struct.unwrap().perk_val();
-                    };
-                    if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
-                        return ExplosivePercentResponse {
-                            percent: 0.5 + 0.003 * blast_radius as f64,
-                            delyed: 0.0,
-                            retain_base_total: true,
-                        };
-                    } else if _input.calc_data.ammo_type == &AmmoType::HEAVY {
-                        return ExplosivePercentResponse {
-                            percent: 0.7 + 0.00175 * blast_radius as f64,
-                            delyed: 0.0,
-                            retain_base_total: true,
-                        };
-                    };
-                }
                 if *_input.calc_data.weapon_type == WeaponType::ROCKET
                     && _input.calc_data.intrinsic_hash < 1000
                 //ensures not exotic
