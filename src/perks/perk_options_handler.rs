@@ -352,6 +352,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::ColdFusion => Some(PerkOptionData::toggle()),
         Perks::BlackHole => Some(PerkOptionData::static_()),
         Perks::TemporalUnlimiter => Some(PerkOptionData::toggle()),
+        Perks::TrinaryVision => Some(PerkOptionData::static_()),
         Perks::MarksmanSights => Some(PerkOptionData::static_()),
         Perks::DexterityMod => Some(PerkOptionData::stacking(3)),
         Perks::ReserveMod => Some(PerkOptionData::stacking(3)),
