@@ -1145,7 +1145,6 @@ pub fn exotic_perks() {
             if _input.pvp {
                 DamageModifierResponse {
                     explosive_dmg_scale: dead_messenger_pvp_nerf,
-                    impact_dmg_scale: dead_messenger_pvp_nerf,
                     ..Default::default()
                 }
             } else {
