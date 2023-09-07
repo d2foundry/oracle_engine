@@ -1136,5 +1136,20 @@ pub fn exotic_perks() {
                 ..Default::default()
             };
         }),
-    )
+    );
+
+    add_dmr(
+        Perks::TrinaryVision,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let dead_messenger_pvp_nerf = 0.65;
+            if _input.pvp {
+                DamageModifierResponse {
+                    explosive_dmg_scale: dead_messenger_pvp_nerf,
+                    ..Default::default()
+                }
+            } else {
+                DamageModifierResponse::default()
+            }
+        }),
+    );
 }
