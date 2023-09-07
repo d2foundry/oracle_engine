@@ -390,7 +390,6 @@ impl Weapon {
             .stats
             .get(&StatHashes::BLAST_RADIUS.into())
             .ok_or(GrenadeLauncherDamageErr::BlastRadiusMissing)?
-            .clone()
             .perk_val()
             .clamp(0, 100);
 
@@ -404,7 +403,7 @@ impl Weapon {
             match (self.intrinsic_hash, blast_radius) {
                 (ADAPTIVE_FRAME, 0..=9) => (-0.4030011045, 68.48685607, 0.3999973161, 156.0004464),
                 (ADAPTIVE_FRAME, 10..=100) => (-1.615571887, 80.60595314, 4.000030486, 120.0001854),
-                
+
                 _ => (0.0, 0.0, 0.0, 0.0),
             };
 
