@@ -386,7 +386,7 @@ impl Weapon {
             if epr.retain_base_total && self.firing_data.crit_mult > 1.0 {
                 crit = (self.firing_data.crit_mult - 1.0) / (1.0 - epr.percent) + 1.0
             }
-            delay = epr.delyed;
+            delay = epr.delay;
         }
         (impact, explosion, crit, delay)
     }
