@@ -292,6 +292,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::HighGround => Some(PerkOptionData::toggle()),
         Perks::HeadRush => Some(PerkOptionData::toggle()),
         Perks::EnlightendAction => Some(PerkOptionData::stacking(5)),
+        Perks::Desperation => Some(PerkOptionData::toggle()),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),

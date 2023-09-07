@@ -373,6 +373,7 @@ pub enum Perks {
     HighGround = 2319119708,
     HeadRush = 2565067140,
     EnlightendAction = 3828510309,
+    Desperation = 525593296,
 
     //subclass
     OnYourMark = 3066103999,
