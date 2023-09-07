@@ -480,18 +480,4 @@ pub fn year_6_perks() {
             }
         }),
     );
-    add_fmr(
-        Perks::Desperation,
-        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
-            let mut delay_mult = 1.0;
-            let duration = 7.0;
-            if _input.calc_data.time_total < duration && _input.value > 0 {
-                delay_mult = 0.8;
-            };
-            FiringModifierResponse {
-                burst_delay_scale: delay_mult,
-                ..Default::default()
-            }
-        }),
-    )
 }

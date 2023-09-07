@@ -373,7 +373,6 @@ pub enum Perks {
     HighGround = 2319119708,
     HeadRush = 2565067140,
     EnlightendAction = 3828510309,
-    Desperation = 525593296,
 
     //subclass
     OnYourMark = 3066103999,
@@ -415,6 +414,7 @@ pub enum Perks {
     AgersScepterCatalyst = 970163821,
     Broadhead = 2287699930,
     HuntersTrace = 891750160,
+    Desperation = 525593296,
 
     //energy exotic
     LagragianSight = 2881100038,
