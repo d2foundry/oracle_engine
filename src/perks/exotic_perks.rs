@@ -127,6 +127,21 @@ pub fn exotic_perks() {
         }),
     );
 
+    add_dmr( //Revision Zero alt fire
+        Perks::HuntersTrace,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = if _input.pvp { 158.2 } else { 306.0 };
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                crit_scale: 3.0,
+                ..Default::default()
+            }
+        }),
+    );
+
+
+
     add_dmr(
         Perks::MementoMori,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
