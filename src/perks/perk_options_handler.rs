@@ -376,6 +376,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::MoebiusQuiver => Some(PerkOptionData::static_()),
         Perks::Broadhead => Some(PerkOptionData::static_()),
         Perks::HuntersTrace => Some(PerkOptionData::toggle()),
+        Perks::Desperation => Some(PerkOptionData::toggle()),
 
         Perks::DragonShadow => Some(PerkOptionData::toggle()),
         Perks::OphidianAspect => Some(PerkOptionData::static_()),

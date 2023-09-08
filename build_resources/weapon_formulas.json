@@ -47,7 +47,8 @@
         "3755070117": {"name": "Sweet Business",     "cat": "default",  "subFam": "SweetBuiss",  "magProf": "sweet_buiss", "pve":1.16},
         "3602718766": {"name": "Quicksilver Storm",  "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
         "1385166695": {"name": "Centrifuse",         "cat": "default",  "subFam": "Precision",   "magProf": "small"},
-
+        "4184462049": {"name": "Necrochasm",         "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
+        
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.125, "offset_start": 10.75, "vpp_end": 0.0, "offset_end": 40.0, "floor_percent": 0.5},
