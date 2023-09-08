@@ -1140,13 +1140,12 @@ pub fn exotic_perks() {
     add_fmr(
         Perks::Desperation,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
-            let mut delay_mult = 1.0;
             let duration = 7.0;
-            if _input.calc_data.time_total < duration && _input.value > 0 {
-                delay_mult = 0.8;
-            };
+            if _input.value == 0 || _input.calc_data.time_total > duration {
+                FiringModifierResponse::default();
+            }
             FiringModifierResponse {
-                burst_delay_scale: delay_mult,
+                burst_delay_scale: 0.8,
                 ..Default::default()
             }
         }),
