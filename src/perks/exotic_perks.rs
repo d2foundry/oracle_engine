@@ -1136,5 +1136,18 @@ pub fn exotic_perks() {
                 ..Default::default()
             };
         }),
-    )
+    );
+    add_fmr(
+        Perks::Desperation,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            let duration = 7.0;
+            if _input.value == 0 || _input.calc_data.time_total > duration {
+                return FiringModifierResponse::default();
+            }
+            FiringModifierResponse {
+                burst_delay_scale: 0.8,
+                ..Default::default()
+            }
+        }),
+    );
 }
