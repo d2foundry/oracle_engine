@@ -480,4 +480,19 @@ pub fn year_6_perks() {
             }
         }),
     );
+    add_dmr(
+        Perks::SwordLogic,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = match _input.value {
+                0 => 1.0,
+                1..=3 => 1.05 + (0.1 * _input.value as f64),
+                4.. => 1.5,
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    )
 }
