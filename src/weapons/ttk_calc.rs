@@ -167,7 +167,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
         let mut opt_timeline_headshots = opt_headshots;
 
         // walk back and turn headshots to bodyshots
-        for timeline_snapshot in opt_bullet_timeline.iter().rev() {
+        for timeline_snapshot in opt_bullet_timeline.iter() {
             let _body_damage = timeline_snapshot.0;
             let headshot_diff = timeline_snapshot.1;
 

@@ -47,7 +47,8 @@
         "3755070117": {"name": "Sweet Business",     "cat": "default",  "subFam": "SweetBuiss",  "magProf": "sweet_buiss", "pve":1.16},
         "3602718766": {"name": "Quicksilver Storm",  "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
         "1385166695": {"name": "Centrifuse",         "cat": "default",  "subFam": "Precision",   "magProf": "small"},
-
+        "4184462049": {"name": "Necrochasm",         "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
+        
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.125, "offset_start": 10.75, "vpp_end": 0.0, "offset_end": 40.0, "floor_percent": 0.5},
@@ -369,7 +370,7 @@
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.09,"offset_start": 16.00,"vpp_end": 0.03,"offset_end": 29, "floor_percent": 0.33},
-                "reload":   {"evpp": 0.000129019, "vpp": -0.0363945, "offset": 4.19575, "ammo_percent": 0.71},
+                "reload":   {"evpp": 0.00006137590643, "vpp": -0.02385522011, "offset": 3.600042253, "ammo_percent": 0.71},
                 "handling": {
                     "ready":{"vpp": -0.002942857143, "offset": 0.4782571429},
                     "stow": {"vpp": -0.002952380952, "offset": 0.5133809524},
@@ -379,7 +380,7 @@
             },
             "120 RPM": {
                 "range":    {"vpp_start": 0.09,"offset_start": 18,"vpp_end": 0.02,"offset_end": 32, "floor_percent": 0.33},
-                "reload":   {"evpp": 0.000129019, "vpp": -0.0363945, "offset": 4.19575, "ammo_percent": 0.71},
+                "reload":   {"evpp": 0.00006137590643, "vpp": -0.02385522011, "offset": 3.600042253, "ammo_percent": 0.71},
                 "handling": {
                     "ready":{"vpp": -0.002942857143, "offset": 0.4782571429},
                     "stow": {"vpp": -0.002952380952, "offset": 0.5133809524},
@@ -389,7 +390,7 @@
             },
             "Eriana": {
                 "range":    {"vpp_start": 0.0,"offset_start": 38.0,"vpp_end": 0.0,"offset_end": 70.0, "floor_percent": 0.33},
-                "reload":   {"evpp": 0.000129019, "vpp": -0.0363945, "offset": 4.19575, "ammo_percent": 0.71},
+                "reload":   {"evpp": 0.00006137590643, "vpp": -0.02385522011, "offset": 3.600042253, "ammo_percent": 0.71},
                 "handling": {
                     "ready":{"vpp": -0.002942857143, "offset": 0.4782571429},
                     "stow": {"vpp": -0.002952380952, "offset": 0.5133809524},
@@ -399,7 +400,7 @@
             },
             "LastWord": {
                 "range":    {"vpp_start": 0.0,"offset_start": 19.3,"vpp_end": 0.0,"offset_end": 29.67, "floor_percent": 0.33},
-                "reload":   {"evpp": 0.000129019, "vpp": -0.0363945, "offset": 4.19575, "ammo_percent": 0.71},
+                "reload":   {"evpp": 0.00006137590643, "vpp": -0.02385522011, "offset": 3.600042253, "ammo_percent": 0.71},
                 "handling": {
                     "ready":{"vpp": -0.002942857143, "offset": 0.4782571429},
                     "stow": {"vpp": -0.002952380952, "offset": 0.5133809524},
