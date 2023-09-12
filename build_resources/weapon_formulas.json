@@ -417,7 +417,7 @@
             "Crimson":    {"damage": 19.0, "crit_mult": 5,  "burst_delay": 7,  "burst_size": 3, "inner_burst_delay": 3},
             "Eriana":     {"damage": 78.0, "crit_mult": 5,  "burst_delay": 20, "burst_size": 1, "inner_burst_delay": 0},
             "LastWord":   {"damage": 38.03, "crit_mult": 15, "burst_delay": 8,  "burst_size": 1, "inner_burst_delay": 0},
-            "HeavyBurst": {"damage": 25.006, "crit_mult": 15, "burst_delay": 10, "burst_size": 2, "inner_burst_delay": 4}
+            "HeavyBurst": {"damage": 25.006, "crit_mult": 15, "burst_delay": 11, "burst_size": 2, "inner_burst_delay": 3}
         },
         "magProf": {
             "small": {
