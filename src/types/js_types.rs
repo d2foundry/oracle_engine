@@ -1,29 +1,22 @@
-use std::{
-    collections::HashMap,
-    fmt::{self, write},
-};
+
+use std::fmt;
 
 use crate::{
     activity::damage_calc::DifficultyOptions,
     enemies::EnemyType,
-    perks::Perk,
-    types::rs_types::StatQuadraticFormula,
     weapons::{
         ttk_calc::{BodyKillData, OptimalKillData, ResillienceSummary},
         Stat,
     },
 };
 use serde::{Deserialize, Serialize};
-// use tsify::Tsify;
 use wasm_bindgen::{
-    convert::{IntoWasmAbi, WasmSlice},
     prelude::wasm_bindgen,
     JsValue,
 };
 
 use super::rs_types::{
-    AmmoFormula, AmmoResponse, DamageMods, DpsResponse, FiringData, FiringResponse,
-    HandlingFormula, HandlingResponse, RangeFormula, RangeResponse, ReloadFormula, ReloadResponse,
+    AmmoResponse, DpsResponse, FiringResponse, HandlingResponse, RangeResponse, ReloadResponse,
 };
 
 #[derive(Debug, Clone, Copy, Serialize)]

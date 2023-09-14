@@ -4,13 +4,10 @@ use crate::{
     d2_enums::{AmmoType, DamageType, WeaponType},
     database,
     perks::{enhanced_check, Perk},
-    types::rs_types::{
-        AmmoFormula, DamageMods, DataPointers, HandlingFormula, RangeFormula, ReloadFormula,
-        StatQuadraticFormula, WeaponPath,
-    },
+    types::formula_types::*,
 };
 
-use super::{FiringData, Weapon};
+use super::Weapon;
 
 fn get_data_pointers(_weapon_type_id: u8, _intrinsic_hash: u32) -> Result<DataPointers, String> {
     let pointer_map: HashMap<WeaponPath, DataPointers> = HashMap::from(database::DATA_POINTERS);
@@ -43,9 +40,9 @@ impl Weapon {
 
         let reload_formula: ReloadFormula = database::RELOAD_DATA[data_pointer.rl];
 
-        let damage_mods: DamageMods = database::SCALAR_DATA[data_pointer.s];
+        let damage_mods: DamageModFormula = database::SCALAR_DATA[data_pointer.s];
 
-        let firing_data: FiringData = database::FIRING_DATA[data_pointer.f];
+        let firing_data: FiringDataFormula = database::FIRING_DATA[data_pointer.f];
 
         let ammo_formula: AmmoFormula = database::AMMO_DATA[data_pointer.a];
 

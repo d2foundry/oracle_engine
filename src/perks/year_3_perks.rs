@@ -18,20 +18,18 @@ use super::{
 pub fn year_3_perks() {
     add_mmr(
         Perks::ClownCartridge,
-        Box::new(
-            |_input: ModifierResponseInput| -> MagazineModifierResponse {
-                MagazineModifierResponse {
-                    magazine_add: 0.0,
-                    magazine_scale: 1.5,
-                    magazine_stat_add: 0,
-                }
-            },
-        ),
+        |_input: ModifierResponseInput| -> MagazineModifierResponse {
+            MagazineModifierResponse {
+                magazine_add: 0.0,
+                magazine_scale: 1.5,
+                magazine_stat_add: 0,
+            }
+        },
     );
 
     add_sbr(
         Perks::ElementalCapacitor,
-        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             let ev = if _input.is_enhanced { 5 } else { 0 };
             if _input.value == 1 {
@@ -46,28 +44,26 @@ pub fn year_3_perks() {
                 stats.insert(StatHashes::AIRBORNE.into(), 20 + ev);
             };
             stats
-        }),
+        },
     );
 
     add_hmr(
         Perks::ElementalCapacitor,
-        Box::new(
-            |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                let mut handling = 0;
-                if _input.value == 3 {
-                    handling = if _input.is_enhanced { 55 } else { 50 };
-                };
-                HandlingModifierResponse {
-                    stat_add: handling,
-                    ..Default::default()
-                }
-            },
-        ),
+        |_input: ModifierResponseInput| -> HandlingModifierResponse {
+            let mut handling = 0;
+            if _input.value == 3 {
+                handling = if _input.is_enhanced { 55 } else { 50 };
+            };
+            HandlingModifierResponse {
+                stat_add: handling,
+                ..Default::default()
+            }
+        },
     );
 
     add_rsmr(
         Perks::ElementalCapacitor,
-        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+        |_input: ModifierResponseInput| -> ReloadModifierResponse {
             let mut reload = 0;
             if _input.value == 2 {
                 reload = if _input.is_enhanced { 55 } else { 50 };
@@ -76,24 +72,24 @@ pub fn year_3_perks() {
                 reload_stat_add: reload,
                 ..Default::default()
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::KillingWind,
-        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
                 stats.insert(StatHashes::HANDLING.into(), 40);
                 stats.insert(StatHashes::RANGE.into(), 20);
             };
             stats
-        }),
+        },
     );
 
     add_rmr(
         Perks::KillingWind,
-        Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
+        |_input: ModifierResponseInput| -> RangeModifierResponse {
             if _input.value > 0 {
                 RangeModifierResponse {
                     range_stat_add: 20,
@@ -109,39 +105,37 @@ pub fn year_3_perks() {
                     range_hip_scale: 1.0,
                 }
             }
-        }),
+        },
     );
 
     add_hmr(
         Perks::KillingWind,
-        Box::new(
-            |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                if _input.value > 0 {
-                    HandlingModifierResponse {
-                        stat_add: 40,
-                        ..Default::default()
-                    }
-                } else {
-                    HandlingModifierResponse::default()
+        |_input: ModifierResponseInput| -> HandlingModifierResponse {
+            if _input.value > 0 {
+                HandlingModifierResponse {
+                    stat_add: 40,
+                    ..Default::default()
                 }
-            },
-        ),
+            } else {
+                HandlingModifierResponse::default()
+            }
+        },
     );
 
     add_dmr(
         Perks::LastingImpression,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+        |_input: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0,
                 explosive_dmg_scale: 1.25,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::Vorpal,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+        |_input: ModifierResponseInput| -> DamageModifierResponse {
             let mut buff = 1.0;
             if (*_input.calc_data.enemy_type == EnemyType::BOSS
                 || *_input.calc_data.enemy_type == EnemyType::MINIBOSS
@@ -161,12 +155,12 @@ pub fn year_3_perks() {
                 explosive_dmg_scale: buff,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::TrenchBarrel,
-        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut buffer: HashMap<u32, i32> = HashMap::new();
             let bump = if _input.is_enhanced { 35 } else { 30 };
             if _input.value > 0 {
@@ -175,28 +169,26 @@ pub fn year_3_perks() {
                 buffer.insert(StatHashes::RELOAD.into(), bump);
             }
             buffer
-        }),
+        },
     );
 
     add_hmr(
         Perks::TrenchBarrel,
-        Box::new(
-            |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                if _input.value == 0 {
-                    return HandlingModifierResponse::default();
-                }
-                HandlingModifierResponse {
-                    stat_add: if _input.is_enhanced { 35 } else { 30 },
-                    ..Default::default()
-                }
-            },
-        ),
+        |_input: ModifierResponseInput| -> HandlingModifierResponse {
+            if _input.value == 0 {
+                return HandlingModifierResponse::default();
+            }
+            HandlingModifierResponse {
+                stat_add: if _input.is_enhanced { 35 } else { 30 },
+                ..Default::default()
+            }
+        },
     );
 
     //ready for when someone finds the reload information
     add_rsmr(
         Perks::TrenchBarrel,
-        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+        |_input: ModifierResponseInput| -> ReloadModifierResponse {
             if _input.value == 0 {
                 return ReloadModifierResponse::default();
             }
@@ -204,12 +196,12 @@ pub fn year_3_perks() {
                 reload_stat_add: if _input.is_enhanced { 35 } else { 30 },
                 ..Default::default()
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::TrenchBarrel,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+        |_input: ModifierResponseInput| -> DamageModifierResponse {
             if _input.value > 0 {
                 return DamageModifierResponse {
                     impact_dmg_scale: 1.5,
@@ -218,6 +210,6 @@ pub fn year_3_perks() {
                 };
             }
             DamageModifierResponse::default()
-        }),
+        },
     );
 }

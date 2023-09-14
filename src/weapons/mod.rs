@@ -1,4 +1,6 @@
-pub mod dps_calc;
+// TODO: get dps back in while coping with it wont be perfect
+//      under current system
+// pub mod dps_calc;
 pub mod reserve_calc;
 pub mod stat_calc;
 pub mod ttk_calc;
@@ -6,19 +8,17 @@ pub mod weapon_constructor;
 
 use std::collections::HashMap;
 
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 
-use crate::d2_enums::{AmmoType, DamageType, StatHashes, WeaponType};
-use crate::enemies::Enemy;
+use crate::d2_enums::{AmmoType, DamageType, WeaponType};
 use crate::perks::{
-    get_magazine_modifier, get_reserve_modifier, get_stat_bumps, lib::CalculationInput, Perk,
+    get_stat_bumps, lib::CalculationInput, Perk,
 };
 
-use crate::types::rs_types::{
-    AmmoFormula, DamageMods, DpsResponse, FiringData, HandlingFormula, RangeFormula, ReloadFormula,
+use crate::types::formula_types::{
+    AmmoFormula, DamageModFormula, FiringDataFormula, HandlingFormula, RangeFormula,
+    ReloadFormula,
 };
-
-use self::dps_calc::complex_dps_calc;
 
 #[derive(Debug, Clone)]
 pub struct PsuedoWeapon {}
@@ -71,8 +71,8 @@ pub struct Weapon {
     #[serde(skip)]
     pub perk_value_map: HashMap<u32, u32>,
 
-    pub damage_mods: DamageMods,
-    pub firing_data: FiringData,
+    pub damage_mods: DamageModFormula,
+    pub firing_data: FiringDataFormula,
     pub range_formula: RangeFormula,
     pub ammo_formula: AmmoFormula,
     pub handling_formula: HandlingFormula,
@@ -131,8 +131,8 @@ impl Weapon {
         self.perks = HashMap::new();
         self.stats = HashMap::new();
         self.hash = 0;
-        self.damage_mods = DamageMods::default();
-        self.firing_data = FiringData::default();
+        self.damage_mods = DamageModFormula::default();
+        self.firing_data = FiringDataFormula::default();
         self.range_formula = RangeFormula::default();
         self.ammo_formula = AmmoFormula::default();
         self.handling_formula = HandlingFormula::default();
@@ -223,9 +223,6 @@ impl Weapon {
             }
         }
     }
-    pub fn calc_dps(&self, _enemy: Enemy, _pl_dmg_mult: f64) -> DpsResponse {
-        complex_dps_calc(self.clone(), _enemy, _pl_dmg_mult)
-    }
 }
 impl Default for Weapon {
     fn default() -> Weapon {
@@ -237,8 +234,8 @@ impl Default for Weapon {
             stats: HashMap::new(),
             perk_value_map: HashMap::new(),
 
-            damage_mods: DamageMods::default(),
-            firing_data: FiringData::default(),
+            damage_mods: DamageModFormula::default(),
+            firing_data: FiringDataFormula::default(),
 
             range_formula: RangeFormula::default(),
             ammo_formula: AmmoFormula::default(),

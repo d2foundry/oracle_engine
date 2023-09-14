@@ -1,3 +1,9 @@
+//quiet rust analyzer while refactoring
+#![allow(unused_imports)]
+
+//is because the people who make num enum dont know how to make macros
+#![allow(non_upper_case_globals)]
+
 pub mod buff_perks;
 pub mod exotic_armor;
 pub mod exotic_perks;
@@ -13,13 +19,12 @@ pub mod year_4_perks;
 pub mod year_5_perks;
 pub mod year_6_perks;
 
-use std::borrow::BorrowMut;
 use std::collections::HashMap;
 
 use num_enum::{FromPrimitive, IntoPrimitive};
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 
-use crate::d2_enums::{BungieHash, StatBump, StatHashes, WeaponType};
+use crate::d2_enums::{BungieHash, StatBump};
 use crate::database;
 
 use self::{
@@ -83,7 +88,6 @@ pub fn enhanced_check(_hash: u32) -> (u32, bool) {
 }
 
 // all armor pekrs are for the future but wanted to started to compile them now
-
 #[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, FromPrimitive, IntoPrimitive)]
 #[repr(u32)]
 pub enum Perks {
@@ -466,7 +470,7 @@ pub struct ModifierResponseInput<'a> {
     pvp: bool,
     cached_data: &'a mut HashMap<String, f64>,
 }
-type ModifierFunction<T> = Box<dyn Fn(ModifierResponseInput) -> T>;
+type ModifierFunction<T> = fn(ModifierResponseInput) -> T;
 type StatMap = HashMap<BungieHash, StatBump>;
 type ModifierMap<T> = HashMap<Perks, ModifierFunction<T>>;
 

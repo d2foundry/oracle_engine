@@ -1,8 +1,7 @@
 #![allow(dead_code)]
 use super::Activity;
-use crate::{enemies::EnemyType, logging, types::rs_types::DamageMods};
+use crate::logging;
 use piecewise_linear::PiecewiseLinearFunction;
-use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone)]
 pub struct DifficultyData {
@@ -13,8 +12,7 @@ pub struct DifficultyData {
 
 const WEAPON_DELTA_EXPONENT: f64 = 0.00672;
 
-#[derive(Debug, Clone)]
-#[derive(Default)]
+#[derive(Debug, Clone, Default)]
 pub enum DifficultyOptions {
     #[default]
     NORMAL = 1,

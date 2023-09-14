@@ -1,16 +1,16 @@
 use crate::{
-    d2_enums::{AmmoType, BungieHash, DamageSource, DamageType, StatBump, StatHashes, WeaponType},
+    d2_enums::{AmmoType, BungieHash, DamageSource, DamageType, StatBump, WeaponType},
     enemies::EnemyType,
-    types::rs_types::{FiringData, HandlingResponse},
+    types::{rs_types::HandlingResponse, formula_types::FiringDataFormula},
     weapons::Stat,
 };
 use serde::Serialize;
-use std::{cell::RefCell, collections::HashMap, ops::Mul};
+use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
 pub struct CalculationInput<'a> {
     pub intrinsic_hash: u32,
-    pub curr_firing_data: &'a FiringData,
+    pub curr_firing_data: &'a FiringDataFormula,
     pub base_crit_mult: f64,
     pub shots_fired_this_mag: f64,
     pub total_shots_fired: f64,
@@ -35,7 +35,7 @@ impl<'a> CalculationInput<'a> {
     #[allow(clippy::too_many_arguments)]
     pub fn construct_pve_sparse(
         _intrinsic_hash: u32,
-        _firing_data: &'a FiringData,
+        _firing_data: &'a FiringDataFormula,
         _stats: &'a HashMap<u32, Stat>,
         _perk_value_map: &'a HashMap<u32, u32>,
         _weapon_type: &'a WeaponType,
@@ -73,7 +73,7 @@ impl<'a> CalculationInput<'a> {
     #[allow(clippy::too_many_arguments)]
     pub fn construct_pvp(
         _intrinsic_hash: u32,
-        _firing_data: &'a FiringData,
+        _firing_data: &'a FiringDataFormula,
         _stats: &'a HashMap<u32, Stat>,
         _perk_value_map: &'a HashMap<u32, u32>,
         _weapon_type: &'a WeaponType,
@@ -110,7 +110,7 @@ impl<'a> CalculationInput<'a> {
     #[allow(clippy::too_many_arguments)]
     pub fn construct_static(
         _intrinsic_hash: u32,
-        _firing_data: &'a FiringData,
+        _firing_data: &'a FiringDataFormula,
         _stats: &'a HashMap<u32, Stat>,
         _perk_value_map: &'a HashMap<u32, u32>,
         _weapon_type: &'a WeaponType,

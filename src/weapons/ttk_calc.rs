@@ -4,16 +4,10 @@ use serde::Serialize;
 
 use crate::{
     d2_enums::WeaponType,
-    logging::extern_log,
-    perks::{get_dmg_modifier, get_firing_modifier, lib::CalculationInput},
+    perks::{get_dmg_modifier, get_firing_modifier},
 };
 
-use super::{FiringData, Weapon};
-
-//just to make code cleaner for now
-fn ceil(x: f64) -> f64 {
-    x.ceil()
-}
+use super::Weapon;
 
 const RESILIENCE_VALUES: [f64; 11] = [
     185.001, 186.001, 187.001, 188.001, 189.001, 190.001, 192.001, 194.001, 196.001, 198.01, 200.00,

@@ -1,11 +1,11 @@
 use std::collections::HashMap;
-use std::{cell::RefCell, rc::Rc};
+use std::rc::Rc;
 
 use super::Weapon;
 use crate::d2_enums::{AmmoType, WeaponType};
 use crate::enemies::Enemy;
 use crate::perks::lib::{
-    CalculationInput, ExtraDamageResponse, RefundResponse, ReloadOverrideResponse,
+    CalculationInput, ExtraDamageResponse, RefundResponse,
 };
 use crate::perks::*;
 use crate::types::rs_types::DpsResponse;

@@ -12,12 +12,11 @@ use crate::{
             HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
             RangeModifierResponse, ReloadModifierResponse,
         },
-        Perks,
     },
-    types::rs_types::{
-        AmmoFormula, AmmoResponse, FiringResponse, HandlingFormula, HandlingResponse, RangeFormula,
-        RangeResponse, ReloadFormula, ReloadResponse,
-    },
+    types::{rs_types::{
+        AmmoResponse, FiringResponse, HandlingResponse,
+        RangeResponse, ReloadResponse,
+    }, formula_types::*}
 };
 
 impl ReloadFormula {
@@ -38,8 +37,8 @@ impl Weapon {
         _cached_data: Option<&mut HashMap<String, f64>>,
         _pvp: bool,
     ) -> ReloadResponse {
-        let mut default_chd_dt = HashMap::new();
-        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
+        let mut default_cache_data = HashMap::new();
+        let cached_data = _cached_data.unwrap_or(&mut default_cache_data);
 
         let mut reload_stat = self
             .stats
@@ -455,10 +454,8 @@ impl Weapon {
 //this should be in weapons_formulas
 fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f64, ()> {
     //EXCEPTIONS
+    // TODO: make this system not cringe 🙏
     const LAST_WORD: u32 = 2770223582;
-    const ACE_OF_SPACEDS: u32 = 647617635; //only during memento
-    const DEVILS_RUIN: u32 = 334466122; //only when laser
-    const REVISION_ZERO: u32 = 2770223582; //only in hunters trance
     const CRIMSON: u32 = 1030990989;
     const VEX_MYTHOCLAST: u32 = 3610750208;
     const FORERUNNER: u32 = 2984682260;

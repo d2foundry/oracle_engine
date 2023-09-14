@@ -99,7 +99,7 @@ impl UuidTimestamp for StatQuadraticFormula {
 }
 
 #[derive(Debug, Clone, Serialize, Default)]
-pub struct DamageMods {
+pub struct DamageModFormula {
     pub pve: f64,
     pub minor: f64,
     pub elite: f64,
@@ -109,9 +109,9 @@ pub struct DamageMods {
     pub vehicle: f64,
     pub timestamp: u64,
 }
-impl From<&Map<String, Value>> for DamageMods {
+impl From<&Map<String, Value>> for DamageModFormula {
     fn from(_val: &Map<String, Value>) -> Self {
-        DamageMods {
+        DamageModFormula {
             pve: 1.0,
             minor: _val
                 .get("minor")
@@ -147,10 +147,10 @@ impl From<&Map<String, Value>> for DamageMods {
         }
     }
 }
-impl DamageMods {
+impl DamageModFormula {
     pub fn add_pve_mult(self, mult: f64) -> Self {
         // not super memory efficient but it works
-        DamageMods {
+        DamageModFormula {
             pve: mult,
             minor: self.minor,
             elite: self.elite,
@@ -162,7 +162,7 @@ impl DamageMods {
         }
     }
 }
-impl UuidTimestamp for DamageMods {
+impl UuidTimestamp for DamageModFormula {
     fn uuid(&self) -> f64 {
         (self.pve - 12.0) * 6729.0
             + self.minor * 18342.0
@@ -294,7 +294,7 @@ impl UuidTimestamp for AmmoFormula {
 }
 
 #[derive(Debug, Clone, Serialize, Default)]
-pub struct FiringData {
+pub struct FiringDataFormula {
     pub damage: f64,
     pub crit_mult: f64,
     pub burst_delay: f64,
@@ -304,9 +304,9 @@ pub struct FiringData {
     pub charge: bool,
     pub timestamp: u64,
 }
-impl From<&Map<String, Value>> for FiringData {
+impl From<&Map<String, Value>> for FiringDataFormula {
     fn from(_val: &Map<String, Value>) -> Self {
-        FiringData {
+        FiringDataFormula {
             damage: _val["damage"].as_f64().unwrap_or_default(),
             crit_mult: _val["crit_mult"].as_f64().unwrap_or_default(),
             burst_delay: _val["burst_delay"].as_f64().unwrap_or_default(),
@@ -326,7 +326,7 @@ impl From<&Map<String, Value>> for FiringData {
         }
     }
 }
-impl UuidTimestamp for FiringData {
+impl UuidTimestamp for FiringDataFormula {
     fn uuid(&self) -> f64 {
         (self.damage * 821.88
             + self.crit_mult * 388.1
@@ -382,7 +382,7 @@ fn main() {
     //write imports in file
     let res = writeln!(
         formula_file,
-        "use crate::types::rs_types::{{StatQuadraticFormula, RangeFormula, HandlingFormula, ReloadFormula, DamageMods, AmmoFormula, DataPointers, FiringData, WeaponPath}};");
+        "use crate::types::prelude::*;");
     if res.is_err() {
         panic!("cargo:warning=error writing imports");
     }
@@ -496,8 +496,8 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
     let mut range_data: Vec<RangeFormula> = vec![RangeFormula::default()];
     let mut reload_data: Vec<ReloadFormula> = vec![ReloadFormula::default()];
     let mut ammo_data: Vec<AmmoFormula> = vec![AmmoFormula::default()];
-    let mut firing_data: Vec<FiringData> = vec![FiringData::default()];
-    let mut scalar_data: Vec<DamageMods> = vec![DamageMods::default()];
+    let mut firing_data: Vec<FiringDataFormula> = vec![FiringDataFormula::default()];
+    let mut scalar_data: Vec<DamageModFormula> = vec![DamageModFormula::default()];
 
     let mut updated_weapon_defs: Vec<(WeaponPath, DataPointers)> = Vec::new();
     for (weapon_id, inner_values) in new_jdata.as_object().unwrap() {
@@ -647,7 +647,7 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
                     handling_data.push(handling);
                 }
 
-                let b_scalar: DamageMods = cat
+                let b_scalar: DamageModFormula = cat
                     .get("combatant_scalars")
                     .unwrap_or_else(|| {
                         err_list.push(format!(
@@ -686,7 +686,7 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
                     ammo_data.push(ammo);
                 }
 
-                let mut firing: FiringData = (&fam).into();
+                let mut firing: FiringDataFormula = (&fam).into();
                 firing.burst_delay *= 1.0 / 30.0;
                 firing.inner_burst_delay *= 1.0 / 30.0;
                 firing.crit_mult = 1.5 + (firing.crit_mult / 51.0);
@@ -752,14 +752,14 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
     write_variable(
         formula_file,
         "SCALAR_DATA",
-        &format!("[DamageMods; {}]", scalar_data.len()),
+        &format!("[DamageModFormula; {}]", scalar_data.len()),
         format!("{:?}", scalar_data),
         "Array of combatant scalar formulas",
     );
     write_variable(
         formula_file,
         "FIRING_DATA",
-        &format!("[FiringData; {}]", firing_data.len()),
+        &format!("[FiringDataFormula; {}]", firing_data.len()),
         format!("{:?}", firing_data),
         "Array of firing data formulas",
     );

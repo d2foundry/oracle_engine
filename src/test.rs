@@ -15,6 +15,7 @@ fn cmp_floats<T: Float + Zero>(a: T, b: T) -> bool {
     (a - b).abs() < delta
 }
 
+#[allow(unused)]
 fn cmp_floats_delta<T: Float + Zero>(a: T, b: T, delta: T) -> bool {
     (a - b).abs() < delta
 }
