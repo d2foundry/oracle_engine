@@ -12,7 +12,7 @@ This is also where we plan on having our project board for keeping track of our 
 
 If you wish to interact with us on a closer basis, our [Discord Server](https://discord.gg/dzW2DZBBQH) is where you can find us and have discussions with like minded guardians. We look forward to seeing you there! 
 
-## Building Oracle Engine for Foundry
+## Building Oracle Engine
 
 Run `cargo build` to install the dependencies required by Oracle Engine. 
 
