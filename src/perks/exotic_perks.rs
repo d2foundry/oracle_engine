@@ -835,7 +835,7 @@ pub fn exotic_perks() {
                 burst_delay_add: val as f64 * (-0.625 / 30.0),
                 ..Default::default()
             }
-        },
+        }
     );
 
     add_mmr(
@@ -1123,6 +1123,7 @@ pub fn exotic_perks() {
             }
         },
     );
+
     add_fmr(
         Perks::Desperation,
         |_input: ModifierResponseInput| -> FiringModifierResponse {

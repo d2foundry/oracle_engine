@@ -281,7 +281,7 @@ pub fn year_1_perks() {
                 out.insert(StatHashes::STABILITY.into(), stabiltiy);
             }
             out
-        },
+        }
     );
 
     add_hmr(

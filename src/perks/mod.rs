@@ -1,3 +1,4 @@
+
 //quiet rust analyzer while refactoring
 #![allow(unused_imports)]
 //is because the people who make num enum dont know how to make macros
@@ -469,6 +470,7 @@ pub struct ModifierResponseInput<'a> {
     pvp: bool,
     cached_data: &'a mut HashMap<String, f64>,
 }
+
 type ModifierFunction<T> = fn(ModifierResponseInput) -> T;
 type StatMap = HashMap<BungieHash, StatBump>;
 type ModifierMap<T> = HashMap<Perks, ModifierFunction<T>>;

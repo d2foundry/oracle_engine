@@ -27,7 +27,7 @@ pub fn exotic_armor() {
                 modifier.explosive_dmg_scale = value;
             }
             modifier
-        },
+        }
     );
 
     add_dmr(
@@ -43,7 +43,7 @@ pub fn exotic_armor() {
                 impact_dmg_scale: damage_mult,
                 ..Default::default()
             }
-        },
+        }
     );
 
     //doesnt work for sturm overcharge, (maybe) memento
@@ -73,7 +73,7 @@ pub fn exotic_armor() {
                 impact_dmg_scale: 1.0 + mult * _input.value.clamp(0, 10) as f64,
                 ..Default::default()
             }
-        },
+        }
     );
 
     add_sbr(
@@ -84,7 +84,7 @@ pub fn exotic_armor() {
                 stats.insert(StatHashes::AIRBORNE.into(), 50);
             }
             stats
-        },
+        }
     );
 
     add_flmr(
@@ -95,14 +95,14 @@ pub fn exotic_armor() {
             } else {
                 FlinchModifierResponse::default()
             }
-        },
+        }
     );
 
     add_sbr(
         Perks::KnuckleheadRadar,
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             HashMap::from([(StatHashes::AIRBORNE.into(), 20)])
-        },
+        }
     );
 
     add_dmr(
@@ -118,7 +118,7 @@ pub fn exotic_armor() {
                 explosive_dmg_scale: modifier,
                 crit_scale: 1.0,
             }
-        },
+        }
     );
 
     //TODO: MECHANEER'S TRICKSLEEVES AUTORELOAD
@@ -133,7 +133,7 @@ pub fn exotic_armor() {
                 stats.insert(StatHashes::RELOAD.into(), 100);
             };
             stats
-        },
+        }
     );
 
     add_hmr(
@@ -147,7 +147,7 @@ pub fn exotic_armor() {
             } else {
                 HandlingModifierResponse::default()
             }
-        },
+        }
     );
     add_rsmr(
         Perks::MechaneersTricksleeves,
@@ -160,7 +160,7 @@ pub fn exotic_armor() {
             } else {
                 ReloadModifierResponse::default()
             }
-        },
+        }
     );
 
     add_dmr(
@@ -176,7 +176,7 @@ pub fn exotic_armor() {
             } else {
                 DamageModifierResponse::default()
             }
-        },
+        }
     );
 
     add_sbr(
@@ -188,22 +188,8 @@ pub fn exotic_armor() {
                 stats.insert(StatHashes::DRAW_TIME.into(), 10);
             };
             stats
-        },
+        }
     );
-
-    /*add_fmr(
-        Perks::Oathkeeper,
-        |_input: ModifierResponsInput| -> FiringModifierResponse {
-            FiringModifierResponse {
-                burst_delay_add: match _input.calc_data.intrinsic_hash {
-                    906 => -36.0 / 1100.0,
-                    905 => -40.0 / 1100.0,
-                    _ => 0.0,
-                },
-                ..Default::default()
-            }
-        },
-    );*/
 
     add_sbr(
         Perks::SealedAhamkaraGrasps,
@@ -228,7 +214,7 @@ pub fn exotic_armor() {
                 stat.insert(StatHashes::HANDLING.into(), 100);
             };
             stat
-        },
+        }
     );
 
     add_hmr(
@@ -242,7 +228,7 @@ pub fn exotic_armor() {
                 };
             }
             HandlingModifierResponse::default()
-        },
+        }
     );
 
     add_sbr(
@@ -253,7 +239,7 @@ pub fn exotic_armor() {
                 stats.insert(StatHashes::AIRBORNE.into(), 30);
             };
             stats
-        },
+        }
     );
 
     add_dmr(
@@ -269,7 +255,7 @@ pub fn exotic_armor() {
                 explosive_dmg_scale: buff,
                 ..Default::default()
             }
-        },
+        }
     );
 
     add_sbr(
@@ -282,7 +268,7 @@ pub fn exotic_armor() {
                 stats.insert(StatHashes::AIRBORNE.into(), 30);
             }
             stats
-        },
+        }
     );
 
     //TODO: AUTORELOAD ON ACTIUM WAR RIG
@@ -330,21 +316,21 @@ pub fn exotic_armor() {
                 };
             }
             HandlingModifierResponse::default()
-        },
+        }
     );
 
     add_sbr(
         Perks::PeregrineGreaves,
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             HashMap::from([(StatHashes::AIRBORNE.into(), 20)])
-        },
+        }
     );
 
     add_sbr(
         Perks::EyeOfAnotherWorld,
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             HashMap::from([(StatHashes::AIRBORNE.into(), 15)])
-        },
+        }
     );
 
     add_sbr(
@@ -356,7 +342,7 @@ pub fn exotic_armor() {
                 stats.insert(StatHashes::HANDLING.into(), 100);
             }
             stats
-        },
+        }
     );
 
     add_hmr(
@@ -369,7 +355,7 @@ pub fn exotic_armor() {
                 draw_add: 100,
                 ..Default::default()
             }
-        },
+        }
     );
 
     add_sbr(
