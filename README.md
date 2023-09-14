@@ -18,7 +18,7 @@ Run `cargo build` to install the dependencies required by Oracle Engine.
 
 In order to build the WebAssembly (wasm) pack you will need to download wasm-pack from this [site](https://rustwasm.github.io/wasm-pack/installer/) or via this cURL command:
 
-`curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh`
+`cargo install wasm-pack`
 
 Once you have this installed you can build the app via this wasm-pack command.
 
