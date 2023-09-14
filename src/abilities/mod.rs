@@ -14,7 +14,7 @@ pub enum AbilityType {
 }
 
 #[allow(dead_code)]
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Copy, Default)]
 pub struct AbilityDamageProfile {
     impact: f64,
     secondary: f64,

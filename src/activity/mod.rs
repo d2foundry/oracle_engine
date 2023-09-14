@@ -11,7 +11,7 @@ pub enum PlayerClass {
     Warlock = 3,
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Copy, Default)]
 pub struct Player {
     pub power: u32,
     pub wep_power: u32,

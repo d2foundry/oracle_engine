@@ -156,7 +156,6 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
         )
         .reserve_size;
 
-    #[allow(unused_mut)]
     while reserve > 0 {
         let mut shots_this_mag = 0;
         //MAGAZINE/////////////////////

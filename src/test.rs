@@ -11,11 +11,12 @@ use crate::{
 
 const FLOAT_DELTA: f32 = 0.0001;
 fn cmp_floats<T: Float + Zero>(a: T, b: T) -> bool {
+    #[allow(clippy::unwrap_used)]
     let delta = T::from(FLOAT_DELTA).unwrap();
     (a - b).abs() < delta
 }
 
-#[allow(unused)]
+#[allow(dead_code)]
 fn cmp_floats_delta<T: Float + Zero>(a: T, b: T, delta: T) -> bool {
     (a - b).abs() < delta
 }
@@ -36,7 +37,7 @@ fn setup_pulse() {
         1,          //primary
         3373582085, //kinetic
     )
-    .unwrap();
+    .expect("Failed to generate weapon");
     let mut stats = HashMap::new();
     stats.insert(StatHashes::RELOAD.into(), Stat::from(50));
     stats.insert(StatHashes::HANDLING.into(), Stat::from(50));
@@ -60,7 +61,7 @@ fn test_pulse_setup() {
         let test_stat = weapon
             .get_stats()
             .get(&(StatHashes::HANDLING.into()))
-            .unwrap()
+            .expect("Failed to get stat")
             .val();
         assert_eq!(test_stat, 50, "test_stat: {}", test_stat);
     });
@@ -186,7 +187,7 @@ fn setup_bow() {
         2,          //special
         3949783978, //strand
     )
-    .unwrap();
+    .expect("Failed to generate weapon");
     let mut stats = HashMap::new();
     stats.insert(StatHashes::RELOAD.into(), Stat::from(50));
     stats.insert(StatHashes::HANDLING.into(), Stat::from(50));
@@ -210,7 +211,7 @@ fn test_bow_setup() {
         let test_stat = weapon
             .get_stats()
             .get(&(StatHashes::HANDLING.into()))
-            .unwrap()
+            .expect("Failed to get stat")
             .val();
         assert_eq!(test_stat, 50, "test_stat: {}", test_stat);
     });
@@ -323,14 +324,15 @@ fn test_phase_mag() {
         1,          //primary
         3949783978, //strand
     )
-    .unwrap();
+    .expect("Failed to generate weapon");
+
     let precision = Weapon::generate_weapon(
         3240434620, 24,         //smg
         1636108362, //precision
         1,          //primary
         3949783978, //strand
     )
-    .unwrap();
+    .expect("Failed to generate weapon");
 
     //setup perks
     map_perks();

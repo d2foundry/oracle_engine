@@ -240,6 +240,7 @@ impl Weapon {
         let mut out;
         let mut default_chd_dt = HashMap::new();
         let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
+        #[allow(clippy::unwrap_used)]
         if _calc_input.is_some() {
             let mag_modifiers = get_magazine_modifier(
                 self.list_perks(),
@@ -294,6 +295,7 @@ impl Weapon {
         let firing_modifiers: FiringModifierResponse;
         let mut default_cached_data = HashMap::new();
         let cached_data = _cached_data.unwrap_or(&mut default_cached_data);
+        #[allow(clippy::unwrap_used)]
         if _calc_input.is_some() {
             firing_modifiers = get_firing_modifier(
                 self.list_perks(),

@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 ///Describes the addresses of all the formulas for a given weapon
 /// based off the weapon path
-#[derive(Debug, Clone)]
+#[derive(Debug, Copy, Clone)]
 pub struct DataPointers {
     pub h: usize,
     pub r: usize,
@@ -13,7 +13,7 @@ pub struct DataPointers {
 }
 
 ///The path to a weapon in the database
-#[derive(Debug, Clone, Hash, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub struct WeaponPath(
     //type id
     pub u32,

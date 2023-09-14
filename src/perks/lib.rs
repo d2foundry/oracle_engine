@@ -143,7 +143,7 @@ impl<'a> CalculationInput<'a> {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
 pub struct DamageModifierResponse {
     pub impact_dmg_scale: f64,
     pub explosive_dmg_scale: f64,
@@ -159,7 +159,7 @@ impl Default for DamageModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct ExtraDamageResponse {
     pub additive_damage: f64,
     pub time_for_additive_damage: f64,
@@ -194,7 +194,7 @@ impl Default for ExtraDamageResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
 pub struct ReloadModifierResponse {
     pub reload_stat_add: i32,
     pub reload_time_scale: f64,
@@ -208,7 +208,7 @@ impl Default for ReloadModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
 pub struct FiringModifierResponse {
     pub burst_delay_scale: f64,
     pub burst_delay_add: f64,
@@ -226,7 +226,7 @@ impl Default for FiringModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
 pub struct HandlingModifierResponse {
     pub stat_add: i32,
     //separated stats
@@ -253,7 +253,7 @@ impl Default for HandlingModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
 pub struct RangeModifierResponse {
     pub range_stat_add: i32,
     pub range_all_scale: f64,
@@ -271,7 +271,7 @@ impl Default for RangeModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Default)]
 pub struct RefundResponse {
     pub crit: bool,
     pub requirement: i32,
@@ -279,7 +279,7 @@ pub struct RefundResponse {
     pub refund_reserves: i32,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
 pub struct MagazineModifierResponse {
     pub magazine_stat_add: i32,
     pub magazine_scale: f64,
@@ -295,7 +295,7 @@ impl Default for MagazineModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
 pub struct InventoryModifierResponse {
     pub inv_stat_add: i32,
     pub inv_scale: f64,
@@ -311,7 +311,7 @@ impl Default for InventoryModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
 pub struct FlinchModifierResponse {
     pub flinch_scale: f64,
 }
@@ -321,7 +321,7 @@ impl Default for FlinchModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct VelocityModifierResponse {
     pub velocity_scaler: f64,
 }
@@ -333,7 +333,7 @@ impl Default for VelocityModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct ReloadOverrideResponse {
     pub valid: bool,
     pub reload_time: f64,
@@ -357,7 +357,7 @@ impl ReloadOverrideResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct ExplosivePercentResponse {
     pub percent: f64,
     pub delyed: f64,
@@ -373,7 +373,7 @@ impl Default for ExplosivePercentResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
 pub struct DamageResistModifierResponse {
     pub body_shot_resist: f64,
     pub head_shot_resist: f64,

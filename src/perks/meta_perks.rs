@@ -50,7 +50,7 @@ pub fn meta_perks() {
                     .calc_data
                     .stats
                     .get(&StatHashes::CHARGE_TIME.into())
-                    .unwrap();
+                    .expect("Charge time not found");
                 //source: https://docs.google.com/spreadsheets/d/1QaUwtOW2_RJCTK1uaIGkbCoEXDa8UStvjDQSHSDxLOM/edit#gid=497378026
                 //damage value updated from harm and stardust during super DR testing
                 let total_damage = _input.calc_data.curr_firing_data.damage
@@ -70,7 +70,6 @@ pub fn meta_perks() {
     add_fmr(
         Perks::BuiltIn,
         |_input: ModifierResponseInput| -> FiringModifierResponse {
-            #[allow(unused_mut)]
             let mut delay_add = 0.0;
 
             if matches!(
@@ -82,7 +81,7 @@ pub fn meta_perks() {
                     .calc_data
                     .stats
                     .get(&StatHashes::CHARGE_TIME.into())
-                    .unwrap();
+                    .expect("Charge time not found");
                 let stat = (charge_time.perk_val() - charge_time.base_value) as f64;
                 delay_add -= match _input.calc_data.weapon_type {
                     WeaponType::FUSIONRIFLE => stat * 0.0040,
@@ -96,8 +95,7 @@ pub fn meta_perks() {
                     .calc_data
                     .stats
                     .get(&StatHashes::DRAW_TIME.into())
-                    .unwrap()
-                    .clone();
+                    .expect("Draw time not found");
                 delay_add += match _input.calc_data.intrinsic_hash {
                     //Lightweights, Wishender, Ticcus, Verglas
                     905 | 1470121888 | 3239299468 | 2636679416 => {

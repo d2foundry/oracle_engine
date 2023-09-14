@@ -33,10 +33,9 @@ fn get_log_level() -> LogLevel {
 }
 
 pub fn extern_log(s: &str, log_level: LogLevel) {
-    if log_level > get_log_level() {
-        return;
+    if log_level < get_log_level() {
+        crate::console_log!("{}", s);
     }
-    crate::console_log!("{}", s);
 }
 
 pub fn log(s: &str, log_level: usize) {

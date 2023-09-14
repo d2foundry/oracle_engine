@@ -13,7 +13,7 @@ const RESILIENCE_VALUES: [f64; 11] = [
     185.001, 186.001, 187.001, 188.001, 189.001, 190.001, 192.001, 194.001, 196.001, 198.01, 200.00,
 ];
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Copy, Serialize)]
 pub struct OptimalKillData {
     pub headshots: i32,
     pub bodyshots: i32,
@@ -21,14 +21,14 @@ pub struct OptimalKillData {
     pub time_taken: f64,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Copy, Serialize)]
 pub struct BodyKillData {
     pub bodyshots: i32,
     #[serde(rename = "timeTaken")]
     pub time_taken: f64,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Copy, Serialize)]
 pub struct ResillienceSummary {
     pub value: i32,
     #[serde(rename = "bodyTtk")]

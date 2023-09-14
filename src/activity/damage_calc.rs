@@ -1,18 +1,18 @@
-#![allow(dead_code)]
+// #![allow(dead_code)]
 use super::Activity;
 use crate::logging;
 use piecewise_linear::PiecewiseLinearFunction;
 
 #[derive(Debug, Clone)]
 pub struct DifficultyData {
-    name: String,
+    // name: String,
     cap: i32,
     table: PiecewiseLinearFunction<f64>,
 }
 
 const WEAPON_DELTA_EXPONENT: f64 = 0.00672;
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Copy, Default)]
 pub enum DifficultyOptions {
     #[default]
     NORMAL = 1,
@@ -24,7 +24,7 @@ impl DifficultyOptions {
     pub fn get_difficulty_data(&self) -> DifficultyData {
         match self {
             DifficultyOptions::NORMAL => DifficultyData {
-                name: "Normal".to_string(),
+                // name: "Normal".to_string(),
                 cap: 50,
                 table: PiecewiseLinearFunction::try_from(vec![
                     (-99.0, 0.4018),
@@ -39,10 +39,10 @@ impl DifficultyOptions {
                     (-10.0, 0.7800),
                     (0.0, 1.0),
                 ])
-                .unwrap(),
+                .expect("Failed to create PiecewiseLinearFunction in difficulty data"),
             },
             DifficultyOptions::MASTER => DifficultyData {
-                name: "Master".to_string(),
+                // name: "Master".to_string(),
                 cap: 20,
                 table: PiecewiseLinearFunction::try_from(vec![
                     (-99.0, 0.4018),
@@ -57,10 +57,10 @@ impl DifficultyOptions {
                     (-10.0, 0.6800),
                     (0.0, 0.8500),
                 ])
-                .unwrap(),
+                .expect("Failed to create PiecewiseLinearFunction in difficulty data"),
             },
             DifficultyOptions::RAID => DifficultyData {
-                name: "Raid & Dungeon".to_string(),
+                // name: "Raid & Dungeon".to_string(),
                 cap: 20,
                 table: PiecewiseLinearFunction::try_from(vec![
                     (-99.0, 0.4018),
@@ -75,7 +75,7 @@ impl DifficultyOptions {
                     (-10.0, 0.73),
                     (0.0, 0.925),
                 ])
-                .unwrap(),
+                .expect("Failed to create PiecewiseLinearFunction in difficulty data"),
             },
         }
     }
@@ -109,7 +109,7 @@ pub(super) fn get_gear_delta_mult(_activity: &Activity) -> f64 {
     } else {
         difficulty_data.table.y_at_x(0.0)
     }
-    .unwrap();
+    .expect("Failed to get gear delta mult");
 
     crate::logging::log(
         format!("gear_delta_mult: {}", gear_delta_mult).as_str(),

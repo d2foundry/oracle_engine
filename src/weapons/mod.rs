@@ -17,10 +17,8 @@ use crate::types::formula_types::{
     AmmoFormula, DamageModFormula, FiringDataFormula, HandlingFormula, RangeFormula, ReloadFormula,
 };
 
-#[derive(Debug, Clone)]
-pub struct PsuedoWeapon {}
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Copy, Serialize)]
 pub struct Stat {
     pub base_value: i32,
     pub part_value: i32,

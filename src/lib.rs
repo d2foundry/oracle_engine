@@ -1,3 +1,31 @@
+// #![forbid(clippy::all)]//, clippy::pedantic, clippy::nursery, clippy::cargo
+#![warn(
+    missing_copy_implementations,
+    single_use_lifetimes,
+    variant_size_differences,
+    clippy::many_single_char_names,
+    clippy::get_unwrap,
+    clippy::unwrap_in_result,
+    clippy::unwrap_used,
+    clippy::panicking_unwrap,
+    arithmetic_overflow,
+    missing_debug_implementations
+)]
+#![forbid(
+    while_true,
+    absolute_paths_not_starting_with_crate,
+    bare_trait_objects,
+    semicolon_in_expressions_from_macros,
+    trivial_casts,
+    trivial_numeric_casts,
+    unreachable_pub,
+    unused_import_braces,
+    unused_lifetimes,
+    redundant_semicolons
+)]
+
+
+
 extern crate alloc;
 
 use logging::LogLevel;
@@ -73,6 +101,7 @@ extern "C" {
 
 #[macro_export]
 macro_rules! console_log {
+    // ($($t:tt)*) => ()
     ($($t:tt)*) => ($crate::log(&format_args!($($t)*).to_string()))
 }
 
@@ -87,6 +116,7 @@ pub fn start() {
 
 #[wasm_bindgen(js_name = "getMetadata")]
 pub fn get_metadata() -> Result<JsMetaData, JsValue> {
+    #[allow(clippy::unwrap_used)]
     let metadata = JsMetaData {
         api_timestamp: built_info::BUILT_TIME_UTC,
         api_version: built_info::PKG_VERSION,
@@ -99,7 +129,7 @@ pub fn get_metadata() -> Result<JsMetaData, JsValue> {
 #[wasm_bindgen(js_name = "stringifyWeapon")]
 pub fn weapon_as_string() -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
-    Ok(serde_wasm_bindgen::to_value(&weapon).unwrap())
+    serde_wasm_bindgen::to_value(&weapon).map_err(JsValue::from)
 }
 
 //
@@ -151,16 +181,12 @@ pub fn get_stats() -> Result<JsValue, JsValue> {
     for (key, value) in stat_map {
         js_stat_map.insert(key, JsStat::from(value));
     }
-    let value = serde_wasm_bindgen::to_value(&js_stat_map);
-    if value.is_err() {
-        return Err(JsValue::from_str("Could not convert stats to JsValue"));
-    }
-    Ok(value.unwrap())
+    serde_wasm_bindgen::to_value(&js_stat_map).map_err(JsValue::from)
 }
 
 #[wasm_bindgen(js_name = "setStats")]
 pub fn set_stats(_stats: JsValue) -> Result<(), JsValue> {
-    let in_stats: HashMap<u32, i32> = serde_wasm_bindgen::from_value(_stats).unwrap();
+    let in_stats: HashMap<u32, i32> = serde_wasm_bindgen::from_value(_stats).map_err(JsValue::from)?;
     let mut stats = HashMap::new();
     for (key, value) in in_stats {
         stats.insert(key, Stat::from(value));
@@ -173,7 +199,7 @@ pub fn set_stats(_stats: JsValue) -> Result<(), JsValue> {
 pub fn add_perk(_stats: JsValue, _value: u32, _hash: u32) -> Result<(), JsValue> {
     let data = perks::enhanced_check(_hash);
     let perk = Perk {
-        stat_buffs: serde_wasm_bindgen::from_value(_stats).unwrap(),
+        stat_buffs: serde_wasm_bindgen::from_value(_stats).map_err(JsValue::from)?,
         enhanced: data.1,
         value: _value,
         raw_hash: _hash,
@@ -208,13 +234,10 @@ pub fn change_perk_value(perk_hash: u32, new_value: u32) {
 #[wasm_bindgen(js_name = "getTraitOptions")]
 pub fn get_perk_options_js(_perks: Vec<u32>) -> Result<JsValue, JsValue> {
     let options = perks::perk_options_handler::get_perk_options(_perks);
-    let value = serde_wasm_bindgen::to_value(&options);
-    if value.is_err() {
-        return Err(JsValue::from_str(
-            "Could not convert perk options to JsValue",
-        ));
+    match serde_wasm_bindgen::to_value(&options) {
+        Ok(value) => Ok(value),
+        Err(_) => Err(JsValue::from_str("Could not convert perk options to JsValue")),
     }
-    Ok(value.unwrap())
 }
 
 #[wasm_bindgen(js_name = "getWeaponRangeFalloff")]
@@ -273,7 +296,7 @@ pub fn get_weapon_ttk(_overshield: f64) -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
     let ttk_data = weapon.calc_ttk(_overshield);
     let js_ttk_data: Vec<JsResillienceSummary> = ttk_data.into_iter().map(|r| r.into()).collect();
-    Ok(serde_wasm_bindgen::to_value(&js_ttk_data).unwrap())
+    serde_wasm_bindgen::to_value(&js_ttk_data).map_err(JsValue::from)
 }
 
 ///DEPRECATED for now
@@ -343,12 +366,12 @@ pub fn get_weapon_flinch(
 pub fn get_misc_data(_dynamic_traits: bool, _pvp: bool) -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
     if _dynamic_traits {
-        Ok(serde_wasm_bindgen::to_value(
+        serde_wasm_bindgen::to_value(
             &weapon.get_misc_stats(Some(weapon.static_calc_input()), _pvp),
         )
-        .unwrap())
+        .map_err(JsValue::from)
     } else {
-        Ok(serde_wasm_bindgen::to_value(&weapon.get_misc_stats(None, _pvp)).unwrap())
+        serde_wasm_bindgen::to_value(&weapon.get_misc_stats(None, _pvp)).map_err(JsValue::from)
     }
 }
 
@@ -392,7 +415,7 @@ pub fn get_modifier_response(_dynamic_traits: bool, _pvp: bool) -> Result<JsValu
         _pvp,
         None,
     );
-    Ok(serde_wasm_bindgen::to_value(&modifier).unwrap())
+    serde_wasm_bindgen::to_value(&modifier).map_err(JsValue::from)
 }
 
 #[wasm_bindgen(js_name = "getScalarResponseSummary")]

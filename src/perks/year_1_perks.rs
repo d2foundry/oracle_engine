@@ -773,6 +773,7 @@ pub fn year_1_perks() {
         Perks::PhaseMag,
         |_input: ModifierResponseInput| -> DamageModifierResponse {
             //set up precision smg to get damage values from
+            #[allow(clippy::unwrap_used)]
             let precision = Weapon::generate_weapon(
                 0, 24,         //smg
                 1636108362, //precision

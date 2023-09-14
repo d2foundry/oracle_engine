@@ -13,7 +13,7 @@ pub enum EnemyType {
     CHAMPION,
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Copy, Default)]
 pub struct Enemy {
     pub health: f64,
     pub damage: f64,

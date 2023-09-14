@@ -18,8 +18,8 @@ fn get_data_pointers(_weapon_type_id: u8, _intrinsic_hash: u32) -> Result<DataPo
             _intrinsic_hash
         ));
     }
-    let pointer = pointer_result.unwrap();
-    Ok(pointer.clone())
+    let pointer = pointer_result.expect("Failed to get pointer");
+    Ok(*pointer)
 }
 
 impl Weapon {

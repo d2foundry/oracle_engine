@@ -473,7 +473,7 @@ type ModifierFunction<T> = fn(ModifierResponseInput) -> T;
 type StatMap = HashMap<BungieHash, StatBump>;
 type ModifierMap<T> = HashMap<Perks, ModifierFunction<T>>;
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct PersistentModifierResponses {
     pub sbr: ModifierMap<StatMap>,
     pub dmr: ModifierMap<DamageModifierResponse>,
@@ -1047,7 +1047,7 @@ impl Weapon {
             return buffer;
         }
 
-        let calc_input = _calc_input.unwrap();
+        let calc_input = _calc_input.expect("Calculation input is none");
 
         for perk in self.list_perks() {
             let mod_buffer = PERK_FUNC_MAP.with(|pers_modifier| {
