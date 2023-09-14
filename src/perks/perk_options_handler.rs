@@ -316,6 +316,15 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::InvisibleHand => Some(PerkOptionData::toggled_off()),
         Perks::UnsatedHunger => Some(PerkOptionData::toggled_off()),
         Perks::Discord => Some(PerkOptionData::toggled_off()),
+      
+        //season 22 | year 6
+        Perks::PrecisionInstrument => Some(PerkOptionData::stacking(6)),
+        Perks::LooseChange => Some(PerkOptionData::toggled_off()),
+        Perks::HighGround => Some(PerkOptionData::toggled_off()),
+        Perks::HeadRush => Some(PerkOptionData::toggled_off()),
+        Perks::EnlightendAction => Some(PerkOptionData::stacking(5)),
+        Perks::SwordLogic => Some(PerkOptionData::stacking(4)),
+
 
         //exotic weapon
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
@@ -381,6 +390,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::HuntersTrace => Some(PerkOptionData::toggled_off()),
         Perks::FullStop => Some(PerkOptionData::static_()),
         Perks::HakkeHeavyBurst => Some(PerkOptionData::static_()),
+        Perks::Desperation => Some(PerkOptionData::toggled_off()),
 
         //exotic armor
         Perks::DragonShadow => Some(PerkOptionData::toggled_on()),
@@ -393,7 +403,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::LunaFaction => Some(PerkOptionData::options(
             ["Heal Rift", "Empowering Rift / Well"].to_vec(),
         )),
-        Perks::Foetracer => Some(PerkOptionData::toggled_on()),
+        Perks::KnuckleheadRadar => Some(PerkOptionData::toggled_on()),
         Perks::MechaneersTricksleeves => Some(PerkOptionData::toggled_on()),
         Perks::Oathkeeper => Some(PerkOptionData::static_()),
         Perks::SealedAhamkaraGrasps => Some(PerkOptionData::toggled_on()),
@@ -409,6 +419,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::BootsOfTheAssembler => Some(PerkOptionData::toggled_on()),
         Perks::RainOfFire => Some(PerkOptionData::toggled_on()),
         Perks::SpeedloaderSlacks => Some(PerkOptionData::stacking(5)),
+
         Perks::PeregrineGreaves => Some(PerkOptionData::toggled_on()),
         Perks::Gyrfalcon => Some(PerkOptionData::toggled_on()),
         Perks::AeonInsight => Some(PerkOptionData::toggled_on()),
@@ -416,6 +427,9 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::SanguineAlchemy => Some(PerkOptionData::toggled_on()),
         Perks::TritonVice => Some(PerkOptionData::toggled_on()),
         Perks::EternalWarrior => Some(PerkOptionData::stacking(4)),
+        Perks::Foetracers => Some(PerkOptionData::toggled_on()),
+        Perks::GlacialGuard => Some(PerkOptionData::toggled_on()),
+
 
         //misc
         Perks::Demolitionist => Some(PerkOptionData::static_()),

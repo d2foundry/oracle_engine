@@ -863,7 +863,7 @@ fn construct_enhance_perk_mapping(formula_file: &mut File, cached: &mut CachedBu
                     (904, vec!["Aggressive Frame", "Aggressive Glaive"]),
                     (905, vec!["Lightweight Frame", "MIDA Synergy"]),
                     (906, vec!["Precision Frame", "Häkke Precision Frame"]),
-                    (907, vec!["Double Fire"]),
+                    (907, vec!["Double Fire", "Heavy Burst"]),
                     (908, vec!["Wave Frame"]),
                     (911, vec!["Legacy PR-55 Frame"]),
                 ]);

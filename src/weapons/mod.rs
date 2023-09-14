@@ -187,6 +187,7 @@ impl Weapon {
         tmp.shots_fired_this_mag = _total_shots_fired;
         tmp.total_shots_fired = _total_shots_fired;
         tmp.total_shots_hit = _total_shots_hit;
+        tmp.damage_type = &self.damage_type;
         tmp
     }
     pub fn update_stats(&mut self) {
