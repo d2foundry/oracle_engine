@@ -363,7 +363,7 @@
         "2770223582": {"name": "The Last Word",    "cat": "LastWord", "subFam": "LastWord",    "magProf": "small"},
         "3174300811": {"name": "Eriana's vow",     "cat": "Eriana",   "subFam": "Eriana",      "magProf": "eriana"},
         "3468089894": {"name": "Aggressive Frame", "cat": "120 RPM",  "subFam": "Aggressive",  "magProf": "small"},
-        "3923638944": {"name": "Heavy Burst",      "cat": "120 RPM",  "subFam": "HeavyBurst",  "magProf": "HeavyBurst"},
+        "3923638944": {"name": "Heavy Burst",      "cat": "default",  "subFam": "HeavyBurst",  "magProf": "HeavyBurst"},
         "4045839491": {"name": "Sunshot",          "cat": "default",  "subFam": "Lightweight", "magProf": "small"},
         "1458010786": {"name": "Rose",             "cat": "default",  "subFam": "Adaptive",    "magProf": "small"},
 
