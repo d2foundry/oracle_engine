@@ -56,9 +56,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
         crit_mult = 1.0; // shawty has no crits
     }
 
-    for i in 0..RESILIENCE_VALUES.len() {
-        let health = RESILIENCE_VALUES[i] + _overshield;
-
+    for (i, health) in RESILIENCE_VALUES.iter().enumerate() {
         let mut opt_damage_dealt = 0.0_f64;
         let mut opt_time_taken = 0.0_f64;
         let mut opt_bullets_fired = 0.0_f64;
@@ -154,7 +152,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
             opt_bullet_timeline.push((body_damage, head_diff));
 
             // assume all headshots for first pass
-            if (opt_damage_dealt + body_damage + head_diff) >= health {
+            if (opt_damage_dealt + body_damage + head_diff) >= *health {
                 opt_headshots += 1;
                 opt_damage_dealt += body_damage + head_diff;
                 break;
@@ -173,7 +171,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
             let _body_damage = timeline_snapshot.0;
             let headshot_diff = timeline_snapshot.1;
 
-            if opt_timeline_damage_dealt - headshot_diff >= health {
+            if opt_timeline_damage_dealt - headshot_diff >= *health {
                 opt_timeline_bodyshots += 1;
                 opt_timeline_headshots -= 1;
                 opt_timeline_damage_dealt -= headshot_diff;
@@ -274,7 +272,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
                 bdy_bullets_hit += 1.0;
             };
 
-            if (bdy_damage_dealt + body_damage) >= health {
+            if (bdy_damage_dealt + body_damage) >= *health {
                 break;
             } else {
                 bdy_damage_dealt += body_damage;

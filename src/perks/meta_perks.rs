@@ -38,7 +38,7 @@ pub fn meta_perks() {
             if *_input.calc_data.ammo_type == AmmoType::PRIMARY
                 && _input.calc_data.intrinsic_hash > 1000
                 && *_input.calc_data.enemy_type == EnemyType::MINOR
-                && _input.pvp == false
+                && !_input.pvp
             {
                 dmg_scale *= 1.4;
             }
@@ -126,12 +126,9 @@ pub fn meta_perks() {
                 if *_input.calc_data.weapon_type == WeaponType::GRENADELAUNCHER {
                     let blast_radius_struct =
                         _input.calc_data.stats.get(&StatHashes::BLAST_RADIUS.into());
-                    let blast_radius;
-                    if blast_radius_struct.is_none() {
-                        blast_radius = 0;
-                    } else {
-                        blast_radius = blast_radius_struct.unwrap().perk_val();
-                    };
+                        
+                    let blast_radius = blast_radius_struct.cloned().unwrap_or_default().perk_val();
+
                     if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
                         return ExplosivePercentResponse {
                             percent: 0.5 + 0.003 * blast_radius as f64,

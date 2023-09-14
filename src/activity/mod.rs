@@ -3,17 +3,15 @@ use self::damage_calc::{get_gear_delta_mult, rpl_mult, DifficultyOptions, get_we
 pub mod damage_calc;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Default)]
 pub enum PlayerClass {
+    #[default]
     Unknown = 0,
     Titan = 1,
     Hunter = 2,
     Warlock = 3,
 }
-impl Default for PlayerClass {
-    fn default() -> Self {
-        PlayerClass::Unknown
-    }
-}
+
 
 #[derive(Debug, Clone, Default)]
 pub struct Player {
@@ -48,7 +46,7 @@ impl Default for Activity {
 }
 impl Activity {
     pub fn get_pl_delta(&self) -> f64 {
-        get_gear_delta_mult(&self)*get_wep_delta_mult(&self)
+        get_gear_delta_mult(self)*get_wep_delta_mult(self)
     }
     pub fn get_rpl_mult(&self) -> f64 {
         rpl_mult(self.rpl as f64)

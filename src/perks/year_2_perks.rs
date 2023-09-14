@@ -200,7 +200,7 @@ pub fn year_2_perks() {
     add_rsmr(
         Perks::RapidHit,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            let values = vec![
+            let values = [
                 (0, 1.0),
                 (5, 0.99),
                 (30, 0.97),
@@ -223,8 +223,8 @@ pub fn year_2_perks() {
     add_sbr(
         Perks::RapidHit,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
-            let rel_values = vec![0, 5, 30, 35, 45, 60];
-            let stab_values = vec![0, 2, 12, 14, 18, 25];
+            let rel_values = [0, 5, 30, 35, 45, 60];
+            let stab_values = [0, 2, 12, 14, 18, 25];
             let entry_to_get = clamp(
                 _input.value + _input.calc_data.shots_fired_this_mag as u32,
                 0,
@@ -334,41 +334,15 @@ pub fn year_2_perks() {
             if shots_left <= 0.0 {
                 return DamageModifierResponse::default();
             };
-            if _input.calc_data.weapon_type == &WeaponType::GRENADELAUNCHER {
-                let blast_radius_struct =
-                    _input.calc_data.stats.get(&StatHashes::BLAST_RADIUS.into());
-                let blast_radius;
-                if blast_radius_struct.is_none() {
-                    blast_radius = 0;
-                } else {
-                    blast_radius = blast_radius_struct.unwrap().val();
-                };
-                if _input.calc_data.ammo_type == &AmmoType::HEAVY {
-                    let expl_percent = 0.7 + 0.00175 * blast_radius as f64;
-                    let impt_percent = 1.0 - expl_percent;
-                    let expl_mult = 0.875 / expl_percent * 1.6;
-                    let impt_mult = 0.125 / impt_percent;
-                    return DamageModifierResponse {
-                        impact_dmg_scale: impt_mult,
-                        explosive_dmg_scale: expl_mult,
-                        crit_scale: 1.0,
-                    };
-                }
-                if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
-                    let expl_percent = 0.5 + 0.0025 * blast_radius as f64;
-                    let impt_percent = 1.0 - expl_percent;
-                    let expl_mult = 0.75 / expl_percent * 1.6;
-                    let impt_mult = 0.25 / impt_percent;
-                    return DamageModifierResponse {
-                        impact_dmg_scale: impt_mult,
-                        explosive_dmg_scale: expl_mult,
-                        crit_scale: 1.0,
-                    };
-                }
+
+            let mult = match _input.calc_data.weapon_type {
+                WeaponType::ROCKET => (1.25, 1.25),
+                WeaponType::GRENADELAUNCHER => (1.6, 1.0),
+                _ => (1.0, 1.0),
             };
             DamageModifierResponse {
-                explosive_dmg_scale: 1.25,
-                impact_dmg_scale: 1.25,
+                explosive_dmg_scale: mult.0,
+                impact_dmg_scale: mult.1,
                 crit_scale: 1.0,
             }
         }),

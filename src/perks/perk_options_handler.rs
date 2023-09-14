@@ -4,17 +4,13 @@ use serde::Serialize;
 
 use super::{enhanced_check, Perk, Perks};
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Default)]
 pub enum PerkValueVariant {
+    #[default]
     STATIC,
     TOGGLE,
     SLIDER,
     OPTIONS,
-}
-impl Default for PerkValueVariant {
-    fn default() -> Self {
-        PerkValueVariant::STATIC
-    }
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -440,8 +436,8 @@ pub fn get_perk_options(_perks: Vec<u32>) -> HashMap<u32, PerkOptionData> {
     for perk in _perks {
         // let data = if  _input._is_enhanced {enh_hash_to_perk_option_data(perk)} else {hash_to_perk_option_data(perk)};
         let data = hash_to_perk_option_data(perk);
-        if data.is_some() {
-            options.insert(perk, data.unwrap());
+        if let Some(value) = data {
+            options.insert(perk, value);
         }
     }
     options

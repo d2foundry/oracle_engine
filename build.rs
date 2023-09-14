@@ -1,3 +1,4 @@
+#![allow(clippy::all)]
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Number, Value};
 use std::collections::{BTreeMap, HashMap};
@@ -23,13 +24,15 @@ impl CachedBuildData {
 
     fn get_timestamp(&mut self, formula: &impl UuidTimestamp) -> u64 {
         // get current unix time
-        let uuid = (formula.uuid() * 10.0).to_bits() as u64;
+        let uuid = (formula.uuid() * 10.0).to_bits();
         let now = std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap()
             .as_secs();
-        if !self.perk_formula_timestamps.contains_key(&uuid) {
-            self.perk_formula_timestamps.insert(uuid, now);
+        if let std::collections::btree_map::Entry::Vacant(e) =
+            self.perk_formula_timestamps.entry(uuid)
+        {
+            e.insert(now);
             now
         } else {
             *self.perk_formula_timestamps.get(&uuid).unwrap()
@@ -355,7 +358,7 @@ fn write_variable(
 ) {
     let res = writeln!(
         writer,
-        "#[doc=r#\"{}\"#]\n#[allow(dead_code)]\npub const {}: {} = {};",
+        "#[doc=r#\"{}\"#]\n#[allow(dead_code)]\n#[allow(clippy::approx_constant)]\npub const {}: {} = {};",
         doc, name, datatype, value
     );
     if res.is_err() {
@@ -416,11 +419,9 @@ fn main() {
 
     //check if being run by rust-analyzer
     let is_rust_analyzer = std::env::var("IS_RA");
-    if is_rust_analyzer.is_ok() {
-        if is_rust_analyzer.unwrap() == "true" {
-            println!("cargo:warning=running in rust-analyzer");
-            return;
-        }
+    if is_rust_analyzer.is_ok() && is_rust_analyzer.unwrap() == "true" {
+        println!("cargo:warning=running in rust-analyzer");
+        return;
     }
 
     let file_res = std::fs::File::create("./build_resources/cached_build.ron");
@@ -698,10 +699,10 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
                     firing_data.push(firing);
                 }
 
-                if err_list.len() > 0 {
+                if !err_list.is_empty() {
                     return Err(err_list);
                 }
-                return Ok(());
+                Ok(())
             };
             let set_data_res = set_data(inner_values.clone());
             if set_data_res.is_err() {
@@ -804,14 +805,12 @@ fn construct_enhance_perk_mapping(formula_file: &mut File, cached: &mut CachedBu
             println!("cargo:warning=dim enhanced mapping not found");
             return;
         }
+    } else if cached.has_data() {
+        println!("cargo:warning=using cached dim enhanced mapping");
+        let mut dim_mappings = cached.dim_perk_mappings.clone();
+        perk_mappings.append(&mut dim_mappings);
     } else {
-        if cached.has_data() {
-            println!("cargo:warning=using cached dim enhanced mapping");
-            let mut dim_mappings = cached.dim_perk_mappings.clone();
-            perk_mappings.append(&mut dim_mappings);
-        } else {
-            panic!("cargo:warning=no cached dim enhanced mapping found");
-        }
+        panic!("cargo:warning=no cached dim enhanced mapping found");
     }
 
     if has_internet {
