@@ -20,7 +20,8 @@
     trivial_numeric_casts,
     unused_import_braces,
     unused_lifetimes,
-    redundant_semicolons
+    redundant_semicolons,
+    unreachable_pub
 )]
 
 
@@ -57,11 +58,11 @@ use lol_alloc::{AssumeSingleThreaded, FreeListAllocator};
 static ALLOCATOR: AssumeSingleThreaded<FreeListAllocator> =
     unsafe { AssumeSingleThreaded::new(FreeListAllocator::new()) };
 
-mod built_info {
+pub mod built_info {
     include!(concat!(env!("OUT_DIR"), "/built.rs"));
 }
 
-mod database {
+pub(crate) mod database {
     include!(concat!(env!("OUT_DIR"), "/formulas.rs"));
 }
 
