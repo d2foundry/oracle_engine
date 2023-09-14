@@ -9,10 +9,10 @@ use crate::{
     },
 };
 use serde::{Deserialize, Serialize};
-use wasm_bindgen::{prelude::wasm_bindgen, JsValue};
+use wasm_bindgen::prelude::wasm_bindgen;
 
 use super::rs_types::{
-    AmmoResponse, DpsResponse, FiringResponse, HandlingResponse, RangeResponse, ReloadResponse,
+    AmmoResponse, FiringResponse, HandlingResponse, RangeResponse, ReloadResponse,
 };
 
 #[derive(Debug, Clone, Copy, Serialize)]
@@ -107,57 +107,57 @@ impl From<AmmoResponse> for JsAmmoResponse {
     }
 }
 
-#[derive(Debug, Clone, Serialize)]
-#[wasm_bindgen(js_name = "DpsResponse")]
-pub struct JsDpsResponse {
-    #[wasm_bindgen(skip)]
-    pub dps_per_mag: Vec<f64>,
-    #[wasm_bindgen(skip)]
-    pub time_damage_data: Vec<(f64, f64)>,
-    #[wasm_bindgen(js_name = "totalDamage", readonly)]
-    pub total_damage: f64,
-    #[wasm_bindgen(js_name = "totalTime", readonly)]
-    pub total_time: f64,
-    #[wasm_bindgen(js_name = "totalShots", readonly)]
-    pub total_shots: i32,
-}
-#[allow(clippy::unwrap_used)]
-#[wasm_bindgen(js_class = "DpsResponse")]
-impl JsDpsResponse {
-    #[wasm_bindgen(js_name = "toJSON")]
-    pub fn to_json(self) -> String {
-        serde_wasm_bindgen::to_value(&self)
-            .unwrap()
-            .as_string()
-            .unwrap()
-    }
-    ///Returns a list of tuples of time and damage
-    #[wasm_bindgen(getter, js_name = "timeDamageData")]
-    pub fn time_damage_data(&self) -> JsValue {
-        serde_wasm_bindgen::to_value(&self.time_damage_data).unwrap()
-    }
-    ///Returns a list of dps values for each magazine
-    #[wasm_bindgen(getter, js_name = "dpsPerMag")]
-    pub fn dps_per_mag(&self) -> JsValue {
-        serde_wasm_bindgen::to_value(&self.dps_per_mag).unwrap()
-    }
-}
-impl fmt::Display for JsDpsResponse {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{:?}", self)
-    }
-}
-impl From<DpsResponse> for JsDpsResponse {
-    fn from(dps: DpsResponse) -> Self {
-        JsDpsResponse {
-            dps_per_mag: dps.dps_per_mag,
-            time_damage_data: dps.time_damage_data,
-            total_damage: dps.total_damage,
-            total_time: dps.total_time,
-            total_shots: dps.total_shots,
-        }
-    }
-}
+// #[derive(Debug, Clone, Serialize)]
+// #[wasm_bindgen(js_name = "DpsResponse")]
+// pub struct JsDpsResponse {
+//     #[wasm_bindgen(skip)]
+//     pub dps_per_mag: Vec<f64>,
+//     #[wasm_bindgen(skip)]
+//     pub time_damage_data: Vec<(f64, f64)>,
+//     #[wasm_bindgen(js_name = "totalDamage", readonly)]
+//     pub total_damage: f64,
+//     #[wasm_bindgen(js_name = "totalTime", readonly)]
+//     pub total_time: f64,
+//     #[wasm_bindgen(js_name = "totalShots", readonly)]
+//     pub total_shots: i32,
+// }
+// #[allow(clippy::unwrap_used)]
+// #[wasm_bindgen(js_class = "DpsResponse")]
+// impl JsDpsResponse {
+//     #[wasm_bindgen(js_name = "toJSON")]
+//     pub fn to_json(self) -> String {
+//         serde_wasm_bindgen::to_value(&self)
+//             .unwrap()
+//             .as_string()
+//             .unwrap()
+//     }
+//     ///Returns a list of tuples of time and damage
+//     #[wasm_bindgen(getter, js_name = "timeDamageData")]
+//     pub fn time_damage_data(&self) -> JsValue {
+//         serde_wasm_bindgen::to_value(&self.time_damage_data).unwrap()
+//     }
+//     ///Returns a list of dps values for each magazine
+//     #[wasm_bindgen(getter, js_name = "dpsPerMag")]
+//     pub fn dps_per_mag(&self) -> JsValue {
+//         serde_wasm_bindgen::to_value(&self.dps_per_mag).unwrap()
+//     }
+// }
+// impl fmt::Display for JsDpsResponse {
+//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+//         write!(f, "{:?}", self)
+//     }
+// }
+// impl From<DpsResponse> for JsDpsResponse {
+//     fn from(dps: DpsResponse) -> Self {
+//         JsDpsResponse {
+//             dps_per_mag: dps.dps_per_mag,
+//             time_damage_data: dps.time_damage_data,
+//             total_damage: dps.total_damage,
+//             total_time: dps.total_time,
+//             total_shots: dps.total_shots,
+//         }
+//     }
+// }
 
 #[derive(Debug, Clone, Copy, Serialize)]
 #[wasm_bindgen(js_name = "OptimalKillData", inspectable)]

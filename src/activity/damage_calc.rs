@@ -11,7 +11,7 @@ pub struct DifficultyData {
 
 const WEAPON_DELTA_EXPONENT: f64 = 0.00672;
 
-#[derive(Debug, Clone, Copy, Default)]
+#[derive(Debug, Clone, Copy, Default, serde::Deserialize)]
 pub enum DifficultyOptions {
     #[default]
     Normal = 1,

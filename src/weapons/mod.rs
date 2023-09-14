@@ -18,6 +18,7 @@ use crate::types::formula_types::{
 };
 
 #[derive(Debug, Clone, Copy, Serialize)]
+#[serde(rename_all(serialize = "camelCase"))]
 pub struct Stat {
     pub base_value: i32,
     pub part_value: i32,

@@ -24,8 +24,6 @@
     unreachable_pub
 )]
 
-
-
 extern crate alloc;
 
 use logging::LogLevel;
@@ -62,17 +60,24 @@ pub mod built_info {
     include!(concat!(env!("OUT_DIR"), "/built.rs"));
 }
 
+#[derive(Debug, Clone, Copy, serde::Serialize)]
+#[serde(rename_all(serialize = "camelCase"))]
+pub struct MetaData {
+    pub api_version: &'static str,
+    pub api_timestamp: &'static str,
+    pub api_commit: &'static str,
+    pub api_branch: &'static str,
+}
+
 pub(crate) mod database {
     include!(concat!(env!("OUT_DIR"), "/formulas.rs"));
 }
 
 //JavaScript
 
-use crate::types::prelude::*;
+use crate::types::*;
 
 use wasm_bindgen::prelude::*;
-
-use crate::types::js_types::JsScalarResponse;
 
 #[derive(Debug, Clone, Default)]
 pub struct PersistentData {
@@ -114,15 +119,15 @@ pub fn start() {
 //---------------WEAPONS---------------//
 
 #[wasm_bindgen(js_name = "getMetadata")]
-pub fn get_metadata() -> Result<JsMetaData, JsValue> {
+pub fn get_metadata() -> Result<JsValue, JsValue> {
     #[allow(clippy::unwrap_used)]
-    let metadata = JsMetaData {
+    let metadata = MetaData {
         api_timestamp: built_info::BUILT_TIME_UTC,
         api_version: built_info::PKG_VERSION,
         api_commit: built_info::GIT_COMMIT_HASH.unwrap(),
         api_branch: built_info::GIT_HEAD_REF.unwrap(),
     };
-    Ok(metadata)
+    serde_wasm_bindgen::to_value(&metadata).map_err(JsValue::from)
 }
 
 #[wasm_bindgen(js_name = "stringifyWeapon")]
@@ -146,7 +151,7 @@ pub fn set_weapon(
     _intrinsic_hash: u32,
     _ammo_type_id: u32,
     _damage_type_id: u32,
-) -> Result<(), JsValue> {
+) {
     PERS_DATA.with(|perm_data| {
         let new_weapon = Weapon::generate_weapon(
             _hash,
@@ -170,22 +175,18 @@ pub fn set_weapon(
             perm_data.borrow_mut().weapon = Weapon::default();
         }
     });
-    Ok(())
 }
 
 #[wasm_bindgen(js_name = "getStats")]
 pub fn get_stats() -> Result<JsValue, JsValue> {
     let stat_map = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.stats.clone());
-    let mut js_stat_map = HashMap::new();
-    for (key, value) in stat_map {
-        js_stat_map.insert(key, JsStat::from(value));
-    }
-    serde_wasm_bindgen::to_value(&js_stat_map).map_err(JsValue::from)
+    serde_wasm_bindgen::to_value(&stat_map).map_err(JsValue::from)
 }
 
 #[wasm_bindgen(js_name = "setStats")]
 pub fn set_stats(_stats: JsValue) -> Result<(), JsValue> {
-    let in_stats: HashMap<u32, i32> = serde_wasm_bindgen::from_value(_stats).map_err(JsValue::from)?;
+    let in_stats: HashMap<u32, i32> =
+        serde_wasm_bindgen::from_value(_stats).map_err(JsValue::from)?;
     let mut stats = HashMap::new();
     for (key, value) in in_stats {
         stats.insert(key, Stat::from(value));
@@ -209,9 +210,8 @@ pub fn add_perk(_stats: JsValue, _value: u32, _hash: u32) -> Result<(), JsValue>
 }
 
 #[wasm_bindgen(js_name = "resetTraits")]
-pub fn reset_perks() -> Result<(), JsValue> {
+pub fn reset_perks() {
     PERS_DATA.with(|perm_data| perm_data.borrow_mut().weapon.reset_perks());
-    Ok(())
 }
 
 #[wasm_bindgen(js_name = "getTraitHashes")]
@@ -235,67 +235,61 @@ pub fn get_perk_options_js(_perks: Vec<u32>) -> Result<JsValue, JsValue> {
     let options = perks::perk_options_handler::get_perk_options(_perks);
     match serde_wasm_bindgen::to_value(&options) {
         Ok(value) => Ok(value),
-        Err(_) => Err(JsValue::from_str("Could not convert perk options to JsValue")),
+        Err(_) => Err(JsValue::from_str(
+            "Could not convert perk options to JsValue",
+        )),
     }
 }
 
 #[wasm_bindgen(js_name = "getWeaponRangeFalloff")]
-pub fn get_weapon_range(_dynamic_traits: bool, _pvp: bool) -> Result<JsRangeResponse, JsValue> {
+pub fn get_weapon_range(_dynamic_traits: bool, _pvp: bool) -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
-    if _dynamic_traits {
-        Ok(weapon
-            .calc_range_falloff(Some(weapon.static_calc_input()), None, _pvp)
-            .into())
+    let out = if _dynamic_traits {
+        weapon.calc_range_falloff(Some(weapon.static_calc_input()), None, _pvp)
     } else {
-        Ok(weapon.calc_range_falloff(None, None, _pvp).into())
-    }
+        weapon.calc_range_falloff(None, None, _pvp)
+    };
+    serde_wasm_bindgen::to_value(&out).map_err(JsValue::from)
 }
 
 #[wasm_bindgen(js_name = "getWeaponHandlingTimes")]
-pub fn get_weapon_handling(
-    _dynamic_traits: bool,
-    _pvp: bool,
-) -> Result<JsHandlingResponse, JsValue> {
+pub fn get_weapon_handling(_dynamic_traits: bool, _pvp: bool) -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
-    if _dynamic_traits {
-        Ok(weapon
-            .calc_handling_times(Some(weapon.static_calc_input()), None, _pvp)
-            .into())
+    let out = if _dynamic_traits {
+        weapon.calc_handling_times(Some(weapon.static_calc_input()), None, _pvp)
     } else {
-        Ok(weapon.calc_handling_times(None, None, _pvp).into())
-    }
+        weapon.calc_handling_times(None, None, _pvp)
+    };
+    serde_wasm_bindgen::to_value(&out).map_err(JsValue::from)
 }
 
 #[wasm_bindgen(js_name = "getWeaponReloadTimes")]
-pub fn get_weapon_reload(_dynamic_traits: bool, _pvp: bool) -> Result<JsReloadResponse, JsValue> {
+pub fn get_weapon_reload(_dynamic_traits: bool, _pvp: bool) -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
-    if _dynamic_traits {
-        Ok(weapon
-            .calc_reload_time(Some(weapon.static_calc_input()), None, _pvp)
-            .into())
+    let out = if _dynamic_traits {
+        weapon.calc_reload_time(Some(weapon.static_calc_input()), None, _pvp)
     } else {
-        Ok(weapon.calc_reload_time(None, None, _pvp).into())
-    }
+        weapon.calc_reload_time(None, None, _pvp)
+    };
+    serde_wasm_bindgen::to_value(&out).map_err(JsValue::from)
 }
 
 #[wasm_bindgen(js_name = "getWeaponAmmoSizes")]
-pub fn get_weapon_ammo(_dynamic_traits: bool, _pvp: bool) -> Result<JsAmmoResponse, JsValue> {
+pub fn get_weapon_ammo(_dynamic_traits: bool, _pvp: bool) -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
-    if _dynamic_traits {
-        Ok(weapon
-            .calc_ammo_sizes(Some(weapon.static_calc_input()), None, _pvp)
-            .into())
+    let out = if _dynamic_traits {
+        weapon.calc_ammo_sizes(Some(weapon.static_calc_input()), None, _pvp)
     } else {
-        Ok(weapon.calc_ammo_sizes(None, None, _pvp).into())
-    }
+        weapon.calc_ammo_sizes(None, None, _pvp)
+    };
+    serde_wasm_bindgen::to_value(&out).map_err(JsValue::from)
 }
 
 #[wasm_bindgen(js_name = "getWeaponTtk")]
 pub fn get_weapon_ttk(_overshield: f64) -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
     let ttk_data = weapon.calc_ttk(_overshield);
-    let js_ttk_data: Vec<JsResillienceSummary> = ttk_data.into_iter().map(|r| r.into()).collect();
-    serde_wasm_bindgen::to_value(&js_ttk_data).map_err(JsValue::from)
+    serde_wasm_bindgen::to_value(&ttk_data).map_err(JsValue::from)
 }
 
 ///DEPRECATED for now
@@ -318,12 +312,12 @@ pub fn get_weapon_firing_data(
     _dynamic_traits: bool,
     _pvp: bool,
     _use_rpl: bool,
-) -> Result<JsFiringResponse, JsValue> {
+) -> Result<JsValue, JsValue> {
     let persistent = PERS_DATA.with(|_perm_data| _perm_data.borrow().clone());
     let mut response: types::rs_types::FiringResponse;
     let calc_input: Option<CalculationInput> = if _dynamic_traits {
         let mut buffer = persistent.weapon.static_calc_input();
-        buffer.enemy_type = &persistent.enemy.type_;
+        buffer.enemy_type = &persistent.enemy.r#type;
         Some(buffer)
     } else {
         None
@@ -336,10 +330,9 @@ pub fn get_weapon_firing_data(
         persistent
             .weapon
             .damage_mods
-            .get_mod(&persistent.enemy.type_),
+            .get_mod(&persistent.enemy.r#type),
     );
-    crate::logging::log(format!("{:?}", response).as_str(), LogLevel::Debug.into());
-    Ok(response.into())
+    serde_wasm_bindgen::to_value(&response).map_err(JsValue::from)
 }
 
 #[wasm_bindgen(js_name = "getWeaponFlinch")]
@@ -365,10 +358,8 @@ pub fn get_weapon_flinch(
 pub fn get_misc_data(_dynamic_traits: bool, _pvp: bool) -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
     if _dynamic_traits {
-        serde_wasm_bindgen::to_value(
-            &weapon.get_misc_stats(Some(weapon.static_calc_input()), _pvp),
-        )
-        .map_err(JsValue::from)
+        serde_wasm_bindgen::to_value(&weapon.get_misc_stats(Some(weapon.static_calc_input()), _pvp))
+            .map_err(JsValue::from)
     } else {
         serde_wasm_bindgen::to_value(&weapon.get_misc_stats(None, _pvp)).map_err(JsValue::from)
     }
@@ -380,20 +371,22 @@ pub fn set_encounter(
     _player_pl: u32,
     _weapon_pl: u32,
     _override_cap: i32,
-    _difficulty: JsDifficultyOptions,
-    _enemy_type: JsEnemyType,
+    _difficulty: JsValue,
+    _enemy_type: JsValue,
 ) -> Result<(), JsValue> {
+    let difficulty = serde_wasm_bindgen::from_value(_difficulty).map_err(JsValue::from)?;
     PERS_DATA.with(|perm_data| {
         let activity = &mut perm_data.borrow_mut().activity;
         activity.rpl = _recommend_pl;
         activity.cap = _override_cap;
-        activity.difficulty = _difficulty.into();
+        activity.difficulty = difficulty;
         activity.player.power = _player_pl;
         activity.player.wep_power = _weapon_pl;
     });
+    let enemy_type = serde_wasm_bindgen::from_value(_enemy_type).map_err(JsValue::from)?;
     PERS_DATA.with(|perm_data| {
         let enemy = &mut perm_data.borrow_mut().enemy;
-        enemy.type_ = _enemy_type.into();
+        enemy.r#type = enemy_type;
     });
     Ok(())
 }
@@ -418,7 +411,7 @@ pub fn get_modifier_response(_dynamic_traits: bool, _pvp: bool) -> Result<JsValu
 }
 
 #[wasm_bindgen(js_name = "getScalarResponseSummary")]
-pub fn get_scalar_response(_pvp: bool) -> Result<JsScalarResponse, JsValue> {
+pub fn get_scalar_response(_pvp: bool) -> Result<JsValue, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
     let input_data = weapon.static_calc_input();
     let mut cached_data = HashMap::new();
@@ -429,7 +422,7 @@ pub fn get_scalar_response(_pvp: bool) -> Result<JsScalarResponse, JsValue> {
     let hmr =
         perks::get_handling_modifier(weapon.list_perks(), &input_data, _pvp, &mut cached_data);
     let imr = perks::get_reserve_modifier(weapon.list_perks(), &input_data, _pvp, &mut cached_data);
-    Ok(JsScalarResponse {
+    let out = ScalarResponse {
         ads_range_scalar: rmr.range_zoom_scale,
         global_range_scalar: rmr.range_all_scale,
         hipfire_range_scalar: rmr.range_hip_scale,
@@ -439,5 +432,6 @@ pub fn get_scalar_response(_pvp: bool) -> Result<JsScalarResponse, JsValue> {
         reload_scalar: rsmr.reload_time_scale,
         mag_size_scalar: mmr.magazine_scale,
         reserve_size_scalar: imr.inv_scale,
-    })
+    };
+    serde_wasm_bindgen::to_value(&out).map_err(JsValue::from)
 }

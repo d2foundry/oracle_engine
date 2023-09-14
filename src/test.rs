@@ -149,7 +149,7 @@ fn test_pulse_firing_data() {
                     .borrow()
                     .weapon
                     .damage_mods
-                    .get_mod(&perm_data.borrow().enemy.type_),
+                    .get_mod(&perm_data.borrow().enemy.r#type),
             )
         });
         assert!(
@@ -289,7 +289,7 @@ fn test_bow_firing_data() {
                     .borrow()
                     .weapon
                     .damage_mods
-                    .get_mod(&perm_data.borrow().enemy.type_),
+                    .get_mod(&perm_data.borrow().enemy.r#type),
             )
         });
         assert!(
