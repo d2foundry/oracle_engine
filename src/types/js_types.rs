@@ -1,4 +1,3 @@
-
 use std::fmt;
 
 use crate::{
@@ -122,6 +121,7 @@ pub struct JsDpsResponse {
     #[wasm_bindgen(js_name = "totalShots", readonly)]
     pub total_shots: i32,
 }
+#[allow(clippy::unwrap_used)]
 #[wasm_bindgen(js_class = "DpsResponse")]
 impl JsDpsResponse {
     #[wasm_bindgen(js_name = "toJSON")]
@@ -195,7 +195,7 @@ impl From<BodyKillData> for JsBodyKillData {
     }
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Copy, Serialize)]
 #[wasm_bindgen(js_name = "ResillienceSummary", inspectable)]
 pub struct JsResillienceSummary {
     #[serde(rename = "resillienceValue")]
@@ -218,7 +218,7 @@ impl From<ResillienceSummary> for JsResillienceSummary {
     }
 }
 
-#[derive(Debug, Clone, Default, Serialize)]
+#[derive(Debug, Clone, Copy, Default, Serialize)]
 #[wasm_bindgen(js_name = "FiringResponse", inspectable)]
 pub struct JsFiringResponse {
     #[wasm_bindgen(js_name = "pvpImpactDamage", readonly)]
@@ -294,7 +294,7 @@ impl From<Stat> for JsStat {
     }
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Copy, Serialize)]
 #[wasm_bindgen(js_name = "MetaData", inspectable)]
 pub struct JsMetaData {
     #[wasm_bindgen(js_name = "apiVersion", readonly)]
@@ -307,7 +307,7 @@ pub struct JsMetaData {
     pub api_branch: &'static str,
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Copy, Default)]
 #[wasm_bindgen(js_name = "ScalarResponseSummary", inspectable)]
 pub struct JsScalarResponse {
     #[wasm_bindgen(js_name = "reloadScalar", readonly)]
@@ -330,19 +330,19 @@ pub struct JsScalarResponse {
     pub reserve_size_scalar: f64,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 #[wasm_bindgen(js_name = "DifficultyOptions")]
 pub enum JsDifficultyOptions {
-    NORMAL = 1,
-    RAID = 2,
-    MASTER = 3,
+    Normal = 1,
+    Raid = 2,
+    Master = 3,
 }
 impl From<JsDifficultyOptions> for DifficultyOptions {
     fn from(val: JsDifficultyOptions) -> Self {
         match val {
-            JsDifficultyOptions::NORMAL => DifficultyOptions::NORMAL,
-            JsDifficultyOptions::RAID => DifficultyOptions::RAID,
-            JsDifficultyOptions::MASTER => DifficultyOptions::MASTER,
+            JsDifficultyOptions::Normal => DifficultyOptions::Normal,
+            JsDifficultyOptions::Raid => DifficultyOptions::Raid,
+            JsDifficultyOptions::Master => DifficultyOptions::Master,
         }
     }
 }
@@ -350,26 +350,26 @@ impl From<JsDifficultyOptions> for DifficultyOptions {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[wasm_bindgen(js_name = "EnemyType")]
 pub enum JsEnemyType {
-    MINOR,
-    ELITE,
-    MINIBOSS,
-    BOSS,
-    VEHICLE,
-    ENCLAVE,
-    PLAYER,
-    CHAMPION,
+    Minor,
+    Elite,
+    Miniboss,
+    Boss,
+    Vehicle,
+    Enclave,
+    Player,
+    Champion,
 }
 impl From<JsEnemyType> for EnemyType {
     fn from(val: JsEnemyType) -> Self {
         match val {
-            JsEnemyType::MINOR => EnemyType::MINOR,
-            JsEnemyType::ELITE => EnemyType::ELITE,
-            JsEnemyType::MINIBOSS => EnemyType::MINIBOSS,
-            JsEnemyType::BOSS => EnemyType::BOSS,
-            JsEnemyType::VEHICLE => EnemyType::VEHICLE,
-            JsEnemyType::ENCLAVE => EnemyType::ENCLAVE,
-            JsEnemyType::PLAYER => EnemyType::PLAYER,
-            JsEnemyType::CHAMPION => EnemyType::CHAMPION,
+            JsEnemyType::Minor => EnemyType::Minor,
+            JsEnemyType::Elite => EnemyType::Elite,
+            JsEnemyType::Miniboss => EnemyType::Miniboss,
+            JsEnemyType::Boss => EnemyType::Boss,
+            JsEnemyType::Vehicle => EnemyType::Vehicle,
+            JsEnemyType::Enclave => EnemyType::Enclave,
+            JsEnemyType::Player => EnemyType::Player,
+            JsEnemyType::Champion => EnemyType::Champion,
         }
     }
 }

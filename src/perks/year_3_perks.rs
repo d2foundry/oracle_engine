@@ -33,15 +33,15 @@ pub fn year_3_perks() {
             let mut stats = HashMap::new();
             let ev = if _input.is_enhanced { 5 } else { 0 };
             if _input.value == 1 {
-                stats.insert(StatHashes::STABILITY.into(), 20 + ev);
+                stats.insert(StatHashes::Stability.into(), 20 + ev);
             } else if _input.value == 2 {
-                stats.insert(StatHashes::RELOAD.into(), 50 + ev);
+                stats.insert(StatHashes::Reload.into(), 50 + ev);
             } else if _input.value == 3 {
-                stats.insert(StatHashes::HANDLING.into(), 50 + ev);
+                stats.insert(StatHashes::Handling.into(), 50 + ev);
             } else if _input.value == 4 {
-                stats.insert(StatHashes::RECOIL_DIR.into(), 20 + ev);
+                stats.insert(StatHashes::RecoilDir.into(), 20 + ev);
             } else if _input.value == 5 {
-                stats.insert(StatHashes::AIRBORNE.into(), 20 + ev);
+                stats.insert(StatHashes::Airborne.into(), 20 + ev);
             };
             stats
         },
@@ -80,8 +80,8 @@ pub fn year_3_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
-                stats.insert(StatHashes::HANDLING.into(), 40);
-                stats.insert(StatHashes::RANGE.into(), 20);
+                stats.insert(StatHashes::Handling.into(), 40);
+                stats.insert(StatHashes::Range.into(), 20);
             };
             stats
         },
@@ -137,17 +137,17 @@ pub fn year_3_perks() {
         Perks::Vorpal,
         |_input: ModifierResponseInput| -> DamageModifierResponse {
             let mut buff = 1.0;
-            if (*_input.calc_data.enemy_type == EnemyType::BOSS
-                || *_input.calc_data.enemy_type == EnemyType::MINIBOSS
-                || *_input.calc_data.enemy_type == EnemyType::CHAMPION
-                || *_input.calc_data.enemy_type == EnemyType::VEHICLE)
+            if (*_input.calc_data.enemy_type == EnemyType::Boss
+                || *_input.calc_data.enemy_type == EnemyType::Miniboss
+                || *_input.calc_data.enemy_type == EnemyType::Champion
+                || *_input.calc_data.enemy_type == EnemyType::Vehicle)
                 && !_input.pvp
             {
                 buff = match *_input.calc_data.ammo_type {
-                    AmmoType::HEAVY => 1.1,
-                    AmmoType::SPECIAL => 1.15,
-                    AmmoType::PRIMARY => 1.2,
-                    AmmoType::UNKNOWN => 0.0, //this should make someone point out a bug? whats error handling lol
+                    AmmoType::Heavy => 1.1,
+                    AmmoType::Special => 1.15,
+                    AmmoType::Primary => 1.2,
+                    AmmoType::Unknown => 0.0, //this should make someone point out a bug? whats error handling lol
                 };
             }
             DamageModifierResponse {
@@ -164,9 +164,9 @@ pub fn year_3_perks() {
             let mut buffer: HashMap<u32, i32> = HashMap::new();
             let bump = if _input.is_enhanced { 35 } else { 30 };
             if _input.value > 0 {
-                buffer.insert(StatHashes::HANDLING.into(), bump);
+                buffer.insert(StatHashes::Handling.into(), bump);
                 //reload unknown
-                buffer.insert(StatHashes::RELOAD.into(), bump);
+                buffer.insert(StatHashes::Reload.into(), bump);
             }
             buffer
         },

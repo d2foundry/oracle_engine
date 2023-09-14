@@ -58,7 +58,7 @@ pub fn year_4_perks() {
             let mut map = HashMap::new();
             let duration = if _input.is_enhanced { 8.0 } else { 7.0 };
             if _input.calc_data.time_total <= duration && _input.value > 0 {
-                map.insert(StatHashes::RANGE.into(), 10);
+                map.insert(StatHashes::Range.into(), 10);
             }
             map
         },
@@ -104,7 +104,7 @@ pub fn year_4_perks() {
                 handling = 20;
             };
             let mut out = HashMap::new();
-            out.insert(StatHashes::HANDLING.into(), handling);
+            out.insert(StatHashes::Handling.into(), handling);
             out
         },
     );
@@ -143,8 +143,8 @@ pub fn year_4_perks() {
             let reload = if _input.is_enhanced { 45 } else { 40 };
             if _input.value > 0 {
                 let mut out = HashMap::new();
-                out.insert(StatHashes::HANDLING.into(), handling);
-                out.insert(StatHashes::RELOAD.into(), reload);
+                out.insert(StatHashes::Handling.into(), handling);
+                out.insert(StatHashes::Reload.into(), reload);
                 out
             } else {
                 HashMap::new()
@@ -251,8 +251,8 @@ pub fn year_4_perks() {
                 reload = 100;
             };
             let mut out = HashMap::new();
-            out.insert(StatHashes::HANDLING.into(), handling);
-            out.insert(StatHashes::RELOAD.into(), reload);
+            out.insert(StatHashes::Handling.into(), handling);
+            out.insert(StatHashes::Reload.into(), reload);
             out
         },
     );
@@ -278,7 +278,7 @@ pub fn year_4_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let reload = if _input.is_enhanced { 25 } else { 20 };
             let mut out = HashMap::new();
-            out.insert(StatHashes::RELOAD.into(), reload);
+            out.insert(StatHashes::Reload.into(), reload);
             out
         },
     );
@@ -303,9 +303,9 @@ pub fn year_4_perks() {
                 stat_bump = 20;
             };
             let mut out = HashMap::new();
-            out.insert(StatHashes::RELOAD.into(), stat_bump);
-            out.insert(StatHashes::HANDLING.into(), stat_bump);
-            out.insert(StatHashes::STABILITY.into(), stat_bump);
+            out.insert(StatHashes::Reload.into(), stat_bump);
+            out.insert(StatHashes::Handling.into(), stat_bump);
+            out.insert(StatHashes::Stability.into(), stat_bump);
             out
         },
     );
@@ -349,7 +349,7 @@ pub fn year_4_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut out = HashMap::new();
             if _input.value > 0 {
-                out.insert(StatHashes::AIRBORNE.into(), 30);
+                out.insert(StatHashes::Airborne.into(), 30);
             };
             out
         },
@@ -368,7 +368,7 @@ pub fn year_4_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut out = HashMap::new();
             if _input.value > 0 {
-                out.insert(StatHashes::HANDLING.into(), 35);
+                out.insert(StatHashes::Handling.into(), 35);
             };
             out
         },
@@ -405,7 +405,7 @@ pub fn year_4_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut out = HashMap::new();
             if _input.value > 0 {
-                out.insert(StatHashes::BLAST_RADIUS.into(), 100);
+                out.insert(StatHashes::BlastRadius.into(), 100);
             };
             out
         },
@@ -435,7 +435,7 @@ pub fn year_4_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut buffer: HashMap<u32, i32> = HashMap::new();
             if _input.value > 0 {
-                buffer.insert(StatHashes::RELOAD.into(), 50);
+                buffer.insert(StatHashes::Reload.into(), 50);
             }
             buffer
         },
@@ -508,7 +508,7 @@ pub fn year_4_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut out = HashMap::new();
             if _input.value > 0 {
-                out.insert(StatHashes::HANDLING.into(), 15);
+                out.insert(StatHashes::Handling.into(), 15);
             }
             out
         },
@@ -519,17 +519,17 @@ pub fn year_4_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut out = HashMap::new();
             if _input.value == 1 {
-                out.insert(StatHashes::HANDLING.into(), 10);
-                out.insert(StatHashes::RELOAD.into(), 5);
-                out.insert(StatHashes::STABILITY.into(), 5);
+                out.insert(StatHashes::Handling.into(), 10);
+                out.insert(StatHashes::Reload.into(), 5);
+                out.insert(StatHashes::Stability.into(), 5);
             } else if _input.value == 2 {
-                out.insert(StatHashes::HANDLING.into(), 25);
-                out.insert(StatHashes::RELOAD.into(), 25);
-                out.insert(StatHashes::STABILITY.into(), 15);
+                out.insert(StatHashes::Handling.into(), 25);
+                out.insert(StatHashes::Reload.into(), 25);
+                out.insert(StatHashes::Stability.into(), 15);
             } else if _input.value == 3 {
-                out.insert(StatHashes::HANDLING.into(), 50);
-                out.insert(StatHashes::RELOAD.into(), 50);
-                out.insert(StatHashes::STABILITY.into(), 25);
+                out.insert(StatHashes::Handling.into(), 50);
+                out.insert(StatHashes::Reload.into(), 50);
+                out.insert(StatHashes::Stability.into(), 25);
             }
             out
         },
@@ -578,8 +578,8 @@ pub fn year_4_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let val = clamp(_input.value, 0, 2) as i32;
             let mut out = HashMap::new();
-            out.insert(StatHashes::RECOIL_DIR.into(), 20 * val);
-            out.insert(StatHashes::STABILITY.into(), 15 * val);
+            out.insert(StatHashes::RecoilDir.into(), 20 * val);
+            out.insert(StatHashes::Stability.into(), 15 * val);
             out
         },
     );
@@ -589,7 +589,7 @@ pub fn year_4_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut out = HashMap::new();
             if _input.value > 0 {
-                out.insert(StatHashes::AIM_ASSIST.into(), 20);
+                out.insert(StatHashes::AimAssist.into(), 20);
             }
             out
         },

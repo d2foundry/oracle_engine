@@ -65,7 +65,7 @@ pub fn other_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.calc_data.weapon_type == &WeaponType::HANDCANNON {
-                stats.insert(StatHashes::AIRBORNE.into(), 25);
+                stats.insert(StatHashes::Airborne.into(), 25);
             }
             stats
         },
@@ -127,9 +127,9 @@ pub fn other_perks() {
         Perks::OphidianAspect,
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
-            stats.insert(StatHashes::HANDLING.into(), 35);
-            stats.insert(StatHashes::RELOAD.into(), 35);
-            stats.insert(StatHashes::AIRBORNE.into(), 10);
+            stats.insert(StatHashes::Handling.into(), 35);
+            stats.insert(StatHashes::Reload.into(), 35);
+            stats.insert(StatHashes::Airborne.into(), 10);
             stats
         },
     );
@@ -139,8 +139,8 @@ pub fn other_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.value >= 1 {
-                stats.insert(StatHashes::HANDLING.into(), 100);
-                stats.insert(StatHashes::RELOAD.into(), 100);
+                stats.insert(StatHashes::Handling.into(), 100);
+                stats.insert(StatHashes::Reload.into(), 100);
             }
             stats
         },
@@ -180,7 +180,7 @@ pub fn other_perks() {
         Perks::Amplified,
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
-            stats.insert(StatHashes::HANDLING.into(), 40);
+            stats.insert(StatHashes::Handling.into(), 40);
             stats
         },
     );
@@ -216,7 +216,7 @@ pub fn other_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
-                stats.insert(StatHashes::RELOAD.into(), 50);
+                stats.insert(StatHashes::Reload.into(), 50);
             };
             stats
         },
@@ -241,7 +241,7 @@ pub fn other_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
-                stats.insert(StatHashes::RELOAD.into(), 50);
+                stats.insert(StatHashes::Reload.into(), 50);
             };
             stats
         },
@@ -252,7 +252,7 @@ pub fn other_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
-                stats.insert(StatHashes::AIRBORNE.into(), 20);
+                stats.insert(StatHashes::Airborne.into(), 20);
             };
             stats
         },
@@ -264,8 +264,8 @@ pub fn other_perks() {
             let mut stats = HashMap::new();
             let val = clamp(_input.value, 0, 3) as i32;
             if _input.value > 0 {
-                stats.insert(StatHashes::HANDLING.into(), 20 * val);
-                stats.insert(StatHashes::RELOAD.into(), 20 * val);
+                stats.insert(StatHashes::Handling.into(), 20 * val);
+                stats.insert(StatHashes::Reload.into(), 20 * val);
             };
             stats
         },
@@ -301,7 +301,7 @@ pub fn other_perks() {
             if _input.value > 0 {
                 buff += 50;
             };
-            stats.insert(StatHashes::AIRBORNE.into(), buff);
+            stats.insert(StatHashes::Airborne.into(), buff);
             stats
         },
     );
@@ -311,9 +311,9 @@ pub fn other_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
-                stats.insert(StatHashes::AIRBORNE.into(), 20);
-                stats.insert(StatHashes::AIM_ASSIST.into(), 15);
-                stats.insert(StatHashes::STABILITY.into(), 30);
+                stats.insert(StatHashes::Airborne.into(), 20);
+                stats.insert(StatHashes::AimAssist.into(), 15);
+                stats.insert(StatHashes::Stability.into(), 30);
             };
             stats
         },
@@ -322,7 +322,7 @@ pub fn other_perks() {
     add_dmr(
         Perks::BossSpec,
         |_input: ModifierResponseInput| -> DamageModifierResponse {
-            let damage_mult = if *_input.calc_data.enemy_type == EnemyType::BOSS && !_input.pvp {
+            let damage_mult = if *_input.calc_data.enemy_type == EnemyType::Boss && !_input.pvp {
                 1.077
             } else {
                 1.0
@@ -340,7 +340,7 @@ pub fn other_perks() {
         |_input: ModifierResponseInput| -> DamageModifierResponse {
             if !matches!(
                 *_input.calc_data.enemy_type,
-                EnemyType::ELITE | EnemyType::MINIBOSS | EnemyType::CHAMPION
+                EnemyType::Elite | EnemyType::Miniboss | EnemyType::Champion
             ) || _input.pvp
             {
                 return DamageModifierResponse::default();
@@ -359,7 +359,7 @@ pub fn other_perks() {
         |_input: ModifierResponseInput| -> DamageModifierResponse {
             if !matches!(
                 *_input.calc_data.enemy_type,
-                EnemyType::ELITE | EnemyType::MINIBOSS | EnemyType::CHAMPION | EnemyType::BOSS
+                EnemyType::Elite | EnemyType::Miniboss | EnemyType::Champion | EnemyType::Boss
             ) || _input.pvp
             {
                 return DamageModifierResponse::default();
@@ -376,7 +376,7 @@ pub fn other_perks() {
     add_dmr(
         Perks::MinorSpec,
         |_input: ModifierResponseInput| -> DamageModifierResponse {
-            let damage_mult = if _input.calc_data.enemy_type == &EnemyType::MINOR && !_input.pvp {
+            let damage_mult = if _input.calc_data.enemy_type == &EnemyType::Minor && !_input.pvp {
                 1.077
             } else {
                 1.0
@@ -525,9 +525,9 @@ pub fn other_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut map = HashMap::new();
             if _input.value > 0 {
-                map.insert(StatHashes::AIRBORNE.into(), 30);
-                map.insert(StatHashes::RELOAD.into(), 40);
-                map.insert(StatHashes::HANDLING.into(), 40);
+                map.insert(StatHashes::Airborne.into(), 30);
+                map.insert(StatHashes::Reload.into(), 40);
+                map.insert(StatHashes::Handling.into(), 40);
             }
             map
         },

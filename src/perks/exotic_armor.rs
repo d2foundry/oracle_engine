@@ -22,12 +22,12 @@ pub fn exotic_armor() {
         |_input: ModifierResponseInput| -> DamageModifierResponse {
             let mut modifier = DamageModifierResponse::default();
             let value = if _input.pvp { 1.05 } else { 1.15 };
-            if _input.calc_data.damage_type == &DamageType::STASIS && _input.value >= 1 {
+            if _input.calc_data.damage_type == &DamageType::Stasis && _input.value >= 1 {
                 modifier.impact_dmg_scale = value;
                 modifier.explosive_dmg_scale = value;
             }
             modifier
-        }
+        },
     );
 
     add_dmr(
@@ -43,7 +43,7 @@ pub fn exotic_armor() {
                 impact_dmg_scale: damage_mult,
                 ..Default::default()
             }
-        }
+        },
     );
 
     //doesnt work for sturm overcharge, (maybe) memento
@@ -63,7 +63,7 @@ pub fn exotic_armor() {
                 return DamageModifierResponse::default();
             }
 
-            let mult = if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
+            let mult = if _input.calc_data.ammo_type == &AmmoType::Special {
                 0.3
             } else {
                 0.6
@@ -73,7 +73,7 @@ pub fn exotic_armor() {
                 impact_dmg_scale: 1.0 + mult * _input.value.clamp(0, 10) as f64,
                 ..Default::default()
             }
-        }
+        },
     );
 
     add_sbr(
@@ -81,10 +81,10 @@ pub fn exotic_armor() {
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
-                stats.insert(StatHashes::AIRBORNE.into(), 50);
+                stats.insert(StatHashes::Airborne.into(), 50);
             }
             stats
-        }
+        },
     );
 
     add_flmr(
@@ -95,14 +95,14 @@ pub fn exotic_armor() {
             } else {
                 FlinchModifierResponse::default()
             }
-        }
+        },
     );
 
     add_sbr(
         Perks::KnuckleheadRadar,
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-            HashMap::from([(StatHashes::AIRBORNE.into(), 20)])
-        }
+            HashMap::from([(StatHashes::Airborne.into(), 20)])
+        },
     );
 
     add_dmr(
@@ -118,7 +118,7 @@ pub fn exotic_armor() {
                 explosive_dmg_scale: modifier,
                 crit_scale: 1.0,
             }
-        }
+        },
     );
 
     //TODO: MECHANEER'S TRICKSLEEVES AUTORELOAD
@@ -128,12 +128,12 @@ pub fn exotic_armor() {
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             let mut stats = HashMap::new();
             if _input.calc_data.weapon_type == &WeaponType::SIDEARM {
-                stats.insert(StatHashes::AIRBORNE.into(), 50);
-                stats.insert(StatHashes::HANDLING.into(), 100);
-                stats.insert(StatHashes::RELOAD.into(), 100);
+                stats.insert(StatHashes::Airborne.into(), 50);
+                stats.insert(StatHashes::Handling.into(), 100);
+                stats.insert(StatHashes::Reload.into(), 100);
             };
             stats
-        }
+        },
     );
 
     add_hmr(
@@ -147,7 +147,7 @@ pub fn exotic_armor() {
             } else {
                 HandlingModifierResponse::default()
             }
-        }
+        },
     );
     add_rsmr(
         Perks::MechaneersTricksleeves,
@@ -160,7 +160,7 @@ pub fn exotic_armor() {
             } else {
                 ReloadModifierResponse::default()
             }
-        }
+        },
     );
 
     add_dmr(
@@ -176,7 +176,7 @@ pub fn exotic_armor() {
             } else {
                 DamageModifierResponse::default()
             }
-        }
+        },
     );
 
     add_sbr(
@@ -184,11 +184,11 @@ pub fn exotic_armor() {
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             let mut stats = HashMap::new();
             if _input.calc_data.weapon_type == &WeaponType::BOW {
-                stats.insert(StatHashes::AIRBORNE.into(), 40);
-                stats.insert(StatHashes::DRAW_TIME.into(), 10);
+                stats.insert(StatHashes::Airborne.into(), 40);
+                stats.insert(StatHashes::DrawTime.into(), 10);
             };
             stats
-        }
+        },
     );
 
     add_sbr(
@@ -196,7 +196,7 @@ pub fn exotic_armor() {
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
-                stats.insert(StatHashes::AIRBORNE.into(), 50);
+                stats.insert(StatHashes::Airborne.into(), 50);
             };
             stats
         },
@@ -210,11 +210,11 @@ pub fn exotic_armor() {
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             let mut stat = HashMap::new();
             if _input.value > 0 && _input.calc_data.weapon_type == &WeaponType::HANDCANNON {
-                stat.insert(StatHashes::AIRBORNE.into(), 20);
-                stat.insert(StatHashes::HANDLING.into(), 100);
+                stat.insert(StatHashes::Airborne.into(), 20);
+                stat.insert(StatHashes::Handling.into(), 100);
             };
             stat
-        }
+        },
     );
 
     add_hmr(
@@ -228,7 +228,7 @@ pub fn exotic_armor() {
                 };
             }
             HandlingModifierResponse::default()
-        }
+        },
     );
 
     add_sbr(
@@ -236,10 +236,10 @@ pub fn exotic_armor() {
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             let mut stats = HashMap::new();
             if _input.calc_data.weapon_type == &WeaponType::SHOTGUN {
-                stats.insert(StatHashes::AIRBORNE.into(), 30);
+                stats.insert(StatHashes::Airborne.into(), 30);
             };
             stats
-        }
+        },
     );
 
     add_dmr(
@@ -255,7 +255,7 @@ pub fn exotic_armor() {
                 explosive_dmg_scale: buff,
                 ..Default::default()
             }
-        }
+        },
     );
 
     add_sbr(
@@ -265,10 +265,10 @@ pub fn exotic_armor() {
             if _input.calc_data.weapon_type == &WeaponType::AUTORIFLE
                 || _input.calc_data.weapon_type == &WeaponType::MACHINEGUN
             {
-                stats.insert(StatHashes::AIRBORNE.into(), 30);
+                stats.insert(StatHashes::Airborne.into(), 30);
             }
             stats
-        }
+        },
     );
 
     //TODO: AUTORELOAD ON ACTIUM WAR RIG
@@ -276,7 +276,7 @@ pub fn exotic_armor() {
     add_sbr(
         Perks::HallowfireHeart,
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-            HashMap::from([(StatHashes::AIRBORNE.into(), 20)])
+            HashMap::from([(StatHashes::Airborne.into(), 20)])
         },
     );
 
@@ -285,7 +285,7 @@ pub fn exotic_armor() {
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
-                stats.insert(StatHashes::AIRBORNE.into(), 50);
+                stats.insert(StatHashes::Airborne.into(), 50);
             };
             stats
         },
@@ -296,8 +296,8 @@ pub fn exotic_armor() {
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             let mut stats = HashMap::new();
             if _input.calc_data.weapon_type == &WeaponType::SUBMACHINEGUN {
-                stats.insert(StatHashes::AIRBORNE.into(), 40);
-                stats.insert(StatHashes::HANDLING.into(), 100);
+                stats.insert(StatHashes::Airborne.into(), 40);
+                stats.insert(StatHashes::Handling.into(), 100);
             };
             stats
         },
@@ -316,33 +316,33 @@ pub fn exotic_armor() {
                 };
             }
             HandlingModifierResponse::default()
-        }
+        },
     );
 
     add_sbr(
         Perks::PeregrineGreaves,
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-            HashMap::from([(StatHashes::AIRBORNE.into(), 20)])
-        }
+            HashMap::from([(StatHashes::Airborne.into(), 20)])
+        },
     );
 
     add_sbr(
         Perks::EyeOfAnotherWorld,
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-            HashMap::from([(StatHashes::AIRBORNE.into(), 15)])
-        }
+            HashMap::from([(StatHashes::Airborne.into(), 15)])
+        },
     );
 
     add_sbr(
         Perks::AstrocyteVerse,
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             let mut stats = HashMap::new();
-            stats.insert(StatHashes::AIRBORNE.into(), 30);
+            stats.insert(StatHashes::Airborne.into(), 30);
             if _input.value > 0 {
-                stats.insert(StatHashes::HANDLING.into(), 100);
+                stats.insert(StatHashes::Handling.into(), 100);
             }
             stats
-        }
+        },
     );
 
     add_hmr(
@@ -355,7 +355,7 @@ pub fn exotic_armor() {
                 draw_add: 100,
                 ..Default::default()
             }
-        }
+        },
     );
 
     add_sbr(
@@ -367,7 +367,7 @@ pub fn exotic_armor() {
                 || _input.calc_data.intrinsic_hash == 2724693746
             {
                 //Thorn, Osteo Striga, Touch of Malice
-                stats.insert(StatHashes::AIRBORNE.into(), 30);
+                stats.insert(StatHashes::Airborne.into(), 30);
             };
             stats
         },
@@ -379,7 +379,7 @@ pub fn exotic_armor() {
             let mut stats = HashMap::new();
             if _input.calc_data.intrinsic_hash == 2144092201 {
                 //Lumina
-                stats.insert(StatHashes::AIRBORNE.into(), 30);
+                stats.insert(StatHashes::Airborne.into(), 30);
             };
             stats
         },
@@ -392,7 +392,7 @@ pub fn exotic_armor() {
             if _input.calc_data.weapon_type == &WeaponType::FUSIONRIFLE
                 || _input.calc_data.weapon_type == &WeaponType::LINEARFUSIONRIFLE
             {
-                stats.insert(StatHashes::AIRBORNE.into(), 30);
+                stats.insert(StatHashes::Airborne.into(), 30);
             }
             stats
         },
@@ -412,9 +412,9 @@ pub fn exotic_armor() {
             };
 
             HashMap::from([
-                (StatHashes::RELOAD.into(), modifiers.0),
-                (StatHashes::HANDLING.into(), modifiers.1), //?
-                (StatHashes::AIRBORNE.into(), modifiers.2),
+                (StatHashes::Reload.into(), modifiers.0),
+                (StatHashes::Handling.into(), modifiers.1), //?
+                (StatHashes::Airborne.into(), modifiers.2),
             ])
         },
     );
@@ -463,7 +463,7 @@ pub fn exotic_armor() {
         |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
             let mut stat = HashMap::new();
             if _input.value >= 1 {
-                stat.insert(StatHashes::RELOAD.into(), 100);
+                stat.insert(StatHashes::Reload.into(), 100);
             }
             stat
         },
@@ -500,7 +500,7 @@ pub fn exotic_armor() {
         |_input| -> HashMap<BungieHash, StatBump> {
             let mut stats = HashMap::new();
             if _input.value > 0 && *_input.calc_data.weapon_type == WeaponType::GLAIVE {
-                stats.insert(StatHashes::RELOAD.into(), 50);
+                stats.insert(StatHashes::Reload.into(), 50);
             }
             stats
         },

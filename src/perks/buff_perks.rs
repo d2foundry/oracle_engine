@@ -346,7 +346,7 @@ pub fn buff_perks() {
             let buff = if _input.value > 0
                 && matches!(
                     _input.calc_data.damage_type,
-                    DamageType::STASIS | DamageType::ARC
+                    DamageType::Stasis | DamageType::Arc
                 ) {
                 surge_buff(_input.cached_data, 4, _input.pvp)
             } else {
@@ -362,7 +362,7 @@ pub fn buff_perks() {
     add_dmr(
         Perks::SanguineAlchemy,
         |_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value == 0 || *_input.calc_data.damage_type == DamageType::KINETIC {
+            if _input.value == 0 || *_input.calc_data.damage_type == DamageType::Kinetic {
                 return DamageModifierResponse::default();
             }
 

@@ -26,8 +26,8 @@ pub fn year_6_perks() {
                 range_bonus = 10 + ev;
                 reload_bonus = 30 + ev;
             };
-            map.insert(StatHashes::RANGE.into(), range_bonus);
-            map.insert(StatHashes::RELOAD.into(), reload_bonus);
+            map.insert(StatHashes::Range.into(), range_bonus);
+            map.insert(StatHashes::Reload.into(), reload_bonus);
             map
         },
     );
@@ -61,20 +61,20 @@ pub fn year_6_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut map = HashMap::new();
             if _input.value > 4 {
-                map.insert(StatHashes::RANGE.into(), 20);
-                map.insert(StatHashes::RELOAD.into(), 55);
+                map.insert(StatHashes::Range.into(), 20);
+                map.insert(StatHashes::Reload.into(), 55);
             } else if _input.value == 4 {
-                map.insert(StatHashes::RANGE.into(), 12);
-                map.insert(StatHashes::RELOAD.into(), 35);
+                map.insert(StatHashes::Range.into(), 12);
+                map.insert(StatHashes::Reload.into(), 35);
             } else if _input.value == 3 {
-                map.insert(StatHashes::RANGE.into(), 9);
-                map.insert(StatHashes::RELOAD.into(), 20);
+                map.insert(StatHashes::Range.into(), 9);
+                map.insert(StatHashes::Reload.into(), 20);
             } else if _input.value == 2 {
-                map.insert(StatHashes::RANGE.into(), 6);
-                map.insert(StatHashes::RELOAD.into(), 10);
+                map.insert(StatHashes::Range.into(), 6);
+                map.insert(StatHashes::Reload.into(), 10);
             } else if _input.value == 1 {
-                map.insert(StatHashes::RELOAD.into(), 5);
-                map.insert(StatHashes::RANGE.into(), 3);
+                map.insert(StatHashes::Reload.into(), 5);
+                map.insert(StatHashes::Range.into(), 3);
             }
             map
         },
@@ -258,7 +258,7 @@ pub fn year_6_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
-                stats.insert(StatHashes::STABILITY.into(), 25);
+                stats.insert(StatHashes::Stability.into(), 25);
             }
             stats
         },
@@ -268,9 +268,9 @@ pub fn year_6_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
-                stats.insert(StatHashes::STABILITY.into(), 20);
-                stats.insert(StatHashes::HANDLING.into(), 60);
-                stats.insert(StatHashes::RELOAD.into(), 60);
+                stats.insert(StatHashes::Stability.into(), 20);
+                stats.insert(StatHashes::Handling.into(), 60);
+                stats.insert(StatHashes::Reload.into(), 60);
             }
             stats
         },
@@ -319,7 +319,7 @@ pub fn year_6_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.value > 0 {
-                stats.insert(StatHashes::AIRBORNE.into(), 30);
+                stats.insert(StatHashes::Airborne.into(), 30);
             }
             stats
         },
@@ -360,7 +360,7 @@ pub fn year_6_perks() {
             if _input.value == 0 {
                 return HashMap::new();
             }
-            HashMap::from([(StatHashes::RELOAD.into(), 50)])
+            HashMap::from([(StatHashes::Reload.into(), 50)])
         },
     );
 
@@ -386,8 +386,8 @@ pub fn year_6_perks() {
                 return HashMap::new();
             }
             HashMap::from([
-                (StatHashes::RELOAD.into(), 10),
-                (StatHashes::HANDLING.into(), 0),
+                (StatHashes::Reload.into(), 10),
+                (StatHashes::Handling.into(), 0),
             ])
         },
     );
@@ -425,8 +425,8 @@ pub fn year_6_perks() {
 
             let stat_bump = clamp(value + shots_hit, 0, max_stacks) * stat_per_stack;
             HashMap::from([
-                (StatHashes::RELOAD.into(), stat_bump),
-                (StatHashes::HANDLING.into(), stat_bump),
+                (StatHashes::Reload.into(), stat_bump),
+                (StatHashes::Handling.into(), stat_bump),
             ])
         },
     );

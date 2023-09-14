@@ -2,15 +2,15 @@ use crate::activity::Activity;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub enum EnemyType {
-    MINOR,
-    ELITE,
-    MINIBOSS,
-    BOSS,
-    VEHICLE,
+    Minor,
+    Elite,
+    Miniboss,
+    Boss,
+    Vehicle,
     #[default]
-    ENCLAVE,
-    PLAYER,
-    CHAMPION,
+    Enclave,
+    Player,
+    Champion,
 }
 
 #[derive(Debug, Clone, Copy, Default)]
@@ -31,12 +31,12 @@ impl Enemy {
 impl crate::types::formula_types::DamageModFormula {
     pub fn get_mod(&self, _type: &EnemyType) -> f64 {
         match *_type {
-            EnemyType::MINOR => self.minor,
-            EnemyType::ELITE => self.elite,
-            EnemyType::MINIBOSS => self.miniboss,
-            EnemyType::CHAMPION => self.champion,
-            EnemyType::BOSS => self.boss,
-            EnemyType::VEHICLE => self.vehicle,
+            EnemyType::Minor => self.minor,
+            EnemyType::Elite => self.elite,
+            EnemyType::Miniboss => self.miniboss,
+            EnemyType::Champion => self.champion,
+            EnemyType::Boss => self.boss,
+            EnemyType::Vehicle => self.vehicle,
             _ => 1.0,
         }
     }

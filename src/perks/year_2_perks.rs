@@ -23,7 +23,7 @@ pub fn year_2_perks() {
             let mut stats = HashMap::new();
             let ae_per_stack = if _input.is_enhanced { 35 } else { 30 };
             let ae = ae_per_stack * _input.value as i32;
-            stats.insert(StatHashes::AIRBORNE.into(), ae);
+            stats.insert(StatHashes::Airborne.into(), ae);
             stats
         },
     );
@@ -124,7 +124,7 @@ pub fn year_2_perks() {
             if _input.calc_data.time_total > duration {
                 reload = 0;
             };
-            stats.insert(StatHashes::RELOAD.into(), reload);
+            stats.insert(StatHashes::Reload.into(), reload);
             stats
         },
     );
@@ -227,9 +227,9 @@ pub fn year_2_perks() {
                 5,
             );
             let mut stats = HashMap::new();
-            stats.insert(StatHashes::RELOAD.into(), rel_values[entry_to_get as usize]);
+            stats.insert(StatHashes::Reload.into(), rel_values[entry_to_get as usize]);
             stats.insert(
-                StatHashes::STABILITY.into(),
+                StatHashes::Stability.into(),
                 stab_values[entry_to_get as usize],
             );
             stats
@@ -349,7 +349,7 @@ pub fn year_2_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut out = HashMap::new();
             if _input.value > 0 {
-                out.insert(StatHashes::BLAST_RADIUS.into(), 100);
+                out.insert(StatHashes::BlastRadius.into(), 100);
             };
             out
         },
@@ -360,7 +360,7 @@ pub fn year_2_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut out = HashMap::new();
             if _input.value > 0 {
-                out.insert(StatHashes::HANDLING.into(), 30);
+                out.insert(StatHashes::Handling.into(), 30);
             };
             out
         },

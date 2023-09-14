@@ -27,17 +27,17 @@ pub fn meta_perks() {
             if *_input.calc_data.weapon_type == WeaponType::LINEARFUSIONRIFLE && !_input.pvp {
                 crit_scale *= 1.15;
             };
-            if *_input.calc_data.damage_type == DamageType::KINETIC && !_input.pvp {
-                if _input.calc_data.ammo_type == &AmmoType::PRIMARY {
+            if *_input.calc_data.damage_type == DamageType::Kinetic && !_input.pvp {
+                if _input.calc_data.ammo_type == &AmmoType::Primary {
                     dmg_scale *= 1.1;
-                } else if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
+                } else if _input.calc_data.ammo_type == &AmmoType::Special {
                     dmg_scale *= 1.15;
                 };
             };
 
-            if *_input.calc_data.ammo_type == AmmoType::PRIMARY
+            if *_input.calc_data.ammo_type == AmmoType::Primary
                 && _input.calc_data.intrinsic_hash > 1000
-                && *_input.calc_data.enemy_type == EnemyType::MINOR
+                && *_input.calc_data.enemy_type == EnemyType::Minor
                 && !_input.pvp
             {
                 dmg_scale *= 1.4;
@@ -49,7 +49,7 @@ pub fn meta_perks() {
                 let charge_time = _input
                     .calc_data
                     .stats
-                    .get(&StatHashes::CHARGE_TIME.into())
+                    .get(&StatHashes::ChargeTime.into())
                     .expect("Charge time not found");
                 //source: https://docs.google.com/spreadsheets/d/1QaUwtOW2_RJCTK1uaIGkbCoEXDa8UStvjDQSHSDxLOM/edit#gid=497378026
                 //damage value updated from harm and stardust during super DR testing
@@ -80,7 +80,7 @@ pub fn meta_perks() {
                 let charge_time = _input
                     .calc_data
                     .stats
-                    .get(&StatHashes::CHARGE_TIME.into())
+                    .get(&StatHashes::ChargeTime.into())
                     .expect("Charge time not found");
                 let stat = (charge_time.perk_val() - charge_time.base_value) as f64;
                 delay_add -= match _input.calc_data.weapon_type {
@@ -94,7 +94,7 @@ pub fn meta_perks() {
                 let draw_time = _input
                     .calc_data
                     .stats
-                    .get(&StatHashes::DRAW_TIME.into())
+                    .get(&StatHashes::DrawTime.into())
                     .expect("Draw time not found");
                 delay_add += match _input.calc_data.intrinsic_hash {
                     //Lightweights, Wishender, Ticcus, Verglas
@@ -122,17 +122,17 @@ pub fn meta_perks() {
         |_input: ModifierResponseInput| -> ExplosivePercentResponse {
             if *_input.calc_data.weapon_type == WeaponType::GRENADELAUNCHER {
                 let blast_radius_struct =
-                    _input.calc_data.stats.get(&StatHashes::BLAST_RADIUS.into());
+                    _input.calc_data.stats.get(&StatHashes::BlastRadius.into());
 
                 let blast_radius = blast_radius_struct.cloned().unwrap_or_default().perk_val();
 
-                if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
+                if _input.calc_data.ammo_type == &AmmoType::Special {
                     return ExplosivePercentResponse {
                         percent: 0.5 + 0.003 * blast_radius as f64,
                         delyed: 0.0,
                         retain_base_total: true,
                     };
-                } else if _input.calc_data.ammo_type == &AmmoType::HEAVY {
+                } else if _input.calc_data.ammo_type == &AmmoType::Heavy {
                     return ExplosivePercentResponse {
                         percent: 0.7 + 0.00175 * blast_radius as f64,
                         delyed: 0.0,
@@ -189,11 +189,11 @@ pub fn meta_perks() {
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if _input.value == 1 {
-                stats.insert(StatHashes::AIM_ASSIST.into(), 5);
+                stats.insert(StatHashes::AimAssist.into(), 5);
             } else if _input.value == 2 {
-                stats.insert(StatHashes::AIM_ASSIST.into(), 8);
+                stats.insert(StatHashes::AimAssist.into(), 8);
             } else if _input.value > 2 {
-                stats.insert(StatHashes::AIM_ASSIST.into(), 10);
+                stats.insert(StatHashes::AimAssist.into(), 10);
             }
             stats
         },
@@ -228,7 +228,7 @@ pub fn meta_perks() {
                 inv_buff += 20;
             }
             let mut stats = HashMap::new();
-            stats.insert(StatHashes::INVENTORY_SIZE.into(), inv_buff);
+            stats.insert(StatHashes::InventorySize.into(), inv_buff);
             stats
         },
     );
@@ -261,7 +261,7 @@ pub fn meta_perks() {
                 2 => 15,
                 3.. => 18,
             };
-            stats.insert(StatHashes::RELOAD.into(), buff);
+            stats.insert(StatHashes::Reload.into(), buff);
             stats
         },
     );
@@ -285,8 +285,8 @@ pub fn meta_perks() {
         Perks::RallyBarricade,
         |_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
-            stats.insert(StatHashes::STABILITY.into(), 30);
-            stats.insert(StatHashes::RELOAD.into(), 100);
+            stats.insert(StatHashes::Stability.into(), 30);
+            stats.insert(StatHashes::Reload.into(), 100);
             stats
         },
     );

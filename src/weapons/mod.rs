@@ -17,7 +17,6 @@ use crate::types::formula_types::{
     AmmoFormula, DamageModFormula, FiringDataFormula, HandlingFormula, RangeFormula, ReloadFormula,
 };
 
-
 #[derive(Debug, Clone, Copy, Serialize)]
 pub struct Stat {
     pub base_value: i32,
@@ -238,8 +237,8 @@ impl Default for Weapon {
             reload_formula: ReloadFormula::default(),
 
             weapon_type: WeaponType::UNKNOWN,
-            damage_type: DamageType::UNKNOWN,
-            ammo_type: AmmoType::UNKNOWN,
+            damage_type: DamageType::Unknown,
+            ammo_type: AmmoType::Unknown,
         }
     }
 }

@@ -39,10 +39,10 @@ fn setup_pulse() {
     )
     .expect("Failed to generate weapon");
     let mut stats = HashMap::new();
-    stats.insert(StatHashes::RELOAD.into(), Stat::from(50));
-    stats.insert(StatHashes::HANDLING.into(), Stat::from(50));
-    stats.insert(StatHashes::RANGE.into(), Stat::from(50));
-    stats.insert(StatHashes::ZOOM.into(), Stat::from(15));
+    stats.insert(StatHashes::Reload.into(), Stat::from(50));
+    stats.insert(StatHashes::Handling.into(), Stat::from(50));
+    stats.insert(StatHashes::Range.into(), Stat::from(50));
+    stats.insert(StatHashes::Zoom.into(), Stat::from(15));
     new_weapon.set_stats(stats);
     PERS_DATA.with(|perm_data| {
         perm_data.borrow_mut().weapon = new_weapon;
@@ -54,13 +54,13 @@ fn test_pulse_setup() {
     setup_pulse();
     PERS_DATA.with(|perm_data| {
         let mut weapon = perm_data.borrow().weapon.clone();
-        assert_eq!(weapon.damage_type, DamageType::KINETIC);
-        assert_eq!(weapon.ammo_type, AmmoType::PRIMARY);
+        assert_eq!(weapon.damage_type, DamageType::Kinetic);
+        assert_eq!(weapon.ammo_type, AmmoType::Primary);
         assert_eq!(weapon.intrinsic_hash, 69420);
         assert_eq!(weapon.weapon_type, WeaponType::PULSERIFLE);
         let test_stat = weapon
             .get_stats()
-            .get(&(StatHashes::HANDLING.into()))
+            .get(&(StatHashes::Handling.into()))
             .expect("Failed to get stat")
             .val();
         assert_eq!(test_stat, 50, "test_stat: {}", test_stat);
@@ -189,10 +189,10 @@ fn setup_bow() {
     )
     .expect("Failed to generate weapon");
     let mut stats = HashMap::new();
-    stats.insert(StatHashes::RELOAD.into(), Stat::from(50));
-    stats.insert(StatHashes::HANDLING.into(), Stat::from(50));
-    stats.insert(StatHashes::RANGE.into(), Stat::from(50));
-    stats.insert(StatHashes::ZOOM.into(), Stat::from(15));
+    stats.insert(StatHashes::Reload.into(), Stat::from(50));
+    stats.insert(StatHashes::Handling.into(), Stat::from(50));
+    stats.insert(StatHashes::Range.into(), Stat::from(50));
+    stats.insert(StatHashes::Zoom.into(), Stat::from(15));
     new_weapon.set_stats(stats);
     PERS_DATA.with(|perm_data| {
         perm_data.borrow_mut().weapon = new_weapon;
@@ -204,13 +204,13 @@ fn test_bow_setup() {
     setup_bow();
     PERS_DATA.with(|perm_data| {
         let mut weapon = perm_data.borrow().weapon.clone();
-        assert_eq!(weapon.damage_type, DamageType::STRAND);
-        assert_eq!(weapon.ammo_type, AmmoType::SPECIAL);
+        assert_eq!(weapon.damage_type, DamageType::Strand);
+        assert_eq!(weapon.ammo_type, AmmoType::Special);
         assert_eq!(weapon.intrinsic_hash, 696969);
         assert_eq!(weapon.weapon_type, WeaponType::BOW);
         let test_stat = weapon
             .get_stats()
-            .get(&(StatHashes::HANDLING.into()))
+            .get(&(StatHashes::Handling.into()))
             .expect("Failed to get stat")
             .val();
         assert_eq!(test_stat, 50, "test_stat: {}", test_stat);

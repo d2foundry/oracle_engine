@@ -42,7 +42,7 @@ impl Weapon {
 
         let mut reload_stat = self
             .stats
-            .get(&StatHashes::RELOAD.into())
+            .get(&StatHashes::Reload.into())
             .unwrap_or(&Stat::new())
             .perk_val();
 
@@ -104,7 +104,7 @@ impl Weapon {
 
         let range_stat = self
             .stats
-            .get(&StatHashes::RANGE.into())
+            .get(&StatHashes::Range.into())
             .unwrap_or(&Stat::new())
             .val();
         let ads_mult = get_ads_multiplier(self.weapon_type, self.intrinsic_hash).unwrap_or(1.0);
@@ -162,7 +162,7 @@ impl Weapon {
 
         let handling_stat = self
             .stats
-            .get(&StatHashes::HANDLING.into())
+            .get(&StatHashes::Handling.into())
             .unwrap_or(&Stat::new())
             .val();
 
@@ -229,12 +229,12 @@ impl Weapon {
     ) -> AmmoResponse {
         let mag_stat = self
             .stats
-            .get(&StatHashes::MAGAZINE.into())
+            .get(&StatHashes::Magazine.into())
             .unwrap_or(&Stat::new())
             .val();
         let inv_stat = self
             .stats
-            .get(&StatHashes::INVENTORY_SIZE.into())
+            .get(&StatHashes::InventorySize.into())
             .unwrap_or(&Stat::new())
             .val();
         let mut out;
@@ -438,7 +438,7 @@ impl Weapon {
 
         let total_stability: f64 = self
             .stats
-            .get(&StatHashes::STABILITY.into())
+            .get(&StatHashes::Stability.into())
             .unwrap_or(&Stat::new())
             .perk_val()
             .clamp(0, 100)
@@ -517,7 +517,7 @@ impl Weapon {
             WeaponType::GLAIVE => {
                 f64::from(
                     self.stats
-                        .get(&StatHashes::RANGE.into())
+                        .get(&StatHashes::Range.into())
                         .unwrap_or(&Stat::new())
                         .perk_val()
                         .clamp(0, 100),
@@ -527,7 +527,7 @@ impl Weapon {
             WeaponType::GRENADELAUNCHER => {
                 f64::from(
                     self.stats
-                        .get(&StatHashes::VELOCITY.into())
+                        .get(&StatHashes::Velocity.into())
                         .unwrap_or(&Stat::new())
                         .perk_val()
                         .clamp(0, 100),
@@ -537,7 +537,7 @@ impl Weapon {
             WeaponType::ROCKET => {
                 f64::from(
                     self.stats
-                        .get(&StatHashes::VELOCITY.into())
+                        .get(&StatHashes::Velocity.into())
                         .unwrap_or(&Stat::new())
                         .perk_val()
                         .clamp(0, 100),
@@ -559,7 +559,7 @@ impl Weapon {
     pub fn calc_perfect_draw(&self) -> Seconds {
         let stability: f64 = self
             .stats
-            .get(&StatHashes::STABILITY.into())
+            .get(&StatHashes::Stability.into())
             .unwrap_or(&Stat::new())
             .perk_val()
             .clamp(0, 100)
@@ -580,7 +580,7 @@ impl Weapon {
         if self.weapon_type == WeaponType::GLAIVE {
             let shield_duration: f64 = self
                 .stats
-                .get(&StatHashes::SHIELD_DURATION.into())
+                .get(&StatHashes::ShieldDuration.into())
                 .unwrap_or(&Stat::new())
                 .perk_val()
                 .clamp(0, 100)
@@ -589,7 +589,7 @@ impl Weapon {
         } else if self.weapon_type == WeaponType::SWORD {
             let guard_endruance: f64 = self
                 .stats
-                .get(&StatHashes::GUARD_ENDURANCE.into())
+                .get(&StatHashes::GuardEndurance.into())
                 .unwrap_or(&Stat::new())
                 .perk_val()
                 .clamp(0, 100)

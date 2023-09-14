@@ -65,7 +65,7 @@ impl<'a> CalculationInput<'a> {
             ammo_type: _ammo_type,
             handling_data: HandlingResponse::default(),
             num_reloads: 0.0,
-            enemy_type: &EnemyType::BOSS,
+            enemy_type: &EnemyType::Boss,
             perk_value_map: _perk_value_map,
             has_overshield: false,
         }
@@ -98,11 +98,11 @@ impl<'a> CalculationInput<'a> {
             time_this_mag: 0.0,
             stats: _stats,
             weapon_type: _weapon_type,
-            damage_type: &DamageType::STASIS,
+            damage_type: &DamageType::Stasis,
             ammo_type: _ammo_type,
             handling_data: _handling_data,
             num_reloads: 0.0,
-            enemy_type: &EnemyType::PLAYER,
+            enemy_type: &EnemyType::Player,
             perk_value_map: _perk_value_map,
             has_overshield: _has_overshield,
         }
@@ -136,7 +136,7 @@ impl<'a> CalculationInput<'a> {
             ammo_type: _ammo_type,
             handling_data: HandlingResponse::default(),
             num_reloads: 0.0,
-            enemy_type: &EnemyType::ENCLAVE,
+            enemy_type: &EnemyType::Enclave,
             perk_value_map: _perk_value_map,
             has_overshield: false,
         }

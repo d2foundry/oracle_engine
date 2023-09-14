@@ -1,4 +1,3 @@
-// #![allow(dead_code)]
 use super::Activity;
 use crate::logging;
 use piecewise_linear::PiecewiseLinearFunction;
@@ -15,15 +14,15 @@ const WEAPON_DELTA_EXPONENT: f64 = 0.00672;
 #[derive(Debug, Clone, Copy, Default)]
 pub enum DifficultyOptions {
     #[default]
-    NORMAL = 1,
-    RAID = 2,
-    MASTER = 3,
+    Normal = 1,
+    Raid = 2,
+    Master = 3,
 }
 
 impl DifficultyOptions {
     pub fn get_difficulty_data(&self) -> DifficultyData {
         match self {
-            DifficultyOptions::NORMAL => DifficultyData {
+            DifficultyOptions::Normal => DifficultyData {
                 // name: "Normal".to_string(),
                 cap: 50,
                 table: PiecewiseLinearFunction::try_from(vec![
@@ -41,7 +40,7 @@ impl DifficultyOptions {
                 ])
                 .expect("Failed to create PiecewiseLinearFunction in difficulty data"),
             },
-            DifficultyOptions::MASTER => DifficultyData {
+            DifficultyOptions::Master => DifficultyData {
                 // name: "Master".to_string(),
                 cap: 20,
                 table: PiecewiseLinearFunction::try_from(vec![
@@ -59,7 +58,7 @@ impl DifficultyOptions {
                 ])
                 .expect("Failed to create PiecewiseLinearFunction in difficulty data"),
             },
-            DifficultyOptions::RAID => DifficultyData {
+            DifficultyOptions::Raid => DifficultyData {
                 // name: "Raid & Dungeon".to_string(),
                 cap: 20,
                 table: PiecewiseLinearFunction::try_from(vec![
@@ -83,10 +82,10 @@ impl DifficultyOptions {
 impl From<i32> for DifficultyOptions {
     fn from(i: i32) -> Self {
         match i {
-            1 => DifficultyOptions::NORMAL,
-            2 => DifficultyOptions::RAID,
-            3 => DifficultyOptions::MASTER,
-            _ => DifficultyOptions::NORMAL,
+            1 => DifficultyOptions::Normal,
+            2 => DifficultyOptions::Raid,
+            3 => DifficultyOptions::Master,
+            _ => DifficultyOptions::Normal,
         }
     }
 }
