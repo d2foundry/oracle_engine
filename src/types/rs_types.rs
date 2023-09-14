@@ -1,5 +1,3 @@
-
-
 #[derive(Debug, Clone, Default)]
 pub struct RangeResponse {
     pub hip_falloff_start: f64,

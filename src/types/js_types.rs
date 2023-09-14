@@ -1,4 +1,3 @@
-
 use std::fmt;
 
 use crate::{
@@ -10,10 +9,7 @@ use crate::{
     },
 };
 use serde::{Deserialize, Serialize};
-use wasm_bindgen::{
-    prelude::wasm_bindgen,
-    JsValue,
-};
+use wasm_bindgen::{prelude::wasm_bindgen, JsValue};
 
 use super::rs_types::{
     AmmoResponse, DpsResponse, FiringResponse, HandlingResponse, RangeResponse, ReloadResponse,

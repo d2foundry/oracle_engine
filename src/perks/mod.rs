@@ -1,6 +1,5 @@
 //quiet rust analyzer while refactoring
 #![allow(unused_imports)]
-
 //is because the people who make num enum dont know how to make macros
 #![allow(non_upper_case_globals)]
 

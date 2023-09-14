@@ -13,10 +13,10 @@ use crate::{
             RangeModifierResponse, ReloadModifierResponse,
         },
     },
-    types::{rs_types::{
-        AmmoResponse, FiringResponse, HandlingResponse,
-        RangeResponse, ReloadResponse,
-    }, formula_types::*}
+    types::{
+        formula_types::*,
+        rs_types::{AmmoResponse, FiringResponse, HandlingResponse, RangeResponse, ReloadResponse},
+    },
 };
 
 impl ReloadFormula {

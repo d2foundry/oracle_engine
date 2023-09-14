@@ -1,7 +1,7 @@
 use crate::{
     d2_enums::{AmmoType, BungieHash, DamageSource, DamageType, StatBump, WeaponType},
     enemies::EnemyType,
-    types::{rs_types::HandlingResponse, formula_types::FiringDataFormula},
+    types::{formula_types::FiringDataFormula, rs_types::HandlingResponse},
     weapons::Stat,
 };
 use serde::Serialize;

@@ -11,13 +11,10 @@ use std::collections::HashMap;
 use serde::Serialize;
 
 use crate::d2_enums::{AmmoType, DamageType, WeaponType};
-use crate::perks::{
-    get_stat_bumps, lib::CalculationInput, Perk,
-};
+use crate::perks::{get_stat_bumps, lib::CalculationInput, Perk};
 
 use crate::types::formula_types::{
-    AmmoFormula, DamageModFormula, FiringDataFormula, HandlingFormula, RangeFormula,
-    ReloadFormula,
+    AmmoFormula, DamageModFormula, FiringDataFormula, HandlingFormula, RangeFormula, ReloadFormula,
 };
 
 #[derive(Debug, Clone)]

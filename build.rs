@@ -380,9 +380,7 @@ fn main() {
     let mut formula_file = std::fs::File::create(formula_dst).unwrap();
 
     //write imports in file
-    let res = writeln!(
-        formula_file,
-        "use crate::types::prelude::*;");
+    let res = writeln!(formula_file, "use crate::types::prelude::*;");
     if res.is_err() {
         panic!("cargo:warning=error writing imports");
     }

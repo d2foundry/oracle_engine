@@ -1,5 +1,4 @@
-use serde::{Serialize, Deserialize};
-
+use serde::{Deserialize, Serialize};
 
 ///Describes the addresses of all the formulas for a given weapon
 /// based off the weapon path
@@ -19,7 +18,7 @@ pub struct WeaponPath(
     //type id
     pub u32,
     //intrinsic hash
-    pub u32
+    pub u32,
 );
 
 //even if just linear use this
