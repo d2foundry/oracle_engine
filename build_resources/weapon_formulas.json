@@ -47,7 +47,8 @@
         "3755070117": {"name": "Sweet Business",     "cat": "default",  "subFam": "SweetBuiss",  "magProf": "sweet_buiss", "pve":1.16},
         "3602718766": {"name": "Quicksilver Storm",  "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
         "1385166695": {"name": "Centrifuse",         "cat": "default",  "subFam": "Precision",   "magProf": "small"},
-
+        "4184462049": {"name": "Necrochasm",         "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
+        
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.125, "offset_start": 10.75, "vpp_end": 0.0, "offset_end": 40.0, "floor_percent": 0.5},
@@ -362,7 +363,7 @@
         "2770223582": {"name": "The Last Word",    "cat": "LastWord", "subFam": "LastWord",    "magProf": "small"},
         "3174300811": {"name": "Eriana's vow",     "cat": "Eriana",   "subFam": "Eriana",      "magProf": "eriana"},
         "3468089894": {"name": "Aggressive Frame", "cat": "120 RPM",  "subFam": "Aggressive",  "magProf": "small"},
-        "3923638944": {"name": "Double Fire",      "cat": "default",  "subFam": "Aggressive",  "magProf": "small"},
+        "3923638944": {"name": "Heavy Burst",      "cat": "default",  "subFam": "HeavyBurst",  "magProf": "HeavyBurst"},
         "4045839491": {"name": "Sunshot",          "cat": "default",  "subFam": "Lightweight", "magProf": "small"},
         "1458010786": {"name": "Rose",             "cat": "default",  "subFam": "Adaptive",    "magProf": "small"},
 
@@ -415,7 +416,8 @@
             "Lightweight":{"damage": 42.0, "crit_mult": 5,  "burst_delay": 12, "burst_size": 1, "inner_burst_delay": 0},
             "Crimson":    {"damage": 19.0, "crit_mult": 5,  "burst_delay": 7,  "burst_size": 3, "inner_burst_delay": 3},
             "Eriana":     {"damage": 78.0, "crit_mult": 5,  "burst_delay": 20, "burst_size": 1, "inner_burst_delay": 0},
-            "LastWord":   {"damage": 38.03, "crit_mult": 15, "burst_delay": 8,  "burst_size": 1, "inner_burst_delay": 0}
+            "LastWord":   {"damage": 38.03, "crit_mult": 15, "burst_delay": 8,  "burst_size": 1, "inner_burst_delay": 0},
+            "HeavyBurst": {"damage": 25.006, "crit_mult": 15, "burst_delay": 11, "burst_size": 2, "inner_burst_delay": 3}
         },
         "magProf": {
             "small": {
@@ -433,6 +435,9 @@
             "crimson": {
                 "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 24.0},
                 "reserve_id": 0
+            },
+            "HeavyBurst": {
+                "mag": {"evpp": 0.0, "vpp": 0.2, "offset": 8.0}
             }
         }
     },

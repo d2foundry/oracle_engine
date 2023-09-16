@@ -1,4 +1,5 @@
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Default)]
 pub enum AbilityType {
     GRENADE,
     MELEE,
@@ -9,13 +10,10 @@ pub enum AbilityType {
     WEAPON,
     ARMOR,
     MISC,
+    #[default]
     UNKNOWN,
 }
-impl Default for AbilityType {
-    fn default() -> Self {
-        AbilityType::UNKNOWN
-    }
-}
+
 
 #[derive(Debug, Clone, Default)]
 pub struct AbilityDamageProfile {

@@ -64,20 +64,17 @@ pub fn year_5_perks() {
     add_dmr(
         Perks::FocusedFury,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut dmg_boost = 1.0;
-            let shots_needed;
-            if _input.calc_data.curr_firing_data.one_ammo == false
-                || _input.calc_data.curr_firing_data.burst_size == 1
-            {
-                shots_needed = _input.calc_data.base_mag / 2.0;
-            } else {
-                shots_needed = (_input.calc_data.base_mag
-                    * (_input.calc_data.curr_firing_data.burst_size as f64))
-                    / 2.0;
-            }
-            if _input.calc_data.total_shots_fired >= shots_needed || _input.value > 0 {
-                dmg_boost = 1.2;
-            }
+            
+            let shots_needed = (_input.calc_data.base_mag
+                * (_input.calc_data.curr_firing_data.burst_size as f64))
+                / 2.0;
+
+            let dmg_boost =
+                if _input.calc_data.total_shots_fired >= shots_needed || _input.value > 0 {
+                    1.2
+                } else {
+                    1.0
+                };
             DamageModifierResponse {
                 impact_dmg_scale: dmg_boost,
                 explosive_dmg_scale: dmg_boost,
@@ -123,7 +120,7 @@ pub fn year_5_perks() {
             ];
             let dmg_scale: f64;
             let crit_scale: f64;
-            if high_weapons.contains(&_input.calc_data.weapon_type) {
+            if high_weapons.contains(_input.calc_data.weapon_type) {
                 dmg_scale = 1.2;
                 crit_scale = 1.0 / 1.2;
             } else {

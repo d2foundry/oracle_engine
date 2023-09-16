@@ -208,7 +208,7 @@ impl AmmoFormula {
         if _calc_inv {
             reserve_size = calc_reserves(
                 raw_mag_size,
-                _mag_stat as i32,
+                _mag_stat,
                 inv_stat as i32,
                 _inv_id,
                 _inv_modifiers.inv_scale,
@@ -341,13 +341,13 @@ impl Weapon {
                 + (inner_burst_delay * (burst_size as f64 - 1.0))
                 + extra_charge_delay)
                 / burst_size as f64);
-        let rpm: f64;
-        if self.firing_data.one_ammo {
-            rpm = raw_rpm / burst_size as f64
+        let rpm = if self.firing_data.one_ammo {
+            raw_rpm / burst_size as f64
         } else {
-            rpm = raw_rpm
+            raw_rpm
         };
-        let out = FiringResponse {
+
+        FiringResponse {
             pvp_impact_damage: impact_dmg * pvp_damage_modifiers.impact_dmg_scale,
             pvp_explosion_damage: explosion_dmg * pvp_damage_modifiers.explosive_dmg_scale,
             pvp_crit_mult: crit_mult * pvp_damage_modifiers.crit_scale,
@@ -363,8 +363,7 @@ impl Weapon {
             rpm,
 
             timestamp: fd.timestamp,
-        };
-        out
+        }
     }
 }
 
@@ -499,11 +498,9 @@ impl Weapon {
             .clamp(0, 100)
             .into();
         total_scaler *= 1.0 - ((total_stability - 20.0) / 80.0 * stability_percent);
-
-        if _calc_input.is_some() {
+        if let Some(calc_input) = _calc_input {
             total_scaler *=
-                get_flinch_modifier(self.list_perks(), &_calc_input.unwrap(), _pvp, cached_data)
-                    .flinch_scale;
+                get_flinch_modifier(self.list_perks(), &calc_input, _pvp, cached_data).flinch_scale;
         }
 
         total_scaler
@@ -606,10 +603,9 @@ impl Weapon {
             _ => 0.0,
         };
 
-        if _calc_input.is_some() {
-            velocity *=
-                get_velocity_modifier(self.list_perks(), &_calc_input.unwrap(), _pvp, cached_data)
-                    .velocity_scaler;
+        if let Some(calc_input) = _calc_input {
+            velocity *= get_velocity_modifier(self.list_perks(), &calc_input, _pvp, cached_data)
+                .velocity_scaler;
         }
         velocity
     }

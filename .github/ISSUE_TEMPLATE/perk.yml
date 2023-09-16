@@ -1,0 +1,42 @@
+name: Perk Support
+description: Create an issue for a new perk/fix a current perk
+title: "[perk]: <title>"
+labels: "perk support"
+body:
+  - type: input
+    attributes:
+      label: Perk/Trait Name
+      description: What is the name of the perk(s)
+      placeholder: Sword Logic, Wild Card, Rangefinder...
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue/thread for this?
+      description: Please search here and in our discord to see if an issue already exists for this perk.
+      options:
+      - label: I have searched on discord and github
+        required: true
+  - type: input
+    attributes:
+      label: Link to discord support thread
+      description: If there is a support thread open in discord, please put it here.
+      placeholder: https://discord.com/...
+  - type: textarea
+    attributes:
+      label: Current Behavior
+      description: What is the perk currently showing/doing
+      placeholder: wrong percent buff, duration, not implemented, etc.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: What should the perk be doing, if you know.
+      placeholder: wrong percent buff, not implemented, etc.
+  - type: textarea
+    attributes:
+      label: Supporting Information
+      description: Any information you think that will help us resolve the issue
+      placeholder: mossy's sheet, youtube link, etc.
+  

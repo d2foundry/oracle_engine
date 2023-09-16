@@ -14,16 +14,14 @@ pub struct DifficultyData {
 const WEAPON_DELTA_EXPONENT: f64 = 0.00672;
 
 #[derive(Debug, Clone)]
+#[derive(Default)]
 pub enum DifficultyOptions {
+    #[default]
     NORMAL = 1,
     RAID = 2,
     MASTER = 3,
 }
-impl Default for DifficultyOptions {
-    fn default() -> Self {
-        DifficultyOptions::NORMAL
-    }
-}
+
 impl DifficultyOptions {
     pub fn get_difficulty_data(&self) -> DifficultyData {
         match self {
@@ -96,7 +94,7 @@ impl From<i32> for DifficultyOptions {
 }
 
 pub(super) fn rpl_mult(_rpl: f64) -> f64 {
-    return (1.0 + ((1.0 / 30.0) * _rpl)) / (4.0 / 3.0);
+    (1.0 + ((1.0 / 30.0) * _rpl)) / (4.0 / 3.0)
 }
 
 pub(super) fn get_gear_delta_mult(_activity: &Activity) -> f64 {

@@ -26,21 +26,23 @@ pub fn exotic_armor() {
                 modifier.impact_dmg_scale = value;
                 modifier.explosive_dmg_scale = value;
             }
-            return modifier;
+            modifier
         }),
     );
 
     add_dmr(
         Perks::MechaneersTricksleeves,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut dmr = DamageModifierResponse::default();
-            if _input.value <= 0 || _input.calc_data.weapon_type != &WeaponType::SIDEARM {
-                return dmr;
+            if _input.value == 0 || *_input.calc_data.weapon_type != WeaponType::SIDEARM {
+                return DamageModifierResponse::default();
             };
+
             let damage_mult = if _input.pvp { 1.35 } else { 2.0 };
-            dmr.explosive_dmg_scale = damage_mult;
-            dmr.impact_dmg_scale = damage_mult;
-            dmr
+            DamageModifierResponse {
+                explosive_dmg_scale: damage_mult,
+                impact_dmg_scale: damage_mult,
+                ..Default::default()
+            }
         }),
     );
 
@@ -110,16 +112,16 @@ pub fn exotic_armor() {
     add_dmr(
         Perks::KnuckleheadRadar,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let health_percent = _input.cached_data.get("health%").unwrap_or(&1.0).clone();
+            let health_percent = *_input.cached_data.get("health%").unwrap_or(&1.0);
             if health_percent >= 0.3 || _input.value == 0 {
                 return DamageModifierResponse::default();
             }
             let modifier = 1.0 + (0.3 - health_percent);
-            return DamageModifierResponse {
+            DamageModifierResponse {
                 impact_dmg_scale: modifier,
                 explosive_dmg_scale: modifier,
                 crit_scale: 1.0,
-            };
+            }
         }),
     );
 
@@ -254,7 +256,7 @@ pub fn exotic_armor() {
                         ..Default::default()
                     };
                 }
-                return HandlingModifierResponse::default();
+                HandlingModifierResponse::default()
             },
         ),
     );
@@ -354,7 +356,7 @@ pub fn exotic_armor() {
                         ..Default::default()
                     };
                 }
-                return HandlingModifierResponse::default();
+                HandlingModifierResponse::default()
             },
         ),
     );

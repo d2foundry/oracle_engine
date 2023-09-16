@@ -32,6 +32,7 @@ pub struct CalculationInput<'a> {
 }
 impl<'a> CalculationInput<'a> {
     //stuff like mag size can use this, not reload, damage, etc.
+    #[allow(clippy::too_many_arguments)]
     pub fn construct_pve_sparse(
         _intrinsic_hash: u32,
         _firing_data: &'a FiringData,
@@ -48,7 +49,7 @@ impl<'a> CalculationInput<'a> {
     ) -> Self {
         Self {
             intrinsic_hash: _intrinsic_hash,
-            curr_firing_data: &_firing_data,
+            curr_firing_data: _firing_data,
             base_crit_mult: _base_crit_mult,
             shots_fired_this_mag: 0.0,
             total_shots_fired: _total_shots_hit as f64,
@@ -58,10 +59,10 @@ impl<'a> CalculationInput<'a> {
             reserves_left: 100.0,
             time_total: _total_time,
             time_this_mag: -1.0,
-            stats: &_stats,
-            weapon_type: &_weapon_type,
+            stats: _stats,
+            weapon_type: _weapon_type,
             damage_type: _damage_type,
-            ammo_type: &_ammo_type,
+            ammo_type: _ammo_type,
             handling_data: HandlingResponse::default(),
             num_reloads: 0.0,
             enemy_type: &EnemyType::BOSS,
@@ -69,6 +70,7 @@ impl<'a> CalculationInput<'a> {
             has_overshield: false,
         }
     }
+    #[allow(clippy::too_many_arguments)]
     pub fn construct_pvp(
         _intrinsic_hash: u32,
         _firing_data: &'a FiringData,
@@ -105,6 +107,7 @@ impl<'a> CalculationInput<'a> {
             has_overshield: _has_overshield,
         }
     }
+    #[allow(clippy::too_many_arguments)]
     pub fn construct_static(
         _intrinsic_hash: u32,
         _firing_data: &'a FiringData,
@@ -268,23 +271,14 @@ impl Default for RangeModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Default)]
 pub struct RefundResponse {
     pub crit: bool,
     pub requirement: i32,
     pub refund_mag: i32,
     pub refund_reserves: i32,
 }
-impl Default for RefundResponse {
-    fn default() -> Self {
-        Self {
-            crit: false,
-            requirement: 0,
-            refund_mag: 0,
-            refund_reserves: 0,
-        }
-    }
-}
+
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct MagazineModifierResponse {
     pub magazine_stat_add: i32,
@@ -397,7 +391,7 @@ impl Default for DamageResistModifierResponse {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Default)]
 pub struct ModifierResponseSummary {
     pub rmr: Option<RangeModifierResponse>,
     pub dmr: Option<DamageModifierResponse>,
@@ -409,21 +403,4 @@ pub struct ModifierResponseSummary {
     pub imr: Option<InventoryModifierResponse>,
     pub drmr: Option<DamageResistModifierResponse>,
     pub statbump: Option<HashMap<BungieHash, StatBump>>,
-}
-
-impl Default for ModifierResponseSummary {
-    fn default() -> Self {
-        Self {
-            rmr: None,
-            dmr: None,
-            hmr: None,
-            fmr: None,
-            flmr: None,
-            rsmr: None,
-            mmr: None,
-            imr: None,
-            drmr: None,
-            statbump: None,
-        }
-    }
 }

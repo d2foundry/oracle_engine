@@ -1,5 +1,3 @@
-#![allow(clippy::all)]
-
 pub mod buff_perks;
 pub mod exotic_armor;
 pub mod exotic_perks;
@@ -373,6 +371,7 @@ pub enum Perks {
     HighGround = 2319119708,
     HeadRush = 2565067140,
     EnlightendAction = 3828510309,
+    SwordLogic = 31345821,
 
     //subclass
     OnYourMark = 3066103999,
@@ -414,6 +413,7 @@ pub enum Perks {
     AgersScepterCatalyst = 970163821,
     Broadhead = 2287699930,
     HuntersTrace = 891750160,
+    Desperation = 525593296,
 
     //energy exotic
     LagragianSight = 2881100038,
@@ -466,21 +466,25 @@ pub struct ModifierResponseInput<'a> {
     pvp: bool,
     cached_data: &'a mut HashMap<String, f64>,
 }
+type ModifierFunction<T> = Box<dyn Fn(ModifierResponseInput) -> T>;
+type StatMap = HashMap<BungieHash, StatBump>;
+type ModifierMap<T> = HashMap<Perks, ModifierFunction<T>>;
+
 #[derive(Default)]
 pub struct PersistentModifierResponses {
-    pub sbr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> HashMap<BungieHash, StatBump>>>,
-    pub dmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> DamageModifierResponse>>,
-    pub hmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> HandlingModifierResponse>>,
-    pub rmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> RangeModifierResponse>>,
-    pub rsmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> ReloadModifierResponse>>,
-    pub fmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> FiringModifierResponse>>,
-    pub flmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> FlinchModifierResponse>>,
-    pub edr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> ExtraDamageResponse>>,
-    pub rr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> RefundResponse>>,
-    pub vmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> VelocityModifierResponse>>,
-    pub epr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> ExplosivePercentResponse>>,
-    pub mmr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> MagazineModifierResponse>>,
-    pub imr: HashMap<Perks, Box<dyn Fn(ModifierResponseInput) -> InventoryModifierResponse>>,
+    pub sbr: ModifierMap<StatMap>,
+    pub dmr: ModifierMap<DamageModifierResponse>,
+    pub hmr: ModifierMap<HandlingModifierResponse>,
+    pub rmr: ModifierMap<RangeModifierResponse>,
+    pub rsmr: ModifierMap<ReloadModifierResponse>,
+    pub fmr: ModifierMap<FiringModifierResponse>,
+    pub flmr: ModifierMap<FlinchModifierResponse>,
+    pub edr: ModifierMap<ExtraDamageResponse>,
+    pub rr: ModifierMap<RefundResponse>,
+    pub vmr: ModifierMap<VelocityModifierResponse>,
+    pub epr: ModifierMap<ExplosivePercentResponse>,
+    pub mmr: ModifierMap<MagazineModifierResponse>,
+    pub imr: ModifierMap<InventoryModifierResponse>,
 }
 impl PersistentModifierResponses {
     fn is_empty(&self) -> bool {
@@ -604,67 +608,67 @@ impl PersistentModifierResponses {
     }
 }
 
-fn add_sbr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> HashMap<BungieHash, StatBump>>) {
+fn add_sbr(perk: Perks, func: ModifierFunction<StatMap>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().sbr.insert(perk, func);
     });
 }
-fn add_dmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> DamageModifierResponse>) {
+fn add_dmr(perk: Perks, func: ModifierFunction<DamageModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().dmr.insert(perk, func);
     });
 }
-fn add_hmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> HandlingModifierResponse>) {
+fn add_hmr(perk: Perks, func: ModifierFunction<HandlingModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().hmr.insert(perk, func);
     });
 }
-fn add_rmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> RangeModifierResponse>) {
+fn add_rmr(perk: Perks, func: ModifierFunction<RangeModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().rmr.insert(perk, func);
     });
 }
-fn add_rsmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> ReloadModifierResponse>) {
+fn add_rsmr(perk: Perks, func: ModifierFunction<ReloadModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().rsmr.insert(perk, func);
     });
 }
-fn add_fmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> FiringModifierResponse>) {
+fn add_fmr(perk: Perks, func: ModifierFunction<FiringModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().fmr.insert(perk, func);
     });
 }
-fn add_flmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> FlinchModifierResponse>) {
+fn add_flmr(perk: Perks, func: ModifierFunction<FlinchModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().flmr.insert(perk, func);
     });
 }
-fn add_edr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> ExtraDamageResponse>) {
+fn add_edr(perk: Perks, func: ModifierFunction<ExtraDamageResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().edr.insert(perk, func);
     });
 }
-fn add_rr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> RefundResponse>) {
+fn add_rr(perk: Perks, func: ModifierFunction<RefundResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().rr.insert(perk, func);
     });
 }
-fn add_vmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> VelocityModifierResponse>) {
+fn add_vmr(perk: Perks, func: ModifierFunction<VelocityModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().vmr.insert(perk, func);
     });
 }
-fn add_epr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> ExplosivePercentResponse>) {
+fn add_epr(perk: Perks, func: ModifierFunction<ExplosivePercentResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().epr.insert(perk, func);
     });
 }
-fn add_mmr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> MagazineModifierResponse>) {
+fn add_mmr(perk: Perks, func: ModifierFunction<MagazineModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().mmr.insert(perk, func);
     });
 }
-fn add_imr(perk: Perks, func: Box<dyn Fn(ModifierResponseInput) -> InventoryModifierResponse>) {
+fn add_imr(perk: Perks, func: ModifierFunction<InventoryModifierResponse>) {
     PERK_FUNC_MAP.with(|map| {
         map.borrow_mut().imr.insert(perk, func);
     });
@@ -694,7 +698,7 @@ pub fn get_stat_bumps(
             *entry += value;
         }
         for (key, value) in perk.stat_buffs {
-            let entry = static_stats.entry(key.clone()).or_insert(0);
+            let entry = static_stats.entry(key).or_insert(0);
             *entry += value;
         }
     }
@@ -713,7 +717,7 @@ pub fn get_dmg_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -738,7 +742,7 @@ pub fn get_reload_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -762,7 +766,7 @@ pub fn get_firing_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -788,7 +792,7 @@ pub fn get_handling_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -817,7 +821,7 @@ pub fn get_magazine_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -842,7 +846,7 @@ pub fn get_reserve_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -867,7 +871,7 @@ pub fn get_range_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -893,7 +897,7 @@ pub fn get_refund_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -918,7 +922,7 @@ pub fn get_extra_damage(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -967,7 +971,7 @@ pub fn get_explosion_data(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: &mut HashMap::new(),
             };
@@ -992,7 +996,7 @@ pub fn get_flinch_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -1015,7 +1019,7 @@ pub fn get_velocity_modifier(
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
+                calc_data: _input_data,
                 pvp: _pvp,
                 cached_data: _cached_data,
             };
@@ -1163,7 +1167,7 @@ impl Weapon {
                         .or_insert(value);
                 }
                 mod_response.statbump = Some(stat_buffer);
-                return mod_response;
+                mod_response
             });
             buffer.insert(perk.raw_hash, mod_buffer);
         }
