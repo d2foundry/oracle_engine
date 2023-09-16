@@ -19,7 +19,7 @@ pub fn calc_refund(_shots_hit_this_mag: i32, _refunds: Vec<RefundResponse>) -> (
             refund_ammount.1 += refund.refund_reserves;
         }
     }
-    return refund_ammount;
+    refund_ammount
 }
 
 #[derive(Debug, Clone)]
@@ -74,7 +74,7 @@ pub fn calc_extra_dmg(
                 };
                 extra_time_dmg.push((_total_time + entry.time_for_additive_damage, bonus_dmg));
                 extra_hits += entry.times_to_hit;
-            } else if entry.is_dot == false {
+            } else if !entry.is_dot {
                 for i in 0..entry.times_to_hit {
                     let mut bonus_dmg = entry.additive_damage;
                     bonus_dmg *= _dmg_buffs.get_buff_amount(&entry);
@@ -117,8 +117,8 @@ pub fn calc_extra_dmg(
 pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> DpsResponse {
     let weapon = Rc::new(_weapon.clone());
     let stats = weapon.stats.clone();
-    let weapon_type = weapon.weapon_type.clone();
-    let ammo_type = weapon.ammo_type.clone();
+    let weapon_type = weapon.weapon_type;
+    let ammo_type = weapon.ammo_type;
 
     let tmp_dmg_prof = weapon.get_damage_profile();
     let impact_dmg = tmp_dmg_prof.0;
@@ -129,7 +129,7 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
     let base_mag = weapon.calc_ammo_sizes(None, None, false).mag_size;
     let maximum_shots = if base_mag * 5 < 15 { 15 } else { base_mag * 5 };
 
-    let firing_settings = _weapon.firing_data.clone();
+    let firing_settings = _weapon.firing_data;
     let perks = weapon.list_perks();
 
     let burst_size = firing_settings.burst_size as f64;
@@ -175,7 +175,7 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
         let handling_data =
             weapon.calc_handling_times(Some(handling_calc_input), Some(&mut pers_calc_data), false);
         ///////////////////////////////
-        let mut start_time = total_time.clone();
+        let mut start_time = total_time;
         while mag > 0 {
             //DMG MODIFIERS////////////////
             let before_shot_input_data = CalculationInput {
@@ -196,7 +196,7 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
                 time_total: total_time,
                 time_this_mag: (total_time - start_time),
                 damage_type: &weapon.damage_type,
-                handling_data: handling_data,
+                handling_data,
                 num_reloads: num_reloads as f64,
                 has_overshield: false,
             };
@@ -298,7 +298,7 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
                 time_total: total_time,
                 time_this_mag: (total_time - start_time),
                 damage_type: &weapon.damage_type,
-                handling_data: handling_data,
+                handling_data,
                 num_reloads: num_reloads as f64,
                 has_overshield: false,
             };
@@ -375,11 +375,9 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
                     reserve = 0;
                     break;
                 }
-            } else {
-                if total_shots_fired > base_mag * 8 + 20 {
-                    reserve = 0;
-                    break;
-                }
+            } else if total_shots_fired > base_mag * 8 + 20 {
+                reserve = 0;
+                break;
             }
             if reserve <= 0 {
                 break;

@@ -1,21 +1,19 @@
 use crate::activity::Activity;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Default)]
 pub enum EnemyType {
     MINOR,
     ELITE,
     MINIBOSS,
     BOSS,
     VEHICLE,
+    #[default]
     ENCLAVE,
     PLAYER,
     CHAMPION,
 }
-impl Default for EnemyType {
-    fn default() -> Self {
-        EnemyType::ENCLAVE
-    }
-}
+
 
 #[derive(Debug, Clone, Default)]
 pub struct Enemy {
