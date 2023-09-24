@@ -1,29 +1,18 @@
-use std::{
-    collections::HashMap,
-    fmt::{self, write},
-};
+use std::fmt;
 
 use crate::{
     activity::damage_calc::DifficultyOptions,
     enemies::EnemyType,
-    perks::Perk,
-    types::rs_types::StatQuadraticFormula,
     weapons::{
         ttk_calc::{BodyKillData, OptimalKillData, ResillienceSummary},
         Stat,
     },
 };
 use serde::{Deserialize, Serialize};
-// use tsify::Tsify;
-use wasm_bindgen::{
-    convert::{IntoWasmAbi, WasmSlice},
-    prelude::wasm_bindgen,
-    JsValue,
-};
+use wasm_bindgen::prelude::wasm_bindgen;
 
 use super::rs_types::{
-    AmmoFormula, AmmoResponse, DamageMods, DpsResponse, FiringData, FiringResponse,
-    HandlingFormula, HandlingResponse, RangeFormula, RangeResponse, ReloadFormula, ReloadResponse,
+    AmmoResponse, FiringResponse, HandlingResponse, RangeResponse, ReloadResponse,
 };
 
 #[derive(Debug, Clone, Copy, Serialize)]
@@ -118,56 +107,57 @@ impl From<AmmoResponse> for JsAmmoResponse {
     }
 }
 
-#[derive(Debug, Clone, Serialize)]
-#[wasm_bindgen(js_name = "DpsResponse")]
-pub struct JsDpsResponse {
-    #[wasm_bindgen(skip)]
-    pub dps_per_mag: Vec<f64>,
-    #[wasm_bindgen(skip)]
-    pub time_damage_data: Vec<(f64, f64)>,
-    #[wasm_bindgen(js_name = "totalDamage", readonly)]
-    pub total_damage: f64,
-    #[wasm_bindgen(js_name = "totalTime", readonly)]
-    pub total_time: f64,
-    #[wasm_bindgen(js_name = "totalShots", readonly)]
-    pub total_shots: i32,
-}
-#[wasm_bindgen(js_class = "DpsResponse")]
-impl JsDpsResponse {
-    #[wasm_bindgen(js_name = "toJSON")]
-    pub fn to_json(self) -> String {
-        serde_wasm_bindgen::to_value(&self)
-            .unwrap()
-            .as_string()
-            .unwrap()
-    }
-    ///Returns a list of tuples of time and damage
-    #[wasm_bindgen(getter, js_name = "timeDamageData")]
-    pub fn time_damage_data(&self) -> JsValue {
-        serde_wasm_bindgen::to_value(&self.time_damage_data).unwrap()
-    }
-    ///Returns a list of dps values for each magazine
-    #[wasm_bindgen(getter, js_name = "dpsPerMag")]
-    pub fn dps_per_mag(&self) -> JsValue {
-        serde_wasm_bindgen::to_value(&self.dps_per_mag).unwrap()
-    }
-}
-impl fmt::Display for JsDpsResponse {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{:?}", self)
-    }
-}
-impl From<DpsResponse> for JsDpsResponse {
-    fn from(dps: DpsResponse) -> Self {
-        JsDpsResponse {
-            dps_per_mag: dps.dps_per_mag,
-            time_damage_data: dps.time_damage_data,
-            total_damage: dps.total_damage,
-            total_time: dps.total_time,
-            total_shots: dps.total_shots,
-        }
-    }
-}
+// #[derive(Debug, Clone, Serialize)]
+// #[wasm_bindgen(js_name = "DpsResponse")]
+// pub struct JsDpsResponse {
+//     #[wasm_bindgen(skip)]
+//     pub dps_per_mag: Vec<f64>,
+//     #[wasm_bindgen(skip)]
+//     pub time_damage_data: Vec<(f64, f64)>,
+//     #[wasm_bindgen(js_name = "totalDamage", readonly)]
+//     pub total_damage: f64,
+//     #[wasm_bindgen(js_name = "totalTime", readonly)]
+//     pub total_time: f64,
+//     #[wasm_bindgen(js_name = "totalShots", readonly)]
+//     pub total_shots: i32,
+// }
+// #[allow(clippy::unwrap_used)]
+// #[wasm_bindgen(js_class = "DpsResponse")]
+// impl JsDpsResponse {
+//     #[wasm_bindgen(js_name = "toJSON")]
+//     pub fn to_json(self) -> String {
+//         serde_wasm_bindgen::to_value(&self)
+//             .unwrap()
+//             .as_string()
+//             .unwrap()
+//     }
+//     ///Returns a list of tuples of time and damage
+//     #[wasm_bindgen(getter, js_name = "timeDamageData")]
+//     pub fn time_damage_data(&self) -> JsValue {
+//         serde_wasm_bindgen::to_value(&self.time_damage_data).unwrap()
+//     }
+//     ///Returns a list of dps values for each magazine
+//     #[wasm_bindgen(getter, js_name = "dpsPerMag")]
+//     pub fn dps_per_mag(&self) -> JsValue {
+//         serde_wasm_bindgen::to_value(&self.dps_per_mag).unwrap()
+//     }
+// }
+// impl fmt::Display for JsDpsResponse {
+//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+//         write!(f, "{:?}", self)
+//     }
+// }
+// impl From<DpsResponse> for JsDpsResponse {
+//     fn from(dps: DpsResponse) -> Self {
+//         JsDpsResponse {
+//             dps_per_mag: dps.dps_per_mag,
+//             time_damage_data: dps.time_damage_data,
+//             total_damage: dps.total_damage,
+//             total_time: dps.total_time,
+//             total_shots: dps.total_shots,
+//         }
+//     }
+// }
 
 #[derive(Debug, Clone, Copy, Serialize)]
 #[wasm_bindgen(js_name = "OptimalKillData", inspectable)]
@@ -205,7 +195,7 @@ impl From<BodyKillData> for JsBodyKillData {
     }
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Copy, Serialize)]
 #[wasm_bindgen(js_name = "ResillienceSummary", inspectable)]
 pub struct JsResillienceSummary {
     #[serde(rename = "resillienceValue")]
@@ -228,7 +218,7 @@ impl From<ResillienceSummary> for JsResillienceSummary {
     }
 }
 
-#[derive(Debug, Clone, Default, Serialize)]
+#[derive(Debug, Clone, Copy, Default, Serialize)]
 #[wasm_bindgen(js_name = "FiringResponse", inspectable)]
 pub struct JsFiringResponse {
     #[wasm_bindgen(js_name = "pvpImpactDamage", readonly)]
@@ -304,7 +294,7 @@ impl From<Stat> for JsStat {
     }
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Copy, Serialize)]
 #[wasm_bindgen(js_name = "MetaData", inspectable)]
 pub struct JsMetaData {
     #[wasm_bindgen(js_name = "apiVersion", readonly)]
@@ -317,7 +307,7 @@ pub struct JsMetaData {
     pub api_branch: &'static str,
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone, Copy, Default)]
 #[wasm_bindgen(js_name = "ScalarResponseSummary", inspectable)]
 pub struct JsScalarResponse {
     #[wasm_bindgen(js_name = "reloadScalar", readonly)]
@@ -340,19 +330,19 @@ pub struct JsScalarResponse {
     pub reserve_size_scalar: f64,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 #[wasm_bindgen(js_name = "DifficultyOptions")]
 pub enum JsDifficultyOptions {
-    NORMAL = 1,
-    RAID = 2,
-    MASTER = 3,
+    Normal = 1,
+    Raid = 2,
+    Master = 3,
 }
 impl From<JsDifficultyOptions> for DifficultyOptions {
     fn from(val: JsDifficultyOptions) -> Self {
         match val {
-            JsDifficultyOptions::NORMAL => DifficultyOptions::NORMAL,
-            JsDifficultyOptions::RAID => DifficultyOptions::RAID,
-            JsDifficultyOptions::MASTER => DifficultyOptions::MASTER,
+            JsDifficultyOptions::Normal => DifficultyOptions::Normal,
+            JsDifficultyOptions::Raid => DifficultyOptions::Raid,
+            JsDifficultyOptions::Master => DifficultyOptions::Master,
         }
     }
 }
@@ -360,26 +350,26 @@ impl From<JsDifficultyOptions> for DifficultyOptions {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[wasm_bindgen(js_name = "EnemyType")]
 pub enum JsEnemyType {
-    MINOR,
-    ELITE,
-    MINIBOSS,
-    BOSS,
-    VEHICLE,
-    ENCLAVE,
-    PLAYER,
-    CHAMPION,
+    Minor,
+    Elite,
+    Miniboss,
+    Boss,
+    Vehicle,
+    Enclave,
+    Player,
+    Champion,
 }
 impl From<JsEnemyType> for EnemyType {
     fn from(val: JsEnemyType) -> Self {
         match val {
-            JsEnemyType::MINOR => EnemyType::MINOR,
-            JsEnemyType::ELITE => EnemyType::ELITE,
-            JsEnemyType::MINIBOSS => EnemyType::MINIBOSS,
-            JsEnemyType::BOSS => EnemyType::BOSS,
-            JsEnemyType::VEHICLE => EnemyType::VEHICLE,
-            JsEnemyType::ENCLAVE => EnemyType::ENCLAVE,
-            JsEnemyType::PLAYER => EnemyType::PLAYER,
-            JsEnemyType::CHAMPION => EnemyType::CHAMPION,
+            JsEnemyType::Minor => EnemyType::Minor,
+            JsEnemyType::Elite => EnemyType::Elite,
+            JsEnemyType::Miniboss => EnemyType::Miniboss,
+            JsEnemyType::Boss => EnemyType::Boss,
+            JsEnemyType::Vehicle => EnemyType::Vehicle,
+            JsEnemyType::Enclave => EnemyType::Enclave,
+            JsEnemyType::Player => EnemyType::Player,
+            JsEnemyType::Champion => EnemyType::Champion,
         }
     }
 }

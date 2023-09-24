@@ -1,5 +1,5 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(Default)]
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 pub enum LogLevel {
     Error,
     #[default]
@@ -29,16 +29,14 @@ impl From<LogLevel> for usize {
     }
 }
 
-
 fn get_log_level() -> LogLevel {
     crate::PERS_DATA.with(|perm_data| perm_data.borrow().log_level)
 }
 
 pub fn extern_log(s: &str, log_level: LogLevel) {
-    if log_level > get_log_level() {
-        return;
+    if log_level < get_log_level() {
+        crate::console_log!("{}", s);
     }
-    crate::console_log!("{}", s);
 }
 
 pub fn log(s: &str, log_level: usize) {

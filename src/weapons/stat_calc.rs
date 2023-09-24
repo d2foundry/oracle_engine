@@ -12,11 +12,10 @@ use crate::{
             HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
             RangeModifierResponse, ReloadModifierResponse,
         },
-        Perks,
     },
-    types::rs_types::{
-        AmmoFormula, AmmoResponse, FiringResponse, HandlingFormula, HandlingResponse, RangeFormula,
-        RangeResponse, ReloadFormula, ReloadResponse,
+    types::{
+        formula_types::*,
+        rs_types::{AmmoResponse, FiringResponse, HandlingResponse, RangeResponse, ReloadResponse},
     },
 };
 
@@ -38,12 +37,12 @@ impl Weapon {
         _cached_data: Option<&mut HashMap<String, f64>>,
         _pvp: bool,
     ) -> ReloadResponse {
-        let mut default_chd_dt = HashMap::new();
-        let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
+        let mut default_cache_data = HashMap::new();
+        let cached_data = _cached_data.unwrap_or(&mut default_cache_data);
 
         let mut reload_stat = self
             .stats
-            .get(&StatHashes::RELOAD.into())
+            .get(&StatHashes::Reload.into())
             .unwrap_or(&Stat::new())
             .perk_val();
 
@@ -105,7 +104,7 @@ impl Weapon {
 
         let range_stat = self
             .stats
-            .get(&StatHashes::RANGE.into())
+            .get(&StatHashes::Range.into())
             .unwrap_or(&Stat::new())
             .val();
         let ads_mult = get_ads_multiplier(self.weapon_type, self.intrinsic_hash).unwrap_or(1.0);
@@ -163,7 +162,7 @@ impl Weapon {
 
         let handling_stat = self
             .stats
-            .get(&StatHashes::HANDLING.into())
+            .get(&StatHashes::Handling.into())
             .unwrap_or(&Stat::new())
             .val();
 
@@ -230,17 +229,18 @@ impl Weapon {
     ) -> AmmoResponse {
         let mag_stat = self
             .stats
-            .get(&StatHashes::MAGAZINE.into())
+            .get(&StatHashes::Magazine.into())
             .unwrap_or(&Stat::new())
             .val();
         let inv_stat = self
             .stats
-            .get(&StatHashes::INVENTORY_SIZE.into())
+            .get(&StatHashes::InventorySize.into())
             .unwrap_or(&Stat::new())
             .val();
         let mut out;
         let mut default_chd_dt = HashMap::new();
         let cached_data = _cached_data.unwrap_or(&mut default_chd_dt);
+        #[allow(clippy::unwrap_used)]
         if _calc_input.is_some() {
             let mag_modifiers = get_magazine_modifier(
                 self.list_perks(),
@@ -295,6 +295,7 @@ impl Weapon {
         let firing_modifiers: FiringModifierResponse;
         let mut default_cached_data = HashMap::new();
         let cached_data = _cached_data.unwrap_or(&mut default_cached_data);
+        #[allow(clippy::unwrap_used)]
         if _calc_input.is_some() {
             firing_modifiers = get_firing_modifier(
                 self.list_perks(),
@@ -437,7 +438,7 @@ impl Weapon {
 
         let total_stability: f64 = self
             .stats
-            .get(&StatHashes::STABILITY.into())
+            .get(&StatHashes::Stability.into())
             .unwrap_or(&Stat::new())
             .perk_val()
             .clamp(0, 100)
@@ -455,10 +456,8 @@ impl Weapon {
 //this should be in weapons_formulas
 fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f64, ()> {
     //EXCEPTIONS
+    // TODO: make this system not cringe 🙏
     const LAST_WORD: u32 = 2770223582;
-    const ACE_OF_SPACEDS: u32 = 647617635; //only during memento
-    const DEVILS_RUIN: u32 = 334466122; //only when laser
-    const REVISION_ZERO: u32 = 2770223582; //only in hunters trance
     const CRIMSON: u32 = 1030990989;
     const VEX_MYTHOCLAST: u32 = 3610750208;
     const FORERUNNER: u32 = 2984682260;
@@ -518,7 +517,7 @@ impl Weapon {
             WeaponType::GLAIVE => {
                 f64::from(
                     self.stats
-                        .get(&StatHashes::RANGE.into())
+                        .get(&StatHashes::Range.into())
                         .unwrap_or(&Stat::new())
                         .perk_val()
                         .clamp(0, 100),
@@ -528,7 +527,7 @@ impl Weapon {
             WeaponType::GRENADELAUNCHER => {
                 f64::from(
                     self.stats
-                        .get(&StatHashes::VELOCITY.into())
+                        .get(&StatHashes::Velocity.into())
                         .unwrap_or(&Stat::new())
                         .perk_val()
                         .clamp(0, 100),
@@ -538,7 +537,7 @@ impl Weapon {
             WeaponType::ROCKET => {
                 f64::from(
                     self.stats
-                        .get(&StatHashes::VELOCITY.into())
+                        .get(&StatHashes::Velocity.into())
                         .unwrap_or(&Stat::new())
                         .perk_val()
                         .clamp(0, 100),
@@ -560,7 +559,7 @@ impl Weapon {
     pub fn calc_perfect_draw(&self) -> Seconds {
         let stability: f64 = self
             .stats
-            .get(&StatHashes::STABILITY.into())
+            .get(&StatHashes::Stability.into())
             .unwrap_or(&Stat::new())
             .perk_val()
             .clamp(0, 100)
@@ -581,7 +580,7 @@ impl Weapon {
         if self.weapon_type == WeaponType::GLAIVE {
             let shield_duration: f64 = self
                 .stats
-                .get(&StatHashes::SHIELD_DURATION.into())
+                .get(&StatHashes::ShieldDuration.into())
                 .unwrap_or(&Stat::new())
                 .perk_val()
                 .clamp(0, 100)
@@ -590,7 +589,7 @@ impl Weapon {
         } else if self.weapon_type == WeaponType::SWORD {
             let guard_endruance: f64 = self
                 .stats
-                .get(&StatHashes::GUARD_ENDURANCE.into())
+                .get(&StatHashes::GuardEndurance.into())
                 .unwrap_or(&Stat::new())
                 .perk_val()
                 .clamp(0, 100)

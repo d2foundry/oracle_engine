@@ -11,10 +11,12 @@ use crate::{
 
 const FLOAT_DELTA: f32 = 0.0001;
 fn cmp_floats<T: Float + Zero>(a: T, b: T) -> bool {
+    #[allow(clippy::unwrap_used)]
     let delta = T::from(FLOAT_DELTA).unwrap();
     (a - b).abs() < delta
 }
 
+#[allow(dead_code)]
 fn cmp_floats_delta<T: Float + Zero>(a: T, b: T, delta: T) -> bool {
     (a - b).abs() < delta
 }
@@ -35,12 +37,12 @@ fn setup_pulse() {
         1,          //primary
         3373582085, //kinetic
     )
-    .unwrap();
+    .expect("Failed to generate weapon");
     let mut stats = HashMap::new();
-    stats.insert(StatHashes::RELOAD.into(), Stat::from(50));
-    stats.insert(StatHashes::HANDLING.into(), Stat::from(50));
-    stats.insert(StatHashes::RANGE.into(), Stat::from(50));
-    stats.insert(StatHashes::ZOOM.into(), Stat::from(15));
+    stats.insert(StatHashes::Reload.into(), Stat::from(50));
+    stats.insert(StatHashes::Handling.into(), Stat::from(50));
+    stats.insert(StatHashes::Range.into(), Stat::from(50));
+    stats.insert(StatHashes::Zoom.into(), Stat::from(15));
     new_weapon.set_stats(stats);
     PERS_DATA.with(|perm_data| {
         perm_data.borrow_mut().weapon = new_weapon;
@@ -52,14 +54,14 @@ fn test_pulse_setup() {
     setup_pulse();
     PERS_DATA.with(|perm_data| {
         let mut weapon = perm_data.borrow().weapon.clone();
-        assert_eq!(weapon.damage_type, DamageType::KINETIC);
-        assert_eq!(weapon.ammo_type, AmmoType::PRIMARY);
+        assert_eq!(weapon.damage_type, DamageType::Kinetic);
+        assert_eq!(weapon.ammo_type, AmmoType::Primary);
         assert_eq!(weapon.intrinsic_hash, 69420);
         assert_eq!(weapon.weapon_type, WeaponType::PULSERIFLE);
         let test_stat = weapon
             .get_stats()
-            .get(&(StatHashes::HANDLING.into()))
-            .unwrap()
+            .get(&(StatHashes::Handling.into()))
+            .expect("Failed to get stat")
             .val();
         assert_eq!(test_stat, 50, "test_stat: {}", test_stat);
     });
@@ -147,7 +149,7 @@ fn test_pulse_firing_data() {
                     .borrow()
                     .weapon
                     .damage_mods
-                    .get_mod(&perm_data.borrow().enemy.type_),
+                    .get_mod(&perm_data.borrow().enemy.r#type),
             )
         });
         assert!(
@@ -185,12 +187,12 @@ fn setup_bow() {
         2,          //special
         3949783978, //strand
     )
-    .unwrap();
+    .expect("Failed to generate weapon");
     let mut stats = HashMap::new();
-    stats.insert(StatHashes::RELOAD.into(), Stat::from(50));
-    stats.insert(StatHashes::HANDLING.into(), Stat::from(50));
-    stats.insert(StatHashes::RANGE.into(), Stat::from(50));
-    stats.insert(StatHashes::ZOOM.into(), Stat::from(15));
+    stats.insert(StatHashes::Reload.into(), Stat::from(50));
+    stats.insert(StatHashes::Handling.into(), Stat::from(50));
+    stats.insert(StatHashes::Range.into(), Stat::from(50));
+    stats.insert(StatHashes::Zoom.into(), Stat::from(15));
     new_weapon.set_stats(stats);
     PERS_DATA.with(|perm_data| {
         perm_data.borrow_mut().weapon = new_weapon;
@@ -202,14 +204,14 @@ fn test_bow_setup() {
     setup_bow();
     PERS_DATA.with(|perm_data| {
         let mut weapon = perm_data.borrow().weapon.clone();
-        assert_eq!(weapon.damage_type, DamageType::STRAND);
-        assert_eq!(weapon.ammo_type, AmmoType::SPECIAL);
+        assert_eq!(weapon.damage_type, DamageType::Strand);
+        assert_eq!(weapon.ammo_type, AmmoType::Special);
         assert_eq!(weapon.intrinsic_hash, 696969);
         assert_eq!(weapon.weapon_type, WeaponType::BOW);
         let test_stat = weapon
             .get_stats()
-            .get(&(StatHashes::HANDLING.into()))
-            .unwrap()
+            .get(&(StatHashes::Handling.into()))
+            .expect("Failed to get stat")
             .val();
         assert_eq!(test_stat, 50, "test_stat: {}", test_stat);
     });
@@ -287,7 +289,7 @@ fn test_bow_firing_data() {
                     .borrow()
                     .weapon
                     .damage_mods
-                    .get_mod(&perm_data.borrow().enemy.type_),
+                    .get_mod(&perm_data.borrow().enemy.r#type),
             )
         });
         assert!(
@@ -322,14 +324,15 @@ fn test_phase_mag() {
         1,          //primary
         3949783978, //strand
     )
-    .unwrap();
+    .expect("Failed to generate weapon");
+
     let precision = Weapon::generate_weapon(
         3240434620, 24,         //smg
         1636108362, //precision
         1,          //primary
         3949783978, //strand
     )
-    .unwrap();
+    .expect("Failed to generate weapon");
 
     //setup perks
     map_perks();

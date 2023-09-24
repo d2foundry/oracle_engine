@@ -4,4 +4,5 @@
         "IS_RA": "true"
     },
     "rust-analyzer.check.command": "clippy",
+    "rust-analyzer.cargo.target": "wasm32-unknown-unknown",
 }

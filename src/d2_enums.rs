@@ -1,26 +1,26 @@
-#![allow(dead_code)]
-
 use serde::Serialize;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum AmmoType {
-    PRIMARY = 1,
-    SPECIAL = 2,
-    HEAVY = 3,
-    UNKNOWN = 0,
+    Primary = 1,
+    Special = 2,
+    Heavy = 3,
+    Unknown = 0,
 }
 impl From<u32> for AmmoType {
     fn from(_value: u32) -> AmmoType {
         match _value {
-            1 => AmmoType::PRIMARY,
-            2 => AmmoType::SPECIAL,
-            3 => AmmoType::HEAVY,
-            _ => AmmoType::UNKNOWN,
+            1 => AmmoType::Primary,
+            2 => AmmoType::Special,
+            3 => AmmoType::Heavy,
+            _ => AmmoType::Unknown,
         }
     }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum WeaponType {
     AUTORIFLE = 6,
     BOW = 31,
@@ -66,118 +66,114 @@ impl From<u32> for WeaponType {
     }
 }
 
-#[allow(non_snake_case, non_camel_case_types)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum StatHashes {
-    ACCURACY,
-    AIM_ASSIST,
-    AIRBORNE,
-    AMMO_CAPACITY,
-    ATTACK,
-    BLAST_RADIUS,
-    CHARGE_RATE,
-    CHARGE_TIME,
-    DISCIPLINE,
-    DRAW_TIME,
-    GUARD_EFFICIENCY,
-    GUARD_ENDURANCE,
-    GUARD_RESISTANCE,
-    HANDLING,
-    IMPACT,
-    INTELLECT,
-    INVENTORY_SIZE,
-    MAGAZINE,
-    MOBILITY,
-    POWER,
-    RANGE,
-    RECOIL_DIR,
-    RECOVERY,
-    RELOAD,
-    RESILIENCE,
-    RPM,
-    SHIELD_DURATION,
-    STABILITY,
-    STRENGTH,
-    SWING_SPEED,
-    VELOCITY,
-    ZOOM,
-    UNKNOWN,
+    Accuracy,
+    AimAssist,
+    Airborne,
+    AmmoCapacity,
+    Attack,
+    BlastRadius,
+    ChargeRate,
+    ChargeTime,
+    Discipline,
+    DrawTime,
+    GuardEfficiency,
+    GuardEndurance,
+    GuardResistance,
+    Handling,
+    Impact,
+    Itellect,
+    InventorySize,
+    Magazine,
+    Mobility,
+    Range,
+    RecoilDir,
+    Recovery,
+    Reload,
+    Resilience,
+    Rpm,
+    ShieldDuration,
+    Stability,
+    Strength,
+    SwingSpeed,
+    Velocity,
+    Zoom,
+    Unknown,
 }
 impl From<u32> for StatHashes {
     fn from(_value: u32) -> StatHashes {
         match _value {
-            1591432999 => StatHashes::ACCURACY,
-            1345609583 => StatHashes::AIM_ASSIST,
-            2714457168 => StatHashes::AIRBORNE,
-            925767036 => StatHashes::AMMO_CAPACITY,
-            1480404414 => StatHashes::ATTACK,
-            3614673599 => StatHashes::BLAST_RADIUS,
-            3022301683 => StatHashes::CHARGE_RATE,
-            2961396640 => StatHashes::CHARGE_TIME,
-            1735777505 => StatHashes::DISCIPLINE,
-            447667954 => StatHashes::DRAW_TIME,
-            2762071195 => StatHashes::GUARD_EFFICIENCY,
-            3736848092 => StatHashes::GUARD_ENDURANCE,
-            209426660 => StatHashes::GUARD_RESISTANCE,
-            943549884 => StatHashes::HANDLING,
-            4043523819 => StatHashes::IMPACT,
-            144602215 => StatHashes::INTELLECT,
-            1931675084 => StatHashes::INVENTORY_SIZE,
-            3871231066 => StatHashes::MAGAZINE,
-            2996146975 => StatHashes::MOBILITY,
-            1935470627 => StatHashes::POWER,
-            1240592695 => StatHashes::RANGE,
-            2715839340 => StatHashes::RECOIL_DIR,
-            1943323491 => StatHashes::RECOVERY,
-            4188031367 => StatHashes::RELOAD,
-            392767087 => StatHashes::RESILIENCE,
-            4284893193 => StatHashes::RPM,
-            1842278586 => StatHashes::SHIELD_DURATION,
-            155624089 => StatHashes::STABILITY,
-            4244567218 => StatHashes::STRENGTH,
-            2837207746 => StatHashes::SWING_SPEED,
-            2523465841 => StatHashes::VELOCITY,
-            3555269338 => StatHashes::ZOOM,
-            _ => StatHashes::UNKNOWN,
+            1591432999 => StatHashes::Accuracy,
+            1345609583 => StatHashes::AimAssist,
+            2714457168 => StatHashes::Airborne,
+            925767036 => StatHashes::AmmoCapacity,
+            1480404414 => StatHashes::Attack,
+            3614673599 => StatHashes::BlastRadius,
+            3022301683 => StatHashes::ChargeRate,
+            2961396640 => StatHashes::ChargeTime,
+            1735777505 => StatHashes::Discipline,
+            447667954 => StatHashes::DrawTime,
+            2762071195 => StatHashes::GuardEfficiency,
+            3736848092 => StatHashes::GuardEndurance,
+            209426660 => StatHashes::GuardResistance,
+            943549884 => StatHashes::Handling,
+            4043523819 => StatHashes::Impact,
+            144602215 => StatHashes::Itellect,
+            1931675084 => StatHashes::InventorySize,
+            3871231066 => StatHashes::Magazine,
+            2996146975 => StatHashes::Mobility,
+            1240592695 => StatHashes::Range,
+            2715839340 => StatHashes::RecoilDir,
+            1943323491 => StatHashes::Recovery,
+            4188031367 => StatHashes::Reload,
+            392767087 => StatHashes::Resilience,
+            4284893193 => StatHashes::Rpm,
+            1842278586 => StatHashes::ShieldDuration,
+            155624089 => StatHashes::Stability,
+            4244567218 => StatHashes::Strength,
+            2837207746 => StatHashes::SwingSpeed,
+            2523465841 => StatHashes::Velocity,
+            3555269338 => StatHashes::Zoom,
+            _ => StatHashes::Unknown,
         }
     }
 }
 impl From<StatHashes> for u32 {
     fn from(val: StatHashes) -> Self {
         match val {
-            StatHashes::ACCURACY => 1591432999,
-            StatHashes::AIM_ASSIST => 1345609583,
-            StatHashes::AIRBORNE => 2714457168,
-            StatHashes::AMMO_CAPACITY => 925767036,
-            StatHashes::ATTACK => 1480404414,
-            StatHashes::BLAST_RADIUS => 3614673599,
-            StatHashes::CHARGE_RATE => 3022301683,
-            StatHashes::CHARGE_TIME => 2961396640,
-            StatHashes::DISCIPLINE => 1735777505,
-            StatHashes::DRAW_TIME => 447667954,
-            StatHashes::GUARD_EFFICIENCY => 2762071195,
-            StatHashes::GUARD_ENDURANCE => 3736848092,
-            StatHashes::GUARD_RESISTANCE => 209426660,
-            StatHashes::HANDLING => 943549884,
-            StatHashes::IMPACT => 4043523819,
-            StatHashes::INTELLECT => 144602215,
-            StatHashes::INVENTORY_SIZE => 1931675084,
-            StatHashes::MAGAZINE => 3871231066,
-            StatHashes::MOBILITY => 2996146975,
-            StatHashes::POWER => 1935470627,
-            StatHashes::RANGE => 1240592695,
-            StatHashes::RECOIL_DIR => 2715839340,
-            StatHashes::RECOVERY => 1943323491,
-            StatHashes::RELOAD => 4188031367,
-            StatHashes::RESILIENCE => 392767087,
-            StatHashes::RPM => 4284893193,
-            StatHashes::SHIELD_DURATION => 1842278586,
-            StatHashes::STABILITY => 155624089,
-            StatHashes::STRENGTH => 4244567218,
-            StatHashes::SWING_SPEED => 2837207746,
-            StatHashes::VELOCITY => 2523465841,
-            StatHashes::ZOOM => 3555269338,
-            StatHashes::UNKNOWN => 0,
+            StatHashes::Accuracy => 1591432999,
+            StatHashes::AimAssist => 1345609583,
+            StatHashes::Airborne => 2714457168,
+            StatHashes::AmmoCapacity => 925767036,
+            StatHashes::Attack => 1480404414,
+            StatHashes::BlastRadius => 3614673599,
+            StatHashes::ChargeRate => 3022301683,
+            StatHashes::ChargeTime => 2961396640,
+            StatHashes::Discipline => 1735777505,
+            StatHashes::DrawTime => 447667954,
+            StatHashes::GuardEfficiency => 2762071195,
+            StatHashes::GuardEndurance => 3736848092,
+            StatHashes::GuardResistance => 209426660,
+            StatHashes::Handling => 943549884,
+            StatHashes::Impact => 4043523819,
+            StatHashes::Itellect => 144602215,
+            StatHashes::InventorySize => 1931675084,
+            StatHashes::Magazine => 3871231066,
+            StatHashes::Mobility => 2996146975,
+            StatHashes::Range => 1240592695,
+            StatHashes::RecoilDir => 2715839340,
+            StatHashes::Recovery => 1943323491,
+            StatHashes::Reload => 4188031367,
+            StatHashes::Resilience => 392767087,
+            StatHashes::Rpm => 4284893193,
+            StatHashes::ShieldDuration => 1842278586,
+            StatHashes::Stability => 155624089,
+            StatHashes::Strength => 4244567218,
+            StatHashes::SwingSpeed => 2837207746,
+            StatHashes::Velocity => 2523465841,
+            StatHashes::Zoom => 3555269338,
+            StatHashes::Unknown => 0,
         }
     }
 }
@@ -185,66 +181,68 @@ impl StatHashes {
     pub fn is_weapon_stat(&self) -> bool {
         matches!(
             self,
-            StatHashes::ACCURACY
-                | StatHashes::AIM_ASSIST
-                | StatHashes::AIRBORNE
-                | StatHashes::AMMO_CAPACITY
-                | StatHashes::ZOOM
-                | StatHashes::RANGE
-                | StatHashes::STABILITY
-                | StatHashes::RELOAD
-                | StatHashes::MAGAZINE
-                | StatHashes::HANDLING
-                | StatHashes::VELOCITY
-                | StatHashes::BLAST_RADIUS
-                | StatHashes::CHARGE_TIME
-                | StatHashes::INVENTORY_SIZE
-                | StatHashes::RECOIL_DIR
-                | StatHashes::RPM
-                | StatHashes::GUARD_EFFICIENCY
-                | StatHashes::GUARD_ENDURANCE
-                | StatHashes::GUARD_RESISTANCE
-                | StatHashes::DRAW_TIME
-                | StatHashes::SWING_SPEED
-                | StatHashes::SHIELD_DURATION
-                | StatHashes::IMPACT
-                | StatHashes::CHARGE_RATE
+            StatHashes::Accuracy
+                | StatHashes::AimAssist
+                | StatHashes::Airborne
+                | StatHashes::AmmoCapacity
+                | StatHashes::Zoom
+                | StatHashes::Range
+                | StatHashes::Stability
+                | StatHashes::Reload
+                | StatHashes::Magazine
+                | StatHashes::Handling
+                | StatHashes::Velocity
+                | StatHashes::BlastRadius
+                | StatHashes::ChargeTime
+                | StatHashes::InventorySize
+                | StatHashes::RecoilDir
+                | StatHashes::Rpm
+                | StatHashes::GuardEfficiency
+                | StatHashes::GuardEndurance
+                | StatHashes::GuardResistance
+                | StatHashes::DrawTime
+                | StatHashes::SwingSpeed
+                | StatHashes::ShieldDuration
+                | StatHashes::Impact
+                | StatHashes::ChargeRate
         )
     }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum DamageType {
-    ARC,
-    VOID,
-    SOLAR,
-    STASIS,
-    KINETIC,
-    STRAND,
-    UNKNOWN,
+    Arc,
+    Void,
+    Solar,
+    Stasis,
+    Kinetic,
+    Strand,
+    Unknown,
 }
 
 impl From<u32> for DamageType {
     fn from(_value: u32) -> DamageType {
         match _value {
-            2303181850 => DamageType::ARC,
-            3454344768 => DamageType::VOID,
-            1847026933 => DamageType::SOLAR,
-            151347233 => DamageType::STASIS,
-            3373582085 => DamageType::KINETIC,
-            3949783978 => DamageType::STRAND,
-            _ => DamageType::UNKNOWN,
+            2303181850 => DamageType::Arc,
+            3454344768 => DamageType::Void,
+            1847026933 => DamageType::Solar,
+            151347233 => DamageType::Stasis,
+            3373582085 => DamageType::Kinetic,
+            3949783978 => DamageType::Strand,
+            _ => DamageType::Unknown,
         }
     }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum DamageSource {
-    SNIPER,
-    MELEE,
-    EXPLOSION,
-    ENVIRONMENTAL,
-    UNKNOWN,
+    Sniper,
+    Melee,
+    Eplosion,
+    Enviromental,
+    Unknown,
 }
 
 pub type Seconds = f64;

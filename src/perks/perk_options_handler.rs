@@ -4,7 +4,7 @@ use serde::Serialize;
 
 use super::{enhanced_check, Perk, Perks};
 
-#[derive(Debug, Clone, Serialize, Default)]
+#[derive(Debug, Clone, Copy, Serialize, Default)]
 pub enum PerkValueVariant {
     #[default]
     STATIC,

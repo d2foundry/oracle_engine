@@ -8,13 +8,4 @@
 *.zip
 *.ts
 !*.d.ts
-database/weapon_formulas.rs
-!database/compactor.py
-!database/perk_rerouter.py
-zdata.json
-database/weapon.json
-database/weapon_test.json
-database/enhanced_handler.rs
-/zPythonStuff
-/zPveReverser
-data.json
+/boboswaggins_kitchen
