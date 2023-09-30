@@ -105,6 +105,9 @@ pub fn buff_perks() {
     add_dmr(
         Perks::PathOfTheBurningSteps,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 || _input.calc_data.damage_type != &DamageType::SOLAR {
+                return DamageModifierResponse::default();
+            }
             let buff = surge_buff(_input.cached_data, _input.value, _input.pvp);
             DamageModifierResponse {
                 impact_dmg_scale: buff,
