@@ -146,11 +146,13 @@ pub fn exotic_perks() {
     add_dmr( // symmetry alt fire
         Perks::DynamicCharge,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let buff = if _input.pvp { 0.0 } else { (1.0 + (.3 * _input.value as f64))};
+            let stacks = if _input.calc_data.perk_value_map.contains_key(&4218954970) { clamp(_input.value, 0, 20)} else { clamp(_input.value, 0, 15)};
+            let buff = if _input.pvp { 0.0 } else { 1.0 + (0.3 * stacks as f64)};
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
                 crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );

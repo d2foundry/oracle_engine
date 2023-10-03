@@ -444,6 +444,8 @@ pub enum Perks {
     TemporalUnlimiter = 806917387,
     Revolution = 4185339856,
     DynamicCharge = 127335543,
+    ElectricStyx = 4218954970,
+    
 
     //heavy exotic
     ReignHavoc = 4148158229,
