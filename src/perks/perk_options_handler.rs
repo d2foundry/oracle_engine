@@ -327,6 +327,8 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
             ["Taken", "Witherhoard", "Both"].to_vec(),
         )),
         Perks::MarkovChain => Some(PerkOptionData::stacking(5)),
+        Perks::Revolution => Some(PerkOptionData::toggle()),
+        Perks::DynamicCharge => Some(PerkOptionData::stacking(15)), // 20 with catalyst
         Perks::StormAndStress => Some(PerkOptionData::toggle()),
         Perks::DualSpeedReceiver => Some(PerkOptionData::toggle()),
         Perks::ExplosiveShadow => Some(PerkOptionData::static_()),

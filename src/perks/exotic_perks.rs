@@ -140,7 +140,20 @@ pub fn exotic_perks() {
         }),
     );
 
+    //TODO
+    //RPM change for revision zero alt fire
 
+    add_dmr( // symmetry alt fire
+        Perks::DynamicCharge,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = if _input.pvp { 0.0 } else { (1.0 + (.3 * _input.value as f64))};
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                crit_scale: 1.0,
+            }
+        }),
+    );
 
     add_dmr(
         Perks::MementoMori,
