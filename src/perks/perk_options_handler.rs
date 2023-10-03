@@ -4,17 +4,13 @@ use serde::Serialize;
 
 use super::{enhanced_check, Perk, Perks};
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Default)]
 pub enum PerkValueVariant {
+    #[default]
     STATIC,
     TOGGLE,
     SLIDER,
     OPTIONS,
-}
-impl Default for PerkValueVariant {
-    fn default() -> Self {
-        PerkValueVariant::STATIC
-    }
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -286,6 +282,13 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::InvisibleHand => Some(PerkOptionData::toggle()),
         Perks::UnsatedHunger => Some(PerkOptionData::toggle()),
         Perks::Discord => Some(PerkOptionData::toggle()),
+        //season 22 | year 6
+        Perks::PrecisionInstrument => Some(PerkOptionData::stacking(6)),
+        Perks::LooseChange => Some(PerkOptionData::toggle()),
+        Perks::HighGround => Some(PerkOptionData::toggle()),
+        Perks::HeadRush => Some(PerkOptionData::toggle()),
+        Perks::EnlightendAction => Some(PerkOptionData::stacking(5)),
+        Perks::SwordLogic => Some(PerkOptionData::stacking(4)),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
@@ -372,6 +375,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::MoebiusQuiver => Some(PerkOptionData::static_()),
         Perks::Broadhead => Some(PerkOptionData::static_()),
         Perks::HuntersTrace => Some(PerkOptionData::toggle()),
+        Perks::Desperation => Some(PerkOptionData::toggle()),
 
         Perks::DragonShadow => Some(PerkOptionData::toggle()),
         Perks::OphidianAspect => Some(PerkOptionData::static_()),
@@ -383,7 +387,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::LunaFaction => Some(PerkOptionData::options(
             ["Heal Rift", "Empowering Rift / Well"].to_vec(),
         )),
-        Perks::Foetracer => Some(PerkOptionData::toggle()),
+        Perks::KnuckleheadRadar => Some(PerkOptionData::toggle()),
         Perks::MechaneersTricksleeves => Some(PerkOptionData::toggle()),
         Perks::Oathkeeper => Some(PerkOptionData::static_()),
         Perks::SealedAhamkaraGrasps => Some(PerkOptionData::toggle()),
@@ -405,6 +409,8 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Felwinters => Some(PerkOptionData::toggle()),
         Perks::SanguineAlchemy => Some(PerkOptionData::toggle()),
         Perks::TritonVice => Some(PerkOptionData::toggle()),
+        Perks::Foetracers => Some(PerkOptionData::toggle()),
+        Perks::GlacialGuard => Some(PerkOptionData::toggle()),
 
         //misc
         Perks::UmbralSharpening => Some(PerkOptionData::stacking(5)),
@@ -432,8 +438,8 @@ pub fn get_perk_options(_perks: Vec<u32>) -> HashMap<u32, PerkOptionData> {
     for perk in _perks {
         // let data = if  _input._is_enhanced {enh_hash_to_perk_option_data(perk)} else {hash_to_perk_option_data(perk)};
         let data = hash_to_perk_option_data(perk);
-        if data.is_some() {
-            options.insert(perk, data.unwrap());
+        if let Some(value) = data {
+            options.insert(perk, value);
         }
     }
     options

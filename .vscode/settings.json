@@ -3,4 +3,5 @@
     "rust-analyzer.cargo.extraEnv": {
         "IS_RA": "true"
     },
+    "rust-analyzer.check.command": "clippy",
 }

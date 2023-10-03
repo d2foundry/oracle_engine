@@ -825,21 +825,12 @@ pub fn exotic_perks() {
     add_rmr(
         Perks::DualSpeedReceiver,
         Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
-            let zoom_stat = _input
-                .calc_data
-                .stats
-                .get(&StatHashes::ZOOM.into())
-                .unwrap_or(&Stat::new())
-                .val() as f64;
-            let zoom_mult = (zoom_stat + 3.0) / zoom_stat;
-            if _input.value > 0 {
-                RangeModifierResponse {
-                    range_stat_add: 30,
-                    range_zoom_scale: zoom_mult,
-                    ..Default::default()
-                }
-            } else {
-                RangeModifierResponse::default()
+            if _input.value == 0 {
+                return RangeModifierResponse::default();
+            }
+            RangeModifierResponse {
+                range_stat_add: 30,
+                ..Default::default()
             }
         }),
     );
@@ -870,12 +861,11 @@ pub fn exotic_perks() {
     add_fmr(
         Perks::RatPack,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
-            let val;
-            if _input.value > 0 {
-                val = clamp(_input.value - 1, 0, 4);
-            } else {
-                val = 0;
+            if _input.value == 0 {
+                return FiringModifierResponse::default();
             }
+            let val = clamp(_input.value - 1, 0, 4);
+
             FiringModifierResponse {
                 burst_delay_add: val as f64 * (-0.625 / 30.0),
                 ..Default::default()
@@ -899,7 +889,7 @@ pub fn exotic_perks() {
     add_fmr(
         Perks::RideTheBull,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
-            let extra_value = _input.calc_data.shots_fired_this_mag as f64 / 10.0;
+            let extra_value = _input.calc_data.shots_fired_this_mag / 10.0;
             let val = clamp(_input.value + extra_value as u32, 0, 2);
             FiringModifierResponse {
                 burst_delay_add: val as f64 * (-0.25 / 30.0),
@@ -911,7 +901,7 @@ pub fn exotic_perks() {
     add_fmr(
         Perks::SpinningUp,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
-            let extra_value = _input.calc_data.shots_fired_this_mag as f64 / 12.0;
+            let extra_value = _input.calc_data.shots_fired_this_mag / 12.0;
             let val = clamp(_input.value + extra_value as u32, 0, 2);
             FiringModifierResponse {
                 burst_delay_add: val as f64 * (-0.5 / 30.0),
@@ -1167,11 +1157,24 @@ pub fn exotic_perks() {
             let crit_scale = (impact_damage * crit_mult + broadhead_damage)
                 / (impact_damage * impact_dmg_scale * crit_mult);
 
-            return DamageModifierResponse {
-                impact_dmg_scale: impact_dmg_scale,
-                crit_scale: crit_scale,
+            DamageModifierResponse {
+                impact_dmg_scale,
+                crit_scale,
                 ..Default::default()
-            };
+            }
         }),
-    )
+    );
+    add_fmr(
+        Perks::Desperation,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            let duration = 7.0;
+            if _input.value == 0 || _input.calc_data.time_total > duration {
+                return FiringModifierResponse::default();
+            }
+            FiringModifierResponse {
+                burst_delay_scale: 0.8,
+                ..Default::default()
+            }
+        }),
+    );
 }

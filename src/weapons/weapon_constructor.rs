@@ -34,22 +34,20 @@ impl Weapon {
         _damage_type_id: u32,
     ) -> Result<Weapon, String> {
         let data_pointer_result = get_data_pointers(_weapon_type_id, _intrinsic_hash);
-        if data_pointer_result.is_err() {
-            return Err(data_pointer_result.unwrap_err());
-        }
-        let data_pointer = data_pointer_result.unwrap();
 
-        let range_formula: RangeFormula = database::RANGE_DATA[data_pointer.r].clone();
+        let data_pointer = data_pointer_result?;
 
-        let handling_formula: HandlingFormula = database::HANDLING_DATA[data_pointer.h].clone();
+        let range_formula: RangeFormula = database::RANGE_DATA[data_pointer.r];
 
-        let reload_formula: ReloadFormula = database::RELOAD_DATA[data_pointer.rl].clone();
+        let handling_formula: HandlingFormula = database::HANDLING_DATA[data_pointer.h];
 
-        let damage_mods: DamageMods = database::SCALAR_DATA[data_pointer.s].clone();
+        let reload_formula: ReloadFormula = database::RELOAD_DATA[data_pointer.rl];
 
-        let firing_data: FiringData = database::FIRING_DATA[data_pointer.f].clone();
+        let damage_mods: DamageMods = database::SCALAR_DATA[data_pointer.s];
 
-        let ammo_formula: AmmoFormula = database::AMMO_DATA[data_pointer.a].clone();
+        let firing_data: FiringData = database::FIRING_DATA[data_pointer.f];
+
+        let ammo_formula: AmmoFormula = database::AMMO_DATA[data_pointer.a];
 
         let weapon_type = WeaponType::from(_weapon_type_id as u32);
         let ammo_type = AmmoType::from(_ammo_type_id);
