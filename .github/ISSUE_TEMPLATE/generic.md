@@ -1,7 +1,7 @@
 ---
 name: Generic Issue 
 about: Open a general issue
-title: "[General]: "
+title: "General: "
 labels: bug
 assignees: ''
 

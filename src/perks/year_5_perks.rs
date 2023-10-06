@@ -64,7 +64,6 @@ pub fn year_5_perks() {
     add_dmr(
         Perks::FocusedFury,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            
             let shots_needed = (_input.calc_data.base_mag
                 * (_input.calc_data.curr_firing_data.burst_size as f64))
                 / 2.0;
@@ -516,21 +515,12 @@ pub fn year_5_perks() {
     add_fmr(
         Perks::SuccesfulWarmup,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
-            let fire_rate_buff = if _input.value > 0 { 0.625 } else { 1.0 };
-            let duration = if _input.value > 0 {
-                6_f64
-                    + (if _input.is_enhanced { 5_f64 } else { 4_f64 })
-                        * clamp(_input.value as f64 - 1_f64, 0_f64, 4_f64)
-            } else {
-                0.0
-            };
-            if _input.calc_data.time_total < duration as f64 {
-                FiringModifierResponse {
-                    burst_delay_scale: fire_rate_buff,
-                    ..Default::default()
-                }
-            } else {
-                FiringModifierResponse::default()
+            if _input.value == 0 {
+                return FiringModifierResponse::default();
+            }
+            FiringModifierResponse {
+                burst_delay_scale: 0.625,
+                ..Default::default()
             }
         }),
     );

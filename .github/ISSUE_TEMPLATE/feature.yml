@@ -1,6 +1,6 @@
 name: Feature Request
 description: Create an issue for a new feature or enhancement
-title: "[feat]: <title>"
+title: "feat: <title>"
 labels: "enhancement"
 body:
   - type: input
