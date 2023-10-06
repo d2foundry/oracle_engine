@@ -9,21 +9,21 @@ use std::io::Write;
 
 const ID_TO_NAME: PhfMap<i32, &'static str> = phf_map! {
     6i32 => "Auto Rifle",
-31i32 => "Combat Bow",
-11i32 => "Fusion Rifle",
-23i32 => "Grenade Launcher",
-9i32=> "Hand Cannon",
-22i32 => "Linear Fusion Rifle",
-8i32=> "Machine Gun",
-13i32 => "Pulse Rifle",
-10i32 => "Rocket Launcher",
-14i32 => "Scout Rifle",
-7i32=> "Shotgun",
-12i32 => "Sniper Rifle",
-24i32 => "Submachine Gun",
-33i32 => "Glaive",
-25i32 => "Trace Rifle",
-17i32 => "Sidearm",
+    31i32 => "Combat Bow",
+    11i32 => "Fusion Rifle",
+    23i32 => "Grenade Launcher",
+    9i32=> "Hand Cannon",
+    22i32 => "Linear Fusion Rifle",
+    8i32=> "Machine Gun",
+    13i32 => "Pulse Rifle",
+    10i32 => "Rocket Launcher",
+    14i32 => "Scout Rifle",
+    7i32=> "Shotgun",
+    12i32 => "Sniper Rifle",
+    24i32 => "Submachine Gun",
+    33i32 => "Glaive",
+    25i32 => "Trace Rifle",
+    17i32 => "Sidearm",
 };
 
 const NAME_TO_ID: PhfMap<&'static str, i32> = phf_map! {
@@ -45,7 +45,8 @@ const NAME_TO_ID: PhfMap<&'static str, i32> = phf_map! {
     "Sidearm"=>            17i32   ,
 };
 
-const INTRINSIC_MAP: PhfMap<u32, &'static [&'static str]> = phf_map! {901u32 => &["High-Impact Frame"],
+const INTRINSIC_MAP: PhfMap<u32, &'static [&'static str]> = phf_map! {
+901u32 => &["High-Impact Frame"],
 902u32 => &["VEIST Rapid-Fire", "Rapid-Fire Frame"],
 903u32 => &["Adaptive Frame", "Adaptive Glaive"],
 904u32 => &["Aggressive Frame", "Aggressive Glaive"],
@@ -53,7 +54,8 @@ const INTRINSIC_MAP: PhfMap<u32, &'static [&'static str]> = phf_map! {901u32 => 
 906u32 => &["Precision Frame", "Häkke Precision Frame"],
 907u32 => &["Double Fire", "Heavy Burst"],
 908u32 => &["Wave Frame"],
-911u32 => &["Legacy PR-55 Frame"]};
+911u32 => &["Legacy PR-55 Frame"]
+};
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 struct CachedBuildData {
@@ -94,7 +96,7 @@ impl CachedBuildData {
     }
 }
 
-#[derive(Debug, Clone, Hash)]
+#[derive(Debug, Clone, Copy, Hash)]
 struct WeaponPath(u32, u32);
 
 trait UuidTimestamp {
@@ -120,7 +122,7 @@ impl UuidTimestamp for StatQuadraticFormula {
     }
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
 pub struct DamageMods {
     #[serde(default)]
     pub pve: f64,
@@ -134,21 +136,6 @@ pub struct DamageMods {
     pub timestamp: u64,
 }
 
-impl DamageMods {
-    pub fn add_pve_mult(self, mult: f64) -> Self {
-        // not super memory efficient but it works
-        DamageMods {
-            pve: mult,
-            minor: self.minor,
-            elite: self.elite,
-            miniboss: self.miniboss,
-            champion: self.champion,
-            boss: self.boss,
-            vehicle: self.vehicle,
-            timestamp: 0,
-        }
-    }
-}
 impl UuidTimestamp for DamageMods {
     fn uuid(&self) -> f64 {
         (self.pve - 12.0) * 6729.0
@@ -161,7 +148,8 @@ impl UuidTimestamp for DamageMods {
     }
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
+#[serde(from = "RangeJson")]
 pub struct RangeFormula {
     pub start: StatQuadraticFormula,
     pub end: StatQuadraticFormula,
@@ -171,6 +159,7 @@ pub struct RangeFormula {
     #[serde(default)]
     pub timestamp: u64,
 }
+
 impl From<RangeJson> for RangeFormula {
     fn from(value: RangeJson) -> Self {
         let start = StatQuadraticFormula {
@@ -192,6 +181,7 @@ impl From<RangeJson> for RangeFormula {
         }
     }
 }
+
 impl UuidTimestamp for RangeFormula {
     fn uuid(&self) -> f64 {
         (self.start.uuid() + 17.0) * 920.0
@@ -201,7 +191,7 @@ impl UuidTimestamp for RangeFormula {
     }
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
 pub struct ReloadFormula {
     #[serde(flatten)]
     pub reload_data: StatQuadraticFormula,
@@ -217,7 +207,7 @@ impl UuidTimestamp for ReloadFormula {
     }
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
 pub struct HandlingFormula {
     pub ready: StatQuadraticFormula,
     pub stow: StatQuadraticFormula,
@@ -232,7 +222,7 @@ impl UuidTimestamp for HandlingFormula {
     }
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
 pub struct AmmoFormula {
     pub mag: StatQuadraticFormula,
     #[serde(default)]
@@ -249,7 +239,8 @@ impl UuidTimestamp for AmmoFormula {
     }
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
+#[serde(from = "SubFamJson")]
 pub struct FiringData {
     pub damage: f64,
     pub crit_mult: f64,
@@ -312,7 +303,7 @@ fn write_variable(
 ) {
     let res = writeln!(
         writer,
-        "#[doc=r#\"{}\"#]\n#[allow(dead_code)]\n#[allow(clippy::approx_constant)]\npub const {}: {} = {};",
+        "#[doc=r#\"{}\"#]\n#[allow(dead_code,clippy::approx_constant)]\npub const {}: {} = {};",
         doc, name, datatype, value
     );
     if res.is_err() {
@@ -403,108 +394,97 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
     //get current directory
     let jdata_path = std::path::Path::new(&std::env::var("CARGO_MANIFEST_DIR").unwrap())
         .join("build_resources/weapon_formulas.json");
-    let mut jdata: WeaponFormulaJson =
+
+    let jdata: WeaponFormulaJson =
         serde_json::from_str(&std::fs::read_to_string(jdata_path).unwrap()).unwrap();
     // remove "COMMENTS" from jdata
 
-    let mut handling_data: Vec<HandlingFormula> = vec![HandlingFormula::default()];
-    let mut range_data: Vec<RangeFormula> = vec![RangeFormula::default()];
-    let mut reload_data: Vec<ReloadFormula> = vec![ReloadFormula::default()];
-    let mut ammo_data: Vec<AmmoFormula> = vec![AmmoFormula::default()];
-    let mut firing_data: Vec<FiringData> = vec![FiringData::default()];
-    let mut scalar_data: Vec<DamageMods> = vec![DamageMods::default()];
+    let mut handling_data: Vec<HandlingFormula> = Vec::new();
+    let mut range_data: Vec<RangeFormula> = Vec::new();
+    let mut reload_data: Vec<ReloadFormula> = Vec::new();
+    let mut ammo_data: Vec<AmmoFormula> = Vec::new();
+    let mut firing_data: Vec<FiringData> = Vec::new();
+    let mut scalar_data: Vec<DamageMods> = Vec::new();
 
     let mut updated_weapon_defs: Vec<(WeaponPath, DataPointers)> = Vec::new();
-    let mut data = DataPointers::default();
 
-    for (weapon_id, inner_values) in jdata.types {
-        for (weapon_hash, weapon_def) in inner_values.clone().intrinsics {
-            // make a closure to parse the json value and return the rrors that occured
-            let mut set_data = |val: WeaponFormula| -> Result<(), Vec<String>> {
-                let mut err_list: Vec<String> = Vec::new();
-                //add error handling
-                let cat: Category = val.cat.get(&weapon_def.cat).unwrap().clone();
-                let mag: AmmoFormula = val.mag_prof.get(&weapon_def.mag_prof).unwrap().clone();
-                let fam: FiringData = val.sub_fam.get(&weapon_def.sub_fam).unwrap().clone().into();
+    for (weapon_family, val) in jdata.types {
+        for (weapon_hash, weapon_def) in val.intrinsics {
+            let mut data = DataPointers::default();
+            //add error handling
+            let cat: Category = *val.cat.get(&weapon_def.cat).unwrap();
+            let mag: AmmoFormula = *val.mag_prof.get(&weapon_def.mag_prof).unwrap();
+            let fam: FiringData = *val.sub_fam.get(&weapon_def.sub_fam).unwrap();
 
-                let mut reload: ReloadFormula = cat.reload;
+            let mut reload: ReloadFormula = cat.reload;
 
-                let index_option = find_uuid(&reload_data, reload.uuid());
-                if let Some(index) = index_option {
-                    data.rl = index;
-                } else {
-                    data.rl = reload_data.len();
-                    reload.timestamp = cached.get_timestamp(&reload);
-                    reload_data.push(reload);
-                }
-
-                let mut range: RangeFormula = cat.range.into();
-                let index_option = find_uuid(&range_data, range.uuid());
-                if let Some(index) = index_option {
-                    data.r = index;
-                } else {
-                    data.r = range_data.len();
-                    range.timestamp = cached.get_timestamp(&range);
-                    range_data.push(range);
-                }
-
-                let mut handling: HandlingFormula = cat.handling;
-
-                let index_option = find_uuid(&handling_data, handling.uuid());
-                if let Some(index) = index_option {
-                    data.h = index;
-                } else {
-                    data.h = handling_data.len();
-                    handling.timestamp = cached.get_timestamp(&handling);
-                    handling_data.push(handling);
-                }
-
-                let b_scalar: DamageMods = cat.combatant_scalars;
-                let mut scalar = b_scalar.add_pve_mult(weapon_def.pve.unwrap_or(1.0));
-
-                let index_option = find_uuid(&scalar_data, scalar.uuid());
-                if let Some(index) = index_option {
-                    data.s = index;
-                } else {
-                    data.s = scalar_data.len();
-                    scalar.timestamp = cached.get_timestamp(&scalar);
-                    scalar_data.push(scalar);
-                }
-
-                let mut ammo: AmmoFormula = mag;
-
-                let index_option = find_uuid(&ammo_data, ammo.uuid());
-
-                if let Some(index) = index_option {
-                    data.a = index
-                } else {
-                    data.a = ammo_data.len();
-                    ammo.timestamp = cached.get_timestamp(&ammo);
-                    ammo_data.push(ammo);
-                }
-
-                let mut firing: FiringData = fam;
-                let index_option = find_uuid(&firing_data, firing.uuid());
-                if let Some(index) = index_option {
-                    data.f = index;
-                } else {
-                    data.f = firing_data.len();
-                    firing.timestamp = cached.get_timestamp(&firing);
-                    firing_data.push(firing);
-                }
-
-                if !err_list.is_empty() {
-                    return Err(err_list);
-                }
-                Ok(())
-            };
-            let set_data_res = set_data(inner_values.clone());
-            if set_data_res.is_err() {
-                println!("cargo:warning={:?}", set_data_res.unwrap_err());
+            let index_option = find_uuid(&reload_data, reload.uuid());
+            if let Some(index) = index_option {
+                data.rl = index;
+            } else {
+                data.rl = reload_data.len();
+                reload.timestamp = cached.get_timestamp(&reload);
+                reload_data.push(reload);
             }
+
+            let mut range: RangeFormula = cat.range;
+            let index_option = find_uuid(&range_data, range.uuid());
+            if let Some(index) = index_option {
+                data.r = index;
+            } else {
+                data.r = range_data.len();
+                range.timestamp = cached.get_timestamp(&range);
+                range_data.push(range);
+            }
+
+            let mut handling: HandlingFormula = cat.handling;
+
+            let index_option = find_uuid(&handling_data, handling.uuid());
+            if let Some(index) = index_option {
+                data.h = index;
+            } else {
+                data.h = handling_data.len();
+                handling.timestamp = cached.get_timestamp(&handling);
+                handling_data.push(handling);
+            }
+
+            let mut scalar: DamageMods = cat.combatant_scalars;
+            scalar.pve = weapon_def.pve.unwrap_or(1.0);
+
+            let index_option = find_uuid(&scalar_data, scalar.uuid());
+            if let Some(index) = index_option {
+                data.s = index;
+            } else {
+                data.s = scalar_data.len();
+                scalar.timestamp = cached.get_timestamp(&scalar);
+                scalar_data.push(scalar);
+            }
+
+            let mut ammo: AmmoFormula = mag;
+
+            let index_option = find_uuid(&ammo_data, ammo.uuid());
+
+            if let Some(index) = index_option {
+                data.a = index
+            } else {
+                data.a = ammo_data.len();
+                ammo.timestamp = cached.get_timestamp(&ammo);
+                ammo_data.push(ammo);
+            }
+
+            let mut firing: FiringData = fam;
+            let index_option = find_uuid(&firing_data, firing.uuid());
+            if let Some(index) = index_option {
+                data.f = index;
+            } else {
+                data.f = firing_data.len();
+                firing.timestamp = cached.get_timestamp(&firing);
+                firing_data.push(firing);
+            }
+
             updated_weapon_defs.push((
                 WeaponPath(
-                    NAME_TO_ID.get(&weapon_id).unwrap().clone() as u32,
+                    *NAME_TO_ID.get(&weapon_family).unwrap() as u32,
                     weapon_hash.parse::<u32>().unwrap(),
                 ),
                 data,
@@ -716,7 +696,7 @@ struct WeaponFormula {
     intrinsics: HashMap<String, WeaponIntrinsic>,
     cat: HashMap<String, Category>,
     #[serde(rename = "subFam")]
-    sub_fam: HashMap<String, SubFamJson>,
+    sub_fam: HashMap<String, FiringData>,
     #[serde(rename = "magProf")]
     mag_prof: HashMap<String, AmmoFormula>,
 }
@@ -731,9 +711,9 @@ struct WeaponIntrinsic {
     pve: Option<f64>,
 }
 
-#[derive(Clone, Deserialize)]
+#[derive(Clone, Copy, Deserialize)]
 struct Category {
-    range: RangeJson,
+    range: RangeFormula,
     reload: ReloadFormula,
     handling: HandlingFormula,
     combatant_scalars: DamageMods,
