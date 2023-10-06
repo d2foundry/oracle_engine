@@ -1,6 +1,6 @@
 name: Weapon Support
 description: Create an issue for a new weapon/fix a current weapon
-title: "[weapon]: <title>"
+title: "weapon: <title>"
 labels: "weapon support"
 body:
   - type: input
