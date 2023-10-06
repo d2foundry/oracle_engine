@@ -524,7 +524,7 @@ pub fn year_5_perks() {
             } else {
                 0.0
             };
-            if _input.calc_data.time_total < duration as f64 {
+            if _input.calc_data.time_total < duration {
                 FiringModifierResponse {
                     burst_delay_scale: fire_rate_buff,
                     ..Default::default()
