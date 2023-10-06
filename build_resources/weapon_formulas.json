@@ -1,38 +1,4 @@
 {
-    "COMMENTS": {
-        "MossyMax": "for all the pve scaling numbers , alot of base dmg numbers and just being the GOAT",
-        "subfamilyNotes": [
-            "because of how infrequently some values vary they have had been made reliant upon defaualts",
-            "one_ammo is defaulted to false, if the gun shoots multiple bullets in a \"burst\" but only uses one ammo per burst set this to true",
-            "charge is defaulted to false, if the gun has a charge time set this to true"
-        ],
-        "usageNotes": [
-            "does not subscribe to a consistent schema for easier readability",
-            "entries like pve(scalar) and is_fusion in sub family data will not always be populated",
-            "if you are using this in a strongly typed language keep that in mind using the propper abstraction for your language"],
-        "nomenclature": [
-            "vpp stands for value per point; on the same note evpp stands for exponential value per point",
-            "cat stands for category, subFam stands for sub family, magProf stands for mag profile"
-        ]
-    },
-    "INDEX": {
-        "6":  "Auto Rifle",
-        "31": "Combat Bow",
-        "11": "Fusion Rifle",
-        "23": "Grenade Launcher",
-        "9":  "Hand Cannon",
-        "22": "Linear Fusion Rifle",
-        "8":  "Machine Gun",
-        "13": "Pulse Rifle",
-        "10": "Rocket Launcher",
-        "14": "Scout Rifle",
-        "7":  "Shotgun",
-        "12": "Sniper Rifle",
-        "24": "Submachine Gun",
-        "33": "Glaive",
-        "25": "Trace Rifle",
-        "17": "Sidearm"
-    },
     "Auto Rifle": {
         "878286503":  {"name": "Rapid-Fire Frame",   "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
         "944506345":  {"name": "SUROS Regime",       "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
@@ -205,7 +171,7 @@
             },
             "1KV": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
-                "reload":   {},
+                "reload":   {"evpp": 0.0, "vpp": 0.0, "offset": 0.0},
                 "handling": {
                     "ready":{"vpp": -0.001448069241, "offset": 0.4990612517},
                     "stow": {"vpp": -0.002863515313, "offset": 0.4445712383},
@@ -730,7 +696,7 @@
             },
             "aggresive": {
                 "range":    {"vpp_start": 0.1568, "offset_start": 30.25, "vpp_end": 0.0, "offset_end": 60.75, "floor_percent": 0.5},
-                "reload":   {},
+                "reload":   {"evpp": 0.000102915, "vpp": -0.0276889, "offset": 3.11797356666666},
                 "handling": {
                     "ready":{"vpp": -0.002853368560, "offset": 0.540561867},
                     "stow": {"vpp": -0.002941215324, "offset": 0.527217745},

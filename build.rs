@@ -1,10 +1,59 @@
 #![allow(clippy::all)]
+use phf::{phf_map, Map as PhfMap};
 use serde::{Deserialize, Serialize};
-use serde_json::{Map, Number, Value};
+use serde_json::Value;
 use std::collections::{BTreeMap, HashMap};
 use std::fmt::Debug;
 use std::fs::File;
 use std::io::Write;
+
+const ID_TO_NAME: PhfMap<i32, &'static str> = phf_map! {
+    6i32 => "Auto Rifle",
+31i32 => "Combat Bow",
+11i32 => "Fusion Rifle",
+23i32 => "Grenade Launcher",
+9i32=> "Hand Cannon",
+22i32 => "Linear Fusion Rifle",
+8i32=> "Machine Gun",
+13i32 => "Pulse Rifle",
+10i32 => "Rocket Launcher",
+14i32 => "Scout Rifle",
+7i32=> "Shotgun",
+12i32 => "Sniper Rifle",
+24i32 => "Submachine Gun",
+33i32 => "Glaive",
+25i32 => "Trace Rifle",
+17i32 => "Sidearm",
+};
+
+const NAME_TO_ID: PhfMap<&'static str, i32> = phf_map! {
+    "Auto Rifle" => 6i32,
+    "Combat Bow"=> 31i32,
+    "Fusion Rifle"=>       11i32,
+    "Grenade Launcher" =>  23i32,
+    "Hand Cannon" =>       9i32  ,
+    "Linear Fusion Rifle"=>22i32  ,
+    "Machine Gun"=>        8i32  ,
+    "Pulse Rifle"=>        13i32  ,
+    "Rocket Launcher"=>    10i32  ,
+    "Scout Rifle"=>        14i32  ,
+    "Shotgun"=>            7i32  ,
+    "Sniper Rifle"=>       12i32  ,
+    "Submachine Gun" =>    24i32    ,
+    "Glaive"=>             33i32 ,
+    "Trace Rifle"=>        25i32     ,
+    "Sidearm"=>            17i32   ,
+};
+
+const INTRINSIC_MAP: PhfMap<u32, &'static [&'static str]> = phf_map! {901u32 => &["High-Impact Frame"],
+902u32 => &["VEIST Rapid-Fire", "Rapid-Fire Frame"],
+903u32 => &["Adaptive Frame", "Adaptive Glaive"],
+904u32 => &["Aggressive Frame", "Aggressive Glaive"],
+905u32 => &["Lightweight Frame", "MIDA Synergy"],
+906u32 => &["Precision Frame", "Häkke Precision Frame"],
+907u32 => &["Double Fire", "Heavy Burst"],
+908u32 => &["Wave Frame"],
+911u32 => &["Legacy PR-55 Frame"]};
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 struct CachedBuildData {
@@ -56,50 +105,24 @@ fn find_uuid<T: UuidTimestamp>(vec: &Vec<T>, uuid: f64) -> Option<usize> {
     vec.iter().position(|x| x.uuid() == uuid)
 }
 
-fn json_0_float() -> Value {
-    Value::Number(Number::from_f64(0.0).unwrap())
-}
-
-fn json_1_float() -> Value {
-    Value::Number(Number::from_f64(1.0).unwrap())
-}
-
 //these types reflect whats in src/types/rs_types.rs
-#[derive(Debug, Clone, Serialize, Default)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
 pub struct StatQuadraticFormula {
+    #[serde(default)]
     pub evpp: f64,
     pub vpp: f64,
     pub offset: f64,
 }
-impl From<&Map<String, Value>> for StatQuadraticFormula {
-    fn from(_val: &Map<String, Value>) -> Self {
-        StatQuadraticFormula {
-            evpp: _val
-                .get("evpp")
-                .unwrap_or(&json_0_float())
-                .as_f64()
-                .unwrap_or_default(),
-            vpp: _val
-                .get("vpp")
-                .unwrap_or(&json_0_float())
-                .as_f64()
-                .unwrap_or_default(),
-            offset: _val
-                .get("offset")
-                .unwrap_or(&json_0_float())
-                .as_f64()
-                .unwrap_or_default(),
-        }
-    }
-}
+
 impl UuidTimestamp for StatQuadraticFormula {
     fn uuid(&self) -> f64 {
         (self.evpp - 11.0) * 97293.0 + self.vpp * 84892.0 + self.offset * 3321.0
     }
 }
 
-#[derive(Debug, Clone, Serialize, Default)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct DamageMods {
+    #[serde(default)]
     pub pve: f64,
     pub minor: f64,
     pub elite: f64,
@@ -107,46 +130,10 @@ pub struct DamageMods {
     pub champion: f64,
     pub boss: f64,
     pub vehicle: f64,
+    #[serde(default)]
     pub timestamp: u64,
 }
-impl From<&Map<String, Value>> for DamageMods {
-    fn from(_val: &Map<String, Value>) -> Self {
-        DamageMods {
-            pve: 1.0,
-            minor: _val
-                .get("minor")
-                .unwrap_or(&json_1_float())
-                .as_f64()
-                .unwrap_or(1_f64),
-            elite: _val
-                .get("elite")
-                .unwrap_or(&json_1_float())
-                .as_f64()
-                .unwrap_or(1_f64),
-            miniboss: _val
-                .get("miniboss")
-                .unwrap_or(&json_1_float())
-                .as_f64()
-                .unwrap_or(1_f64),
-            champion: _val
-                .get("champion")
-                .unwrap_or(&json_1_float())
-                .as_f64()
-                .unwrap_or(1_f64),
-            boss: _val
-                .get("boss")
-                .unwrap_or(&json_1_float())
-                .as_f64()
-                .unwrap_or(1_f64),
-            vehicle: _val
-                .get("vehicle")
-                .unwrap_or(&json_1_float())
-                .as_f64()
-                .unwrap_or(1_f64),
-            timestamp: 0,
-        }
-    }
-}
+
 impl DamageMods {
     pub fn add_pve_mult(self, mult: f64) -> Self {
         // not super memory efficient but it works
@@ -174,33 +161,33 @@ impl UuidTimestamp for DamageMods {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Default)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct RangeFormula {
     pub start: StatQuadraticFormula,
     pub end: StatQuadraticFormula,
     pub floor_percent: f64,
+    #[serde(default)]
     pub fusion: bool,
+    #[serde(default)]
     pub timestamp: u64,
 }
-impl From<&Map<String, Value>> for RangeFormula {
-    fn from(_val: &Map<String, Value>) -> Self {
+impl From<RangeJson> for RangeFormula {
+    fn from(value: RangeJson) -> Self {
+        let start = StatQuadraticFormula {
+            evpp: 0.0,
+            vpp: value.vpp_start,
+            offset: value.offset_start,
+        };
+        let end = StatQuadraticFormula {
+            evpp: 0.0,
+            vpp: value.vpp_end,
+            offset: value.offset_end,
+        };
         RangeFormula {
-            start: StatQuadraticFormula {
-                evpp: 0.0,
-                vpp: _val["vpp_start"].as_f64().unwrap_or_default(),
-                offset: _val["offset_start"].as_f64().unwrap_or_default(),
-            },
-            end: StatQuadraticFormula {
-                evpp: 0.0,
-                vpp: _val["vpp_end"].as_f64().unwrap_or_default(),
-                offset: _val["offset_end"].as_f64().unwrap_or_default(),
-            },
-            floor_percent: _val["floor_percent"].as_f64().unwrap_or_default(),
-            fusion: _val
-                .get("fusion")
-                .unwrap_or(&Value::Bool(false))
-                .as_bool()
-                .unwrap_or(false),
+            start,
+            end,
+            floor_percent: value.floor_percent,
+            fusion: value.fusion.unwrap_or_default(),
             timestamp: 0,
         }
     }
@@ -214,118 +201,85 @@ impl UuidTimestamp for RangeFormula {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Default)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct ReloadFormula {
+    #[serde(flatten)]
     pub reload_data: StatQuadraticFormula,
+    #[serde(default)]
     pub ammo_percent: f64,
+    #[serde(default)]
     pub timestamp: u64,
 }
-impl From<&Map<String, Value>> for ReloadFormula {
-    fn from(_val: &Map<String, Value>) -> Self {
-        ReloadFormula {
-            reload_data: StatQuadraticFormula::from(&_val.clone()),
-            ammo_percent: _val
-                .get("ammo_percent")
-                .unwrap_or(&json_0_float())
-                .as_f64()
-                .unwrap_or_default(),
-            timestamp: 0,
-        }
-    }
-}
+
 impl UuidTimestamp for ReloadFormula {
     fn uuid(&self) -> f64 {
         (self.reload_data.uuid() + 29.5) * 72.0 + (self.ammo_percent + 3.0) * 12.0
     }
 }
 
-#[derive(Debug, Clone, Serialize, Default)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct HandlingFormula {
     pub ready: StatQuadraticFormula,
     pub stow: StatQuadraticFormula,
     pub ads: StatQuadraticFormula,
+    #[serde(default)]
     pub timestamp: u64,
 }
-impl From<&Map<String, Value>> for HandlingFormula {
-    fn from(_val: &Map<String, Value>) -> Self {
-        HandlingFormula {
-            ready: StatQuadraticFormula::from(_val["ready"].as_object().unwrap_or(&Map::new())),
-            stow: StatQuadraticFormula::from(_val["stow"].as_object().unwrap_or(&Map::new())),
-            ads: StatQuadraticFormula::from(_val["ads"].as_object().unwrap_or(&Map::new())),
-            timestamp: 0,
-        }
-    }
-}
+
 impl UuidTimestamp for HandlingFormula {
     fn uuid(&self) -> f64 {
         self.ready.uuid() * 79.0 + self.stow.uuid() / 2.0 + self.ads.uuid() * 79.9
     }
 }
 
-#[derive(Debug, Clone, Serialize, Default)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct AmmoFormula {
     pub mag: StatQuadraticFormula,
+    #[serde(default)]
     pub round_to: i32,
+    #[serde(default)]
     pub reserve_id: u32,
+    #[serde(default)]
     pub timestamp: u64,
 }
-impl From<&Map<String, Value>> for AmmoFormula {
-    fn from(_val: &Map<String, Value>) -> Self {
-        AmmoFormula {
-            mag: StatQuadraticFormula::from(_val["mag"].as_object().unwrap_or(&Map::new())),
-            round_to: _val
-                .get("round_to")
-                .unwrap_or(&Value::Null)
-                .as_i64()
-                .unwrap_or_default() as i32,
-            reserve_id: _val
-                .get("reserve_id")
-                .unwrap_or(&Value::Null)
-                .as_u64()
-                .unwrap_or_default() as u32,
-            timestamp: 0,
-        }
-    }
-}
+
 impl UuidTimestamp for AmmoFormula {
     fn uuid(&self) -> f64 {
         self.mag.uuid() * 99.0 + self.round_to as f64 * 6723.3 + self.reserve_id as f64 * 5299.2
     }
 }
 
-#[derive(Debug, Clone, Serialize, Default)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct FiringData {
     pub damage: f64,
     pub crit_mult: f64,
     pub burst_delay: f64,
     pub inner_burst_delay: f64,
+    #[serde(default)]
     pub burst_size: i32,
+    #[serde(default)]
     pub one_ammo: bool,
+    #[serde(default)]
     pub charge: bool,
+    #[serde(default)]
     pub timestamp: u64,
 }
-impl From<&Map<String, Value>> for FiringData {
-    fn from(_val: &Map<String, Value>) -> Self {
+
+impl From<SubFamJson> for FiringData {
+    fn from(value: SubFamJson) -> Self {
         FiringData {
-            damage: _val["damage"].as_f64().unwrap_or_default(),
-            crit_mult: _val["crit_mult"].as_f64().unwrap_or_default(),
-            burst_delay: _val["burst_delay"].as_f64().unwrap_or_default(),
-            inner_burst_delay: _val["inner_burst_delay"].as_f64().unwrap_or_default(),
-            burst_size: _val["burst_size"].as_i64().unwrap_or_default() as i32,
-            one_ammo: _val
-                .get("one_ammo")
-                .unwrap_or(&Value::Bool(false))
-                .as_bool()
-                .unwrap_or(false),
-            charge: _val
-                .get("charge")
-                .unwrap_or(&Value::Bool(false))
-                .as_bool()
-                .unwrap_or(false),
+            damage: value.damage,
+            crit_mult: (value.crit_mult as f64) / 51.0 + 1.5,
+            burst_delay: value.burst_delay / 30.0,
+            inner_burst_delay: value.inner_burst_delay / 30.0,
+            burst_size: value.burst_size,
+            one_ammo: value.one_ammo.unwrap_or_default(),
+            charge: value.charge.unwrap_or_default(),
             timestamp: 0,
         }
     }
 }
+
 impl UuidTimestamp for FiringData {
     fn uuid(&self) -> f64 {
         (self.damage * 821.88
@@ -339,7 +293,7 @@ impl UuidTimestamp for FiringData {
     }
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Copy, Clone, Default)]
 struct DataPointers {
     h: usize,
     r: usize,
@@ -443,54 +397,15 @@ fn main() {
     }
 }
 
-fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildData) {
-    let id_to_name = HashMap::from([
-        (6, "Auto Rifle"),
-        (31, "Combat Bow"),
-        (11, "Fusion Rifle"),
-        (23, "Grenade Launcher"),
-        (9, "Hand Cannon"),
-        (22, "Linear Fusion Rifle"),
-        (8, "Machine Gun"),
-        (13, "Pulse Rifle"),
-        (10, "Rocket Launcher"),
-        (14, "Scout Rifle"),
-        (7, "Shotgun"),
-        (12, "Sniper Rifle"),
-        (24, "Submachine Gun"),
-        (33, "Glaive"),
-        (25, "Trace Rifle"),
-        (17, "Sidearm"),
-    ]);
+//fn set_data(val: Value, weapon_def: Value, weapon_hash: u32, weapon_id: String) {]
 
+fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildData) {
     //get current directory
     let jdata_path = std::path::Path::new(&std::env::var("CARGO_MANIFEST_DIR").unwrap())
         .join("build_resources/weapon_formulas.json");
-    let mut jdata: serde_json::Value =
+    let mut jdata: WeaponFormulaJson =
         serde_json::from_str(&std::fs::read_to_string(jdata_path).unwrap()).unwrap();
     // remove "COMMENTS" from jdata
-    let res = jdata.get("COMMENTS");
-    if res.is_none() {
-        println!("cargo:warning=comments not found");
-        return;
-    } else {
-        jdata.as_object_mut().unwrap().remove("COMMENTS");
-    }
-
-    let mut new_jdata: Value = Value::Object(Map::new());
-    let index_data: Value = jdata["INDEX"].take();
-    for (key, value) in index_data.as_object().unwrap() {
-        let tmp_data_get = jdata[value.as_str().unwrap()].take();
-        let mut tmp_data_set = tmp_data_get.as_object().unwrap().clone();
-        for (key, value) in tmp_data_get.as_object().unwrap() {
-            if key.parse::<u32>().is_ok() {
-                let mut tmp_value = value.as_object().unwrap().clone();
-                tmp_value.remove("name");
-                tmp_data_set[key] = Value::Object(tmp_value);
-            }
-        }
-        new_jdata[key] = Value::Object(tmp_data_set);
-    }
 
     let mut handling_data: Vec<HandlingFormula> = vec![HandlingFormula::default()];
     let mut range_data: Vec<RangeFormula> = vec![RangeFormula::default()];
@@ -500,199 +415,78 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
     let mut scalar_data: Vec<DamageMods> = vec![DamageMods::default()];
 
     let mut updated_weapon_defs: Vec<(WeaponPath, DataPointers)> = Vec::new();
-    for (weapon_id, inner_values) in new_jdata.as_object().unwrap() {
-        for (weapon_hash, weapon_def) in inner_values.as_object().unwrap() {
-            let mut data = DataPointers::default();
-            //check if weapon_hash is a valid u32
-            if weapon_hash.parse::<u32>().is_err() {
-                continue;
-            }
-            // make a closure to parse the json value and return the rrors that occured
-            let mut set_data = |val: Value| -> Result<(), Vec<String>> {
-                let mut err_list: Vec<String> = Vec::new();
-                let cat: Map<String, Value>;
-                if val.get("cat").is_some() && weapon_def.get("cat").is_some() {
-                    if weapon_def.get("cat") == Some(&Value::Null) {
-                        err_list.push(format!(
-                            "category not found for {} :> {}",
-                            id_to_name.get(&weapon_id.parse::<i32>().unwrap()).unwrap(),
-                            weapon_hash
-                        ));
-                        cat = Map::new();
-                    } else {
-                        cat = val["cat"][weapon_def["cat"].as_str().unwrap()]
-                            .as_object()
-                            .unwrap()
-                            .clone();
-                    }
-                } else {
-                    err_list.push(format!(
-                        "category not found for {} :> {}",
-                        id_to_name.get(&weapon_id.parse::<i32>().unwrap()).unwrap(),
-                        weapon_hash
-                    ));
-                    cat = Map::new();
-                }
-                let mag: Map<String, Value>;
-                if val.get("magProf").is_some() && weapon_def.get("magProf").is_some() {
-                    if weapon_def.get("magProf") == Some(&Value::Null) {
-                        err_list.push(format!(
-                            "magazine profile not found for {} :> {}",
-                            id_to_name.get(&weapon_id.parse::<i32>().unwrap()).unwrap(),
-                            weapon_hash
-                        ));
-                        mag = Map::new();
-                    } else {
-                        mag = val["magProf"][weapon_def["magProf"].as_str().unwrap()]
-                            .as_object()
-                            .unwrap()
-                            .clone();
-                    }
-                } else {
-                    err_list.push(format!(
-                        "magazine profile not found for {} :> {}",
-                        id_to_name.get(&weapon_id.parse::<i32>().unwrap()).unwrap(),
-                        weapon_hash
-                    ));
-                    mag = Map::new();
-                }
-                let fam: Map<String, Value>;
-                if val.get("subFam").is_some() && weapon_def.get("subFam").is_some() {
-                    if weapon_def.get("subFam") == Some(&Value::Null) {
-                        err_list.push(format!(
-                            "subfamily not found for {} :> {}",
-                            id_to_name.get(&weapon_id.parse::<i32>().unwrap()).unwrap(),
-                            weapon_hash
-                        ));
-                        fam = Map::new();
-                    } else {
-                        fam = val["subFam"][weapon_def["subFam"].as_str().unwrap()]
-                            .as_object()
-                            .unwrap()
-                            .clone();
-                    }
-                } else {
-                    err_list.push(format!(
-                        "subfamily not found for {} :> {}",
-                        id_to_name.get(&weapon_id.parse::<i32>().unwrap()).unwrap(),
-                        weapon_hash
-                    ));
-                    fam = Map::new();
-                }
-                let empty_object = Value::Object(Map::new());
+    let mut data = DataPointers::default();
 
-                let mut reload: ReloadFormula = cat
-                    .get("reload")
-                    .unwrap_or_else(|| {
-                        err_list.push(format!(
-                            "reload not found for {} :> {}",
-                            id_to_name.get(&weapon_id.parse::<i32>().unwrap()).unwrap(),
-                            weapon_hash
-                        ));
-                        &empty_object
-                    })
-                    .as_object()
-                    .unwrap()
-                    .into();
+    for (weapon_id, inner_values) in jdata.types {
+        for (weapon_hash, weapon_def) in inner_values.clone().intrinsics {
+            // make a closure to parse the json value and return the rrors that occured
+            let mut set_data = |val: WeaponFormula| -> Result<(), Vec<String>> {
+                let mut err_list: Vec<String> = Vec::new();
+                //add error handling
+                let cat: Category = val.cat.get(&weapon_def.cat).unwrap().clone();
+                let mag: AmmoFormula = val.mag_prof.get(&weapon_def.mag_prof).unwrap().clone();
+                let fam: FiringData = val.sub_fam.get(&weapon_def.sub_fam).unwrap().clone().into();
+
+                let mut reload: ReloadFormula = cat.reload;
+
                 let index_option = find_uuid(&reload_data, reload.uuid());
-                if index_option.is_some() {
-                    data.rl = index_option.unwrap();
+                if let Some(index) = index_option {
+                    data.rl = index;
                 } else {
                     data.rl = reload_data.len();
                     reload.timestamp = cached.get_timestamp(&reload);
                     reload_data.push(reload);
                 }
 
-                let mut range: RangeFormula = cat
-                    .get("range")
-                    .unwrap_or_else(|| {
-                        err_list.push(format!(
-                            "range not found for {} :> {}",
-                            id_to_name.get(&weapon_id.parse::<i32>().unwrap()).unwrap(),
-                            weapon_hash
-                        ));
-                        &empty_object
-                    })
-                    .as_object()
-                    .unwrap()
-                    .into();
+                let mut range: RangeFormula = cat.range.into();
                 let index_option = find_uuid(&range_data, range.uuid());
-                if index_option.is_some() {
-                    data.r = index_option.unwrap();
+                if let Some(index) = index_option {
+                    data.r = index;
                 } else {
                     data.r = range_data.len();
                     range.timestamp = cached.get_timestamp(&range);
                     range_data.push(range);
                 }
 
-                let mut handling: HandlingFormula = cat
-                    .get("handling")
-                    .unwrap_or_else(|| {
-                        err_list.push(format!(
-                            "handling not found for {} :> {}",
-                            id_to_name.get(&weapon_id.parse::<i32>().unwrap()).unwrap(),
-                            weapon_hash
-                        ));
-                        &empty_object
-                    })
-                    .as_object()
-                    .unwrap()
-                    .into();
+                let mut handling: HandlingFormula = cat.handling;
+
                 let index_option = find_uuid(&handling_data, handling.uuid());
-                if index_option.is_some() {
-                    data.h = index_option.unwrap();
+                if let Some(index) = index_option {
+                    data.h = index;
                 } else {
                     data.h = handling_data.len();
                     handling.timestamp = cached.get_timestamp(&handling);
                     handling_data.push(handling);
                 }
 
-                let b_scalar: DamageMods = cat
-                    .get("combatant_scalars")
-                    .unwrap_or_else(|| {
-                        err_list.push(format!(
-                            "combatant_scalars not found for {} :> {}",
-                            id_to_name.get(&weapon_id.parse::<i32>().unwrap()).unwrap(),
-                            weapon_hash
-                        ));
-                        &empty_object
-                    })
-                    .as_object()
-                    .unwrap()
-                    .into();
-                let mut scalar = b_scalar.add_pve_mult(
-                    weapon_def
-                        .get("pve")
-                        .unwrap_or(&json_1_float())
-                        .as_f64()
-                        .unwrap_or(1.0),
-                );
+                let b_scalar: DamageMods = cat.combatant_scalars;
+                let mut scalar = b_scalar.add_pve_mult(weapon_def.pve.unwrap_or(1.0));
+
                 let index_option = find_uuid(&scalar_data, scalar.uuid());
-                if index_option.is_some() {
-                    data.s = index_option.unwrap();
+                if let Some(index) = index_option {
+                    data.s = index;
                 } else {
                     data.s = scalar_data.len();
                     scalar.timestamp = cached.get_timestamp(&scalar);
                     scalar_data.push(scalar);
                 }
 
-                let mut ammo: AmmoFormula = (&mag).into();
+                let mut ammo: AmmoFormula = mag;
+
                 let index_option = find_uuid(&ammo_data, ammo.uuid());
-                if index_option.is_some() {
-                    data.a = index_option.unwrap();
+
+                if let Some(index) = index_option {
+                    data.a = index
                 } else {
                     data.a = ammo_data.len();
                     ammo.timestamp = cached.get_timestamp(&ammo);
                     ammo_data.push(ammo);
                 }
 
-                let mut firing: FiringData = (&fam).into();
-                firing.burst_delay *= 1.0 / 30.0;
-                firing.inner_burst_delay *= 1.0 / 30.0;
-                firing.crit_mult = 1.5 + (firing.crit_mult / 51.0);
+                let mut firing: FiringData = fam;
                 let index_option = find_uuid(&firing_data, firing.uuid());
-                if index_option.is_some() {
-                    data.f = index_option.unwrap();
+                if let Some(index) = index_option {
+                    data.f = index;
                 } else {
                     data.f = firing_data.len();
                     firing.timestamp = cached.get_timestamp(&firing);
@@ -710,7 +504,7 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
             }
             updated_weapon_defs.push((
                 WeaponPath(
-                    weapon_id.parse::<u32>().unwrap(),
+                    NAME_TO_ID.get(&weapon_id).unwrap().clone() as u32,
                     weapon_hash.parse::<u32>().unwrap(),
                 ),
                 data,
@@ -855,17 +649,6 @@ fn construct_enhance_perk_mapping(formula_file: &mut File, cached: &mut CachedBu
                     .as_str()
                     .unwrap()
                     .to_owned();
-                let intrinsic_map: HashMap<u32, Vec<&str>> = HashMap::from([
-                    (901, vec!["High-Impact Frame"]),
-                    (902, vec!["VEIST Rapid-Fire", "Rapid-Fire Frame"]),
-                    (903, vec!["Adaptive Frame", "Adaptive Glaive"]),
-                    (904, vec!["Aggressive Frame", "Aggressive Glaive"]),
-                    (905, vec!["Lightweight Frame", "MIDA Synergy"]),
-                    (906, vec!["Precision Frame", "Häkke Precision Frame"]),
-                    (907, vec!["Double Fire", "Heavy Burst"]),
-                    (908, vec!["Wave Frame"]),
-                    (911, vec!["Legacy PR-55 Frame"]),
-                ]);
                 let content_paths = manifest_json["Response"]["jsonWorldComponentContentPaths"]
                     ["en"]
                     .as_object()
@@ -898,7 +681,8 @@ fn construct_enhance_perk_mapping(formula_file: &mut File, cached: &mut CachedBu
                         continue;
                     }
                     let name = value["displayProperties"]["name"].as_str().unwrap();
-                    for (id, names) in intrinsic_map.iter() {
+                    for id in INTRINSIC_MAP.keys() {
+                        let names = INTRINSIC_MAP.get(id).unwrap();
                         if names.contains(&name) {
                             perk_mappings.push((hash, *id));
                             cached.procedural_intrinsic_mappings.push((hash, *id));
@@ -918,4 +702,60 @@ fn construct_enhance_perk_mapping(formula_file: &mut File, cached: &mut CachedBu
         format!("{:?}", perk_mappings),
         "Mapping of enhanced perks and intrinsics to their base perk/intrinsic",
     );
+}
+
+#[derive(Clone, Deserialize)]
+struct WeaponFormulaJson {
+    #[serde(flatten)]
+    types: HashMap<String, WeaponFormula>,
+}
+
+#[derive(Clone, Deserialize)]
+struct WeaponFormula {
+    #[serde(flatten)]
+    intrinsics: HashMap<String, WeaponIntrinsic>,
+    cat: HashMap<String, Category>,
+    #[serde(rename = "subFam")]
+    sub_fam: HashMap<String, SubFamJson>,
+    #[serde(rename = "magProf")]
+    mag_prof: HashMap<String, AmmoFormula>,
+}
+
+#[derive(Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct WeaponIntrinsic {
+    name: String,
+    cat: String,
+    sub_fam: String,
+    mag_prof: String,
+    pve: Option<f64>,
+}
+
+#[derive(Clone, Deserialize)]
+struct Category {
+    range: RangeJson,
+    reload: ReloadFormula,
+    handling: HandlingFormula,
+    combatant_scalars: DamageMods,
+}
+
+#[derive(Clone, Copy, Deserialize)]
+struct RangeJson {
+    vpp_start: f64,
+    offset_start: f64,
+    vpp_end: f64,
+    offset_end: f64,
+    floor_percent: f64,
+    fusion: Option<bool>,
+}
+
+#[derive(Clone, Copy, Deserialize)]
+struct SubFamJson {
+    damage: f64,
+    crit_mult: f64,
+    burst_delay: f64,
+    burst_size: i32,
+    inner_burst_delay: f64,
+    one_ammo: Option<bool>,
+    charge: Option<bool>,
 }

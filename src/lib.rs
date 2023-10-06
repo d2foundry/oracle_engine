@@ -134,7 +134,7 @@ pub fn set_weapon(
             _damage_type_id,
         );
 
-        if let Ok(weapon) = new_weapon {
+        if let Some(weapon) = new_weapon {
             perm_data.borrow_mut().weapon = weapon;
         } else {
             logging::log(
