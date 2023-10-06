@@ -68,6 +68,19 @@ fn calculate_hash<T: Hash>(t: &T) -> u64 {
     s.finish()
 }
 
+fn f64_hashable(t: f64) -> NotNan<f64> {
+    NotNan::new(t).unwrap()
+}
+
+trait PartialHash {
+    fn partial_hash<H: Hasher>(self, state: &mut H);
+}
+impl PartialHash for f64 {
+    fn partial_hash<H: Hasher>(self, state: &mut H) {
+        NotNan::new(self).unwrap().hash(state);
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 struct CachedBuildData {
     last_manifest_version: String,
@@ -116,37 +129,45 @@ fn find_uuid<T: Hash>(vec: &Vec<T>, uuid: &T) -> Option<usize> {
 }
 
 //these types reflect whats in src/types/rs_types.rs
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default, Hash)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
 pub struct StatQuadraticFormula {
     #[serde(default)]
-    pub evpp: NotNan<f64>,
-    pub vpp: NotNan<f64>,
-    pub offset: NotNan<f64>,
+    pub evpp: f64,
+    pub vpp: f64,
+    pub offset: f64,
+}
+
+impl Hash for StatQuadraticFormula {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.evpp.partial_hash(state);
+        self.vpp.partial_hash(state);
+        self.offset.partial_hash(state);
+    }
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
 pub struct DamageMods {
     #[serde(default)]
-    pub pve: NotNan<f64>,
-    pub minor: NotNan<f64>,
-    pub elite: NotNan<f64>,
-    pub miniboss: NotNan<f64>,
-    pub champion: NotNan<f64>,
-    pub boss: NotNan<f64>,
-    pub vehicle: NotNan<f64>,
+    pub pve: f64,
+    pub minor: f64,
+    pub elite: f64,
+    pub miniboss: f64,
+    pub champion: f64,
+    pub boss: f64,
+    pub vehicle: f64,
     #[serde(default)]
     pub timestamp: u64,
 }
 
 impl Hash for DamageMods {
     fn hash<H: Hasher>(&self, state: &mut H) {
-        self.pve.hash(state);
-        self.minor.hash(state);
-        self.elite.hash(state);
-        self.miniboss.hash(state);
-        self.champion.hash(state);
-        self.boss.hash(state);
-        self.vehicle.hash(state);
+        self.pve.partial_hash(state);
+        self.minor.partial_hash(state);
+        self.elite.partial_hash(state);
+        self.miniboss.partial_hash(state);
+        self.champion.partial_hash(state);
+        self.boss.partial_hash(state);
+        self.vehicle.partial_hash(state);
     }
 }
 
@@ -155,7 +176,7 @@ impl Hash for DamageMods {
 pub struct RangeFormula {
     pub start: StatQuadraticFormula,
     pub end: StatQuadraticFormula,
-    pub floor_percent: NotNan<f64>,
+    pub floor_percent: f64,
     #[serde(default)]
     pub fusion: bool,
     #[serde(default)]
@@ -166,7 +187,7 @@ impl Hash for RangeFormula {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.start.hash(state);
         self.end.hash(state);
-        self.floor_percent.hash(state);
+        self.floor_percent.partial_hash(state);
         self.fusion.hash(state);
     }
 }
@@ -198,7 +219,7 @@ pub struct ReloadFormula {
     #[serde(flatten)]
     pub reload_data: StatQuadraticFormula,
     #[serde(default)]
-    pub ammo_percent: NotNan<f64>,
+    pub ammo_percent: f64,
     #[serde(default)]
     pub timestamp: u64,
 }
@@ -206,7 +227,7 @@ pub struct ReloadFormula {
 impl Hash for ReloadFormula {
     fn hash<H: Hasher>(&self, state: &mut H) {
         self.reload_data.hash(state);
-        self.ammo_percent.hash(state);
+        self.ammo_percent.partial_hash(state);
     }
 }
 
@@ -253,10 +274,10 @@ fn default_i32_1() -> i32 {
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
 #[serde(from = "SubFamJson")]
 pub struct FiringData {
-    pub damage: NotNan<f64>,
-    pub crit_mult: NotNan<f64>,
-    pub burst_delay: NotNan<f64>,
-    pub inner_burst_delay: NotNan<f64>,
+    pub damage: f64,
+    pub crit_mult: f64,
+    pub burst_delay: f64,
+    pub inner_burst_delay: f64,
     #[serde(default)]
     pub burst_size: i32,
     #[serde(default)]
@@ -284,10 +305,10 @@ impl From<SubFamJson> for FiringData {
 
 impl Hash for FiringData {
     fn hash<H: Hasher>(&self, state: &mut H) {
-        self.damage.hash(state);
-        self.crit_mult.hash(state);
-        self.burst_delay.hash(state);
-        self.inner_burst_delay.hash(state);
+        self.damage.partial_hash(state);
+        self.crit_mult.partial_hash(state);
+        self.burst_delay.partial_hash(state);
+        self.inner_burst_delay.partial_hash(state);
         self.burst_size.hash(state);
         self.one_ammo.hash(state);
         self.charge.hash(state);
@@ -711,8 +732,8 @@ struct WeaponFormula {
     mag_prof: HashMap<String, AmmoFormula>,
 }
 
-const fn default_pve() -> NotNan<f64> {
-    unsafe { NotNan::new_unchecked(1.0) }
+const fn default_pve() -> f64 {
+    1.0
 }
 
 #[derive(Clone, Deserialize)]
@@ -723,7 +744,7 @@ struct WeaponIntrinsic {
     sub_fam: String,
     mag_prof: String,
     #[serde(default = "default_pve")]
-    pve: NotNan<f64>,
+    pve: f64,
 }
 
 #[derive(Clone, Copy, Deserialize)]
@@ -736,22 +757,22 @@ struct Category {
 
 #[derive(Clone, Copy, Deserialize)]
 struct RangeJson {
-    vpp_start: NotNan<f64>,
-    offset_start: NotNan<f64>,
-    vpp_end: NotNan<f64>,
-    offset_end: NotNan<f64>,
-    floor_percent: NotNan<f64>,
+    vpp_start: f64,
+    offset_start: f64,
+    vpp_end: f64,
+    offset_end: f64,
+    floor_percent: f64,
     fusion: Option<bool>,
 }
 
 #[derive(Clone, Copy, Deserialize)]
 struct SubFamJson {
-    damage: NotNan<f64>,
-    crit_mult: NotNan<f64>,
-    burst_delay: NotNan<f64>,
+    damage: f64,
+    crit_mult: f64,
+    burst_delay: f64,
     #[serde(default = "default_i32_1")]
     burst_size: i32,
-    inner_burst_delay: NotNan<f64>,
+    inner_burst_delay: f64,
     one_ammo: Option<bool>,
     charge: Option<bool>,
 }

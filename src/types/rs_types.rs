@@ -4,8 +4,6 @@ use serde::{Deserialize, Serialize};
 
 use crate::{enemies::EnemyType, perks::clamp};
 
-use ordered_float::NotNan;
-
 #[derive(Debug, Clone, Copy)]
 pub struct DataPointers {
     pub h: usize,
@@ -21,10 +19,10 @@ pub struct WeaponPath(pub u32, pub u32);
 
 #[derive(Debug, Clone, Default, Copy, Serialize)]
 pub struct FiringData {
-    pub damage: NotNan<f64>,
-    pub crit_mult: NotNan<f64>,
-    pub burst_delay: NotNan<f64>,
-    pub inner_burst_delay: NotNan<f64>,
+    pub damage: f64,
+    pub crit_mult: f64,
+    pub burst_delay: f64,
+    pub inner_burst_delay: f64,
     pub burst_size: i32,
     pub one_ammo: bool,
     pub charge: bool,
