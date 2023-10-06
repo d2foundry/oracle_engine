@@ -1,10 +1,15 @@
 #![allow(clippy::all)]
+use ordered_float::{FloatIsNan, NotNan, ParseNotNanError};
 use phf::{phf_map, Map as PhfMap};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
+use std::collections::btree_map::Entry::Vacant;
+use std::collections::hash_map::DefaultHasher;
 use std::collections::{BTreeMap, HashMap};
+use std::default;
 use std::fmt::Debug;
 use std::fs::File;
+use std::hash::{Hash, Hasher};
 use std::io::Write;
 
 const ID_TO_NAME: PhfMap<i32, &'static str> = phf_map! {
@@ -57,120 +62,126 @@ const INTRINSIC_MAP: PhfMap<u32, &'static [&'static str]> = phf_map! {
 911u32 => &["Legacy PR-55 Frame"]
 };
 
+fn calculate_hash<T: Hash>(t: &T) -> u64 {
+    let mut s = DefaultHasher::new();
+    t.hash(&mut s);
+    s.finish()
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 struct CachedBuildData {
     last_manifest_version: String,
     dim_perk_mappings: Vec<(u32, u32)>,
     procedural_intrinsic_mappings: Vec<(u32, u32)>,
     //use ordered hash map
-    perk_formula_timestamps: BTreeMap<u64, u64>,
+    perk_hash_timestamps: BTreeMap<u64, u64>,
 }
+
 impl CachedBuildData {
     fn has_data(&self) -> bool {
         !self.last_manifest_version.is_empty()
             && !self.dim_perk_mappings.is_empty()
             && !self.procedural_intrinsic_mappings.is_empty()
-            && !self.perk_formula_timestamps.is_empty()
-    }
-
-    fn get_timestamp(&mut self, formula: &impl UuidTimestamp) -> u64 {
-        // get current unix time
-        let uuid = (formula.uuid() * 10.0).to_bits();
-        let now = std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .unwrap()
-            .as_secs();
-        if let std::collections::btree_map::Entry::Vacant(e) =
-            self.perk_formula_timestamps.entry(uuid)
-        {
-            e.insert(now);
-            now
-        } else {
-            *self.perk_formula_timestamps.get(&uuid).unwrap()
-        }
+            && !self.perk_hash_timestamps.is_empty()
     }
 
     fn sort(&mut self) {
         self.dim_perk_mappings.sort();
         self.procedural_intrinsic_mappings.sort();
     }
+
+    fn get_timestamp(&mut self, formula: &(impl Hash)) -> u64 {
+        // get current unix time
+        let now = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_secs();
+        let hash = calculate_hash(&formula);
+
+        if let Vacant(e) = self.perk_hash_timestamps.entry(hash) {
+            e.insert(now);
+            now
+        } else {
+            *self.perk_hash_timestamps.get(&hash).unwrap()
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy, Hash)]
 struct WeaponPath(u32, u32);
 
-trait UuidTimestamp {
-    fn uuid(&self) -> f64;
-}
-
-fn find_uuid<T: UuidTimestamp>(vec: &Vec<T>, uuid: f64) -> Option<usize> {
-    vec.iter().position(|x| x.uuid() == uuid)
+fn find_uuid<T: Hash>(vec: &Vec<T>, uuid: &T) -> Option<usize> {
+    vec.iter()
+        .position(|x| calculate_hash(&x) == calculate_hash(uuid))
 }
 
 //these types reflect whats in src/types/rs_types.rs
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default, Hash)]
 pub struct StatQuadraticFormula {
     #[serde(default)]
-    pub evpp: f64,
-    pub vpp: f64,
-    pub offset: f64,
-}
-
-impl UuidTimestamp for StatQuadraticFormula {
-    fn uuid(&self) -> f64 {
-        (self.evpp - 11.0) * 97293.0 + self.vpp * 84892.0 + self.offset * 3321.0
-    }
+    pub evpp: NotNan<f64>,
+    pub vpp: NotNan<f64>,
+    pub offset: NotNan<f64>,
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
 pub struct DamageMods {
     #[serde(default)]
-    pub pve: f64,
-    pub minor: f64,
-    pub elite: f64,
-    pub miniboss: f64,
-    pub champion: f64,
-    pub boss: f64,
-    pub vehicle: f64,
+    pub pve: NotNan<f64>,
+    pub minor: NotNan<f64>,
+    pub elite: NotNan<f64>,
+    pub miniboss: NotNan<f64>,
+    pub champion: NotNan<f64>,
+    pub boss: NotNan<f64>,
+    pub vehicle: NotNan<f64>,
     #[serde(default)]
     pub timestamp: u64,
 }
 
-impl UuidTimestamp for DamageMods {
-    fn uuid(&self) -> f64 {
-        (self.pve - 12.0) * 6729.0
-            + self.minor * 18342.0
-            + self.elite * 88831.0
-            + self.miniboss * 544.0
-            + self.champion * 995.0
-            + self.boss * 392.0
-            + self.vehicle * 3223.0
+impl Hash for DamageMods {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.pve.hash(state);
+        self.minor.hash(state);
+        self.elite.hash(state);
+        self.miniboss.hash(state);
+        self.champion.hash(state);
+        self.boss.hash(state);
+        self.vehicle.hash(state);
     }
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
-#[serde(from = "RangeJson")]
+#[serde(try_from = "RangeJson")]
 pub struct RangeFormula {
     pub start: StatQuadraticFormula,
     pub end: StatQuadraticFormula,
-    pub floor_percent: f64,
+    pub floor_percent: NotNan<f64>,
     #[serde(default)]
     pub fusion: bool,
     #[serde(default)]
     pub timestamp: u64,
 }
 
+impl Hash for RangeFormula {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.start.hash(state);
+        self.end.hash(state);
+        self.floor_percent.hash(state);
+        self.fusion.hash(state);
+    }
+}
+
 impl From<RangeJson> for RangeFormula {
     fn from(value: RangeJson) -> Self {
         let start = StatQuadraticFormula {
-            evpp: 0.0,
             vpp: value.vpp_start,
             offset: value.offset_start,
+            ..Default::default()
         };
         let end = StatQuadraticFormula {
-            evpp: 0.0,
             vpp: value.vpp_end,
             offset: value.offset_end,
+            ..Default::default()
         };
         RangeFormula {
             start,
@@ -182,28 +193,20 @@ impl From<RangeJson> for RangeFormula {
     }
 }
 
-impl UuidTimestamp for RangeFormula {
-    fn uuid(&self) -> f64 {
-        (self.start.uuid() + 17.0) * 920.0
-            + self.end.uuid()
-            + self.floor_percent * 92.0
-            + (self.fusion as u32) as f64 * 88.0
-    }
-}
-
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
 pub struct ReloadFormula {
     #[serde(flatten)]
     pub reload_data: StatQuadraticFormula,
     #[serde(default)]
-    pub ammo_percent: f64,
+    pub ammo_percent: NotNan<f64>,
     #[serde(default)]
     pub timestamp: u64,
 }
 
-impl UuidTimestamp for ReloadFormula {
-    fn uuid(&self) -> f64 {
-        (self.reload_data.uuid() + 29.5) * 72.0 + (self.ammo_percent + 3.0) * 12.0
+impl Hash for ReloadFormula {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.reload_data.hash(state);
+        self.ammo_percent.hash(state);
     }
 }
 
@@ -216,9 +219,11 @@ pub struct HandlingFormula {
     pub timestamp: u64,
 }
 
-impl UuidTimestamp for HandlingFormula {
-    fn uuid(&self) -> f64 {
-        self.ready.uuid() * 79.0 + self.stow.uuid() / 2.0 + self.ads.uuid() * 79.9
+impl Hash for HandlingFormula {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.ready.hash(state);
+        self.stow.hash(state);
+        self.ads.hash(state);
     }
 }
 
@@ -233,19 +238,25 @@ pub struct AmmoFormula {
     pub timestamp: u64,
 }
 
-impl UuidTimestamp for AmmoFormula {
-    fn uuid(&self) -> f64 {
-        self.mag.uuid() * 99.0 + self.round_to as f64 * 6723.3 + self.reserve_id as f64 * 5299.2
+impl Hash for AmmoFormula {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.mag.hash(state);
+        self.round_to.hash(state);
+        self.reserve_id.hash(state);
     }
+}
+
+fn default_i32_1() -> i32 {
+    1
 }
 
 #[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
 #[serde(from = "SubFamJson")]
 pub struct FiringData {
-    pub damage: f64,
-    pub crit_mult: f64,
-    pub burst_delay: f64,
-    pub inner_burst_delay: f64,
+    pub damage: NotNan<f64>,
+    pub crit_mult: NotNan<f64>,
+    pub burst_delay: NotNan<f64>,
+    pub inner_burst_delay: NotNan<f64>,
     #[serde(default)]
     pub burst_size: i32,
     #[serde(default)]
@@ -260,7 +271,7 @@ impl From<SubFamJson> for FiringData {
     fn from(value: SubFamJson) -> Self {
         FiringData {
             damage: value.damage,
-            crit_mult: (value.crit_mult as f64) / 51.0 + 1.5,
+            crit_mult: (value.crit_mult) / 51.0 + 1.5,
             burst_delay: value.burst_delay / 30.0,
             inner_burst_delay: value.inner_burst_delay / 30.0,
             burst_size: value.burst_size,
@@ -271,16 +282,15 @@ impl From<SubFamJson> for FiringData {
     }
 }
 
-impl UuidTimestamp for FiringData {
-    fn uuid(&self) -> f64 {
-        (self.damage * 821.88
-            + self.crit_mult * 388.1
-            + self.burst_delay * 9999.7
-            + self.inner_burst_delay * 7234.9
-            + self.burst_size as f64 * 999.3
-            + (self.one_ammo as u32) as f64 * 16655.5
-            + (self.charge as u32) as f64 * 7388.9)
-            * 10.0
+impl Hash for FiringData {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.damage.hash(state);
+        self.crit_mult.hash(state);
+        self.burst_delay.hash(state);
+        self.inner_burst_delay.hash(state);
+        self.burst_size.hash(state);
+        self.one_ammo.hash(state);
+        self.charge.hash(state);
     }
 }
 
@@ -418,7 +428,7 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
 
             let mut reload: ReloadFormula = cat.reload;
 
-            let index_option = find_uuid(&reload_data, reload.uuid());
+            let index_option = find_uuid(&reload_data, &reload);
             if let Some(index) = index_option {
                 data.rl = index;
             } else {
@@ -428,7 +438,7 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
             }
 
             let mut range: RangeFormula = cat.range;
-            let index_option = find_uuid(&range_data, range.uuid());
+            let index_option = find_uuid(&range_data, &range);
             if let Some(index) = index_option {
                 data.r = index;
             } else {
@@ -439,7 +449,7 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
 
             let mut handling: HandlingFormula = cat.handling;
 
-            let index_option = find_uuid(&handling_data, handling.uuid());
+            let index_option = find_uuid(&handling_data, &handling);
             if let Some(index) = index_option {
                 data.h = index;
             } else {
@@ -449,9 +459,9 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
             }
 
             let mut scalar: DamageMods = cat.combatant_scalars;
-            scalar.pve = weapon_def.pve.unwrap_or(1.0);
+            scalar.pve = weapon_def.pve;
 
-            let index_option = find_uuid(&scalar_data, scalar.uuid());
+            let index_option = find_uuid(&scalar_data, &scalar);
             if let Some(index) = index_option {
                 data.s = index;
             } else {
@@ -462,7 +472,7 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
 
             let mut ammo: AmmoFormula = mag;
 
-            let index_option = find_uuid(&ammo_data, ammo.uuid());
+            let index_option = find_uuid(&ammo_data, &ammo);
 
             if let Some(index) = index_option {
                 data.a = index
@@ -473,7 +483,7 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
             }
 
             let mut firing: FiringData = fam;
-            let index_option = find_uuid(&firing_data, firing.uuid());
+            let index_option = find_uuid(&firing_data, &firing);
             if let Some(index) = index_option {
                 data.f = index;
             } else {
@@ -701,6 +711,10 @@ struct WeaponFormula {
     mag_prof: HashMap<String, AmmoFormula>,
 }
 
+const fn default_pve() -> NotNan<f64> {
+    unsafe { NotNan::new_unchecked(1.0) }
+}
+
 #[derive(Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct WeaponIntrinsic {
@@ -708,7 +722,8 @@ struct WeaponIntrinsic {
     cat: String,
     sub_fam: String,
     mag_prof: String,
-    pve: Option<f64>,
+    #[serde(default = "default_pve")]
+    pve: NotNan<f64>,
 }
 
 #[derive(Clone, Copy, Deserialize)]
@@ -721,21 +736,22 @@ struct Category {
 
 #[derive(Clone, Copy, Deserialize)]
 struct RangeJson {
-    vpp_start: f64,
-    offset_start: f64,
-    vpp_end: f64,
-    offset_end: f64,
-    floor_percent: f64,
+    vpp_start: NotNan<f64>,
+    offset_start: NotNan<f64>,
+    vpp_end: NotNan<f64>,
+    offset_end: NotNan<f64>,
+    floor_percent: NotNan<f64>,
     fusion: Option<bool>,
 }
 
 #[derive(Clone, Copy, Deserialize)]
 struct SubFamJson {
-    damage: f64,
-    crit_mult: f64,
-    burst_delay: f64,
+    damage: NotNan<f64>,
+    crit_mult: NotNan<f64>,
+    burst_delay: NotNan<f64>,
+    #[serde(default = "default_i32_1")]
     burst_size: i32,
-    inner_burst_delay: f64,
+    inner_burst_delay: NotNan<f64>,
     one_ammo: Option<bool>,
     charge: Option<bool>,
 }

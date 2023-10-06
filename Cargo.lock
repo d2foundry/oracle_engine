@@ -763,6 +763,7 @@ dependencies = [
  "lol_alloc",
  "num-traits",
  "num_enum",
+ "ordered-float",
  "phf",
  "phf_codegen",
  "piecewise-linear",
@@ -772,6 +773,17 @@ dependencies = [
  "serde-wasm-bindgen",
  "serde_json",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "ordered-float"
+version = "4.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e3a540f3e3b3d7929c884e46d093d344e4e5bdeed54d08bf007df50c93cc85d5"
+dependencies = [
+ "num-traits",
+ "rand",
+ "serde",
 ]
 
 [[package]]
@@ -901,6 +913,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "34af8d1a0e25924bc5b7c43c079c942339d8f0a8b57c39049bef581b46327404"
 dependencies = [
  "rand_core",
+ "serde",
 ]
 
 [[package]]
@@ -908,6 +921,9 @@ name = "rand_core"
 version = "0.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec0be4795e2f6a28069bec0b5ff3e2ac9bafc99e6a9a7dc3547996c5c816922c"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "redox_syscall"
