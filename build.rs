@@ -5,7 +5,7 @@ use phf::{phf_map, Map as PhfMap};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::btree_map::Entry::Vacant;
-use std::collections::{BTreeMap, HashMap};
+use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fmt::Debug;
 use std::fs::File;
 use std::hash::{Hash, Hasher};
@@ -82,6 +82,8 @@ struct CachedBuildData {
     procedural_intrinsic_mappings: Vec<(u32, u32)>,
     //use ordered hash map
     perk_timestamps: BTreeMap<u64, u64>,
+    #[serde(skip_serializing, default)]
+    current_timestamps: HashSet<u64>,
 }
 
 impl CachedBuildData {
@@ -97,22 +99,31 @@ impl CachedBuildData {
         self.procedural_intrinsic_mappings.sort();
     }
 
+    fn clean_timestamps(&mut self) {
+        for key in self
+            .perk_timestamps
+            .clone()
+            .keys()
+            .filter(|x| !self.current_timestamps.contains(x))
+        {
+            self.perk_timestamps.remove(key);
+        }
+    }
+
     fn get_timestamp(&mut self, formula: &impl Hash) -> u64 {
         // get current unix time
+        let timestamps = &mut self.perk_timestamps;
         let now = std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap()
             .as_secs();
         let hash = calculate_hash(&formula);
+        self.current_timestamps.insert(hash);
 
-        if let Vacant(e) = self.perk_timestamps.entry(hash) {
-            e.insert(now);
-            self.perk_timestamps.insert(hash, now);
+        timestamps.get(&hash).cloned().unwrap_or_else(|| {
+            timestamps.insert(hash, now);
             now
-        } else {
-            let time_stamp = *self.perk_timestamps.get(&hash).unwrap();
-            time_stamp
-        }
+        })
     }
 }
 
@@ -122,203 +133,6 @@ struct WeaponPath(u32, u32);
 fn find_uuid<T: Hash>(vec: &Vec<T>, uuid: &T) -> Option<usize> {
     vec.iter()
         .position(|x| calculate_hash(&x) == calculate_hash(uuid))
-}
-
-//these types reflect whats in src/types/rs_types.rs
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
-pub struct StatQuadraticFormula {
-    #[serde(default)]
-    pub evpp: f64,
-    pub vpp: f64,
-    pub offset: f64,
-}
-
-impl Hash for StatQuadraticFormula {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.evpp.partial_hash(state);
-        self.vpp.partial_hash(state);
-        self.offset.partial_hash(state);
-    }
-}
-
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
-pub struct DamageMods {
-    #[serde(default)]
-    pub pve: f64,
-    pub minor: f64,
-    pub elite: f64,
-    pub miniboss: f64,
-    pub champion: f64,
-    pub boss: f64,
-    pub vehicle: f64,
-    #[serde(default)]
-    pub timestamp: u64,
-}
-
-impl Hash for DamageMods {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.pve.partial_hash(state);
-        self.minor.partial_hash(state);
-        self.elite.partial_hash(state);
-        self.miniboss.partial_hash(state);
-        self.champion.partial_hash(state);
-        self.boss.partial_hash(state);
-        self.vehicle.partial_hash(state);
-    }
-}
-
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
-#[serde(try_from = "RangeJson")]
-pub struct RangeFormula {
-    pub start: StatQuadraticFormula,
-    pub end: StatQuadraticFormula,
-    pub floor_percent: f64,
-    #[serde(default)]
-    pub fusion: bool,
-    #[serde(default)]
-    pub timestamp: u64,
-}
-
-impl Hash for RangeFormula {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.start.hash(state);
-        self.end.hash(state);
-        self.floor_percent.partial_hash(state);
-        self.fusion.hash(state);
-    }
-}
-
-impl From<RangeJson> for RangeFormula {
-    fn from(value: RangeJson) -> Self {
-        let start = StatQuadraticFormula {
-            vpp: value.vpp_start,
-            offset: value.offset_start,
-            ..Default::default()
-        };
-        let end = StatQuadraticFormula {
-            vpp: value.vpp_end,
-            offset: value.offset_end,
-            ..Default::default()
-        };
-        RangeFormula {
-            start,
-            end,
-            floor_percent: value.floor_percent,
-            fusion: value.fusion.unwrap_or_default(),
-            timestamp: 0,
-        }
-    }
-}
-
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
-pub struct ReloadFormula {
-    #[serde(flatten)]
-    pub reload_data: StatQuadraticFormula,
-    #[serde(default)]
-    pub ammo_percent: f64,
-    #[serde(default)]
-    pub timestamp: u64,
-}
-
-impl Hash for ReloadFormula {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.reload_data.hash(state);
-        self.ammo_percent.partial_hash(state);
-    }
-}
-
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
-pub struct HandlingFormula {
-    pub ready: StatQuadraticFormula,
-    pub stow: StatQuadraticFormula,
-    pub ads: StatQuadraticFormula,
-    #[serde(default)]
-    pub timestamp: u64,
-}
-
-impl Hash for HandlingFormula {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.ready.hash(state);
-        self.stow.hash(state);
-        self.ads.hash(state);
-    }
-}
-
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
-pub struct AmmoFormula {
-    pub mag: StatQuadraticFormula,
-    #[serde(default)]
-    pub round_to: i32,
-    #[serde(default)]
-    pub reserve_id: u32,
-    #[serde(default)]
-    pub timestamp: u64,
-}
-
-impl Hash for AmmoFormula {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.mag.hash(state);
-        self.round_to.hash(state);
-        self.reserve_id.hash(state);
-    }
-}
-
-fn default_i32_1() -> i32 {
-    1
-}
-
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
-#[serde(from = "SubFamJson")]
-pub struct FiringData {
-    pub damage: f64,
-    pub crit_mult: f64,
-    pub burst_delay: f64,
-    pub inner_burst_delay: f64,
-    #[serde(default)]
-    pub burst_size: i32,
-    #[serde(default)]
-    pub one_ammo: bool,
-    #[serde(default)]
-    pub charge: bool,
-    #[serde(default)]
-    pub timestamp: u64,
-}
-
-impl From<SubFamJson> for FiringData {
-    fn from(value: SubFamJson) -> Self {
-        FiringData {
-            damage: value.damage,
-            crit_mult: (value.crit_mult) / 51.0 + 1.5,
-            burst_delay: value.burst_delay / 30.0,
-            inner_burst_delay: value.inner_burst_delay / 30.0,
-            burst_size: value.burst_size,
-            one_ammo: value.one_ammo.unwrap_or_default(),
-            charge: value.charge.unwrap_or_default(),
-            timestamp: 0,
-        }
-    }
-}
-
-impl Hash for FiringData {
-    fn hash<H: Hasher>(&self, state: &mut H) {
-        self.damage.partial_hash(state);
-        self.crit_mult.partial_hash(state);
-        self.burst_delay.partial_hash(state);
-        self.inner_burst_delay.partial_hash(state);
-        self.burst_size.hash(state);
-        self.one_ammo.hash(state);
-        self.charge.hash(state);
-    }
-}
-
-#[derive(Debug, Copy, Clone, Default)]
-struct DataPointers {
-    h: usize,
-    r: usize,
-    rl: usize,
-    s: usize,
-    f: usize,
-    a: usize,
 }
 
 fn write_variable(
@@ -386,9 +200,9 @@ fn main() {
 
     construct_enhance_perk_mapping(&mut formula_file, &mut cached_data);
     construct_weapon_formulas(&mut formula_file, &mut cached_data);
-
+    
+    cached_data.clean_timestamps();
     cached_data.sort();
-
     //check if being run by rust-analyzer
     let is_rust_analyzer = std::env::var("IS_RA");
     if is_rust_analyzer.is_ok() && is_rust_analyzer.unwrap() == "true" {
@@ -709,6 +523,203 @@ fn construct_enhance_perk_mapping(formula_file: &mut File, cached: &mut CachedBu
         format!("{:?}", perk_mappings),
         "Mapping of enhanced perks and intrinsics to their base perk/intrinsic",
     );
+}
+
+//these types reflect whats in src/types/rs_types.rs
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
+pub struct StatQuadraticFormula {
+    #[serde(default)]
+    pub evpp: f64,
+    pub vpp: f64,
+    pub offset: f64,
+}
+
+impl Hash for StatQuadraticFormula {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.evpp.partial_hash(state);
+        self.vpp.partial_hash(state);
+        self.offset.partial_hash(state);
+    }
+}
+
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
+pub struct DamageMods {
+    #[serde(default)]
+    pub pve: f64,
+    pub minor: f64,
+    pub elite: f64,
+    pub miniboss: f64,
+    pub champion: f64,
+    pub boss: f64,
+    pub vehicle: f64,
+    #[serde(default)]
+    pub timestamp: u64,
+}
+
+impl Hash for DamageMods {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.pve.partial_hash(state);
+        self.minor.partial_hash(state);
+        self.elite.partial_hash(state);
+        self.miniboss.partial_hash(state);
+        self.champion.partial_hash(state);
+        self.boss.partial_hash(state);
+        self.vehicle.partial_hash(state);
+    }
+}
+
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
+#[serde(try_from = "RangeJson")]
+pub struct RangeFormula {
+    pub start: StatQuadraticFormula,
+    pub end: StatQuadraticFormula,
+    pub floor_percent: f64,
+    #[serde(default)]
+    pub fusion: bool,
+    #[serde(default)]
+    pub timestamp: u64,
+}
+
+impl Hash for RangeFormula {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.start.hash(state);
+        self.end.hash(state);
+        self.floor_percent.partial_hash(state);
+        self.fusion.hash(state);
+    }
+}
+
+impl From<RangeJson> for RangeFormula {
+    fn from(value: RangeJson) -> Self {
+        let start = StatQuadraticFormula {
+            vpp: value.vpp_start,
+            offset: value.offset_start,
+            ..Default::default()
+        };
+        let end = StatQuadraticFormula {
+            vpp: value.vpp_end,
+            offset: value.offset_end,
+            ..Default::default()
+        };
+        RangeFormula {
+            start,
+            end,
+            floor_percent: value.floor_percent,
+            fusion: value.fusion.unwrap_or_default(),
+            timestamp: 0,
+        }
+    }
+}
+
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
+pub struct ReloadFormula {
+    #[serde(flatten)]
+    pub reload_data: StatQuadraticFormula,
+    #[serde(default)]
+    pub ammo_percent: f64,
+    #[serde(default)]
+    pub timestamp: u64,
+}
+
+impl Hash for ReloadFormula {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.reload_data.hash(state);
+        self.ammo_percent.partial_hash(state);
+    }
+}
+
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
+pub struct HandlingFormula {
+    pub ready: StatQuadraticFormula,
+    pub stow: StatQuadraticFormula,
+    pub ads: StatQuadraticFormula,
+    #[serde(default)]
+    pub timestamp: u64,
+}
+
+impl Hash for HandlingFormula {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.ready.hash(state);
+        self.stow.hash(state);
+        self.ads.hash(state);
+    }
+}
+
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
+pub struct AmmoFormula {
+    pub mag: StatQuadraticFormula,
+    #[serde(default)]
+    pub round_to: i32,
+    #[serde(default)]
+    pub reserve_id: u32,
+    #[serde(default)]
+    pub timestamp: u64,
+}
+
+impl Hash for AmmoFormula {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.mag.hash(state);
+        self.round_to.hash(state);
+        self.reserve_id.hash(state);
+    }
+}
+
+fn default_i32_1() -> i32 {
+    1
+}
+
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
+#[serde(from = "SubFamJson")]
+pub struct FiringData {
+    pub damage: f64,
+    pub crit_mult: f64,
+    pub burst_delay: f64,
+    pub inner_burst_delay: f64,
+    #[serde(default)]
+    pub burst_size: i32,
+    #[serde(default)]
+    pub one_ammo: bool,
+    #[serde(default)]
+    pub charge: bool,
+    #[serde(default)]
+    pub timestamp: u64,
+}
+
+impl From<SubFamJson> for FiringData {
+    fn from(value: SubFamJson) -> Self {
+        FiringData {
+            damage: value.damage,
+            crit_mult: (value.crit_mult) / 51.0 + 1.5,
+            burst_delay: value.burst_delay / 30.0,
+            inner_burst_delay: value.inner_burst_delay / 30.0,
+            burst_size: value.burst_size,
+            one_ammo: value.one_ammo.unwrap_or_default(),
+            charge: value.charge.unwrap_or_default(),
+            timestamp: 0,
+        }
+    }
+}
+
+impl Hash for FiringData {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.damage.partial_hash(state);
+        self.crit_mult.partial_hash(state);
+        self.burst_delay.partial_hash(state);
+        self.inner_burst_delay.partial_hash(state);
+        self.burst_size.hash(state);
+        self.one_ammo.hash(state);
+        self.charge.hash(state);
+    }
+}
+
+#[derive(Debug, Copy, Clone, Default)]
+struct DataPointers {
+    h: usize,
+    r: usize,
+    rl: usize,
+    s: usize,
+    f: usize,
+    a: usize,
 }
 
 #[derive(Clone, Deserialize)]
