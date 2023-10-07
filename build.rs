@@ -1,17 +1,15 @@
-#![allow(clippy::all)]
 use fnv::FnvHasher;
 use ordered_float::NotNan;
 use phf::{phf_map, Map as PhfMap};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
-use std::collections::btree_map::Entry::Vacant;
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fmt::Debug;
 use std::fs::File;
 use std::hash::{Hash, Hasher};
 use std::io::Write;
 
-const ID_TO_NAME: PhfMap<i32, &'static str> = phf_map! {
+/*const ID_TO_NAME: PhfMap<i32, &'static str> = phf_map! {
     6i32 => "Auto Rifle",
     31i32 => "Combat Bow",
     11i32 => "Fusion Rifle",
@@ -28,7 +26,7 @@ const ID_TO_NAME: PhfMap<i32, &'static str> = phf_map! {
     33i32 => "Glaive",
     25i32 => "Trace Rifle",
     17i32 => "Sidearm",
-};
+};*/
 
 const NAME_TO_ID: PhfMap<&'static str, i32> = phf_map! {
     "Auto Rifle" => 6i32,
@@ -130,7 +128,7 @@ impl CachedBuildData {
 #[derive(Debug, Clone, Copy, Hash)]
 struct WeaponPath(u32, u32);
 
-fn find_uuid<T: Hash>(vec: &Vec<T>, uuid: &T) -> Option<usize> {
+fn find_uuid<T: Hash>(vec: &[T], uuid: &T) -> Option<usize> {
     vec.iter()
         .position(|x| calculate_hash(&x) == calculate_hash(uuid))
 }
@@ -200,7 +198,7 @@ fn main() {
 
     construct_enhance_perk_mapping(&mut formula_file, &mut cached_data);
     construct_weapon_formulas(&mut formula_file, &mut cached_data);
-    
+
     cached_data.clean_timestamps();
     cached_data.sort();
     //check if being run by rust-analyzer
@@ -389,8 +387,8 @@ fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildDa
 
 fn construct_enhance_perk_mapping(formula_file: &mut File, cached: &mut CachedBuildData) {
     let ping = reqwest::blocking::get("https://www.bungie.net");
-    let has_internet = if ping.is_ok() {
-        ping.unwrap().status() == reqwest::StatusCode::OK
+    let has_internet = if let Ok(ping) = ping {
+        ping.status().is_success()
     } else {
         false
     };
@@ -746,7 +744,6 @@ const fn default_pve() -> f64 {
 #[derive(Clone, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct WeaponIntrinsic {
-    name: String,
     cat: String,
     sub_fam: String,
     mag_prof: String,
