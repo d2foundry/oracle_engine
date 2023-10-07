@@ -1,12 +1,11 @@
 #![allow(clippy::all)]
-use ordered_float::{FloatIsNan, NotNan, ParseNotNanError};
+use fnv::FnvHasher;
+use ordered_float::NotNan;
 use phf::{phf_map, Map as PhfMap};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::btree_map::Entry::Vacant;
-use std::collections::hash_map::DefaultHasher;
 use std::collections::{BTreeMap, HashMap};
-use std::default;
 use std::fmt::Debug;
 use std::fs::File;
 use std::hash::{Hash, Hasher};
@@ -63,15 +62,10 @@ const INTRINSIC_MAP: PhfMap<u32, &'static [&'static str]> = phf_map! {
 };
 
 fn calculate_hash<T: Hash>(t: &T) -> u64 {
-    let mut s = DefaultHasher::new();
+    let mut s = FnvHasher::default();
     t.hash(&mut s);
     s.finish()
 }
-
-fn f64_hashable(t: f64) -> NotNan<f64> {
-    NotNan::new(t).unwrap()
-}
-
 trait PartialHash {
     fn partial_hash<H: Hasher>(self, state: &mut H);
 }
@@ -87,7 +81,7 @@ struct CachedBuildData {
     dim_perk_mappings: Vec<(u32, u32)>,
     procedural_intrinsic_mappings: Vec<(u32, u32)>,
     //use ordered hash map
-    perk_hash_timestamps: BTreeMap<u64, u64>,
+    perk_timestamps: BTreeMap<u64, u64>,
 }
 
 impl CachedBuildData {
@@ -95,7 +89,7 @@ impl CachedBuildData {
         !self.last_manifest_version.is_empty()
             && !self.dim_perk_mappings.is_empty()
             && !self.procedural_intrinsic_mappings.is_empty()
-            && !self.perk_hash_timestamps.is_empty()
+            && !self.perk_timestamps.is_empty()
     }
 
     fn sort(&mut self) {
@@ -103,7 +97,7 @@ impl CachedBuildData {
         self.procedural_intrinsic_mappings.sort();
     }
 
-    fn get_timestamp(&mut self, formula: &(impl Hash)) -> u64 {
+    fn get_timestamp(&mut self, formula: &impl Hash) -> u64 {
         // get current unix time
         let now = std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)
@@ -111,11 +105,13 @@ impl CachedBuildData {
             .as_secs();
         let hash = calculate_hash(&formula);
 
-        if let Vacant(e) = self.perk_hash_timestamps.entry(hash) {
+        if let Vacant(e) = self.perk_timestamps.entry(hash) {
             e.insert(now);
+            self.perk_timestamps.insert(hash, now);
             now
         } else {
-            *self.perk_hash_timestamps.get(&hash).unwrap()
+            let time_stamp = *self.perk_timestamps.get(&hash).unwrap();
+            time_stamp
         }
     }
 }

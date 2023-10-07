@@ -760,6 +760,7 @@ version = "1.0.2"
 dependencies = [
  "built",
  "console_error_panic_hook",
+ "fnv",
  "lol_alloc",
  "num-traits",
  "num_enum",
