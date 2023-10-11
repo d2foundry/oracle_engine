@@ -127,13 +127,23 @@ pub fn exotic_perks() {
         }),
     );
 
+    add_sbr(
+        Perks::HuntersTrace,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut out = HashMap::new();
+            if _input.value > 0 {
+                out.insert(StatHashes::ZOOM.into(), 32);
+            }
+            out
+        }),
+    );
+
     add_dmr(
         //Revision Zero alt fire
         Perks::HuntersTrace,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             if _input.value > 0 {
                 let base_dmg = if _input.pvp { 158.20 } else { 306.0 };
-                let c_scale = 1.38;
                 if _input.calc_data.perk_value_map.contains_key(&2206869417) {
                     let mri_input = ModifierResponseInput {
                         calc_data: _input.calc_data,
@@ -156,13 +166,13 @@ pub fn exotic_perks() {
                         impact_dmg_scale: base_dmg
                             / (heavy_dmr.impact_dmg_scale
                                 * _input.calc_data.curr_firing_data.damage),
-                        crit_scale: 1.38,
+                        crit_scale: 3.0,
                         ..Default::default()
                     }
                 } else {
                     DamageModifierResponse {
                         impact_dmg_scale: base_dmg / _input.calc_data.curr_firing_data.damage,
-                        crit_scale: c_scale,
+                        crit_scale: 3.0,
                         ..Default::default()
                     }
                 }
