@@ -1,5 +1,5 @@
 //This also includes intrinsic perks, not just exotic
-use std::collections::HashMap;
+use std::{collections::HashMap, default};
 
 use serde::__private::de;
 
@@ -13,7 +13,7 @@ use super::{
         HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
         RangeModifierResponse, RefundResponse, ReloadModifierResponse, ReloadOverrideResponse,
     },
-    ModifierResponseInput, Perks,
+    ModifierResponseInput, Perk, Perks, PERK_FUNC_MAP,
 };
 
 pub fn exotic_perks() {
@@ -127,15 +127,47 @@ pub fn exotic_perks() {
         }),
     );
 
-    add_dmr( //Revision Zero alt fire
+    add_dmr(
+        //Revision Zero alt fire
         Perks::HuntersTrace,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let buff = if _input.pvp { 158.2 } else { 306.0 };
-            DamageModifierResponse {
-                impact_dmg_scale: buff,
-                explosive_dmg_scale: buff,
-                crit_scale: 3.0,
-                ..Default::default()
+            if _input.value > 0 {
+                let base_dmg = if _input.pvp { 158.20 } else { 306.0 };
+                let c_scale = 1.38;
+                if _input.calc_data.perk_value_map.contains_key(&2206869417) {
+                    let mri_input = ModifierResponseInput {
+                        calc_data: _input.calc_data,
+                        value: _input.value,
+                        is_enhanced: _input.is_enhanced,
+                        pvp: _input.pvp,
+                        cached_data: _input.cached_data,
+                    };
+
+                    //accesses the perk hashmap, and gets the dmr for the hakke heavy burst
+                    let heavy_dmr = PERK_FUNC_MAP.with(|test| {
+                        test.borrow()
+                            .dmr
+                            .get(&Perks::HakkeHeavyBurst)
+                            .as_ref()
+                            .unwrap()(mri_input)
+                    });
+
+                    DamageModifierResponse {
+                        impact_dmg_scale: base_dmg
+                            / (heavy_dmr.impact_dmg_scale
+                                * _input.calc_data.curr_firing_data.damage),
+                        crit_scale: 1.38,
+                        ..Default::default()
+                    }
+                } else {
+                    DamageModifierResponse {
+                        impact_dmg_scale: base_dmg / _input.calc_data.curr_firing_data.damage,
+                        crit_scale: c_scale,
+                        ..Default::default()
+                    }
+                }
+            } else {
+                DamageModifierResponse::default()
             }
         }),
     );
@@ -143,11 +175,20 @@ pub fn exotic_perks() {
     //TODO
     //RPM change for revision zero alt fire
 
-    add_dmr( // symmetry alt fire
+    add_dmr(
+        // symmetry alt fire
         Perks::DynamicCharge,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let stacks = if _input.calc_data.perk_value_map.contains_key(&4218954970) { clamp(_input.value, 0, 20)} else { clamp(_input.value, 0, 15)};
-            let buff = if _input.pvp { 0.0 } else { 1.0 + (0.3 * stacks as f64)};
+            let stacks = if _input.calc_data.perk_value_map.contains_key(&4218954970) {
+                clamp(_input.value, 0, 20)
+            } else {
+                clamp(_input.value, 0, 15)
+            };
+            let buff = if _input.pvp {
+                1.0
+            } else {
+                1.0 + (0.3 * stacks as f64)
+            };
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
