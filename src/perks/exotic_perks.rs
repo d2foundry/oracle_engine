@@ -199,24 +199,26 @@ pub fn exotic_perks() {
         // symmetry alt fire
         Perks::DynamicCharge,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let base_alt_dmg = if _input.pvp { 0.0 } else { 46.5 };
             let stacks = if _input.calc_data.perk_value_map.contains_key(&4218954970) {
                 clamp(_input.value, 0, 20)
             } else {
                 clamp(_input.value, 0, 15)
             };
             let buff = if _input.pvp {
-                1.0
+                (base_alt_dmg / _input.calc_data.curr_firing_data.damage) + (0.0 * (stacks as f64))
             } else {
-                1.0 + (0.3 * stacks as f64)
+                (base_alt_dmg / _input.calc_data.curr_firing_data.damage) + (0.3 * stacks as f64)
             };
+
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
-                crit_scale: 1.0,
                 ..Default::default()
             }
-        }),
+        })
     );
+
 
     add_dmr(
         Perks::MementoMori,
