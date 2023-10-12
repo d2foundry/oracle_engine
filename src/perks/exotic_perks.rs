@@ -142,43 +142,52 @@ pub fn exotic_perks() {
         //Revision Zero alt fire
         Perks::HuntersTrace,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value > 0 {
-                let base_dmg = if _input.pvp { 158.20 } else { 306.0 };
-                if _input.calc_data.perk_value_map.contains_key(&2206869417) {
-                    let mri_input = ModifierResponseInput {
-                        calc_data: _input.calc_data,
-                        value: _input.value,
-                        is_enhanced: _input.is_enhanced,
-                        pvp: _input.pvp,
-                        cached_data: _input.cached_data,
-                    };
 
-                    //accesses the perk hashmap, and gets the dmr for the hakke heavy burst
-                    let heavy_dmr = PERK_FUNC_MAP.with(|test| {
-                        test.borrow()
-                            .dmr
-                            .get(&Perks::HakkeHeavyBurst)
-                            .as_ref()
-                            .unwrap()(mri_input)
-                    });
+            //checks if alt fire is toggled
+            if _input.value == 0 {
+                DamageModifierResponse::default();
+            }
 
-                    DamageModifierResponse {
-                        impact_dmg_scale: base_dmg
-                            / (heavy_dmr.impact_dmg_scale
-                                * _input.calc_data.curr_firing_data.damage),
-                        crit_scale: 3.0
-                            / (heavy_dmr.crit_scale * _input.calc_data.curr_firing_data.crit_mult),
-                        ..Default::default()
-                    }
-                } else {
-                    DamageModifierResponse {
-                        impact_dmg_scale: base_dmg / _input.calc_data.curr_firing_data.damage,
-                        crit_scale: 3.0 / (_input.calc_data.curr_firing_data.crit_mult),
-                        ..Default::default()
-                    }
+            //target crit modifier
+            const TARGET_CRIT:f64 = 3.0;
+            //base bodyshot damage for the alt fire
+            let alt_dmg = if _input.pvp { 158.20 } else { 306.0 };
+
+            //checks if hakke heavy burst is selected
+            if !_input.calc_data.perk_value_map.contains_key(&2206869417) {
+                //alt fire DMR for no selection or hakke light burst selected
+                return DamageModifierResponse {
+                    impact_dmg_scale: alt_dmg / _input.calc_data.curr_firing_data.damage,
+                    crit_scale: TARGET_CRIT / (_input.calc_data.curr_firing_data.crit_mult),
+                    ..Default::default()
                 }
-            } else {
-                DamageModifierResponse::default()
+            }
+
+            //copy the calc input to use as an input for accessing the heavy burst DMR from the map
+            let mri_input = ModifierResponseInput {
+                calc_data: _input.calc_data,
+                value: _input.value,
+                is_enhanced: _input.is_enhanced,
+                pvp: _input.pvp,
+                cached_data: _input.cached_data,
+            };
+
+            //accesses the perk hashmap, and gets the dmr for the hakke heavy burst
+            let heavy_dmr = PERK_FUNC_MAP.with(|test| {
+                test.borrow()
+                .dmr
+                .get(&Perks::HakkeHeavyBurst)
+                .unwrap()(mri_input)
+            });
+
+            //alt fire DMR with hakke hheavy burst equipped
+            DamageModifierResponse {
+               impact_dmg_scale: alt_dmg
+                    / (heavy_dmr.impact_dmg_scale
+                    * _input.calc_data.curr_firing_data.damage),
+                crit_scale: TARGET_CRIT
+                    / (heavy_dmr.crit_scale * _input.calc_data.curr_firing_data.crit_mult),
+                ..Default::default()
             }
         }),
     );
