@@ -746,6 +746,18 @@ pub fn exotic_perks() {
     );
 
     add_dmr(
+        Perks::ChargedWithBlight,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            DamageModifierResponse {
+                impact_dmg_scale: 1.5,
+                explosive_dmg_scale: 1.5,
+                crit_scale: 1.0,
+            }
+        }),
+    );
+
+
+    add_dmr(
         Perks::MarkovChain,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let val = clamp(_input.value, 0, 5);
