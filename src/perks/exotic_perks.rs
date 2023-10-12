@@ -748,9 +748,13 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::ChargedWithBlight,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let mut damage_mult = 1.0;
+            if _input.value == 10{
+                damage_mult = 1.5
+            }
             DamageModifierResponse {
-                impact_dmg_scale: 1.5,
-                explosive_dmg_scale: 1.5,
+                impact_dmg_scale: damage_mult,
+                explosive_dmg_scale: damage_mult,
                 crit_scale: 1.0,
             }
         }),

@@ -291,7 +291,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::SwordLogic => Some(PerkOptionData::stacking(4)),
 
         //exotics
-        Perks::ChargedWithBlight => Some(PerkOptionData::toggle()),
+        Perks::ChargedWithBlight => Some(PerkOptionData::stacking(10)),
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
         Perks::DarkForgedTrigger => Some(PerkOptionData::options_raw(["Hip-Fire", "ADS"].to_vec())),
         Perks::AgersCall => Some(PerkOptionData::static_()),
