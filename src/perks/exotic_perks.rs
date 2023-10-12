@@ -166,13 +166,14 @@ pub fn exotic_perks() {
                         impact_dmg_scale: base_dmg
                             / (heavy_dmr.impact_dmg_scale
                                 * _input.calc_data.curr_firing_data.damage),
-                        crit_scale: 3.0,
+                        crit_scale: 3.0
+                            / (heavy_dmr.crit_scale * _input.calc_data.curr_firing_data.crit_mult),
                         ..Default::default()
                     }
                 } else {
                     DamageModifierResponse {
                         impact_dmg_scale: base_dmg / _input.calc_data.curr_firing_data.damage,
-                        crit_scale: 3.0,
+                        crit_scale: 3.0 / (_input.calc_data.curr_firing_data.crit_mult),
                         ..Default::default()
                     }
                 }
