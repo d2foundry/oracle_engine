@@ -687,4 +687,18 @@ pub fn year_4_perks() {
             }
         }),
     );
+
+    add_sbr(
+        Perks::DuelistsTrance,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut out = HashMap::new();
+            if _input.value == 1 {
+                out.insert(StatHashes::GUARD_EFFICIENCY.into(), 60);
+                out.insert(StatHashes::GUARD_RESISTANCE.into(), 60);
+                out.insert(StatHashes::GUARD_ENDURANCE.into(), 60);
+                out.insert(StatHashes::CHARGE_RATE.into(), 60);
+            }
+            out
+        }),
+    );
 }

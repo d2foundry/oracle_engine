@@ -240,6 +240,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Harmony => Some(PerkOptionData::toggle()),
         Perks::PerpetualMotion => Some(PerkOptionData::stacking(2)),
         Perks::Adagio => Some(PerkOptionData::toggle()),
+        Perks::DuelistsTrance => Some(PerkOptionData::toggle()),
 
         //season 16 | year 5
         Perks::BaitAndSwitch => Some(PerkOptionData::toggle()),
