@@ -251,6 +251,7 @@ pub enum Perks {
     FeedingFrenzy = 2779035018,
     #[num_enum(alternatives = [1266037486, ])] //R0
     FourthTimesTheCharm = 1354429876,
+    #[num_enum(alternatives = [1557274655, ])] //touch of malice cat
     RapidHit = 247725512,
 
     //season 5 | year 2
