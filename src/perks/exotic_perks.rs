@@ -116,17 +116,6 @@ pub fn exotic_perks() {
         ),
     );
 
-    add_rmr(
-        Perks::HuntersTrace,
-        Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
-            let range_ads_scale = if _input.value > 0 { 4.5 / 1.7 } else { 1.0 };
-            RangeModifierResponse {
-                range_zoom_scale: range_ads_scale,
-                ..Default::default()
-            }
-        }),
-    );
-
     add_dmr(
         Perks::MementoMori,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
