@@ -356,6 +356,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::TargetingMod => Some(PerkOptionData::stacking(3)),
         Perks::UnflinchingMod => Some(PerkOptionData::stacking(3)),
         Perks::SurgeMod => Some(PerkOptionData::stacking(3)),
+        Perks::LucentBlades => Some(PerkOptionData::stacking(3)),
         Perks::OnYourMark => Some(PerkOptionData::stacking(3)),
         Perks::Frequency => Some(PerkOptionData::toggle()),
         Perks::Tempering => Some(PerkOptionData::toggle()),

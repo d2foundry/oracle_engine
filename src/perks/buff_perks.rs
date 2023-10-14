@@ -316,6 +316,19 @@ pub fn buff_perks() {
             }
         }),
     );
+    add_sbr(
+        Perks::LucentBlades,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut out = HashMap::new();
+            match _input.value{
+                1 => out.insert(StatHashes::CHARGE_RATE.into(), 30),
+                2 => out.insert(StatHashes::CHARGE_RATE.into(), 50),
+                3 => out.insert(StatHashes::CHARGE_RATE.into(), 60),
+               _ => ()
+            }
+            out
+        }),
+    );
     add_dmr(
         Perks::EternalWarrior,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
