@@ -252,6 +252,7 @@ pub enum Perks {
     #[num_enum(alternatives = [1266037486, ])] //R0
     FourthTimesTheCharm = 1354429876,
     RapidHit = 247725512,
+    MasterOfArms = 3081867624,
 
     //season 5 | year 2
     ResevoirBurst = 1427256713,

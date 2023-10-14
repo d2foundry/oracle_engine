@@ -174,6 +174,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::FeedingFrenzy => Some(PerkOptionData::stacking(5)),
         Perks::FourthTimesTheCharm => Some(PerkOptionData::static_()),
         Perks::RapidHit => Some(PerkOptionData::stacking(5)),
+        Perks::MasterOfArms => Some(PerkOptionData::toggle()),
 
         //season 5 | year 2
         Perks::ResevoirBurst => Some(PerkOptionData::static_()),
