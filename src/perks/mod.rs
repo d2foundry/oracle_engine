@@ -412,7 +412,6 @@ pub enum Perks {
     MementoMori = 647617635,
     AgersScepterCatalyst = 970163821,
     Broadhead = 2287699930,
-    HuntersTrace = 891750160,
     Desperation = 525593296,
 
     //energy exotic
