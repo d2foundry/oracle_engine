@@ -157,6 +157,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::TripleTap => Some(PerkOptionData::static_()),
         Perks::UnderPressure => Some(PerkOptionData::toggle()),
         Perks::PulseMonitor => Some(PerkOptionData::toggle()),
+        Perks::IonicReturn => Some(PerkOptionData::toggle()),
 
         //season 2 | year 1
         //lmao bozo

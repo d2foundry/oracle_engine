@@ -230,6 +230,7 @@ pub enum Perks {
     TripleTap = 3400784728,
     UnderPressure = 1645158859,
     PulseMonitor = 972757866,
+    IonicReturn = 501717180,
 
     //season 2 | year 1
     //lmao bozo
