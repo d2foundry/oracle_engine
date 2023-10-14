@@ -202,6 +202,7 @@ pub enum Perks {
         1528281896, //rose
         3124871000, //redrix
         1266037487, //R0
+        1931066670, //necrochasm
     ])]
     Outlaw = 1168162263,
     BackupPlan = 1600092898,
