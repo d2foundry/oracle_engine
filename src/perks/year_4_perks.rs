@@ -691,13 +691,12 @@ pub fn year_4_perks() {
     add_dmr(
         Perks::MasterOfArms,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut damage_mult = 1.0;
-            if _input.value == 1{
-                damage_mult = 1.21
+            if _input.value == 0{
+                return DamageModifierResponse::default()
             }
             DamageModifierResponse {
-                impact_dmg_scale: damage_mult,
-                explosive_dmg_scale: damage_mult,
+                impact_dmg_scale: 1.21,
+                explosive_dmg_scale: 1.21,
                 ..Default::default()
             }
         }),
