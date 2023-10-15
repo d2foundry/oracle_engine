@@ -319,15 +319,16 @@ pub fn buff_perks() {
     add_sbr(
         Perks::LucentBlades,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
-            let mut out = HashMap::new();
-            if _input.value == 1 {
-                out.insert(StatHashes::CHARGE_RATE.into(), 30);
-            } else if _input.value == 2 {
-                out.insert(StatHashes::CHARGE_RATE.into(), 50);
-            } else if _input.value == 3 {
-                out.insert(StatHashes::CHARGE_RATE.into(), 60);
+            if _input.calc_data.weapon_type != &WeaponType::SWORD {
+                return HashMap::new()
             }
-            out
+            let stat_bump = match _input.value {
+                0 => return HashMap::default(),
+                1 => 30,
+                2 => 50,
+                3.. => 60,
+            };
+            HashMap::from([(StatHashes::CHARGE_RATE.into(), stat_bump)])
         }),
     );
     add_dmr(
