@@ -852,25 +852,19 @@ pub fn year_1_perks() {
         }),
     );
 
-    add_rr(
-        Perks::IonicReturn,
-        Box::new(|_input: ModifierResponseInput| -> RefundResponse {
-            RefundResponse {
-                refund_mag: 1,
-                refund_reserves: 0,
-                crit: false,
-                requirement: 1,
-            }
-        }),
-    );
-
     add_dmr(
         Perks::IonicReturn,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            //source: harm and jen
+            const CRIT_ADD: f64 = 33.0 / 51.0;
+
+            let current_crit_mult = _input.calc_data.curr_firing_data.crit_mult;
+            let crit_scale = (current_crit_mult + CRIT_ADD) / current_crit_mult;
+
             DamageModifierResponse {
-                impact_dmg_scale: 1.4,
-                explosive_dmg_scale: 1.4,
-                crit_scale: 1.4,
+                impact_dmg_scale: 1.15,
+                explosive_dmg_scale: 1.15,
+                crit_scale,
             }
         }),
     );
