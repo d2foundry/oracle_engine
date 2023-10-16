@@ -388,6 +388,7 @@ pub enum Perks {
 
     //kinetic exotic
     CranialSpike = 1319823571,
+    #[num_enum(alternatives = [499501121, ])] //s22 variant
     DarkForgedTrigger = 1301843770,
     AgersCall = 3164944314,
     RatPack = 2121086290,

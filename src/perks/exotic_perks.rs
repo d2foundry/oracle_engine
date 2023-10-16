@@ -920,25 +920,24 @@ pub fn exotic_perks() {
         Perks::DarkForgedTrigger,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
             if _input.value == 0 {
-                if _input
-                    .calc_data
-                    .perk_value_map
-                    .get(&1319823571)
-                    .unwrap_or(&0)
-                    > &4
-                {
-                    FiringModifierResponse {
-                        burst_delay_add: -5.0 / 30.0,
-                        ..Default::default()
-                    }
-                } else {
-                    FiringModifierResponse {
-                        burst_delay_add: -1.0 / 30.0,
-                        ..Default::default()
-                    }
+                return FiringModifierResponse::default();
+            }
+            if _input
+                .calc_data
+                .perk_value_map
+                .get(&1319823571)
+                .unwrap_or(&0)
+                > &4
+            {
+                FiringModifierResponse {
+                    burst_delay_add: -5.0 / 30.0,
+                    ..Default::default()
                 }
             } else {
-                FiringModifierResponse::default()
+                FiringModifierResponse {
+                    burst_delay_add: -1.0 / 30.0,
+                    ..Default::default()
+                }
             }
         }),
     );
