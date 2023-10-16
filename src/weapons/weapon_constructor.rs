@@ -12,17 +12,11 @@ use crate::{
 
 use super::{FiringData, Weapon};
 
-fn get_data_pointers(_weapon_type_id: u8, _intrinsic_hash: u32) -> Result<DataPointers, String> {
+fn get_data_pointers(_weapon_type_id: u8, _intrinsic_hash: u32) -> Option<DataPointers> {
     let pointer_map: HashMap<WeaponPath, DataPointers> = HashMap::from(database::DATA_POINTERS);
-    let pointer_result = pointer_map.get(&WeaponPath(_weapon_type_id as u32, _intrinsic_hash));
-    if pointer_result.is_none() {
-        return Err(format!(
-            "No data pointers found for intrinsic hash: {}",
-            _intrinsic_hash
-        ));
-    }
-    let pointer = pointer_result.unwrap();
-    Ok(pointer.clone())
+    let pointer = pointer_map.get(&WeaponPath(_weapon_type_id as u32, _intrinsic_hash));
+
+    pointer.cloned()
 }
 
 impl Weapon {
@@ -32,7 +26,7 @@ impl Weapon {
         _intrinsic_hash: u32,
         _ammo_type_id: u32,
         _damage_type_id: u32,
-    ) -> Result<Weapon, String> {
+    ) -> Option<Weapon> {
         let data_pointer_result = get_data_pointers(_weapon_type_id, _intrinsic_hash);
 
         let data_pointer = data_pointer_result?;
@@ -53,7 +47,7 @@ impl Weapon {
         let ammo_type = AmmoType::from(_ammo_type_id);
         let damage_type = DamageType::from(_damage_type_id);
         let intrinsic_alias = enhanced_check(_intrinsic_hash).0;
-        Ok(Weapon {
+        Some(Weapon {
             intrinsic_hash: intrinsic_alias,
             hash: _hash,
             perks: HashMap::from([

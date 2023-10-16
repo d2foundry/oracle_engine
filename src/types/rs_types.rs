@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{enemies::EnemyType, perks::clamp};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub struct DataPointers {
     pub h: usize,
     pub r: usize,
