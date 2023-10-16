@@ -195,6 +195,7 @@ pub enum Perks {
     SearchParty = 2250679103,
     FieldTested = 2120661319,
     HarmonicResonance = 3186078099,
+    NobleDeeds = 1823011807,
 
     //season 1 | year 1
     KillClip = 1015611457,

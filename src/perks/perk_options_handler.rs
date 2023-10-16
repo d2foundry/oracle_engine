@@ -130,6 +130,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::SearchParty => Some(PerkOptionData::toggle()),
         Perks::HarmonicResonance => Some(PerkOptionData::stacking(2)),
         Perks::FieldTested => Some(PerkOptionData::stacking(5)),
+        Perks::NobleDeeds => Some(PerkOptionData::toggle()),
 
         //season 1 | year 1
         Perks::KillClip => Some(PerkOptionData::toggle()),
