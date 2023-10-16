@@ -323,7 +323,7 @@ pub fn buff_perks() {
                 return HashMap::new()
             }
             let stat_bump = match _input.value {
-                0 => return HashMap::default(),
+                0 => return HashMap::new(),
                 1 => 30,
                 2 => 50,
                 3.. => 60,
