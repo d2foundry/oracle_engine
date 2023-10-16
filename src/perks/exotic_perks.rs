@@ -1,5 +1,5 @@
 //This also includes intrinsic perks, not just exotic
-use std::{collections::HashMap, default};
+use std::collections::HashMap;
 
 use serde::__private::de;
 
