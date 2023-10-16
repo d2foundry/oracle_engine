@@ -292,7 +292,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
-        Perks::DarkForgedTrigger => Some(PerkOptionData::options_raw(["Hip-Fire", "ADS"].to_vec())),
+        Perks::DarkForgedTrigger => Some(PerkOptionData::toggle()),
         Perks::AgersCall => Some(PerkOptionData::static_()),
         Perks::LagragianSight => Some(PerkOptionData::toggle()),
         Perks::StringofCurses => Some(PerkOptionData::stacking(5)),
