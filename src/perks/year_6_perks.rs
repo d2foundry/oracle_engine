@@ -496,5 +496,43 @@ pub fn year_6_perks() {
                 ..Default::default()
             }
         }),
-    )
+    );
+    add_sbr(
+        Perks::NobleDeeds,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            if _input.value == 0 {
+                return HashMap::new();
+            }
+            HashMap::from([
+                (StatHashes::HANDLING.into(), 30),
+                (StatHashes::RELOAD.into(), 30),
+            ])
+        }),
+    );
+    add_rsmr(
+        Perks::NobleDeeds,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
+            ReloadModifierResponse {
+                reload_stat_add: 30,
+                ..Default::default()
+            }
+        }),
+    );
+    add_hmr(
+        Perks::NobleDeeds,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
+                HandlingModifierResponse {
+                    stat_add: 30,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
 }
