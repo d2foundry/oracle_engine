@@ -29,22 +29,22 @@ use std::io::Write;
 };*/
 
 const NAME_TO_ID: PhfMap<&'static str, i32> = phf_map! {
-    "Auto Rifle" => 6i32,
-    "Combat Bow"=> 31i32,
+    "Auto Rifle" =>        6i32,
+    "Combat Bow"=>         31i32,
     "Fusion Rifle"=>       11i32,
     "Grenade Launcher" =>  23i32,
-    "Hand Cannon" =>       9i32  ,
-    "Linear Fusion Rifle"=>22i32  ,
-    "Machine Gun"=>        8i32  ,
-    "Pulse Rifle"=>        13i32  ,
-    "Rocket Launcher"=>    10i32  ,
-    "Scout Rifle"=>        14i32  ,
-    "Shotgun"=>            7i32  ,
-    "Sniper Rifle"=>       12i32  ,
-    "Submachine Gun" =>    24i32    ,
-    "Glaive"=>             33i32 ,
-    "Trace Rifle"=>        25i32     ,
-    "Sidearm"=>            17i32   ,
+    "Hand Cannon" =>       9i32,
+    "Linear Fusion Rifle"=>22i32,
+    "Machine Gun"=>        8i32,
+    "Pulse Rifle"=>        13i32,
+    "Rocket Launcher"=>    10i32,
+    "Scout Rifle"=>        14i32,
+    "Shotgun"=>            7i32,
+    "Sniper Rifle"=>       12i32,
+    "Submachine Gun" =>    24i32,
+    "Glaive"=>             33i32,
+    "Trace Rifle"=>        25i32,
+    "Sidearm"=>            17i32,
 };
 
 const INTRINSIC_MAP: PhfMap<u32, &'static [&'static str]> = phf_map! {
@@ -78,7 +78,7 @@ struct CachedBuildData {
     last_manifest_version: String,
     dim_perk_mappings: Vec<(u32, u32)>,
     procedural_intrinsic_mappings: Vec<(u32, u32)>,
-    //use ordered hash map
+
     perk_timestamps: BTreeMap<u64, u64>,
     #[serde(skip_serializing, default)]
     current_timestamps: HashSet<u64>,
@@ -173,7 +173,6 @@ fn main() {
 
     let build_cache_path = std::path::Path::new("./build_resources/cached_build.ron");
     let mut cached_data: CachedBuildData;
-    //if "./build_resources/cached_build.ron" exists
     if !build_cache_path.exists() {
         println!("cargo:warning=no cached build file found");
         cached_data = CachedBuildData::default();
@@ -201,7 +200,6 @@ fn main() {
 
     cached_data.clean_timestamps();
     cached_data.sort();
-    //check if being run by rust-analyzer
     let is_rust_analyzer = std::env::var("IS_RA");
     if is_rust_analyzer.is_ok() && is_rust_analyzer.unwrap() == "true" {
         println!("cargo:warning=running in rust-analyzer");
@@ -213,7 +211,6 @@ fn main() {
         println!("cargo:warning=error writing cached build file");
     } else {
         let mut file = file_res.unwrap();
-        // let serializer = ron::ser::Serializer::new(file, None);
         let res = ron::ser::to_string_pretty(&cached_data, ron::ser::PrettyConfig::default());
         if res.is_err() {
             panic!("cargo:warning=error initializing ron serializer");
@@ -230,13 +227,11 @@ fn main() {
 //fn set_data(val: Value, weapon_def: Value, weapon_hash: u32, weapon_id: String) {]
 
 fn construct_weapon_formulas(formula_file: &mut File, cached: &mut CachedBuildData) {
-    //get current directory
     let jdata_path = std::path::Path::new(&std::env::var("CARGO_MANIFEST_DIR").unwrap())
         .join("build_resources/weapon_formulas.json");
 
     let jdata: WeaponFormulaJson =
         serde_json::from_str(&std::fs::read_to_string(jdata_path).unwrap()).unwrap();
-    // remove "COMMENTS" from jdata
 
     let mut handling_data: Vec<HandlingFormula> = Vec::new();
     let mut range_data: Vec<RangeFormula> = Vec::new();
