@@ -111,6 +111,7 @@ pub enum Perks {
     LoaderMod = 1004,
     UnflinchingMod = 1005,
     SurgeMod = 1006,
+    LucentBlades = 531057500,
     DragonShadow = 593361144,
     OphidianAspect = 1147638875,
     LunaFaction = 3347978672,

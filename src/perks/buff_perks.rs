@@ -316,6 +316,21 @@ pub fn buff_perks() {
             }
         }),
     );
+    add_sbr(
+        Perks::LucentBlades,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            if _input.calc_data.weapon_type != &WeaponType::SWORD {
+                return HashMap::new()
+            }
+            let stat_bump = match _input.value {
+                0 => return HashMap::new(),
+                1 => 30,
+                2 => 50,
+                3.. => 60,
+            };
+            HashMap::from([(StatHashes::CHARGE_RATE.into(), stat_bump)])
+        }),
+    );
     add_dmr(
         Perks::EternalWarrior,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
