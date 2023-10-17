@@ -367,13 +367,68 @@ impl Weapon {
     }
 }
 
+type ExplosiveDamage = f64;
+type ImpactDamage = f64;
+type CritMultiplier = f64;
+type DamageDelay = f64;
+#[derive(Debug)]
+enum GrenadeLauncherDamageErr {
+    NotGrenadeLauncher,
+    BlastRadiusMissing,
+    NotImplemented,
+}
+
 impl Weapon {
-    pub fn get_damage_profile(&self) -> (f64, f64, f64, f64) {
+    fn get_grenade_launcher_damage(
+        &self,
+    ) -> Result<(ImpactDamage, ExplosiveDamage), GrenadeLauncherDamageErr> {
+        if self.weapon_type != WeaponType::GRENADELAUNCHER {
+            return Err(GrenadeLauncherDamageErr::NotGrenadeLauncher);
+        }
+        let blast_radius = self
+            .stats
+            .get(&StatHashes::BLAST_RADIUS.into())
+            .ok_or(GrenadeLauncherDamageErr::BlastRadiusMissing)?
+            .perk_val()
+            .clamp(0, 100);
+
+        const RAPID_FRAME: u32 = 902;
+        const ADAPTIVE_FRAME: u32 = 903;
+        const LW_FRAME: u32 = 905;
+        const DOUBLE_FIRE: u32 = 907;
+        const WAVE_FRAME: u32 = 908;
+
+        let (impact_m, impact_b, explosion_m, explosion_b) =
+            match (self.intrinsic_hash, blast_radius) {
+                (RAPID_FRAME, 0..=9) => (-0.4030011045, 68.48685607, 0.3999973161, 156.0004464),
+                (RAPID_FRAME, 10..=100) => (-1.615571887, 80.60595314, 4.000030486, 120.0001854),
+                (ADAPTIVE_FRAME, 0..=9) => (-1.2613, 100.7461331, 2.749664189, 150.0067162),
+                (ADAPTIVE_FRAME, 10..=100) => (-0.5032, 85.58849794, 0.5000, 195.000131),
+                (LW_FRAME, 0..=100) => (-0.6036133049, 100.6574848823, 0.6000, 100.0001838),
+                (DOUBLE_FIRE, 0..=100) => (-0.35029693, 58.59289171, 0.31799723, 53.00051995),
+                (WAVE_FRAME|2733244971, 0..=100) => (-0.590953431, 99.132, 0.0, 130.00025),
+                _ => return Err(GrenadeLauncherDamageErr::NotImplemented),
+            };
+
+        let impact_damge = impact_m * blast_radius as f64 + impact_b;
+        let explosive_damage = explosion_m * blast_radius as f64 + explosion_b;
+        Ok((impact_damge, explosive_damage))
+    }
+}
+
+impl Weapon {
+    pub fn get_damage_profile(
+        &self,
+    ) -> (ImpactDamage, ExplosiveDamage, CritMultiplier, DamageDelay) {
         let impact;
         let mut explosion = 0.0_f64;
         let mut crit = 1.0_f64;
         let delay;
 
+        if self.weapon_type == WeaponType::GRENADELAUNCHER {
+            let (impact_damage, explosive_damage) = self.get_grenade_launcher_damage().unwrap();
+            return (impact_damage, explosive_damage,1.0,0.0);
+        }
         let epr = get_explosion_data(self.list_perks(), &self.static_calc_input(), false);
         if epr.percent <= 0.0 {
             impact = self.firing_data.damage;
