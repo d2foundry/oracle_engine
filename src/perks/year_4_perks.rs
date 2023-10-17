@@ -632,7 +632,7 @@ pub fn year_4_perks() {
     add_dmr(
         Perks::KickStart,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut damage_mult = if _input.value > 0 { 0.20 } else { 0.0 };
+            let mut damage_mult = if _input.value > 0 { 0.15 } else { 0.0 };
             let duration = 1.0;
             if _input.calc_data.time_total > duration {
                 damage_mult = 0.0;
