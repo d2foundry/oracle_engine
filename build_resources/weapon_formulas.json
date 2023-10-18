@@ -51,7 +51,7 @@
         "subFam": {
             "Rapid-Fire":  {"damage": 13.41, "crit_mult": 0,  "burst_delay": 2.5, "burst_size": 1, "inner_burst_delay": 0},
             "High-Impact": {"damage": 22.00, "crit_mult": 5,  "burst_delay": 5,   "burst_size": 1, "inner_burst_delay": 0},
-            "Adaptive":    {"damage": 15.0, "crit_mult": 2.7,  "burst_delay": 3,   "burst_size": 1, "inner_burst_delay": 0},
+            "Adaptive":    {"damage": 15.009, "crit_mult": 3,  "burst_delay": 3,   "burst_size": 1, "inner_burst_delay": 0},
             "Precision":   {"damage": 20.00, "crit_mult": 3,  "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0},
             "Cerberus":    {"damage": 18.0, "crit_mult": 10, "burst_delay": 5,   "burst_size": 4, "inner_burst_delay": 0},
             "SweetBuiss":  {"damage": 15.0, "crit_mult": -5, "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0}
@@ -127,7 +127,7 @@
             "Hierarchy":   {"damage": 100.74,  "crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "leviathan":   {"damage": 345.6, "crit_mult": 5, "burst_delay": 0,   "burst_size": 1, "inner_burst_delay": 0},
             "Wish-Ender":  {"damage": 71.775, "crit_mult": 15, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
-            "LeMonarque":  {"damage": 85.00, "crit_mult": 5.1, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
+            "LeMonarque":  {"damage": 85.00, "crit_mult": 5, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "test" :       {"damage": 100,   "crit_mult": 2, "burst_delay": 20,   "burst_size": 2, "inner_burst_delay": 0}
         },
         "magProf": {
@@ -902,9 +902,9 @@
             }
         },
         "subFam": {
-            "Rapid-Fire": {"damage":85,  "crit_mult":99.45,  "burst_delay":13, "burst_size":1, "inner_burst_delay":0},
-            "Adaptive":   {"damage":119, "crit_mult":89,  "burst_delay":20, "burst_size":1, "inner_burst_delay":0},
-            "Aggressive": {"damage":135, "crit_mult":102,  "burst_delay":25, "burst_size":1, "inner_burst_delay":0},
+            "Rapid-Fire": {"damage":85.002 ,  "crit_mult":99,  "burst_delay":13, "burst_size":1, "inner_burst_delay":0},
+            "Adaptive":   {"damage":118.999 , "crit_mult":89,  "burst_delay":20, "burst_size":1, "inner_burst_delay":0},
+            "Aggressive": {"damage":135.007, "crit_mult":102,  "burst_delay":25, "burst_size":1, "inner_burst_delay":0},
             "Whisper":    {"damage":170, "crit_mult":153, "burst_delay":25, "burst_size":1, "inner_burst_delay":0}
         },
         "magProf": {
