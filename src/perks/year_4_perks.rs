@@ -632,15 +632,16 @@ pub fn year_4_perks() {
     add_dmr(
         Perks::KickStart,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut damage_mult = if _input.value > 0 { 0.15 } else { 0.0 };
-            let duration = 1.0;
-            if _input.calc_data.time_total > duration {
-                damage_mult = 0.0;
-            };
+            const DURATION: f64 = 1.0;
+            const MULT: f64 = 1.15;
+            if _input.value == 0 || _input.calc_data.time_total > DURATION {
+                return DamageModifierResponse::default();
+            }
+
             DamageModifierResponse {
-                impact_dmg_scale: 1.0 + damage_mult,
-                explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                impact_dmg_scale: MULT,
+                explosive_dmg_scale: MULT,
+                ..Default::default()
             }
         }),
     );
