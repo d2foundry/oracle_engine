@@ -475,11 +475,8 @@ fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f6
         (WeaponType::HANDCANNON, ERIANAS_VOW) => 2.4,
         (WeaponType::HANDCANNON, _) => 1.5,
 
-
-        (WeaponType::AUTORIFLE, 878286503) => 1.6, 
-        (WeaponType::AUTORIFLE, 1294026524) => 1.6,
-        (WeaponType::AUTORIFLE, 1636108362) => 1.6,
-        (WeaponType::AUTORIFLE, _) => 1.7,
+        (WeaponType::AUTORIFLE, 901) => 1.7,
+        (WeaponType::AUTORIFLE, _) => 1.6,
 
         (WeaponType::PULSERIFLE, 2874284214) => 1.8,
         (WeaponType::PULSERIFLE, _) => 1.7,
