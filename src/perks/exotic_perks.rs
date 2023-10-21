@@ -1148,4 +1148,31 @@ pub fn exotic_perks() {
             }
         }),
     );
+    add_fmr(
+        Perks::CorruptedNucleosynthesis,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            let bufflist = vec![0.0, -7.0, -12.0, -16.0, -18.0, -19.0];
+            let bufflist_cat = vec![0.0, -14.0, -15.0];
+            if _input
+                .calc_data
+                .perk_value_map
+                .get(&1826222780)
+                .is_some()
+                &&
+                _input
+                    .calc_data
+                    .perk_value_map
+                    .get(&880704824)
+                    .is_some() {
+                return FiringModifierResponse {
+                    burst_delay_add: bufflist_cat[clamp(_input.value, 0, 2) as usize],
+                    ..Default::default()
+                }
+            }
+            FiringModifierResponse {
+                burst_delay_add: bufflist[clamp(_input.value, 0, 5) as usize],
+                ..Default::default()
+            }
+        }),
+    );
 }

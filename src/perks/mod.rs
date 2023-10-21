@@ -447,6 +447,7 @@ pub enum Perks {
     ColdFusion = 1036269296,
     BlackHole = 3905543891,
     TemporalUnlimiter = 806917387,
+    CorruptedNucleosynthesis = 3183537623,
 
     //heavy exotic
     ReignHavoc = 4148158229,
