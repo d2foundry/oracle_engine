@@ -247,6 +247,7 @@
         "4130495068": {"name": "Precision Frame",   "cat": "heavy",   "subFam": "Precision",    "magProf": "adaptive", "pve":1.20 },
         "1174163613": {"name": "Parasite",          "cat": "parasite","subFam": "Parasite",     "magProf": "adaptive" },
         "1759472859": {"name": "Double Fire",       "cat": "special", "subFam": "TODO",         "magProf": "special" },
+        "3821409356": {"name": "Ex Diris",          "cat": "exdiris", "subFam": "ExDiris",      "magProf": "special"},
         "cat": {
             "special": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
@@ -287,6 +288,16 @@
                     "ads":  {"vpp": -0.00187072, "offset": 0.50019128}
                 },
                 "combatant_scalars": {"vehicle": 2.27, "boss": 2.27, "champion": 2.38, "miniboss": 2.38, "elite": 2.38, "minor": 3.125}
+            },
+            "exdiris": {
+                "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
+                "reload":   {"evpp": 0, "vpp": 0, "offset": 0},
+                "handling": {
+                    "ready":{"vpp": -0.00272791, "offset": 0.55133684},
+                    "stow": {"vpp": -0.00232786, "offset": 0.48726765},
+                    "ads":  {"vpp": -0.00187072, "offset": 0.50019128}
+                },
+                "combatant_scalars": {"vehicle": 2.18, "boss": 2.18, "champion": 2.29, "miniboss": 2.29, "elite": 2.29, "minor": 3.83}
             }
         },
         "subFam": {
@@ -297,6 +308,7 @@
             "Rapid-Fire":   {"damage": 225.0, "crit_mult": -25.5, "burst_delay": 12, "burst_size": 1, "inner_burst_delay": 0.0},
             "Precision":    {"damage": 300.0, "crit_mult": -25.5, "burst_delay": 18, "burst_size": 1, "inner_burst_delay": 0.0},
             "Parasite":     {"damage": 835.0, "crit_mult": -25.5, "burst_delay": 18, "burst_size": 1, "inner_burst_delay": 0.0},
+            "ExDiris":      {"damage": 154.634, "crit_mult": -25.5, "burst_delay": 64, "burst_size": 1, "inner_burst_delay": 0.0},
             "TODO":         {"damage": 0.0,   "crit_mult": -25.5, "burst_delay": 0,  "burst_size": 0, "inner_burst_delay": 0.0}
         },
         "magProf": {
