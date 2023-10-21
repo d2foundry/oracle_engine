@@ -62,6 +62,21 @@ pub fn other_perks() {
         ),
     );
 
+    add_imr(
+        Perks::RapidFireFrame,
+        Box::new(
+            |_input: ModifierResponseInput| -> InventoryModifierResponse {
+                if _input.calc_data.weapon_type != &WeaponType::SHOTGUN {
+                    return InventoryModifierResponse::default();
+                }
+                InventoryModifierResponse {
+                    inv_add: 8,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+
     add_sbr(
         Perks::PrecisionFrame,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
