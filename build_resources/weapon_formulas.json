@@ -545,10 +545,10 @@
         "4208418110": {"name": "Outbreak Perfected",     "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
         "4172222323": {"name": "Legacy PR-55 Frame",     "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
         "3441203855": {"name": "Collective Obligation",  "cat": "default",   "subFam": "Adaptive",      "magProf": "default"},
-        "891750160":  {"name": "Revision Zero IV",       "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
-        "891750167":  {"name": "Revision Zero III",      "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
-        "891750166":  {"name": "Revision Zero II",       "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
-        "3834106778": {"name": "Revision Zero I",        "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
+        "891750160":  {"name": "Revision Zero IV",       "cat": "revisionZero",   "subFam": "Aggressive",    "magProf": "aggressive"},
+        "891750167":  {"name": "Revision Zero III",      "cat": "revisionZero",   "subFam": "Aggressive",    "magProf": "aggressive"},
+        "891750166":  {"name": "Revision Zero II",       "cat": "revisionZero",   "subFam": "Aggressive",    "magProf": "aggressive"},
+        "3834106778": {"name": "Revision Zero I",        "cat": "revisionZero",   "subFam": "Aggressive",    "magProf": "aggressive"},
         "69420":      {"name": "test_weapon",            "cat": "test",      "subFam": "test",          "magProf": "test"},
         "cat": {
             "default": {
@@ -560,6 +560,16 @@
                     "ads":  {"vpp": -0.00196208, "offset": 0.45746870}
                 },
                 "combatant_scalars": {"vehicle": 0.90, "boss": 1.00, "champion": 1.05, "miniboss": 1.05, "elite": 1.4175, "minor": 2.00475}
+            },
+            "revisionZero": {
+                "range":    {"vpp_start": 0.075, "offset_start": 16, "vpp_end": 0.0,"offset_end": 40, "floor_percent": 0.5},
+                "reload":   {"evpp": 0.0000926208, "vpp": -0.0256877, "offset": 2.92627266666667},
+                "handling": {
+                    "ready":{"vpp": -0.00312085, "offset": 0.54370932},
+                    "stow": {"vpp": -0.00355450, "offset": 0.55005845},
+                    "ads":  {"vpp": -0.00196208, "offset": 0.45746870}
+                },
+                "combatant_scalars": {"vehicle": 0.90, "boss": 1.00, "champion": 2.1, "miniboss": 1.05, "elite": 1.4175, "minor": 2.00475}
             },
             "test": {
                 "range": {"vpp_start": 0.1, "offset_start": 10.0, "vpp_end": 0.2, "offset_end": 20.0, "floor_percent": 0.5},
