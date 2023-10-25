@@ -559,7 +559,7 @@
                     "stow": {"vpp": -0.00355450, "offset": 0.55005845},
                     "ads":  {"vpp": -0.00196208, "offset": 0.45746870}
                 },
-                "combatant_scalars": {"vehicle": 0.90, "boss": 1.00, "champion": 1.05, "miniboss": 1.05, "elite": 1.05, "minor": 1.48}
+                "combatant_scalars": {"vehicle": 0.90, "boss": 1.00, "champion": 1.05, "miniboss": 1.05, "elite": 1.18125, "minor": 1.665}
             },
             "test": {
                 "range": {"vpp_start": 0.1, "offset_start": 10.0, "vpp_end": 0.2, "offset_end": 20.0, "floor_percent": 0.5},
