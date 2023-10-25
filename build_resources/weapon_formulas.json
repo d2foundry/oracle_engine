@@ -967,16 +967,16 @@
         }
     },
     "Glaive":{
-        "1900919151": {"name": "Edge Of Action",      "cat": "default", "subFam": "Adaptive",    "magProf": "default"},
-        "3551884421": {"name": "Edge Of Concurrence", "cat": "default", "subFam": "Lightweight", "magProf": "default"},
-        "3024740338": {"name": "Edge Of Intent",      "cat": "default", "subFam": "Aggressive",  "magProf": "default"},
-        "1316753551": {"name": "Adaptive Glaive",     "cat": "default", "subFam": "Adaptive",    "magProf": "default"},
-        "1986105578": {"name": "Aggressive Glaive",   "cat": "default", "subFam": "Aggressive",  "magProf": "default"},
-        "2751656639": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default"},
-        "2898674463": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default"},
-        "2898674462": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default"},
-        "2898674457": {"name": "Vexcaliber",          "cat": "default", "subFam": "Vexcaliber",  "magProf": "default"},
-        "1956005708": {"name": "Rapid-Fire Glaive",   "cat": "default", "subFam": "Lightweight", "magProf": "default"},
+        "1900919151": {"name": "Edge Of Action",      "cat": "default", "subFam": "Adaptive",    "magProf": "default", "pve": 1.25},
+        "3551884421": {"name": "Edge Of Concurrence", "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 1.25},
+        "3024740338": {"name": "Edge Of Intent",      "cat": "default", "subFam": "Aggressive",  "magProf": "default", "pve": 1.25},
+        "1316753551": {"name": "Adaptive Glaive",     "cat": "default", "subFam": "Adaptive",    "magProf": "default", "pve": 1.25},
+        "1986105578": {"name": "Aggressive Glaive",   "cat": "default", "subFam": "Aggressive",  "magProf": "default", "pve": 1.25},
+        "2751656639": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 1.25},
+        "2898674463": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 1.25},
+        "2898674462": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 1.25},
+        "2898674457": {"name": "Vexcaliber",          "cat": "default", "subFam": "Vexcaliber",  "magProf": "default", "pve": 1.25},
+        "1956005708": {"name": "Rapid-Fire Glaive",   "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 1.25},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0546,"offset_start": 15.0,"vpp_end": 0.198,"offset_end": 30.33, "floor_percent": 0.33},
@@ -990,9 +990,9 @@
             }
         },
         "subFam": {
-            "Lightweight": {"damage":105.77, "crit_mult":-25.5, "burst_delay":22.0, "burst_size":1, "inner_burst_delay":0},
-            "Aggressive":  {"damage":146.05, "crit_mult":-25.5, "burst_delay":30.0, "burst_size":1, "inner_burst_delay":0},
-            "Adaptive":    {"damage":130.94, "crit_mult":-25.5, "burst_delay":27.0, "burst_size":1, "inner_burst_delay":0},
+            "Lightweight": {"damage":101.0, "crit_mult":-25.5, "burst_delay":22.0, "burst_size":1, "inner_burst_delay":0},
+            "Aggressive":  {"damage":125.0, "crit_mult":-25.5, "burst_delay":30.0, "burst_size":1, "inner_burst_delay":0},
+            "Adaptive":    {"damage":113.0, "crit_mult":-25.5, "burst_delay":27.0, "burst_size":1, "inner_burst_delay":0},
             "Vexcaliber":  {"damage":28.85,  "crit_mult":-25.5, "burst_delay":22.0, "burst_size":5, "inner_burst_delay":0, "one_ammo":true}
         },
         "magProf": {
