@@ -338,7 +338,7 @@ pub fn year_6_perks() {
     add_dmr(
         Perks::PrecisionInstrument,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let max_percent = if _input.is_enhanced { 0.26 } else { 0.25 };
+            let max_percent = if _input.is_enhanced { 0.30 } else { 0.25 };
             let max_stacks = 6.0;
             let shots_hit = _input.calc_data.total_shots_hit;
 
