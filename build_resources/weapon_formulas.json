@@ -207,7 +207,7 @@
                     "stow": {"vpp": -0.00268436, "offset": 0.48414822},
                     "ads":  {"vpp": -0.001875,   "offset": 0.38975   }
                 },
-                "combatant_scalars": {"vehicle": 2.0, "boss": 2.0, "champion": 2.0, "miniboss": 2.0, "elite": 2.0, "minor": 2.0}
+                "combatant_scalars": {"vehicle": 2.0, "boss": 2.5, "champion": 2.0, "miniboss": 2.0, "elite": 2.0, "minor": 2.2}
             }
         },
         "subFam": {
