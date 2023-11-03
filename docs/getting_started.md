@@ -1,6 +1,6 @@
 # Hello Guardian 
 
-Welcome to the Oracle Engine wiki! This page will cover how to run Oracle Engine locally with a helper node script, go into broad detail on lib.rs, and other common things you need to know about Oracle Engine.
+Welcome to the Oracle Engine wiki! This page will cover how to get any necessary prequisites, run the given sample script, and show how to change the weapon used in the script.
 
 ## Prerequisites 
 
