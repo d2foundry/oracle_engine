@@ -447,6 +447,7 @@ pub enum Perks {
     ColdFusion = 1036269296,
     BlackHole = 3905543891,
     TemporalUnlimiter = 806917387,
+    IonicReturn = 501717180,
 
     //heavy exotic
     ReignHavoc = 4148158229,
