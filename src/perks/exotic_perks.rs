@@ -1155,7 +1155,7 @@ pub fn exotic_perks() {
                 return DamageModifierResponse::default();
             }
             let current_crit = _input.calc_data.curr_firing_data.crit_mult;
-            let crit_scale = (current_crit + (33.0 / 51.0)) / current_crit;
+            let crit_scale = (current_crit + (34.0 / 51.0)) / current_crit;
             DamageModifierResponse {
                 impact_dmg_scale: 1.15,
                 crit_scale,
