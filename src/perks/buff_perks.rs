@@ -437,11 +437,11 @@ pub fn buff_perks() {
         Perks::AeonForce,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let val = _input.value;
-                let mut stats: HashMap<u32, i32> = HashMap::new();
-                stats.insert(StatHashes::RELOAD.into(), 10 * val as i32);
-                stats.insert(StatHashes::HANDLING.into(), 10 * val as i32);
-                stats
+                if _input.value == 0 {
+                    return HashMap::new();
+                }
+                use StatHashes::*;
+                HashMap::from([(RELOAD.into(), 10), (HANDLING.into(), 10)])
             },
         ),
     );
