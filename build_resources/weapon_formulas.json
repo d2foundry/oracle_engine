@@ -9,7 +9,7 @@
         "1484442054": {"name": "Monte Carlo",        "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
         "1636108362": {"name": "Precision Frame",    "cat": "default",  "subFam": "Precision",   "magProf": "small" },
         "3208839961": {"name": "Cerberus+1",         "cat": "Cerberus", "subFam": "Cerberus",    "magProf": "small" },
-        "3610814281": {"name": "Hard Light",         "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
+        "3610814281": {"name": "Hard Light",         "cat": "hard_light","subFam": "Adaptive",    "magProf": "medium" },
         "3755070117": {"name": "Sweet Business",     "cat": "default",  "subFam": "SweetBuiss",  "magProf": "sweet_buiss", "pve":1.16},
         "3602718766": {"name": "Quicksilver Storm",  "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
         "1385166695": {"name": "Centrifuse",         "cat": "default",  "subFam": "Precision",   "magProf": "small"},
