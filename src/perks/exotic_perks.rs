@@ -3,9 +3,7 @@ use std::collections::HashMap;
 
 use serde::__private::de;
 
-use crate::{
-    d2_enums::StatHashes, enemies::EnemyType, types::rs_types::FiringResponse, weapons::Stat,
-};
+use crate::{d2_enums::StatHashes, enemies::EnemyType, weapons::Stat};
 
 use super::{
     add_dmr, add_edr, add_epr, add_fmr, add_hmr, add_mmr, add_rmr, add_rr, add_rsmr, add_sbr,
