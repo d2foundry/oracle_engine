@@ -37,7 +37,7 @@ pub fn exotic_armor() {
                 return DamageModifierResponse::default();
             };
 
-            let damage_mult = if _input.pvp { 1.35 } else { 2.0 };
+            let damage_mult = if _input.pvp { 1.10 } else { 2.0 };
             DamageModifierResponse {
                 explosive_dmg_scale: damage_mult,
                 impact_dmg_scale: damage_mult,
