@@ -3,7 +3,9 @@ use std::collections::HashMap;
 
 use serde::__private::de;
 
-use crate::{d2_enums::StatHashes, enemies::EnemyType, weapons::Stat};
+use crate::{
+    d2_enums::StatHashes, enemies::EnemyType, types::rs_types::FiringResponse, weapons::Stat,
+};
 
 use super::{
     add_dmr, add_edr, add_epr, add_fmr, add_hmr, add_mmr, add_rmr, add_rr, add_rsmr, add_sbr,
@@ -1159,6 +1161,31 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.15,
                 crit_scale,
+                ..Default::default()
+            }
+        }),
+    );
+    add_dmr(
+        Perks::Unrepentant,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 || _input.pvp {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 3.0,
+                ..Default::default()
+            }
+        }),
+    );
+    add_fmr(
+        Perks::Unrepentant,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            let shots_in_super_burst: f64 = 6.0;
+            if _input.calc_data.total_shots_hit >= shots_in_super_burst || _input.value == 0 {
+                return FiringModifierResponse::default();
+            }
+            FiringModifierResponse {
+                burst_size_add: 3.0,
                 ..Default::default()
             }
         }),
