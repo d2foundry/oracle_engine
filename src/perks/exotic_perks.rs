@@ -1054,15 +1054,20 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::TemporalUnlimiter,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let buff = if _input.pvp { 7.545 } else { 14.0 };
-            if _input.value > 0 {
-                return DamageModifierResponse {
-                    impact_dmg_scale: buff,
-                    crit_scale: 1.875,
-                    ..Default::default()
-                };
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
             }
-            DamageModifierResponse::default()
+            let mut buff = if _input.pvp { 7.545 } else { 14.0 };
+            //season 23
+            //https://www.bungie.net/7/en/News/Article/season-23-weapons-preview
+            if *_input.calc_data.enemy_type == EnemyType::CHAMPION {
+                buff *= 2.0;
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                crit_scale: 1.875,
+                ..Default::default()
+            }
         }),
     );
 

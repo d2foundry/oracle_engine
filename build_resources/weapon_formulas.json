@@ -24,7 +24,7 @@
                     "stow": {"vpp": -0.00268436, "offset": 0.48414822},
                     "ads":  {"vpp": -0.001875,   "offset": 0.38975   }
                 },
-                "combatant_scalars": {"vehicle": 1.15, "boss": 1.15, "champion": 1.2, "miniboss": 1.2, "elite": 1.63, "minor": 1.63}
+                "combatant_scalars": {"vehicle": 1.15, "boss": 1.15, "champion": 1.2, "miniboss": 1.2, "elite": 1.63, "minor": 1.79}
             },
             "Cerberus":{
                 "range":    {"vpp_start": 0.0, "offset_start": 0.0, "vpp_end": 0.0, "offset_end": 0.0, "floor_percent": 0.0},
@@ -34,7 +34,7 @@
                     "stow": {"vpp": -0.00268436, "offset": 0.48414822},
                     "ads":  {"vpp": -0.001875,   "offset": 0.38975   }
                 },
-                "combatant_scalars": {"vehicle": 0.86, "boss": 0.86, "champion": 0.90, "miniboss": 0.90, "elite": 1.63, "minor": 2.28}
+                "combatant_scalars": {"vehicle": 0.86, "boss": 0.86, "champion": 0.90, "miniboss": 0.90, "elite": 1.63, "minor": 2.51}
             },
             "hard_light": {
                 "range":    {"vpp_start": 0.125, "offset_start": 10.75, "vpp_end": 0.0, "offset_end": 40.0, "floor_percent": 0.7},
@@ -44,7 +44,7 @@
                     "stow": {"vpp": -0.00268436, "offset": 0.48414822},
                     "ads":  {"vpp": -0.001875,   "offset": 0.38975   }
                 },
-                "combatant_scalars": {"vehicle": 1.15, "boss": 1.15, "champion": 1.2, "miniboss": 1.2, "elite": 1.63, "minor": 1.63}
+                "combatant_scalars": {"vehicle": 1.15, "boss": 1.15, "champion": 1.2, "miniboss": 1.2, "elite": 1.63, "minor": 1.79}
             }
         },
 
@@ -207,7 +207,7 @@
                     "stow": {"vpp": -0.00268436, "offset": 0.48414822},
                     "ads":  {"vpp": -0.001875,   "offset": 0.38975   }
                 },
-                "combatant_scalars": {"vehicle": 2.0, "boss": 2.0, "champion": 2.0, "miniboss": 2.0, "elite": 2.0, "minor": 2.0}
+                "combatant_scalars": {"vehicle": 2.0, "boss": 2.5, "champion": 2.0, "miniboss": 2.0, "elite": 2.0, "minor": 2.2}
             }
         },
         "subFam": {
@@ -545,10 +545,10 @@
         "4208418110": {"name": "Outbreak Perfected",     "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
         "4172222323": {"name": "Legacy PR-55 Frame",     "cat": "default",   "subFam": "Lightweight",   "magProf": "default"},
         "3441203855": {"name": "Collective Obligation",  "cat": "default",   "subFam": "Adaptive",      "magProf": "default"},
-        "891750160":  {"name": "Revision Zero IV",       "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
-        "891750167":  {"name": "Revision Zero III",      "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
-        "891750166":  {"name": "Revision Zero II",       "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
-        "3834106778": {"name": "Revision Zero I",        "cat": "default",   "subFam": "Aggressive",    "magProf": "aggressive"},
+        "891750160":  {"name": "Revision Zero IV",       "cat": "revisionZero",   "subFam": "Aggressive",    "magProf": "aggressive"},
+        "891750167":  {"name": "Revision Zero III",      "cat": "revisionZero",   "subFam": "Aggressive",    "magProf": "aggressive"},
+        "891750166":  {"name": "Revision Zero II",       "cat": "revisionZero",   "subFam": "Aggressive",    "magProf": "aggressive"},
+        "3834106778": {"name": "Revision Zero I",        "cat": "revisionZero",   "subFam": "Aggressive",    "magProf": "aggressive"},
         "69420":      {"name": "test_weapon",            "cat": "test",      "subFam": "test",          "magProf": "test"},
         "cat": {
             "default": {
@@ -559,7 +559,17 @@
                     "stow": {"vpp": -0.00355450, "offset": 0.55005845},
                     "ads":  {"vpp": -0.00196208, "offset": 0.45746870}
                 },
-                "combatant_scalars": {"vehicle": 0.90, "boss": 1.00, "champion": 1.05, "miniboss": 1.05, "elite": 1.26, "minor": 1.782}
+                "combatant_scalars": {"vehicle": 0.90, "boss": 1.00, "champion": 1.05, "miniboss": 1.05, "elite": 1.4175, "minor": 2.00475}
+            },
+            "revisionZero": {
+                "range":    {"vpp_start": 0.075, "offset_start": 16, "vpp_end": 0.0,"offset_end": 40, "floor_percent": 0.5},
+                "reload":   {"evpp": 0.0000926208, "vpp": -0.0256877, "offset": 2.92627266666667},
+                "handling": {
+                    "ready":{"vpp": -0.00312085, "offset": 0.54370932},
+                    "stow": {"vpp": -0.00355450, "offset": 0.55005845},
+                    "ads":  {"vpp": -0.00196208, "offset": 0.45746870}
+                },
+                "combatant_scalars": {"vehicle": 0.90, "boss": 1.00, "champion": 2.1, "miniboss": 1.05, "elite": 1.4175, "minor": 2.00475}
             },
             "test": {
                 "range": {"vpp_start": 0.1, "offset_start": 10.0, "vpp_end": 0.2, "offset_end": 20.0, "floor_percent": 0.5},
@@ -881,14 +891,14 @@
         }
     },
     "Sniper Rifle": {
-        "281315705":  {"name": "Whisper of the Worm", "cat": "default", "subFam": "Whisper",    "magProf": "default", "pve": 1.1},
-        "878286503":  {"name": "Rapid-Fire Frame",    "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.1},
-        "938999636":  {"name": "D.A.R.C.I.",          "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.1},
-        "1070100196": {"name": "Izanagi's Burden",    "cat": "default", "subFam": "Adaptive",   "magProf": "default"},
-        "1294026524": {"name": "Adaptive Frame",      "cat": "default", "subFam": "Adaptive",   "magProf": "default", "pve": 1.1},
-        "2909403175": {"name": "Cloudstrike",         "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.1},
-        "3081173348": {"name": "Borealis",            "cat": "default", "subFam": "Aggressive", "magProf": "default", "pve": 1.1},
-        "3468089894": {"name": "Aggressive Frame",    "cat": "default", "subFam": "Aggressive", "magProf": "default", "pve": 1.1},
+        "281315705":  {"name": "Whisper of the Worm", "cat": "default", "subFam": "Whisper",    "magProf": "default", "pve": 1.265},
+        "878286503":  {"name": "Rapid-Fire Frame",    "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.265},
+        "938999636":  {"name": "D.A.R.C.I.",          "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.265},
+        "1070100196": {"name": "Izanagi's Burden",    "cat": "default", "subFam": "Adaptive",   "magProf": "default", "pve": 1.15},
+        "1294026524": {"name": "Adaptive Frame",      "cat": "default", "subFam": "Adaptive",   "magProf": "default", "pve": 1.265},
+        "2909403175": {"name": "Cloudstrike",         "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.265},
+        "3081173348": {"name": "Borealis",            "cat": "default", "subFam": "Aggressive", "magProf": "default", "pve": 1.265},
+        "3468089894": {"name": "Aggressive Frame",    "cat": "default", "subFam": "Aggressive", "magProf": "default", "pve": 1.265},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
@@ -967,16 +977,16 @@
         }
     },
     "Glaive":{
-        "1900919151": {"name": "Edge Of Action",      "cat": "default", "subFam": "Adaptive",    "magProf": "default"},
-        "3551884421": {"name": "Edge Of Concurrence", "cat": "default", "subFam": "Lightweight", "magProf": "default"},
-        "3024740338": {"name": "Edge Of Intent",      "cat": "default", "subFam": "Aggressive",  "magProf": "default"},
-        "1316753551": {"name": "Adaptive Glaive",     "cat": "default", "subFam": "Adaptive",    "magProf": "default"},
-        "1986105578": {"name": "Aggressive Glaive",   "cat": "default", "subFam": "Aggressive",  "magProf": "default"},
-        "2751656639": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default"},
-        "2898674463": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default"},
-        "2898674462": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default"},
-        "2898674457": {"name": "Vexcaliber",          "cat": "default", "subFam": "Vexcaliber",  "magProf": "default"},
-        "1956005708": {"name": "Rapid-Fire Glaive",   "cat": "default", "subFam": "Lightweight", "magProf": "default"},
+        "1900919151": {"name": "Edge Of Action",      "cat": "default", "subFam": "Adaptive",    "magProf": "default", "pve": 1.25},
+        "3551884421": {"name": "Edge Of Concurrence", "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 1.25},
+        "3024740338": {"name": "Edge Of Intent",      "cat": "default", "subFam": "Aggressive",  "magProf": "default", "pve": 1.25},
+        "1316753551": {"name": "Adaptive Glaive",     "cat": "default", "subFam": "Adaptive",    "magProf": "default", "pve": 1.25},
+        "1986105578": {"name": "Aggressive Glaive",   "cat": "default", "subFam": "Aggressive",  "magProf": "default", "pve": 1.25},
+        "2751656639": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 1.25},
+        "2898674463": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 1.25},
+        "2898674462": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 1.25},
+        "2898674457": {"name": "Vexcaliber",          "cat": "default", "subFam": "Vexcaliber",  "magProf": "default", "pve": 1.25},
+        "1956005708": {"name": "Rapid-Fire Glaive",   "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 1.25},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0546,"offset_start": 15.0,"vpp_end": 0.198,"offset_end": 30.33, "floor_percent": 0.33},
@@ -990,9 +1000,9 @@
             }
         },
         "subFam": {
-            "Lightweight": {"damage":105.77, "crit_mult":-25.5, "burst_delay":22.0, "burst_size":1, "inner_burst_delay":0},
-            "Aggressive":  {"damage":146.05, "crit_mult":-25.5, "burst_delay":30.0, "burst_size":1, "inner_burst_delay":0},
-            "Adaptive":    {"damage":130.94, "crit_mult":-25.5, "burst_delay":27.0, "burst_size":1, "inner_burst_delay":0},
+            "Lightweight": {"damage":101.0, "crit_mult":-25.5, "burst_delay":22.0, "burst_size":1, "inner_burst_delay":0},
+            "Aggressive":  {"damage":125.0, "crit_mult":-25.5, "burst_delay":30.0, "burst_size":1, "inner_burst_delay":0},
+            "Adaptive":    {"damage":113.0, "crit_mult":-25.5, "burst_delay":27.0, "burst_size":1, "inner_burst_delay":0},
             "Vexcaliber":  {"damage":28.85,  "crit_mult":-25.5, "burst_delay":22.0, "burst_size":5, "inner_burst_delay":0, "one_ammo":true}
         },
         "magProf": {

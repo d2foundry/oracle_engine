@@ -524,8 +524,8 @@ impl Weapon {
                         .unwrap_or(&Stat::new())
                         .perk_val()
                         .clamp(0, 100),
-                ) * 0.4
-                    + 60.0
+                ) * 0.52
+                    + 78.0
             }
             WeaponType::GRENADELAUNCHER => {
                 f64::from(
