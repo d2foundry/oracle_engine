@@ -1162,5 +1162,30 @@ pub fn exotic_perks() {
                 ..Default::default()
             }
         }),
+    );
+    add_dmr(
+        Perks::Unrepentant,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 || _input.pvp {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 3.0,
+                ..Default::default()
+            }
+        }),
+    );
+    add_fmr(
+        Perks::Unrepentant,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            let shots_in_super_burst: f64 = 6.0;
+            if _input.calc_data.total_shots_hit >= shots_in_super_burst || _input.value == 0 {
+                return FiringModifierResponse::default();
+            }
+            FiringModifierResponse {
+                burst_size_add: 3.0,
+                ..Default::default()
+            }
+        }),
     )
 }

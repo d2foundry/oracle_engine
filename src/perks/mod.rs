@@ -448,6 +448,7 @@ pub enum Perks {
     BlackHole = 3905543891,
     TemporalUnlimiter = 806917387,
     IonicReturn = 501717180,
+    Unrepentant = 2641107734,
 
     //heavy exotic
     ReignHavoc = 4148158229,
