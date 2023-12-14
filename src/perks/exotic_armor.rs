@@ -30,22 +30,6 @@ pub fn exotic_armor() {
         }),
     );
 
-    add_dmr(
-        Perks::MechaneersTricksleeves,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value == 0 || *_input.calc_data.weapon_type != WeaponType::SIDEARM {
-                return DamageModifierResponse::default();
-            };
-
-            let damage_mult = if _input.pvp { 1.10 } else { 2.0 };
-            DamageModifierResponse {
-                explosive_dmg_scale: damage_mult,
-                impact_dmg_scale: damage_mult,
-                ..Default::default()
-            }
-        }),
-    );
-
     //doesnt work for sturm overcharge, (maybe) memento
     add_dmr(
         Perks::LuckyPants,
@@ -174,15 +158,15 @@ pub fn exotic_armor() {
     add_dmr(
         Perks::MechaneersTricksleeves,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mult = if _input.pvp { 1.35 } else { 2.0 };
-            if _input.value > 0 && _input.calc_data.weapon_type == &WeaponType::SIDEARM {
-                DamageModifierResponse {
-                    explosive_dmg_scale: mult,
-                    impact_dmg_scale: mult,
-                    ..Default::default()
-                }
-            } else {
-                DamageModifierResponse::default()
+            if _input.value == 0 || *_input.calc_data.weapon_type != WeaponType::SIDEARM {
+                return DamageModifierResponse::default();
+            };
+
+            let damage_mult = if _input.pvp { 1.10 } else { 2.0 };
+            DamageModifierResponse {
+                explosive_dmg_scale: damage_mult,
+                impact_dmg_scale: damage_mult,
+                ..Default::default()
             }
         }),
     );
