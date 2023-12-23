@@ -455,10 +455,9 @@
             "QueenBreaker": {"damage": 131,    "crit_mult": 51,  "burst_delay": 9,  "burst_size": 1, "inner_burst_delay": 0},
             "SleeperSim":   {"damage": 726,    "crit_mult": -15, "burst_delay": 31, "burst_size": 1, "inner_burst_delay": 0}
         },
-
         "magProf": {
             "default": {
-                "mag": {"evpp": 0.0, "vpp": 0.0293, "offset": 3.2},
+                "mag": {"evpp": 0.0, "vpp": 0.02857142857, "offset": 3.16785714285714},
                 "reserve_id": 221
             }
         }
