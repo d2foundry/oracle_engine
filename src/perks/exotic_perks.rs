@@ -13,7 +13,7 @@ use super::{
         HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
         RangeModifierResponse, RefundResponse, ReloadModifierResponse, ReloadOverrideResponse,
     },
-    ModifierResponseInput, Perks,
+    ModifierResponseInput, Perk, Perks,
 };
 
 pub fn exotic_perks() {
@@ -1192,5 +1192,39 @@ pub fn exotic_perks() {
                 ..Default::default()
             }
         }),
-    )
+    );
+    add_dmr(
+        Perks::ArcConductor,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 1.1,
+                explosive_dmg_scale: 1.1,
+                ..Default::default()
+            }
+        }),
+    );
+    add_hmr(
+        Perks::ArcConductor,
+        Box::new(|_input: ModifierResponseInput| -> HandlingModifierResponse {
+            if _input.value == 0 {
+                return HandlingModifierResponse::default();
+            }
+            HandlingModifierResponse {
+                stat_add: 100,
+                ..Default::default()
+            }
+        }),
+    );
+    add_sbr(
+        Perks::ArcConductor,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            if _input.value == 1 {
+                stats.insert(StatHashes::HANDLING.into(), 100);
+            }
+            stats
+        }))
 }
