@@ -13,7 +13,7 @@ use super::{
         HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
         RangeModifierResponse, RefundResponse, ReloadModifierResponse, ReloadOverrideResponse,
     },
-    ModifierResponseInput, Perk, Perks,
+    ModifierResponseInput, Perks,
 };
 
 pub fn exotic_perks() {
