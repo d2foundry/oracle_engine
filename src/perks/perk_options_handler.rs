@@ -261,7 +261,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::GutShot => Some(PerkOptionData::static_()),
         Perks::Pugilist => Some(PerkOptionData::toggle()),
         Perks::Slickdraw => Some(PerkOptionData::static_()),
-        Perks::OverUnder => Some(PerkOptionData::static_()),
+        Perks::UnderOver => Some(PerkOptionData::static_()),
 
         //season 19 | year 5
         Perks::CascadePoint => Some(PerkOptionData::toggle()),

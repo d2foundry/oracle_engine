@@ -329,14 +329,14 @@ pub fn year_5_perks() {
     );
 
     add_dmr(
-        Perks::OverUnder,
+        Perks::UnderOver,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let mut buff = 1.0_f64;
-            if _input.calc_data.has_overshield {
-                buff += 0.2;
-            }
-            if _input.is_enhanced {
-                buff *= 1.05;
+            if _input.calc_data.has_overshield && _input.value > 0 {
+                buff += if _input.pvp { 0.2 } else { 1.25 };
+                if _input.is_enhanced {
+                    buff *= 1.05;
+                }
             }
             DamageModifierResponse {
                 impact_dmg_scale: buff,
