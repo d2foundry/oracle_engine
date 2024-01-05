@@ -332,7 +332,7 @@ pub fn year_5_perks() {
         Perks::UnderOver,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let mut buff = 1.0_f64;
-            if _input.calc_data.has_overshield && _input.value > 0 {
+            if _input.calc_data.has_overshield {
                 buff += if _input.pvp { 0.2 } else { 1.25 };
                 if _input.is_enhanced {
                     buff *= 1.05;
