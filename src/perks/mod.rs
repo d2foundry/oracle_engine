@@ -377,6 +377,10 @@ pub enum Perks {
     EnlightendAction = 3828510309,
     SwordLogic = 31345821,
 
+    //season 23 | year 6
+    Onslaught = 95528736,
+
+
     //subclass
     OnYourMark = 3066103999,
     Hedrons = 3469412970,

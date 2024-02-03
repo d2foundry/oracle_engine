@@ -535,4 +535,49 @@ pub fn year_6_perks() {
             },
         ),
     );
+    add_fmr(
+        Perks::Onslaught,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            let buff = match _input.value {
+                0 => 1.0,
+                1 => 0.84,
+                2 => 0.72,
+                3 => 0.63,
+                _ => 0.63,
+            };
+            FiringModifierResponse {
+                burst_delay_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
+    add_rsmr(
+        Perks::Onslaught,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            let buff = match _input.value {
+                0 => 0,
+                1 => 15,
+                2 => 25,
+                3 => 35,
+                _ => 35,
+            };
+            ReloadModifierResponse {
+                reload_stat_add: buff,
+                ..Default::default()
+            }
+        }),
+    );
+    add_sbr(
+        Perks::Onslaught,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let buff = match _input.value {
+                0 => 0,
+                1 => 15,
+                2 => 25,
+                3 => 35,
+                _ => 35,
+            };
+            HashMap::from([(StatHashes::RELOAD.into(), buff)])
+        }),
+    )
 }
