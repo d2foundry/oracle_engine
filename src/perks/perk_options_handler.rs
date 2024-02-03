@@ -380,6 +380,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Desperation => Some(PerkOptionData::toggle()),
         Perks::IonicReturn => Some(PerkOptionData::toggle()),
         Perks::Unrepentant => Some(PerkOptionData::toggle()),
+        Perks::ArcConductor => Some(PerkOptionData::toggle()),
 
         Perks::DragonShadow => Some(PerkOptionData::toggle()),
         Perks::OphidianAspect => Some(PerkOptionData::static_()),

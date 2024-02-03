@@ -453,6 +453,7 @@ pub enum Perks {
     TemporalUnlimiter = 806917387,
     IonicReturn = 501717180,
     Unrepentant = 2641107734,
+    ArcConductor = 2516532331,
 
     //heavy exotic
     ReignHavoc = 4148158229,
