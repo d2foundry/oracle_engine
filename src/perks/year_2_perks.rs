@@ -64,7 +64,7 @@ pub fn year_2_perks() {
             |_input: ModifierResponseInput| -> ExplosivePercentResponse {
                 ExplosivePercentResponse {
                     percent: 0.5,
-                    delyed: if _input.pvp { 0.0 } else { 0.2 },
+                    delay: if _input.pvp { 0.0 } else { 0.2 },
                     retain_base_total: true,
                 }
             },
