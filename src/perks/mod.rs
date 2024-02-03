@@ -346,7 +346,7 @@ pub enum Perks {
     GutShot = 1365187766,
     Pugilist = 691659142,
     Slickdraw = 1821614984,
-    OverUnder = 1870851715,
+    UnderOver = 1870851715,
 
     //season 19 | year 5
     CascadePoint = 3751912585,
