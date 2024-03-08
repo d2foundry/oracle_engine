@@ -320,7 +320,7 @@ pub fn exotic_armor() {
                 let mut stats = HashMap::new();
                 if _input.calc_data.weapon_type == &WeaponType::SUBMACHINEGUN {
                     stats.insert(StatHashes::AIRBORNE.into(), 40);
-                    stats.insert(StatHashes::HANDLING.into(), 100);
+                    stats.insert(StatHashes::HANDLING.into(), 50);
                 };
                 stats
             },
@@ -333,7 +333,7 @@ pub fn exotic_armor() {
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 if _input.calc_data.weapon_type == &WeaponType::SUBMACHINEGUN {
                     return HandlingModifierResponse {
-                        stat_add: 100,
+                        stat_add: 50,
                         ads_scale: 1.0,
                         draw_scale: 0.6,
                         stow_scale: 0.6,
