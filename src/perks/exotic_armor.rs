@@ -335,8 +335,8 @@ pub fn exotic_armor() {
                     return HandlingModifierResponse {
                         stat_add: 50,
                         ads_scale: 1.0,
-                        draw_scale: 0.6,
-                        stow_scale: 0.6,
+                        draw_scale: 0.8,
+                        stow_scale: 0.8,
                         ..Default::default()
                     };
                 }
