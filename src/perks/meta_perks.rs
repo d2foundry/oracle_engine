@@ -58,6 +58,26 @@ pub fn meta_perks() {
                 let stat = (charge_time.perk_val() - charge_time.base_value) as f64;
                 dmg_scale *= 1.0 - (0.6 * stat) / total_damage;
             }
+            if _input.pvp {
+                if *_input.calc_data.weapon_type == WeaponType::SIDEARM
+                    || *_input.calc_data.weapon_type == WeaponType::SCOUTRIFLE
+                    || *_input.calc_data.weapon_type == WeaponType::AUTORIFLE
+                    || *_input.calc_data.weapon_type == WeaponType::PULSERIFLE
+                {
+                    crit_scale *= 1.14;
+                }
+                else if *_input.calc_data.weapon_type == WeaponType::BOW {
+                    dmg_scale *= 0.85;
+                }
+                else if *_input.calc_data.weapon_type == WeaponType::HANDCANNON {
+                    crit_scale *= 1.158;
+                    dmg_scale *= 0.95;
+                }
+                else if *_input.calc_data.weapon_type == WeaponType::SUBMACHINEGUN {
+                    crit_scale *= 1.159;
+                    dmg_scale *= 0.97;
+                }
+            }
 
             DamageModifierResponse {
                 crit_scale,
@@ -126,7 +146,7 @@ pub fn meta_perks() {
                 if *_input.calc_data.weapon_type == WeaponType::GRENADELAUNCHER {
                     let blast_radius_struct =
                         _input.calc_data.stats.get(&StatHashes::BLAST_RADIUS.into());
-                        
+
                     let blast_radius = blast_radius_struct.cloned().unwrap_or_default().perk_val();
 
                     if _input.calc_data.ammo_type == &AmmoType::SPECIAL {

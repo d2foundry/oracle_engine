@@ -213,7 +213,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::KillingWind => Some(PerkOptionData::toggle()),
 
         //season 12 | year 4
-        Perks::DualLoader => Some(PerkOptionData::toggle()),
+        Perks::DualLoader => Some(PerkOptionData::static_()),
         Perks::OneForAll => Some(PerkOptionData::toggle()),
         Perks::Recombination => Some(PerkOptionData::stacking(10)),
         Perks::Reconstruction => Some(PerkOptionData::toggle()),

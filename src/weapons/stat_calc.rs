@@ -490,7 +490,7 @@ fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f6
         (WeaponType::SHOTGUN, 536517534) => 1.2,  //Duality
         (WeaponType::SHOTGUN, _) => 1.0,
 
-        (WeaponType::FUSIONRIFLE, VEX_MYTHOCLAST) => 1.5,
+        (WeaponType::FUSIONRIFLE, VEX_MYTHOCLAST) => 1.7,
         (WeaponType::FUSIONRIFLE, _) => 1.3,
 
         (WeaponType::TRACERIFLE, _) => 1.6,

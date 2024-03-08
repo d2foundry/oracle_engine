@@ -395,14 +395,13 @@ pub fn year_5_perks() {
     add_dmr(
         Perks::BaitAndSwitch,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value > 0 {
-                DamageModifierResponse {
-                    impact_dmg_scale: 1.35,
-                    explosive_dmg_scale: 1.35,
-                    crit_scale: 1.0,
-                }
-            } else {
-                DamageModifierResponse::default()
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 1.30,
+                explosive_dmg_scale: 1.30,
+                crit_scale: 1.0,
             }
         }),
     );

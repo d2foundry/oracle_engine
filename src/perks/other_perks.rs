@@ -428,7 +428,7 @@ pub fn other_perks() {
         Perks::SpikeGrenades,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
-                impact_dmg_scale: 1.5,
+                impact_dmg_scale: 1.125,
                 explosive_dmg_scale: 1.0,
                 crit_scale: 1.0,
             }
