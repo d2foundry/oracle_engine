@@ -65,17 +65,25 @@ pub fn meta_perks() {
                     || *_input.calc_data.weapon_type == WeaponType::PULSERIFLE
                 {
                     crit_scale *= 1.14;
-                }
-                else if *_input.calc_data.weapon_type == WeaponType::BOW {
+                } else if *_input.calc_data.weapon_type == WeaponType::BOW {
                     dmg_scale *= 0.85;
-                }
-                else if *_input.calc_data.weapon_type == WeaponType::HANDCANNON {
+                } else if *_input.calc_data.weapon_type == WeaponType::HANDCANNON {
                     crit_scale *= 1.158;
                     dmg_scale *= 0.95;
-                }
-                else if *_input.calc_data.weapon_type == WeaponType::SUBMACHINEGUN {
-                    crit_scale *= 1.159;
+                } else if *_input.calc_data.weapon_type == WeaponType::SUBMACHINEGUN {
+                    crit_scale *= 1.16;
                     dmg_scale *= 0.97;
+                } else if *_input.calc_data.weapon_type == WeaponType::FUSIONRIFLE
+                    || *_input.calc_data.weapon_type == WeaponType::SHOTGUN
+                    || *_input.calc_data.weapon_type == WeaponType::TRACERIFLE
+                    || *_input.calc_data.weapon_type == WeaponType::MACHINEGUN
+                    || *_input.calc_data.weapon_type == WeaponType::GLAIVE
+                {
+                    dmg_scale *= 1.2;
+                } else if _input.calc_data.intrinsic_hash == 425960662 {
+                    dmg_scale *= 0.8;
+                } else if _input.calc_data.intrinsic_hash == 2984682260 {
+                    dmg_scale *= 1.2;
                 }
             }
 
