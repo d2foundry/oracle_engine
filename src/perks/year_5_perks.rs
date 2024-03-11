@@ -310,7 +310,11 @@ pub fn year_5_perks() {
 
             let percent_of_mag = _input.calc_data.shots_fired_this_mag / _input.calc_data.base_mag;
 
-            let buff = if percent_of_mag < 0.125 {
+            let buff = if (percent_of_mag < 0.125
+                && *_input.calc_data.weapon_type != WeaponType::SUBMACHINEGUN)
+                || (percent_of_mag < 0.2
+                    && *_input.calc_data.weapon_type == WeaponType::SUBMACHINEGUN)
+            {
                 0.0
             } else if percent_of_mag > formula_end {
                 high_end_dmg
