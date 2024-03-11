@@ -717,7 +717,7 @@
         "subFam": {
             "High-Impact": {"damage":40.00, "crit_mult":13, "burst_delay":12, "burst_size":1, "inner_burst_delay":0},
             "Rapid-Fire":  {"damage":27.50, "crit_mult":10, "burst_delay":7,  "burst_size":1, "inner_burst_delay":0},
-            "Lightweight": {"damage":31.55, "crit_mult":13, "burst_delay":9,  "burst_size":1, "inner_burst_delay":0},
+            "Lightweight": {"damage":32.025, "crit_mult":13, "burst_delay":9,  "burst_size":1, "inner_burst_delay":0},
             "Precision":   {"damage":38.00,   "crit_mult":5,  "burst_delay":10, "burst_size":1, "inner_burst_delay":0},
             "Aggressive":  {"damage":54.00, "crit_mult":-1, "burst_delay":15, "burst_size":1, "inner_burst_delay":0}
         },
