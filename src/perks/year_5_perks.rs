@@ -310,7 +310,11 @@ pub fn year_5_perks() {
 
             let percent_of_mag = _input.calc_data.shots_fired_this_mag / _input.calc_data.base_mag;
 
-            let buff = if percent_of_mag < 0.125 {
+            let buff = if (percent_of_mag < 0.125
+                && *_input.calc_data.weapon_type != WeaponType::SUBMACHINEGUN)
+                || (percent_of_mag < 0.2
+                    && *_input.calc_data.weapon_type == WeaponType::SUBMACHINEGUN)
+            {
                 0.0
             } else if percent_of_mag > formula_end {
                 high_end_dmg
@@ -395,14 +399,13 @@ pub fn year_5_perks() {
     add_dmr(
         Perks::BaitAndSwitch,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value > 0 {
-                DamageModifierResponse {
-                    impact_dmg_scale: 1.35,
-                    explosive_dmg_scale: 1.35,
-                    crit_scale: 1.0,
-                }
-            } else {
-                DamageModifierResponse::default()
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 1.30,
+                explosive_dmg_scale: 1.30,
+                crit_scale: 1.0,
             }
         }),
     );

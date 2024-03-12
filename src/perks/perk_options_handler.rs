@@ -213,7 +213,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::KillingWind => Some(PerkOptionData::toggle()),
 
         //season 12 | year 4
-        Perks::DualLoader => Some(PerkOptionData::toggle()),
+        Perks::DualLoader => Some(PerkOptionData::static_()),
         Perks::OneForAll => Some(PerkOptionData::toggle()),
         Perks::Recombination => Some(PerkOptionData::stacking(10)),
         Perks::Reconstruction => Some(PerkOptionData::toggle()),
@@ -274,7 +274,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         //season 20 | year 6
         Perks::KeepAway => Some(PerkOptionData::toggle()),
         Perks::ParacausalAffinity => Some(PerkOptionData::toggle()),
-        Perks::EnviousAssasin => Some(PerkOptionData::stacking(15)),
+        Perks::EnviousAssassin => Some(PerkOptionData::stacking(20)),
 
         //season 21 | year 6
         Perks::CollectiveAction => Some(PerkOptionData::toggle()),
