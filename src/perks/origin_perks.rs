@@ -21,7 +21,6 @@ pub fn origin_perks() {
             let last_proc = *data.unwrap_or(&1.0);
             let time_since_last_proc = _input.calc_data.time_total - last_proc;
             let max_refund = _input.calc_data.base_mag - _input.calc_data.curr_mag;
-            
 
             if _input.value == 0 || time_since_last_proc < 4.0 || max_refund == 0.0 {
                 return RefundResponse::default();
@@ -60,10 +59,20 @@ pub fn origin_perks() {
     add_dmr(
         Perks::HakkeBreach,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let damage_mult = if _input.value > 0 { 0.3 } else { 0.0 };
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+
+            let buff = match _input.value {
+                1 => 1.15,
+                2 => 1.45,
+                3 => 1.30,
+                _ => 1.30,
+            };
+
             DamageModifierResponse {
-                impact_dmg_scale: 1.0 + damage_mult,
-                explosive_dmg_scale: 1.0 + damage_mult,
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
                 crit_scale: 1.0,
             }
         }),
