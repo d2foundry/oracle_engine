@@ -157,18 +157,14 @@ pub fn year_6_perks() {
     );
 
     add_mmr(
-        Perks::EnviousAssasin,
+        Perks::EnviousAssassin,
         Box::new(
             |_input: ModifierResponseInput| -> MagazineModifierResponse {
                 let val = _input.value as f64;
-                //i dont know why this if is here? - harm
-                if _input.calc_data.total_shots_fired == 0.0 {
-                    return MagazineModifierResponse {
-                        magazine_scale: 1.0 + clamp(0.1 * val, 0.0, 1.5),
-                        ..Default::default()
-                    };
-                };
-                MagazineModifierResponse::default()
+                MagazineModifierResponse {
+                    magazine_scale: 1.0 + clamp(0.1 * val, 0.0, 2.0),
+                    ..Default::default()
+                }
             },
         ),
     );

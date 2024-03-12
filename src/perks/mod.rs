@@ -359,7 +359,7 @@ pub enum Perks {
     //season 20 | year 6
     KeepAway = 3619207468,
     ParacausalAffinity = 3215448563,
-    EnviousAssasin = 968510818,
+    EnviousAssassin = 968510818,
 
     //season 21 | year 6
     CollectiveAction = 3324494224,
@@ -379,7 +379,6 @@ pub enum Perks {
 
     //season 23 | year 6
     Onslaught = 95528736,
-
 
     //subclass
     OnYourMark = 3066103999,
