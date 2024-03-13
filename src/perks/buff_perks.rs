@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::d2_enums::{AmmoType, DamageType, StatHashes, WeaponType};
+use crate::d2_enums::{AmmoType, BungieHash, DamageType, StatBump, StatHashes, WeaponType};
 
 use super::{
     add_dmr, add_epr, add_fmr, add_hmr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr, clamp,
@@ -320,7 +320,7 @@ pub fn buff_perks() {
         Perks::LucentBlades,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             if _input.calc_data.weapon_type != &WeaponType::SWORD {
-                return HashMap::new()
+                return HashMap::new();
             }
             let stat_bump = match _input.value {
                 0 => return HashMap::new(),
@@ -421,4 +421,43 @@ pub fn buff_perks() {
             }
         }),
     );
+    add_rsmr(
+        Perks::AeonForce,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
+            ReloadModifierResponse {
+                reload_stat_add: 10,
+                reload_time_scale: 0.85,
+            }
+        }),
+    );
+    add_sbr(
+        Perks::AeonForce,
+        Box::new(
+            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+                if _input.value == 0 {
+                    return HashMap::new();
+                }
+                use StatHashes::*;
+                HashMap::from([(RELOAD.into(), 10), (HANDLING.into(), 10)])
+            },
+        ),
+    );
+    add_hmr(
+        Perks::AeonForce,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
+                HandlingModifierResponse {
+                    stow_add: 10,
+                    draw_add: 10,
+                    ..Default::default()
+                }
+            },
+        ),
+    )
 }
