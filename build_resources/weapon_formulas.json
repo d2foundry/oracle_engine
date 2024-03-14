@@ -67,7 +67,7 @@
                 "reserve_id": 0
             },
             "small": {
-                "mag": {"evpp": 0.0 ,"vpp": 0.2, "offset": 25.0},
+                "mag": {"evpp": 0.0 ,"vpp": 0.2, "offset": 24.5},
                 "reserve_id": 0
             },
             "sweet_buiss": {
