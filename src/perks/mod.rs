@@ -256,6 +256,7 @@ pub enum Perks {
     FourthTimesTheCharm = 1354429876,
     #[num_enum(alternatives = [1557274655, ])] //touch of malice cat
     RapidHit = 247725512,
+    MasterOfArms = 3081867624,
 
     //season 5 | year 2
     ResevoirBurst = 1427256713,

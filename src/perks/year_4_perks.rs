@@ -688,4 +688,18 @@ pub fn year_4_perks() {
             }
         }),
     );
+
+    add_dmr(
+        Perks::MasterOfArms,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0{
+                return DamageModifierResponse::default()
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 1.21,
+                explosive_dmg_scale: 1.21,
+                ..Default::default()
+            }
+        }),
+    );
 }
