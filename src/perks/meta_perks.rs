@@ -59,7 +59,12 @@ pub fn meta_perks() {
                 dmg_scale *= 1.0 - (0.6 * stat) / total_damage;
             }
             if _input.pvp {
-                if *_input.calc_data.weapon_type == WeaponType::SIDEARM
+                if _input.calc_data.intrinsic_hash == 425960662 {
+                    dmg_scale *= 0.8;
+                } else if _input.calc_data.intrinsic_hash == 2984682260 {
+                    dmg_scale *= 1.2;
+                    crit_scale *= 1.14;
+                } else if *_input.calc_data.weapon_type == WeaponType::SIDEARM
                     || *_input.calc_data.weapon_type == WeaponType::SCOUTRIFLE
                     || *_input.calc_data.weapon_type == WeaponType::AUTORIFLE
                     || *_input.calc_data.weapon_type == WeaponType::PULSERIFLE
@@ -80,13 +85,8 @@ pub fn meta_perks() {
                     || *_input.calc_data.weapon_type == WeaponType::GLAIVE
                 {
                     dmg_scale *= 1.2;
-                } else if _input.calc_data.intrinsic_hash == 425960662 {
-                    dmg_scale *= 0.8;
-                } else if _input.calc_data.intrinsic_hash == 2984682260 {
-                    dmg_scale *= 1.2;
                 }
             }
-
             DamageModifierResponse {
                 crit_scale,
                 impact_dmg_scale: dmg_scale,
@@ -239,13 +239,13 @@ pub fn meta_perks() {
         Perks::ReserveMod,
         Box::new(
             |_input: ModifierResponseInput| -> InventoryModifierResponse {
-                let mut inv_buff = if _input.value > 0 { 20 } else { 0 };
-                if _input.value == 2 {
-                    inv_buff += 20;
-                }
-                if _input.value > 2 {
-                    inv_buff += 30;
-                }
+                let inv_buff = match _input.value {
+                    0 => 0,
+                    1 => 20,
+                    2 => 40,
+                    3 => 50,
+                    _ => 50,
+                };
                 InventoryModifierResponse {
                     inv_stat_add: inv_buff,
                     inv_scale: 1.0,
@@ -258,13 +258,13 @@ pub fn meta_perks() {
     add_sbr(
         Perks::ReserveMod,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
-            let mut inv_buff = if _input.value > 0 { 20 } else { 0 };
-            if _input.value == 2 {
-                inv_buff += 15;
-            }
-            if _input.value > 2 {
-                inv_buff += 20;
-            }
+            let inv_buff = match _input.value {
+                0 => 0,
+                1 => 20,
+                2 => 40,
+                3 => 50,
+                _ => 50,
+            };
             let mut stats = HashMap::new();
             stats.insert(StatHashes::INVENTORY_SIZE.into(), inv_buff);
             stats

@@ -1,3 +1,5 @@
+use crate::console_log;
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 enum ReserveIDs {
     Primary,
@@ -19,13 +21,15 @@ enum ReserveIDs {
     SniperRifles,
     Glaive,
     TraceRifles,
+    RapidFireSniper,
+    RapidFireShotgun,
 }
 impl From<u32> for ReserveIDs {
     fn from(id: u32) -> Self {
         match id {
             0 => ReserveIDs::Primary,
             1699724249 => ReserveIDs::LeviathansBreath,
-            111 => ReserveIDs::Fusions,
+            1101 => ReserveIDs::Fusions,
             231 => ReserveIDs::LargeGrenadeLaunchers,
             232 => ReserveIDs::SpecialGrenadeLaunchers,
             233 => ReserveIDs::SmallGrenadeLaunchers,
@@ -42,6 +46,8 @@ impl From<u32> for ReserveIDs {
             121 => ReserveIDs::SniperRifles,
             331 => ReserveIDs::Glaive,
             251 => ReserveIDs::TraceRifles,
+            1201 => ReserveIDs::RapidFireSniper,
+            701 => ReserveIDs::RapidFireShotgun,
             _ => ReserveIDs::Primary,
         }
     }
@@ -49,6 +55,7 @@ impl From<u32> for ReserveIDs {
 
 pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _scale: f64) -> i32 {
     let id = ReserveIDs::from(_id);
+    console_log!("scale: {}", _scale);
     let raw_size: f64 = match id {
         ReserveIDs::Primary => 9999.0,
         ReserveIDs::SmallMachineGuns => small_machinegun(_mag_size, _mag_stat, _inv_stat),
@@ -61,10 +68,12 @@ pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _
         ReserveIDs::ForeRunner => forerunner(_mag_size, _mag_stat, _inv_stat),
         ReserveIDs::ErianasVow => eriana_vow(_mag_size, _mag_stat, _inv_stat),
         ReserveIDs::RocketLaunchers => rockets(_mag_size, _mag_stat, _inv_stat),
+        ReserveIDs::RapidFireSniper => rapid_fire_sniper(_mag_size, _mag_stat, _inv_stat),
+        ReserveIDs::RapidFireShotgun => rapid_fire_shotgun(_mag_size, _mag_stat, _inv_stat),
+        ReserveIDs::Fusions => fusions(_mag_size, _mag_stat, _inv_stat),
+        ReserveIDs::LeviathansBreath => leviathans_breath(_inv_stat),
 
         //placeholders
-        ReserveIDs::LeviathansBreath => 8.0,
-        ReserveIDs::Fusions => 21.0,
         ReserveIDs::SmallGrenadeLaunchers => 18.0,
         ReserveIDs::LargeGrenadeLaunchers => 20.0,
         ReserveIDs::SpecialGrenadeLaunchers => 21.0,
@@ -77,15 +86,21 @@ pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _
 }
 
 fn small_machinegun(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
-    let round_amount = _mag_size.ceil() - _mag_size;
-    let offset = (-0.875 + round_amount * 2.0) * (2.0 - ((100.0 - _mag_stat as f64) / 100.0));
-    
-    225.0 + offset + _inv_stat as f64 * ((225.0 + offset) * 2.0 - (225.0 + offset)) / 100.0
+    let non_rapid_fire_mg = 225.0;
+    let round_amount = _mag_size - (29.5 + 0.45 * _mag_stat as f64);
+    let offset = if _mag_stat as f64 >= 100.0 {0.0} else {(-0.875 + round_amount * 2.0) * (2.0 - ((100.0 - _mag_stat as f64) / 100.0))};
+    let mossy_complex = non_rapid_fire_mg + offset + _inv_stat as f64 * ((non_rapid_fire_mg + offset) * 2.25 - (non_rapid_fire_mg + offset)) / 100.0;
+    let mossy_simple = 2.25 * _inv_stat as f64 + 225.0 - offset;
+    //225.0 + offset + _inv_stat as f64 * ((225.0 + offset) * 2.0 - (225.0 + offset)) / 100.0
+    mossy_simple
 }
 
 fn trace_rifle(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
-    let mult = _inv_stat as f64 * 0.025 + 3.5;
-    _mag_size * mult
+    let vpp = 2.6;
+    let offset = 364.0;
+    //let mult = 0.025 * _mag_stat as f64 + 3.5;
+    console_log!("inv stat: {}", _inv_stat);
+    vpp * _inv_stat as f64 + offset 
 }
 
 fn glaives(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
@@ -100,19 +115,21 @@ fn sniper_rifles(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     vpp * _inv_stat as f64 + offset
 }
 
+fn rapid_fire_sniper(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
+    let vpp = if _mag_stat >= 100 { 0.182 } else { 0.156 };
+    let offset: f64 = if _mag_stat >= 100 { 18.2 } else { 15.6 };
+    (vpp * _inv_stat as f64) + offset
+}
 fn shotguns(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
-    let real_mag_size = _mag_size.ceil() as i32;
-    let base_offset = match real_mag_size {
-        8 => 0.0,
-        7 => 4.0,
-        6 => 9.0,
-        5 => 17.0,
-        4 => 30.0,
-        _ => 0.0,
-    };
-    let base = (base_offset / 15.0) + 12.0;
-    let mult_vpp = (2.0 / 3.0) / 100.0;
-    base * (1.0 + mult_vpp * _inv_stat as f64)
+    let vpp = 0.08;
+    let offset = 12.0;
+    vpp * _inv_stat as f64 + offset
+}
+
+fn rapid_fire_shotgun(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
+    let vpp = 0.08;
+    let offset = 20.0;
+    vpp * _inv_stat as f64 + offset
 }
 
 fn forerunner(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
@@ -136,4 +153,17 @@ fn eriana_vow(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
 
 fn rockets(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     _inv_stat as f64 * 0.05 + 4.5
+}
+
+fn fusions(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
+    let vpp = 0.12;
+    let offset = 9.6;
+    vpp * _inv_stat as f64 + offset
+}
+fn leviathans_breath(_inv_stat: i32) -> f64 {
+    if _inv_stat >= 80 {
+        15.0
+    } else {
+        8.0
+    }
 }

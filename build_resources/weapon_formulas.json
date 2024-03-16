@@ -59,11 +59,11 @@
 
         "magProf": {
             "large": {
-                "mag": {"evpp": 0.0 ,"vpp": 0.32, "offset": 39.9},
+                "mag": {"evpp": 0.0 ,"vpp": 0.32, "offset": 39.5},
                 "reserve_id": 0
             },
             "medium": {
-                "mag": {"evpp": 0.0 ,"vpp": 0.262, "offset": 33.1},
+                "mag": {"evpp": 0.0 ,"vpp": 0.2675, "offset": 32.75},
                 "reserve_id": 0
             },
             "small": {
@@ -224,7 +224,7 @@
         "magProf": {
             "default": {
                 "mag": {"evpp": 0.0 ,"vpp": 0.05, "offset": 2.51},
-                "reserve_id": 111
+                "reserve_id": 1101
             },
             "Vex": {
                 "mag": {"evpp": 0.0 ,"vpp": 0.2, "offset": 25.0},
@@ -387,11 +387,11 @@
         },
         "magProf": {
             "small": {
-                "mag": {"evpp": 0.0, "vpp": 0.1, "offset": 3.5},
+                "mag": {"evpp": 0.0, "vpp": 0.1, "offset": 3.1},
                 "reserve_id": 0
             },
             "large": {
-                "mag": {"evpp": 0.0, "vpp": 0.14166, "offset": 4.25},
+                "mag": {"evpp": 0.0, "vpp": 0.136, "offset": 4.5},
                 "reserve_id": 0
             },
             "eriana": {
@@ -593,11 +593,12 @@
         },
         "magProf": {
             "default": {
-                "mag": {"evpp": 0.0, "vpp": 0.3, "offset": 17.5},
+                "mag": {"evpp": 0.0, "vpp": 0.3, "offset": 16.8},
+                "round_to": 3,
                 "reserve_id": 0
             },
             "aggressive": {
-                "mag": {"evpp": 0.0, "vpp": 0.42, "offset": 21},
+                "mag": {"evpp": 0.0, "vpp": 0.4, "offset": 22.4},
                 "round_to": 4,
                 "reserve_id": 0
             },
@@ -723,7 +724,7 @@
         },
         "magProf": {
             "default": {
-                "mag": {"evpp": 0.0, "vpp": 0.1, "offset": 10.0},
+                "mag": {"evpp": 0.0, "vpp": 0.1, "offset": 9.1},
                 "reserve_id": 0
             }
         }
@@ -734,7 +735,7 @@
         "895140517":  {"name": "Precision Frame",      "cat": "default",   "subFam": "Precision",   "magProf": "default", "pve":1.245},
         "536517534":  {"name": "Duality",              "cat": "Duality",   "subFam": "Slug",        "magProf": "default", "pve":1.242},
         "918679156":  {"name": "Precision Frame",      "cat": "slug",      "subFam": "Slug",        "magProf": "default", "pve":1.204},
-        "996573084":  {"name": "Rapid-Fire Frame",     "cat": "default",   "subFam": "Rapid-Fire",  "magProf": "default", "pve":0.934},
+        "996573084":  {"name": "Rapid-Fire Frame",     "cat": "default",   "subFam": "Rapid-Fire",  "magProf": "rapidfire", "pve":0.934},
         "1210807262": {"name": "Tractor Cannon",       "cat": "Tractor",   "subFam": "Lightweight", "magProf": "default", "pve":1.10},
         "1394384862": {"name": "The Chaperone",        "cat": "slug",      "subFam": "Slug",        "magProf": "default", "pve":1.242},
         "1458010786": {"name": "Lightweight Frame",    "cat": "default",   "subFam": "Lightweight", "magProf": "default", "pve":1.245},
@@ -809,6 +810,10 @@
             "default": {
                 "mag": {"evpp": 0.0, "vpp": 0.0375, "offset": 3.625},
                 "reserve_id": 71
+            },
+            "rapidfire": {
+                "mag": {"vpp": 0.0375, "offset": 3.625},
+                "reserve_id": 701
             },
             "LoW": {
                 "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 30.0},
@@ -895,11 +900,11 @@
     },
     "Sniper Rifle": {
         "281315705":  {"name": "Whisper of the Worm", "cat": "default", "subFam": "Whisper",    "magProf": "default", "pve": 1.265},
-        "878286503":  {"name": "Rapid-Fire Frame",    "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.265},
+        "878286503":  {"name": "Rapid-Fire Frame",    "cat": "default", "subFam": "Rapid-Fire", "magProf": "rapidfire", "pve": 1.265},
         "938999636":  {"name": "D.A.R.C.I.",          "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.265},
         "1070100196": {"name": "Izanagi's Burden",    "cat": "default", "subFam": "Adaptive",   "magProf": "default", "pve": 1.15},
         "1294026524": {"name": "Adaptive Frame",      "cat": "default", "subFam": "Adaptive",   "magProf": "default", "pve": 1.265},
-        "2909403175": {"name": "Cloudstrike",         "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.265},
+        "2909403175": {"name": "Cloudstrike",         "cat": "default", "subFam": "Rapid-Fire", "magProf": "rapidfire", "pve": 1.265},
         "3081173348": {"name": "Borealis",            "cat": "default", "subFam": "Aggressive", "magProf": "default", "pve": 1.265},
         "3468089894": {"name": "Aggressive Frame",    "cat": "default", "subFam": "Aggressive", "magProf": "default", "pve": 1.265},
         "cat": {
@@ -924,6 +929,10 @@
             "default": {
                 "mag": {"vpp": 0.03, "offset": 2.49},
                 "reserve_id": 121
+            },
+            "rapidfire": {
+                "mag": {"vpp": 0.03, "offset": 2.49},
+                "reserve_id": 1201
             }
         }
     },
@@ -932,7 +941,7 @@
         "1294026524": {"name": "Adaptive Frame",    "cat": "default", "subFam": "Adaptive",    "magProf": "large"},
         "1458010786": {"name": "Lightweight Frame", "cat": "default", "subFam": "Lightweight", "magProf": "large"},
         "1525239159": {"name": "Aggressive Frame",  "cat": "default", "subFam": "Aggressive",  "magProf": "small"},
-        "1636108362": {"name": "Precision Frame",   "cat": "default", "subFam": "Precision",   "magProf": "small"},
+        "1636108362": {"name": "Precision Frame",   "cat": "default", "subFam": "Precision",   "magProf": "precision"},
         "2213377102": {"name": "MIDA Synergy",      "cat": "default", "subFam": "Lightweight", "magProf": "large"},
         "2516532331": {"name": "Riskrunner",        "cat": "default", "subFam": "Adaptive",    "magProf": "large"},
         "2540536653": {"name": "Tarrabah",          "cat": "default", "subFam": "Aggressive",  "magProf": "small"},
@@ -970,11 +979,15 @@
         },
         "magProf": {
             "small": {
+                "mag": {"evpp": 0.0, "vpp": 0.095, "offset": 22.6},
+                "reserve_id": 0
+            },
+            "precision": {
                 "mag": {"evpp": 0.0, "vpp": 0.1, "offset": 23.5},
                 "reserve_id": 0
             },
             "large": {
-                "mag": {"evpp": 0.0, "vpp": 0.1, "offset": 28.9},
+                "mag": {"evpp": 0.0, "vpp": 0.12, "offset": 28.3},
                 "reserve_id": 0
             }
         }

@@ -46,24 +46,24 @@ pub fn other_perks() {
         }),
     );
 
-    add_imr(
-        Perks::RapidFireFrame,
-        Box::new(
-            |_input: ModifierResponseInput| -> InventoryModifierResponse {
-                match *_input.calc_data.weapon_type {
-                    WeaponType::SNIPER => InventoryModifierResponse {
-                        inv_scale: 1.3,
-                        ..Default::default()
-                    },
-                    WeaponType::SHOTGUN => InventoryModifierResponse {
-                        inv_add: 8,
-                        ..Default::default()
-                    },
-                    _ => InventoryModifierResponse::default(),
-                }
-            },
-        ),
-    );
+    // add_imr(
+    //     Perks::RapidFireFrame,
+    //     Box::new(
+    //         |_input: ModifierResponseInput| -> InventoryModifierResponse {
+    //             match *_input.calc_data.weapon_type {
+    //                 WeaponType::SNIPER => InventoryModifierResponse {
+    //                     inv_scale: 1.3,
+    //                     ..Default::default()
+    //                 },
+    //                 WeaponType::SHOTGUN => InventoryModifierResponse {
+    //                     inv_add: 8,
+    //                     ..Default::default()
+    //                 },
+    //                 _ => InventoryModifierResponse::default(),
+    //             }
+    //         },
+    //     ),
+    // );
 
     add_sbr(
         Perks::PrecisionFrame,
