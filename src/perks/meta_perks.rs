@@ -59,7 +59,12 @@ pub fn meta_perks() {
                 dmg_scale *= 1.0 - (0.6 * stat) / total_damage;
             }
             if _input.pvp {
-                if *_input.calc_data.weapon_type == WeaponType::SIDEARM
+                if _input.calc_data.intrinsic_hash == 425960662 {
+                    dmg_scale *= 0.8;
+                } else if _input.calc_data.intrinsic_hash == 2984682260 {
+                    dmg_scale *= 1.2;
+                    crit_scale *= 1.1475;
+                } else if *_input.calc_data.weapon_type == WeaponType::SIDEARM
                     || *_input.calc_data.weapon_type == WeaponType::SCOUTRIFLE
                     || *_input.calc_data.weapon_type == WeaponType::AUTORIFLE
                     || *_input.calc_data.weapon_type == WeaponType::PULSERIFLE
@@ -79,10 +84,6 @@ pub fn meta_perks() {
                     || *_input.calc_data.weapon_type == WeaponType::MACHINEGUN
                     || *_input.calc_data.weapon_type == WeaponType::GLAIVE
                 {
-                    dmg_scale *= 1.2;
-                } else if _input.calc_data.intrinsic_hash == 425960662 {
-                    dmg_scale *= 0.8;
-                } else if _input.calc_data.intrinsic_hash == 2984682260 {
                     dmg_scale *= 1.2;
                 }
             }
