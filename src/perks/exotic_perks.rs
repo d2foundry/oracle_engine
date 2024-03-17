@@ -1208,15 +1208,17 @@ pub fn exotic_perks() {
     );
     add_hmr(
         Perks::ArcConductor,
-        Box::new(|_input: ModifierResponseInput| -> HandlingModifierResponse {
-            if _input.value == 0 {
-                return HandlingModifierResponse::default();
-            }
-            HandlingModifierResponse {
-                stat_add: 100,
-                ..Default::default()
-            }
-        }),
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
+                HandlingModifierResponse {
+                    stat_add: 100,
+                    ..Default::default()
+                }
+            },
+        ),
     );
     add_sbr(
         Perks::ArcConductor,
@@ -1226,5 +1228,19 @@ pub fn exotic_perks() {
                 stats.insert(StatHashes::HANDLING.into(), 100);
             }
             stats
-        }))
+        }),
+    );
+    add_dmr(
+        Perks::VoidLeech,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 || _input.pvp {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 1.2,
+                explosive_dmg_scale: 1.2,
+                ..Default::default()
+            }
+        }),
+    )
 }
