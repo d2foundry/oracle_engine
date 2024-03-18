@@ -146,18 +146,18 @@
         }
     },
     "Fusion Rifle":{
-        "656200654":  {"name": "Merciless",           "cat": "default", "subFam": "High-Impact", "magProf": "default", "pve":1.20},
+        "656200654":  {"name": "Merciless",           "cat": "default", "subFam": "High-Impact", "magProf": "merciless", "pve":1.20},
         "878286503":  {"name": "Rapid-Fire Frame",    "cat": "default", "subFam": "Rapid-Fire",  "magProf": "default", "pve":1.12},
         "1019291327": {"name": "High-Impact Frame",   "cat": "default", "subFam": "High-Impact", "magProf": "default", "pve":1.20},
-        "1186480754": {"name": "Bastion",             "cat": "default", "subFam": "Bastion",     "magProf": "default"  },
+        "1186480754": {"name": "Bastion",             "cat": "default", "subFam": "Bastion",     "magProf": "bastion"  },
         "1294026524": {"name": "Adaptive Frame",      "cat": "default", "subFam": "Adaptive",    "magProf": "default", "pve":1.15},
         "1636108362": {"name": "Precision Frame",     "cat": "default", "subFam": "Precision",   "magProf": "default"  },
-        "1656957541": {"name": "Jötunn",              "cat": "Jotunn",  "subFam": "Jotunn",      "magProf": "default"  },
-        "1657056865": {"name": "One Thousand Voices", "cat": "1KV",     "subFam": "1KV",         "magProf": "default", "pve":1.142},
-        "1927916065": {"name": "Telesto",             "cat": "Telesto", "subFam": "Precision",   "magProf": "default"  },
+        "1656957541": {"name": "Jötunn",              "cat": "Jotunn",  "subFam": "Jotunn",      "magProf": "jotunn"  },
+        "1657056865": {"name": "One Thousand Voices", "cat": "1KV",     "subFam": "1KV",         "magProf": "1kv", "pve":1.142},
+        "1927916065": {"name": "Telesto",             "cat": "Telesto", "subFam": "Precision",   "magProf": "telesto"  },
         "2518716062": {"name": "Aggressive Frame",    "cat": "default", "subFam": "Aggressive",  "magProf": "default"  },
         "3610750208": {"name": "Vex Mythoclast",      "cat": "Vex",     "subFam": "Vex",         "magProf": "Vex"      },
-        "2585427437": {"name": "Delicate Tomb",       "cat": "default", "subFam": "Rapid-Fire",  "magProf": "default"  },
+        "2585427437": {"name": "Delicate Tomb",       "cat": "default", "subFam": "Rapid-Fire",  "magProf": "delicateTomb"  },
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0404, "offset_start": 10.73, "vpp_end": 0.318, "offset_end": 14.705, "floor_percent": 0.45, "fusion": true},
@@ -226,6 +226,30 @@
                 "mag": {"evpp": 0.0 ,"vpp": 0.05, "offset": 2.51},
                 "reserve_id": 1101
             },
+            "bastion": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.05, "offset": 2.51},
+                "reserve_id": 1186480754
+            },
+            "delicateTomb": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.05, "offset": 2.51},
+                "reserve_id": 2585427437
+            },
+            "jotunn": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.00, "offset": 5.00},
+                "reserve_id": 1656957541
+            },
+            "merciless": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.05, "offset": 2.51},
+                "reserve_id": 656200654
+            },
+            "1kv": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 4.0},
+                "reserve_id": 1657056865
+            },
+            "telesto": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 7.0},
+                "reserve_id": 1927916065
+            },
             "Vex": {
                 "mag": {"evpp": 0.0 ,"vpp": 0.2, "offset": 25.0},
                 "reserve_id": 0
@@ -241,11 +265,11 @@
         "1395789926": {"name": "Wave Frame",        "cat": "special", "subFam": "WaveFrame",    "magProf": "special", "pve":1.50},
         "1458010786": {"name": "Lightweight Frame", "cat": "special", "subFam": "Lightweight",  "magProf": "special" },
         "2353477480": {"name": "Rapid-Fire Frame",  "cat": "heavy",   "subFam": "Rapid-Fire",   "magProf": "rapid", "pve":1.20 },
-        "2977709078": {"name": "The Prospector",    "cat": "heavy",   "subFam": "TODO",         "magProf": "rapid" },
+        "2977709078": {"name": "The Prospector",    "cat": "heavy",   "subFam": "TODO",         "magProf": "prospector" },
         "3063320916": {"name": "Witherhoard",       "cat": "special", "subFam": "TODO",         "magProf": "special" },
-        "3913463509": {"name": "The Colony",        "cat": "heavy",   "subFam": "TODO",         "magProf": "adaptive" },
+        "3913463509": {"name": "The Colony",        "cat": "heavy",   "subFam": "TODO",         "magProf": "colony" },
         "4130495068": {"name": "Precision Frame",   "cat": "heavy",   "subFam": "Precision",    "magProf": "adaptive", "pve":1.20 },
-        "1174163613": {"name": "Parasite",          "cat": "parasite","subFam": "Parasite",     "magProf": "adaptive" },
+        "1174163613": {"name": "Parasite",          "cat": "parasite","subFam": "Parasite",     "magProf": "parasite" },
         "1759472859": {"name": "Double Fire",       "cat": "special", "subFam": "TODO",         "magProf": "special" },
         "cat": {
             "special": {
@@ -311,6 +335,18 @@
             "adaptive": {
                 "mag": {"evpp": -0.000233 ,"vpp": 0.09785, "offset": -0.031468},
                 "reserve_id": 233
+            },
+            "parasite": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 1.0},
+                "reserve_id": 1174163613
+            },
+            "colony": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 8.0},
+                "reserve_id": 3913463509
+            },
+            "prospector": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 8.0},
+                "reserve_id": 2977709078
             }
         }
     },
@@ -408,11 +444,11 @@
         }
     },
     "Linear Fusion Rifle": {
-        "1531126198": {"name": "The Queenbreaker", "cat": "exotic",   "subFam": "QueenBreaker", "magProf": "default", "pve":1.101},
+        "1531126198": {"name": "The Queenbreaker", "cat": "exotic",   "subFam": "QueenBreaker", "magProf": "queenbreaker", "pve":1.101},
         "2057203855": {"name": "Precision Frame",  "cat": "default",  "subFam": "Precision",    "magProf": "default", "pve":1.101},
-        "2564164194": {"name": "Arbalest",         "cat": "arbalest", "subFam": "Special",      "magProf": "default", "pve":1.101},
-        "3884127242": {"name": "Sleeper Simulant", "cat": "exotic",   "subFam": "SleeperSim",   "magProf": "default" },
-        "2881100038": {"name": "Lorentz Driver",   "cat": "default",  "subFam": "Special",      "magProf": "default", "pve":1.101},
+        "2564164194": {"name": "Arbalest",         "cat": "arbalest", "subFam": "Special",      "magProf": "arbalest", "pve":1.101},
+        "3884127242": {"name": "Sleeper Simulant", "cat": "exotic",   "subFam": "SleeperSim",   "magProf": "sleeper" },
+        "2881100038": {"name": "Lorentz Driver",   "cat": "default",  "subFam": "Special",      "magProf": "lorentz", "pve":1.101},
         "3530948111": {"name": "Aggressive Frame", "cat": "default",  "subFam": "Aggressive",   "magProf": "default", "pve":1.101},
 
         "cat": {
@@ -459,6 +495,22 @@
             "default": {
                 "mag": {"evpp": 0.0, "vpp": 0.02857142857, "offset": 3.16785714285714},
                 "reserve_id": 221
+            },
+            "arbalest": {
+                "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 6.0},
+                "reserve_id": 2564164194
+            },
+            "lorentz": {
+                "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 6.0},
+                "reserve_id": 2881100038
+            },
+            "sleeper": {
+                "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 4.0},
+                "reserve_id": 3884127242
+            },
+            "queenbreaker": {
+                "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 5.0},
+                "reserve_id": 1531126198
             }
         }
     },
@@ -467,7 +519,7 @@
         "1019291327": {"name": "High-Impact Frame",   "cat": "default",   "subFam": "High-Impact",  "magProf": "small", "pve": 1.1},
         "1294026524": {"name": "Adaptive Frame",      "cat": "default",   "subFam": "Adaptive",     "magProf": "small", "pve": 1.1},
         "2261491232": {"name": "Xenophage",           "cat": "Xenophage", "subFam": "Xenophage",    "magProf": "xenophage", "pve":2.75},
-        "2608508147": {"name": "Heir Apparent",       "cat": "default",   "subFam": "HeirApparent", "magProf": "large"},
+        "2608508147": {"name": "Heir Apparent",       "cat": "default",   "subFam": "HeirApparent", "magProf": "hierapparent"},
         "4148158229": {"name": "Thunderlord",         "cat": "default",   "subFam": "Adaptive",     "magProf": "small"},
         "2940035732": {"name": "Grand Overture",      "cat": "Overture",  "subFam": "Xenophage",    "magProf": "overture"},
         "1468523096": {"name": "Deterministic Chaos", "cat": "default",   "subFam": "High-Impact",  "magProf": "small"},
@@ -528,6 +580,10 @@
             "overture": {
                 "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 20},
                 "reserve_id": 2940035732
+            },
+            "hierapparent": {
+                "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 200},
+                "reserve_id": 2608508147
             }
         }
     },
@@ -620,15 +676,15 @@
     },
     "Rocket Launcher": {
         "216781713":  {"name": "Häkke Precision Frame", "cat": "default",   "subFam": "Precision", "magProf": "default"},
-        "411799453":  {"name": "Deathbringer",          "cat": "default",   "subFam": "DeathBringer", "magProf": "default"},
+        "411799453":  {"name": "Deathbringer",          "cat": "default",   "subFam": "DeathBringer", "magProf": "deathbringer"},
         "1019291327": {"name": "High-Impact Frame",     "cat": "default",   "subFam": "High-Impact", "magProf": "default"},
         "1294026524": {"name": "Adaptive Frame",        "cat": "default",   "subFam": "Adaptive", "magProf": "default"},
-        "2200569208": {"name": "Eyes of Tomorrow",      "cat": "eyestmrw",  "subFam": "Wardcliff", "magProf": "default"},
-        "2473404935": {"name": "The Wardcliff Coil",    "cat": "wardcliff", "subFam": "Wardcliff", "magProf": "default"},
+        "2200569208": {"name": "Eyes of Tomorrow",      "cat": "eyestmrw",  "subFam": "Wardcliff", "magProf": "eyesoftomorrow"},
+        "2473404935": {"name": "The Wardcliff Coil",    "cat": "wardcliff", "subFam": "Wardcliff", "magProf": "wardcliff"},
         "3419274965": {"name": "Precision Frame",       "cat": "default",   "subFam": "Precision", "magProf": "default"},
         "3468089894": {"name": "Aggressive Frame",      "cat": "default",   "subFam": "Aggressive", "magProf": "default"},
-        "3649430342": {"name": "Two-Tailed Fox",        "cat": "default",   "subFam": "TwoTailed", "magProf": "default"},
-        "2962361451": {"name": "Gjallarhorn",           "cat": "default",   "subFam": "Adaptive", "magProf": "default", "pve":0.75},
+        "3649430342": {"name": "Two-Tailed Fox",        "cat": "default",   "subFam": "TwoTailed", "magProf": "twotail"},
+        "2962361451": {"name": "Gjallarhorn",           "cat": "default",   "subFam": "Adaptive", "magProf": "gjallarhorn", "pve":0.75},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
@@ -675,6 +731,27 @@
             "default": {
                 "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 1},
                 "reserve_id": 101
+            },
+            "deathbringer": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 1},
+                "reserve_id": 411799453
+            },
+            "eyesoftomorrow": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 1},
+                "reserve_id": 2200569208
+            },
+            "gjallarhorn": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 1},
+                "reserve_id": 2962361451
+            }
+            ,
+            "wardcliff": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 1},
+                "reserve_id": 2473404935
+            },
+            "twotail": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 1},
+                "reserve_id": 3649430342
             }
         }
     },
@@ -730,13 +807,13 @@
         }
     },
     "Shotgun": {
-        "372430833":  {"name": "Legend of Acrius",     "cat": "default",   "subFam": "Aggressive",  "magProf": "default"},
-        "481338655":  {"name": "Lord of Wolves",       "cat": "LoW",       "subFam": "LoW",         "magProf": "default"},
+        "372430833":  {"name": "Legend of Acrius",     "cat": "default",   "subFam": "Aggressive",  "magProf": "acrius"},
+        "481338655":  {"name": "Lord of Wolves",       "cat": "LoW",       "subFam": "LoW",         "magProf": "LoW"},
         "895140517":  {"name": "Precision Frame",      "cat": "default",   "subFam": "Precision",   "magProf": "default", "pve":1.245},
         "536517534":  {"name": "Duality",              "cat": "Duality",   "subFam": "Slug",        "magProf": "default", "pve":1.242},
         "918679156":  {"name": "Precision Frame",      "cat": "slug",      "subFam": "Slug",        "magProf": "default", "pve":1.204},
         "996573084":  {"name": "Rapid-Fire Frame",     "cat": "default",   "subFam": "Rapid-Fire",  "magProf": "rapidfire", "pve":0.934},
-        "1210807262": {"name": "Tractor Cannon",       "cat": "Tractor",   "subFam": "Lightweight", "magProf": "default", "pve":1.10},
+        "1210807262": {"name": "Tractor Cannon",       "cat": "Tractor",   "subFam": "Lightweight", "magProf": "tractor", "pve":1.10},
         "1394384862": {"name": "The Chaperone",        "cat": "slug",      "subFam": "Slug",        "magProf": "default", "pve":1.242},
         "1458010786": {"name": "Lightweight Frame",    "cat": "default",   "subFam": "Lightweight", "magProf": "default", "pve":1.245},
         "1636108362": {"name": "Precision Frame",      "cat": "default",   "subFam": "Precision",   "magProf": "default", "pve":1.245},
@@ -815,6 +892,10 @@
                 "mag": {"vpp": 0.0375, "offset": 3.625},
                 "reserve_id": 701
             },
+            "acrius": {
+                "mag": {"evpp": 0.0, "vpp": 0.000, "offset": 6.0},
+                "reserve_id": 372430833
+            },
             "LoW": {
                 "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 30.0},
                 "reserve_id": 481338655
@@ -822,6 +903,10 @@
             "conditional": {
                 "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 2.0},
                 "reserve_id": 3787406018
+            },
+            "tractor": {
+                "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 7.0},
+                "reserve_id": 1210807262
             }
         }
     },
