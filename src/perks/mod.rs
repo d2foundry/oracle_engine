@@ -94,6 +94,7 @@ pub enum Perks {
 
     Radiant = 1380009033,
     Weaken = 1464159054,
+    Sever = 2519102437,
     WellOfRadiance = 2274196887,
     WardOfDawn = 4260353953,
     BannerShield = 4260353952,
