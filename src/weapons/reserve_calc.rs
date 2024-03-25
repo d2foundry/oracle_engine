@@ -1,5 +1,3 @@
-use crate::console_log;
-
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 enum ReserveIDs {
     Primary,
