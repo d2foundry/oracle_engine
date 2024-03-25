@@ -449,7 +449,7 @@
         "2564164194": {"name": "Arbalest",         "cat": "arbalest", "subFam": "Special",      "magProf": "arbalest", "pve":1.101},
         "3884127242": {"name": "Sleeper Simulant", "cat": "exotic",   "subFam": "SleeperSim",   "magProf": "sleeper" },
         "2881100038": {"name": "Lorentz Driver",   "cat": "default",  "subFam": "Special",      "magProf": "lorentz", "pve":1.101},
-        "3530948111": {"name": "Aggressive Frame", "cat": "default",  "subFam": "Aggressive",   "magProf": "default", "pve":1.101},
+        "3530948111": {"name": "Aggressive Frame", "cat": "default",  "subFam": "Aggressive",   "magProf": "aggressive", "pve":1.101},
 
         "cat": {
             "default": {
@@ -495,6 +495,10 @@
             "default": {
                 "mag": {"evpp": 0.0, "vpp": 0.02857142857, "offset": 3.16785714285714},
                 "reserve_id": 221
+            },
+            "aggressive": {
+                "mag": {"evpp": 0.0, "vpp": 0.02857142857, "offset": 3.16785714285714},
+                "reserve_id": 2202
             },
             "arbalest": {
                 "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 6.0},
@@ -566,7 +570,7 @@
         },
         "magProf": {
             "large": {
-                "mag": {"evpp": 0.0, "vpp": 0.7, "offset": 45.0},
+                "mag": {"evpp": 0.0, "vpp": 0.6945, "offset": 45.55},
                 "reserve_id": 82
             },
             "small": {
@@ -675,9 +679,9 @@
         }
     },
     "Rocket Launcher": {
-        "216781713":  {"name": "Häkke Precision Frame", "cat": "default",   "subFam": "Precision", "magProf": "default"},
+        "216781713":  {"name": "Häkke Precision Frame", "cat": "default",   "subFam": "Precision", "magProf": "highInventory"},
         "411799453":  {"name": "Deathbringer",          "cat": "default",   "subFam": "DeathBringer", "magProf": "deathbringer"},
-        "1019291327": {"name": "High-Impact Frame",     "cat": "default",   "subFam": "High-Impact", "magProf": "default"},
+        "1019291327": {"name": "High-Impact Frame",     "cat": "default",   "subFam": "High-Impact", "magProf": "highInventory"},
         "1294026524": {"name": "Adaptive Frame",        "cat": "default",   "subFam": "Adaptive", "magProf": "default"},
         "2200569208": {"name": "Eyes of Tomorrow",      "cat": "eyestmrw",  "subFam": "Wardcliff", "magProf": "eyesoftomorrow"},
         "2473404935": {"name": "The Wardcliff Coil",    "cat": "wardcliff", "subFam": "Wardcliff", "magProf": "wardcliff"},
@@ -731,6 +735,10 @@
             "default": {
                 "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 1},
                 "reserve_id": 101
+            },
+            "highInventory": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 1},
+                "reserve_id": 1002
             },
             "deathbringer": {
                 "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 1},
@@ -986,7 +994,7 @@
     "Sniper Rifle": {
         "281315705":  {"name": "Whisper of the Worm", "cat": "default", "subFam": "Whisper",    "magProf": "default", "pve": 1.265},
         "878286503":  {"name": "Rapid-Fire Frame",    "cat": "default", "subFam": "Rapid-Fire", "magProf": "rapidfire", "pve": 1.265},
-        "938999636":  {"name": "D.A.R.C.I.",          "cat": "default", "subFam": "Rapid-Fire", "magProf": "default", "pve": 1.265},
+        "938999636":  {"name": "D.A.R.C.I.",          "cat": "default", "subFam": "Rapid-Fire", "magProf": "rapidfire", "pve": 1.265},
         "1070100196": {"name": "Izanagi's Burden",    "cat": "default", "subFam": "Adaptive",   "magProf": "default", "pve": 1.15},
         "1294026524": {"name": "Adaptive Frame",      "cat": "default", "subFam": "Adaptive",   "magProf": "default", "pve": 1.265},
         "2909403175": {"name": "Cloudstrike",         "cat": "default", "subFam": "Rapid-Fire", "magProf": "rapidfire", "pve": 1.265},
@@ -1140,7 +1148,8 @@
         "magProf": {
             "default": {
                 "mag": {"evpp": 0.0, "vpp": 0.3, "offset": 73.99},
-                "reserve_id": 251
+                "reserve_id": 251,
+                "round_to": 1
             }
         }
     }
