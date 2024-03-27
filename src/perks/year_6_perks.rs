@@ -575,5 +575,16 @@ pub fn year_6_perks() {
             };
             HashMap::from([(StatHashes::RELOAD.into(), buff)])
         }),
+    );
+    add_dmr(
+        Perks::Sever,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let debuff = if _input.pvp { 0.85 } else { 1.0 };
+            DamageModifierResponse {
+                impact_dmg_scale: debuff,
+                explosive_dmg_scale: debuff,
+                ..Default::default()
+            }
+        }),
     )
 }

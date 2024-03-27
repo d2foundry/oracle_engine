@@ -371,6 +371,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Amplified => Some(PerkOptionData::static_()),
         Perks::Radiant => Some(PerkOptionData::static_()),
         Perks::Weaken => Some(PerkOptionData::static_()),
+        Perks::Sever => Some(PerkOptionData::static_()),
         Perks::WardOfDawn => Some(PerkOptionData::static_()),
         Perks::BannerShield => Some(PerkOptionData::static_()),
         Perks::DeadFall => Some(PerkOptionData::static_()),
