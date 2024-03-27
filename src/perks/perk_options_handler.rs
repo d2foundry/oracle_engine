@@ -294,6 +294,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Onslaught => Some(PerkOptionData::stacking(3)),
 
         //exotics
+        Perks::ChargedWithBlight => Some(PerkOptionData::toggle()),
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
         Perks::DarkForgedTrigger => Some(PerkOptionData::toggle()),
         Perks::AgersCall => Some(PerkOptionData::static_()),
