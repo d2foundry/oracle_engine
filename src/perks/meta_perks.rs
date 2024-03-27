@@ -87,7 +87,6 @@ pub fn meta_perks() {
                     dmg_scale *= 1.2;
                 }
             }
-
             DamageModifierResponse {
                 crit_scale,
                 impact_dmg_scale: dmg_scale,
@@ -240,13 +239,13 @@ pub fn meta_perks() {
         Perks::ReserveMod,
         Box::new(
             |_input: ModifierResponseInput| -> InventoryModifierResponse {
-                let mut inv_buff = if _input.value > 0 { 20 } else { 0 };
-                if _input.value == 2 {
-                    inv_buff += 20;
-                }
-                if _input.value > 2 {
-                    inv_buff += 30;
-                }
+                let inv_buff = match _input.value {
+                    0 => 0,
+                    1 => 20,
+                    2 => 40,
+                    3 => 50,
+                    _ => 50,
+                };
                 InventoryModifierResponse {
                     inv_stat_add: inv_buff,
                     inv_scale: 1.0,
@@ -259,13 +258,13 @@ pub fn meta_perks() {
     add_sbr(
         Perks::ReserveMod,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
-            let mut inv_buff = if _input.value > 0 { 20 } else { 0 };
-            if _input.value == 2 {
-                inv_buff += 15;
-            }
-            if _input.value > 2 {
-                inv_buff += 20;
-            }
+            let inv_buff = match _input.value {
+                0 => 0,
+                1 => 20,
+                2 => 40,
+                3 => 50,
+                _ => 50,
+            };
             let mut stats = HashMap::new();
             stats.insert(StatHashes::INVENTORY_SIZE.into(), inv_buff);
             stats
