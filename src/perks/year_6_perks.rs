@@ -367,7 +367,10 @@ pub fn year_6_perks() {
                 if _input.value == 0 {
                     return HashMap::new();
                 }
-                HashMap::from([(StatHashes::RELOAD.into(), 50)])
+                HashMap::from([
+                    (StatHashes::RELOAD.into(), 50),
+                    (StatHashes::AIM_ASSIST.into(), 20),
+                ])
             },
         ),
     );
