@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 use crate::{
-    d2_enums::{AmmoType, DamageType, WeaponType},
+    d2_enums::{AmmoType, BungieHash, DamageType, WeaponType},
     database,
     perks::{enhanced_check, Perk},
     types::rs_types::{
@@ -12,11 +12,18 @@ use crate::{
 
 use super::{FiringData, Weapon};
 
-fn get_data_pointers(_weapon_type_id: u8, _intrinsic_hash: u32) -> Option<DataPointers> {
+fn get_data_pointers(
+    _weapon_type_id: u8,
+    intrinsic_hash: BungieHash,
+    weapon_hash: BungieHash,
+) -> Option<DataPointers> {
     let pointer_map: HashMap<WeaponPath, DataPointers> = HashMap::from(database::DATA_POINTERS);
-    let pointer = pointer_map.get(&WeaponPath(_weapon_type_id as u32, _intrinsic_hash));
-
-    pointer.cloned()
+    if let Some(weapon) = pointer_map.get(&WeaponPath(_weapon_type_id as u32, weapon_hash)) {
+        return Some(*weapon);
+    }
+    pointer_map
+        .get(&WeaponPath(_weapon_type_id as u32, intrinsic_hash))
+        .cloned()
 }
 
 impl Weapon {
@@ -27,7 +34,7 @@ impl Weapon {
         _ammo_type_id: u32,
         _damage_type_id: u32,
     ) -> Option<Weapon> {
-        let data_pointer_result = get_data_pointers(_weapon_type_id, _intrinsic_hash);
+        let data_pointer_result = get_data_pointers(_weapon_type_id, _intrinsic_hash, _hash);
 
         let data_pointer = data_pointer_result?;
 
