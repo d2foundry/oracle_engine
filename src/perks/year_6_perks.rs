@@ -589,5 +589,16 @@ pub fn year_6_perks() {
                 ..Default::default()
             }
         }),
-    )
+    );
+    add_dmr(
+        Perks::DesperateMeasures,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = _input.value.clamp(0, 3) as f64 * 0.1 + 1.0;
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
 }

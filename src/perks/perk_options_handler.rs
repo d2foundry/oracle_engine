@@ -292,6 +292,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::SwordLogic => Some(PerkOptionData::stacking(4)),
         //season 23 | year 6
         Perks::Onslaught => Some(PerkOptionData::stacking(3)),
+        Perks::DesperateMeasures => Some(PerkOptionData::stacking(3)),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),

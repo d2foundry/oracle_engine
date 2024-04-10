@@ -380,6 +380,7 @@ pub enum Perks {
 
     //season 23 | year 6
     Onslaught = 95528736,
+    DesperateMeasures = 2109543898,
 
     //subclass
     OnYourMark = 3066103999,
