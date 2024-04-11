@@ -320,7 +320,7 @@ pub fn buff_perks() {
         Perks::LucentBlades,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             if _input.calc_data.weapon_type != &WeaponType::SWORD {
-                return HashMap::new()
+                return HashMap::new();
             }
             let stat_bump = match _input.value {
                 0 => return HashMap::new(),
@@ -417,6 +417,21 @@ pub fn buff_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: mult,
                 explosive_dmg_scale: mult,
+                ..Default::default()
+            }
+        }),
+    );
+    add_dmr(
+        Perks::NoBackupPlans,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if *_input.calc_data.weapon_type != WeaponType::SHOTGUN || _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let desired_buff = if _input.pvp { 1.10 } else { 1.35 };
+            let buff = emp_buff(_input.cached_data, desired_buff);
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
                 ..Default::default()
             }
         }),
