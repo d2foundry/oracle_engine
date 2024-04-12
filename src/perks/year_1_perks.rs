@@ -1,9 +1,7 @@
 use std::collections::HashMap;
 
 use crate::{
-    d2_enums::{AmmoType, BungieHash, DamageType, StatBump, StatHashes, WeaponType},
-    logging::extern_log,
-    weapons::Weapon,
+    console_log, d2_enums::{AmmoType, BungieHash, DamageType, StatBump, StatHashes, WeaponType}, logging::extern_log, weapons::Weapon
 };
 
 use super::{
@@ -43,15 +41,19 @@ pub fn year_1_perks() {
             let mut out_dmg_scale = 1.0;
             let base = if _input.pvp { 0.03 } else { 0.121 };
             let max = if _input.pvp { 0.06 } else { 0.256 };
+            let fake_current_mag = _input.calc_data.curr_mag - 30.0;
             let threshold_divisor = if _input.is_enhanced { 4.0 / 3.0 } else { 2.0 };
-            if _input.calc_data.curr_mag <= _input.calc_data.curr_mag / threshold_divisor {
+            if fake_current_mag <= _input.calc_data.base_mag / threshold_divisor {
+                console_log!("mag {}", _input.calc_data.curr_mag);
                 let t = 1.0
-                    - (_input.calc_data.curr_mag - 1.0)
+                    - (fake_current_mag - 1.0)
                         / ((_input.calc_data.base_mag / threshold_divisor) - 1.0);
+                console_log!("t value: {}", t);
                 if t > 0.0 {
-                    out_dmg_scale = lerp(base, max, t);
+                    out_dmg_scale = lerp(base, max, t) + 1.0;
                 }
             };
+            console_log!("high impact reserves increase: {}", out_dmg_scale);
             DamageModifierResponse {
                 impact_dmg_scale: out_dmg_scale,
                 explosive_dmg_scale: out_dmg_scale,
@@ -60,7 +62,7 @@ pub fn year_1_perks() {
         }),
     );
 
-    //Confirmed by harm <3
+    //Confirmed by harm <3 and andromeda found a typo >:)
     add_hmr(
         Perks::ThreatDetector,
         Box::new(
@@ -512,6 +514,32 @@ pub fn year_1_perks() {
                 ..Default::default()
             }
         }),
+    );
+
+    add_rmr(
+        Perks::IronGaze,
+        Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
+            RangeModifierResponse {
+                range_stat_add: 20,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_sbr(
+        Perks::IronGaze,
+        Box::new(
+            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+                let range = 30;
+                let aim_assit = 20;
+                let mut out = HashMap::new();
+                if _input.value > 0 {
+                    out.insert(StatHashes::RANGE.into(), range);
+                    out.insert(StatHashes::AIM_ASSIST.into(), aim_assit);
+                }
+                out
+            },
+        ),
     );
 
     add_sbr(
