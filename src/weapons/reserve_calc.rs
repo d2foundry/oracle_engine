@@ -60,6 +60,7 @@ enum ReserveIDs {
     Truth,
     TwoTailedFox,
     Winterbite,
+    WhisperOfTheWorm
 }
 impl From<u32> for ReserveIDs {
     fn from(id: u32) -> Self {
@@ -124,6 +125,7 @@ impl From<u32> for ReserveIDs {
             2491817779 => ReserveIDs::Truth,
             3649430342 => ReserveIDs::TwoTailedFox,
             1207608520 => ReserveIDs::Winterbite,
+            281315705 => ReserveIDs::WhisperOfTheWorm,
 
             _ => ReserveIDs::Primary,
         }
@@ -201,6 +203,7 @@ pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _
         ReserveIDs::Truth => truth(_inv_stat),
         ReserveIDs::TwoTailedFox => two_tailed_fox(_inv_stat),
         ReserveIDs::Winterbite => winterbite(_inv_stat),
+        ReserveIDs::WhisperOfTheWorm => whisper_of_the_worm(_mag_size, _mag_stat, _inv_stat)
         //placeholders
     };
     let size = raw_size * _scale;
@@ -242,7 +245,11 @@ fn sniper_rifles(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     let offset = if _mag_stat >= 100 { 14.0 } else { 12.0 };
     vpp * _inv_stat as f64 + offset
 }
-
+fn whisper_of_the_worm(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
+    let vpp = if _mag_stat >= 100 { 0.14 } else { 0.12 };
+    let offset = if _mag_stat >= 100 { 20.0 } else { 18.0 };
+    vpp * _inv_stat as f64 + offset
+}
 fn rapid_fire_sniper(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     let vpp = if _mag_stat >= 100 { 0.182 } else { 0.156 };
     let offset: f64 = if _mag_stat >= 100 { 18.2 } else { 15.6 };
@@ -498,8 +505,8 @@ fn merciless(_inv_stat: i32) -> f64 {
 }
 fn one_thousand_voices(_inv_stat: i32) -> f64 {
     match _inv_stat {
-        80 => 7.0,
-        _ => 8.0,
+        80 => 11.0,
+        _ => 12.0,
     }
 }
 fn parasite(_inv_stat: i32) -> f64 {
