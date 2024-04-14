@@ -53,7 +53,7 @@
             "High-Impact": {"damage": 22.061, "crit_mult": 16,  "burst_delay": 5,   "burst_size": 1, "inner_burst_delay": 0},
             "Adaptive":    {"damage": 15.033, "crit_mult": 14,  "burst_delay": 3,   "burst_size": 1, "inner_burst_delay": 0},
             "Precision":   {"damage": 19.038, "crit_mult": 14,  "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0},
-            "Cerberus":    {"damage": 18.615, "crit_mult": 10, "burst_delay": 5,   "burst_size": 4, "inner_burst_delay": 0},
+            "Cerberus":    {"damage": 18.615, "crit_mult": 17, "burst_delay": 5,   "burst_size": 4, "inner_burst_delay": 0},
             "SweetBuiss":  {"damage": 15.161, "crit_mult": -5, "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0}
         },
 
@@ -124,7 +124,7 @@
             "Precision":   {"damage": 85.115, "crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "Lightweight": {"damage": 77.692, "crit_mult": 5, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "Trinity":     {"damage": 29.077,  "crit_mult": 0, "burst_delay": 0, "burst_size": 3, "inner_burst_delay": 0, "one_ammo":true},
-            "Hierarchy":   {"damage": 82.308,  "crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
+            "Hierarchy":   {"damage": 82.308,  "crit_mult": 5, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "leviathan":   {"damage": 345.6, "crit_mult": 5, "burst_delay": 0,   "burst_size": 1, "inner_burst_delay": 0},
             "Wish-Ender":  {"damage": 71.775, "crit_mult": 15, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "LeMonarque":  {"damage": 85.00, "crit_mult": 5, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
@@ -449,7 +449,7 @@
             "Precision":  {"damage": 40.462, "crit_mult": 12,  "burst_delay": 10, "burst_size": 1, "inner_burst_delay": 0},
             "Aggressive": {"damage": 47.538, "crit_mult": 18,  "burst_delay": 15, "burst_size": 1, "inner_burst_delay": 0},
             "Adaptive":   {"damage": 44.769, "crit_mult": 16,  "burst_delay": 13, "burst_size": 1, "inner_burst_delay": 0},
-            "Lightweight":{"damage": 42.0, "crit_mult": 5,  "burst_delay": 12, "burst_size": 1, "inner_burst_delay": 0},
+            "Lightweight":{"damage": 39.692, "crit_mult": 22,  "burst_delay": 12, "burst_size": 1, "inner_burst_delay": 0},
             "Crimson":    {"damage": 18.042, "crit_mult": 18,  "burst_delay": 7,  "burst_size": 3, "inner_burst_delay": 3},
             "Eriana":     {"damage": 77.115, "crit_mult": 18,  "burst_delay": 20, "burst_size": 1, "inner_burst_delay": 0},
             "LastWord":   {"damage": 38.308, "crit_mult": 31, "burst_delay": 8,  "burst_size": 1, "inner_burst_delay": 0},
@@ -680,7 +680,7 @@
             "High-Impact":   {"damage": 22.061, "crit_mult": 16,    "burst_delay": 12, "burst_size": 3, "inner_burst_delay": 2},
             "Rapid-Fire":    {"damage": 14.615, "crit_mult": 20,   "burst_delay": 6,  "burst_size": 3, "inner_burst_delay": 2},
             "Adaptive":      {"damage": 20.154, "crit_mult": 16,    "burst_delay": 10, "burst_size": 3, "inner_burst_delay": 2},
-            "Lightweight":   {"damage": 17.0, "crit_mult": 17,    "burst_delay": 8,  "burst_size": 3, "inner_burst_delay": 2},
+            "Lightweight":   {"damage": 17.07, "crit_mult": 16.5,    "burst_delay": 8,  "burst_size": 3, "inner_burst_delay": 2},
             "VigilanceWing": {"damage": 15.972, "crit_mult": 8,   "burst_delay": 9,  "burst_size": 5, "inner_burst_delay": 2},
             "GravitonLance": {"damage": 19.038, "crit_mult": 19,    "burst_delay": 10, "burst_size": 2, "inner_burst_delay": 2},
             "test":          {"damage": 10.0, "crit_mult": 25.5, "burst_delay": 2,  "burst_size": 5, "inner_burst_delay": 2}
@@ -1065,7 +1065,7 @@
         }
     },
     "Sniper Rifle": {
-        "281315705":  {"name": "Whisper of the Worm", "cat": "default", "subFam": "Whisper",    "magProf": "default", "pve": 1.265},
+        "281315705":  {"name": "Whisper of the Worm", "cat": "default", "subFam": "Whisper",    "magProf": "whisper", "pve": 1.265},
         "878286503":  {"name": "Rapid-Fire Frame",    "cat": "default", "subFam": "Rapid-Fire", "magProf": "rapidfire", "pve": 1.265},
         "938999636":  {"name": "D.A.R.C.I.",          "cat": "default", "subFam": "Rapid-Fire", "magProf": "rapidfire", "pve": 1.265},
         "1070100196": {"name": "Izanagi's Burden",    "cat": "default", "subFam": "Adaptive",   "magProf": "default", "pve": 1.15},
@@ -1087,7 +1087,7 @@
         },
         "subFam": {
             "Rapid-Fire": {"damage":85.002 ,  "crit_mult":99,  "burst_delay":13, "burst_size":1, "inner_burst_delay":0},
-            "Adaptive":   {"damage":118.885 , "crit_mult":89,  "burst_delay":20, "burst_size":1, "inner_burst_delay":0},
+            "Adaptive":   {"damage":118.999 , "crit_mult":89,  "burst_delay":20, "burst_size":1, "inner_burst_delay":0},
             "Aggressive": {"damage":135.007, "crit_mult":102,  "burst_delay":25, "burst_size":1, "inner_burst_delay":0},
             "Whisper":    {"damage":170, "crit_mult":153, "burst_delay":25, "burst_size":1, "inner_burst_delay":0}
         },
@@ -1099,6 +1099,10 @@
             "rapidfire": {
                 "mag": {"vpp": 0.03, "offset": 2.49},
                 "reserve_id": 1201
+            },
+            "whisper": {
+                "mag": {"vpp": 0.03, "offset": 2.49},
+                "reserve_id": 281315705
             }
         }
     },
