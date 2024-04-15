@@ -683,7 +683,7 @@
             "Lightweight":   {"damage": 17.07, "crit_mult": 16.5,  "pve_damage": 16.00, "pve_crit_mult": 8,    "burst_delay": 8,  "burst_size": 3, "inner_burst_delay": 2},
             "VigilanceWing": {"damage": 15.972, "crit_mult": 8,  "pve_damage": 15.75, "pve_crit_mult": -2,   "burst_delay": 9,  "burst_size": 5, "inner_burst_delay": 2},
             "GravitonLance": {"damage": 19.038, "crit_mult": 19, "pve_damage": 19.018, "pve_crit_mult": 8,    "burst_delay": 10, "burst_size": 2, "inner_burst_delay": 2},
-            "test":          {"damage": 10.0, "crit_mult": 25,   "pve_damage": 10.0, "pve_crit_mult": 25,  "burst_delay": 2,  "burst_size": 5, "inner_burst_delay": 2}
+            "test":          {"damage": 10.0, "crit_mult": 25.5,   "pve_damage": 10.0, "pve_crit_mult": 25.5,  "burst_delay": 2,  "burst_size": 5, "inner_burst_delay": 2}
         },
         "magProf": {
             "default": {
