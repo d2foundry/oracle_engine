@@ -452,7 +452,7 @@
             "Lightweight":{"damage": 39.692, "crit_mult": 22, "pve_damage": 42.00, "pve_crit_mult": 5, "burst_delay": 12, "burst_size": 1, "inner_burst_delay": 0},
             "Crimson":    {"damage": 18.042, "crit_mult": 18, "pve_damage": 19.00, "pve_crit_mult": 5, "burst_delay": 7,  "burst_size": 3, "inner_burst_delay": 3},
             "Eriana":     {"damage": 77.115, "crit_mult": 18, "pve_damage": 78.00, "pve_crit_mult": 5, "burst_delay": 20, "burst_size": 1, "inner_burst_delay": 0},
-            "LastWord":   {"damage": 38.308, "crit_mult": 31, "pve_damage": 38.03, "pve_crit_mult": 15, "burst_delay": 8,  "burst_size": 1, "inner_burst_delay": 0},
+            "LastWord":   {"damage": 38.308, "crit_mult": 31, "pve_damage": 40.3118, "pve_crit_mult": 15, "burst_delay": 8,  "burst_size": 1, "inner_burst_delay": 0},
             "HeavyBurst": {"damage": 23.846, "crit_mult": 29, "pve_damage": 25.006, "pve_crit_mult": 15, "burst_delay": 11, "burst_size": 2, "inner_burst_delay": 3}
         },
         "magProf": {
@@ -1029,7 +1029,7 @@
             "Adaptive_Burst":   {"damage":20.091,  "crit_mult":16, "pve_damage":20.00,  "pve_crit_mult":5,  "burst_delay":7, "burst_size":3, "inner_burst_delay":2},
             "Adaptive":         {"damage":36.083,   "crit_mult":5, "pve_damage":36.00,   "pve_crit_mult":-5, "burst_delay":6, "burst_size":1, "inner_burst_delay":0},
             "Lightweight":      {"damage":31.038,   "crit_mult":5, "pve_damage":31.00,   "pve_crit_mult":55, "burst_delay":5, "burst_size":1, "inner_burst_delay":0},
-            "Forerunner":       {"damage":47.231,  "crit_mult":16, "pve_damage":36.9,  "pve_crit_mult":15, "burst_delay":9, "burst_size":1, "inner_burst_delay":0},
+            "Forerunner":       {"damage":47.231,  "crit_mult":16, "pve_damage":39.114,  "pve_crit_mult":15, "burst_delay":9, "burst_size":1, "inner_burst_delay":0},
             "zero":             {"damage": 0,      "crit_mult": 0, "pve_damage": 0,      "pve_crit_mult": 0, "burst_delay": 0, "burst_size": 0, "inner_burst_delay": 0}
         },
         "magProf": {
