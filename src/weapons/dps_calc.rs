@@ -120,7 +120,7 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
     let weapon_type = weapon.weapon_type;
     let ammo_type = weapon.ammo_type;
 
-    let tmp_dmg_prof = weapon.get_damage_profile();
+    let tmp_dmg_prof = weapon.get_damage_profile(true);
     let impact_dmg = tmp_dmg_prof.0;
     let explosion_dmg = tmp_dmg_prof.1;
     let crit_mult = tmp_dmg_prof.2;
