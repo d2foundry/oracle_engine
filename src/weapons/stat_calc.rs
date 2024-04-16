@@ -369,44 +369,26 @@ impl Weapon {
 
 impl Weapon {
     pub fn get_damage_profile(&self, _pvp: bool) -> (f64, f64, f64, f64) {
-        let impact;
+        let mut impact = if _pvp {
+            self.firing_data.damage
+        } else {
+            self.firing_data.pve_damage
+        };
         let mut explosion = 0.0_f64;
-        let mut crit = 1.0_f64;
-        let delay;
+        let mut crit = if _pvp {
+            self.firing_data.crit_mult
+        } else {
+            self.firing_data.pve_crit_mult
+        };
+        let mut delay = 0.0;
 
         let epr = get_explosion_data(self.list_perks(), &self.static_calc_input(), _pvp);
-        if epr.percent <= 0.0 {
-            impact = if _pvp {
-                self.firing_data.damage
-            } else {
-                self.firing_data.pve_damage
-            };
-            crit = if _pvp {
-                self.firing_data.crit_mult
-            } else {
-                self.firing_data.pve_crit_mult
-            };
-            delay = 0.0;
-        } else {
-            impact = if _pvp {
-                self.firing_data.damage
-            } else {
-                self.firing_data.pve_damage
-            } * (1.0 - epr.percent);
-            explosion = if _pvp {
-                self.firing_data.damage
-            } else {
-                self.firing_data.pve_damage
-            } * epr.percent;
-            if epr.retain_base_total
-                && (self.firing_data.crit_mult > 1.0 && _pvp
-                    || self.firing_data.pve_crit_mult > 1.0 && !_pvp)
-            {
-                crit = if _pvp {
-                    (self.firing_data.crit_mult - 1.0) / (1.0 - epr.percent) + 1.0
-                } else {
-                    (self.firing_data.pve_crit_mult - 1.0) / (1.0 - epr.percent) + 1.0
-                }
+        if epr.percent > 0.0 {
+            explosion = impact * epr.percent;
+            impact *= 1.0 - epr.percent;
+
+            if epr.retain_base_total {
+                crit = (crit - 1.0) / (1.0 - epr.percent) + 1.0;
             }
             delay = epr.delyed;
         }
