@@ -448,7 +448,7 @@
         "subFam": {
             "Precision":  {"damage": 40.462, "crit_mult": 12, "pve_damage": 40.00, "pve_crit_mult": 0, "burst_delay": 10, "burst_size": 1, "inner_burst_delay": 0},
             "Aggressive": {"damage": 47.538, "crit_mult": 18, "pve_damage": 50.0, "pve_crit_mult": 5, "burst_delay": 15, "burst_size": 1, "inner_burst_delay": 0},
-            "Adaptive":   {"damage": 44.769, "crit_mult": 16, "pve_damage": 46.502, "pve_crit_mult": 0, "burst_delay": 13, "burst_size": 1, "inner_burst_delay": 0},
+            "Adaptive":   {"damage": 44.769, "crit_mult": 15.65, "pve_damage": 46.502, "pve_crit_mult": 0, "burst_delay": 13, "burst_size": 1, "inner_burst_delay": 0},
             "Lightweight":{"damage": 39.692, "crit_mult": 22, "pve_damage": 42.00, "pve_crit_mult": 5, "burst_delay": 12, "burst_size": 1, "inner_burst_delay": 0},
             "Crimson":    {"damage": 18.042, "crit_mult": 18, "pve_damage": 19.00, "pve_crit_mult": 5, "burst_delay": 7,  "burst_size": 3, "inner_burst_delay": 3},
             "Eriana":     {"damage": 77.115, "crit_mult": 18, "pve_damage": 78.00, "pve_crit_mult": 5, "burst_delay": 20, "burst_size": 1, "inner_burst_delay": 0},
