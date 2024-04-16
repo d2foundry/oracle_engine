@@ -666,6 +666,8 @@ fn default_i32_1() -> i32 {
 pub struct FiringData {
     pub damage: f64,
     pub crit_mult: f64,
+    pub pve_damage: f64,
+    pub pve_crit_mult: f64,
     pub burst_delay: f64,
     pub inner_burst_delay: f64,
     #[serde(default)]
@@ -683,6 +685,8 @@ impl From<SubFamJson> for FiringData {
         FiringData {
             damage: value.damage,
             crit_mult: (value.crit_mult) / 51.0 + 1.5,
+            pve_damage: value.pve_damage,
+            pve_crit_mult: (value.pve_crit_mult) / 51.0 + 1.5,
             burst_delay: value.burst_delay / 30.0,
             inner_burst_delay: value.inner_burst_delay / 30.0,
             burst_size: value.burst_size,
@@ -768,6 +772,8 @@ struct RangeJson {
 struct SubFamJson {
     damage: f64,
     crit_mult: f64,
+    pve_damage: f64,
+    pve_crit_mult: f64,
     burst_delay: f64,
     #[serde(default = "default_i32_1")]
     burst_size: i32,

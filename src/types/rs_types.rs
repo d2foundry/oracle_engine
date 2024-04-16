@@ -21,6 +21,8 @@ pub struct WeaponPath(pub u32, pub u32);
 pub struct FiringData {
     pub damage: f64,
     pub crit_mult: f64,
+    pub pve_damage: f64,
+    pub pve_crit_mult: f64,
     pub burst_delay: f64,
     pub inner_burst_delay: f64,
     pub burst_size: i32,

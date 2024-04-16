@@ -319,7 +319,7 @@ impl Weapon {
             pvp_damage_modifiers = DamageModifierResponse::default();
             pve_damage_modifiers = DamageModifierResponse::default();
         };
-        let tmp_dmg_prof = self.get_damage_profile();
+        let tmp_dmg_prof = self.get_damage_profile(_pvp);
         let impact_dmg = tmp_dmg_prof.0;
         let explosion_dmg = tmp_dmg_prof.1;
         let crit_mult = tmp_dmg_prof.2;
@@ -368,22 +368,27 @@ impl Weapon {
 }
 
 impl Weapon {
-    pub fn get_damage_profile(&self) -> (f64, f64, f64, f64) {
-        let impact;
-        let mut explosion = 0.0_f64;
-        let mut crit = 1.0_f64;
-        let delay;
-
-        let epr = get_explosion_data(self.list_perks(), &self.static_calc_input(), false);
-        if epr.percent <= 0.0 {
-            impact = self.firing_data.damage;
-            crit = self.firing_data.crit_mult;
-            delay = 0.0;
+    pub fn get_damage_profile(&self, _pvp: bool) -> (f64, f64, f64, f64) {
+        let mut impact = if _pvp {
+            self.firing_data.damage
         } else {
-            impact = self.firing_data.damage * (1.0 - epr.percent);
-            explosion = self.firing_data.damage * epr.percent;
-            if epr.retain_base_total && self.firing_data.crit_mult > 1.0 {
-                crit = (self.firing_data.crit_mult - 1.0) / (1.0 - epr.percent) + 1.0
+            self.firing_data.pve_damage
+        };
+        let mut explosion = 0.0_f64;
+        let mut crit = if _pvp {
+            self.firing_data.crit_mult
+        } else {
+            self.firing_data.pve_crit_mult
+        };
+        let mut delay = 0.0;
+
+        let epr = get_explosion_data(self.list_perks(), &self.static_calc_input(), _pvp);
+        if epr.percent > 0.0 {
+            explosion = impact * epr.percent;
+            impact *= 1.0 - epr.percent;
+
+            if epr.retain_base_total {
+                crit = (crit - 1.0) / (1.0 - epr.percent) + 1.0;
             }
             delay = epr.delyed;
         }

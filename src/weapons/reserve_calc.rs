@@ -22,6 +22,7 @@ enum ReserveIDs {
     RapidFireShotgun,
     HighInventoryRockets,
     AggressiveLinearFusionRifle,
+    RocketAssistedFrame,
 
     //kinetic exotic special
     Arbalest,
@@ -38,6 +39,7 @@ enum ReserveIDs {
     LorentzDriver,
     Merciless,
     Telesto,
+    Tessellation,
 
     //exotic heavy
     Anarchy,
@@ -55,7 +57,10 @@ enum ReserveIDs {
     TheQueenbreaker,
     TheWardcliffCoil,
     TractorCannon,
+    Truth,
     TwoTailedFox,
+    Winterbite,
+    WhisperOfTheWorm
 }
 impl From<u32> for ReserveIDs {
     fn from(id: u32) -> Self {
@@ -82,6 +87,7 @@ impl From<u32> for ReserveIDs {
             701 => ReserveIDs::RapidFireShotgun,
             1002 => ReserveIDs::HighInventoryRockets,
             2202 => ReserveIDs::AggressiveLinearFusionRifle,
+            1701 => ReserveIDs::RocketAssistedFrame,
 
             //kinetic exotic special
             2564164194 => ReserveIDs::Arbalest,
@@ -98,6 +104,7 @@ impl From<u32> for ReserveIDs {
             2881100038 => ReserveIDs::LorentzDriver,
             656200654 => ReserveIDs::Merciless,
             1927916065 => ReserveIDs::Telesto,
+            2769013282 => ReserveIDs::Tessellation,
 
             //heavy
             389268985 => ReserveIDs::Anarchy,
@@ -115,7 +122,10 @@ impl From<u32> for ReserveIDs {
             1531126198 => ReserveIDs::TheQueenbreaker,
             2473404935 => ReserveIDs::TheWardcliffCoil,
             1210807262 => ReserveIDs::TractorCannon,
+            2491817779 => ReserveIDs::Truth,
             3649430342 => ReserveIDs::TwoTailedFox,
+            1207608520 => ReserveIDs::Winterbite,
+            281315705 => ReserveIDs::WhisperOfTheWorm,
 
             _ => ReserveIDs::Primary,
         }
@@ -138,11 +148,19 @@ pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _
         ReserveIDs::LinearFusions => linear_fusion_rifle(_mag_size, _mag_stat, _inv_stat),
         ReserveIDs::LargeMachineGuns => rapid_fire_machinegun(_mag_size, _mag_stat, _inv_stat),
         ReserveIDs::HighInventoryRockets => high_inventory_rockets(_mag_size, _mag_stat, _inv_stat),
-        ReserveIDs::AggressiveLinearFusionRifle => aggressive_linear_fusion_rifle(_mag_size, _mag_stat, _inv_stat),
-        ReserveIDs::SpecialGrenadeLaunchers => special_grenade_launcher(_mag_size, _mag_stat, _inv_stat),
-        ReserveIDs::SmallGrenadeLaunchers => adaptive_grenade_launcher(_mag_size, _mag_stat, _inv_stat),
-        ReserveIDs::LargeGrenadeLaunchers => rapid_grenade_launcher(_mag_size, _mag_stat, _inv_stat),
- 
+        ReserveIDs::AggressiveLinearFusionRifle => {
+            aggressive_linear_fusion_rifle(_mag_size, _mag_stat, _inv_stat)
+        }
+        ReserveIDs::SpecialGrenadeLaunchers => {
+            special_grenade_launcher(_mag_size, _mag_stat, _inv_stat)
+        }
+        ReserveIDs::SmallGrenadeLaunchers => {
+            adaptive_grenade_launcher(_mag_size, _mag_stat, _inv_stat)
+        }
+        ReserveIDs::LargeGrenadeLaunchers => {
+            rapid_grenade_launcher(_mag_size, _mag_stat, _inv_stat)
+        }
+        ReserveIDs::RocketAssistedFrame => rocket_assisted(_mag_size, _mag_stat, _inv_stat),
 
         //exotic kinetic special
         ReserveIDs::ForeRunner => forerunner(_mag_size, _mag_stat, _inv_stat),
@@ -161,6 +179,7 @@ pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _
         ReserveIDs::LorentzDriver => lorentz_driver(_inv_stat),
         ReserveIDs::Merciless => merciless(_inv_stat),
         ReserveIDs::Telesto => telesto(_inv_stat),
+        ReserveIDs::Tessellation => tessellation(_inv_stat),
 
         //exotic heavy
         ReserveIDs::Anarchy => anarchy(_inv_stat),
@@ -181,8 +200,10 @@ pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _
         ReserveIDs::TheQueenbreaker => queenbreaker(_inv_stat),
         ReserveIDs::TheWardcliffCoil => wardcliff_coil(_inv_stat),
         ReserveIDs::TractorCannon => tractor_cannon(_inv_stat),
+        ReserveIDs::Truth => truth(_inv_stat),
         ReserveIDs::TwoTailedFox => two_tailed_fox(_inv_stat),
-
+        ReserveIDs::Winterbite => winterbite(_inv_stat),
+        ReserveIDs::WhisperOfTheWorm => whisper_of_the_worm(_mag_size, _mag_stat, _inv_stat)
         //placeholders
     };
     let size = raw_size * _scale;
@@ -224,7 +245,11 @@ fn sniper_rifles(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     let offset = if _mag_stat >= 100 { 14.0 } else { 12.0 };
     vpp * _inv_stat as f64 + offset
 }
-
+fn whisper_of_the_worm(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
+    let vpp = if _mag_stat >= 100 { 0.14 } else { 0.12 };
+    let offset = if _mag_stat >= 100 { 20.0 } else { 18.0 };
+    vpp * _inv_stat as f64 + offset
+}
 fn rapid_fire_sniper(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     let vpp = if _mag_stat >= 100 { 0.182 } else { 0.156 };
     let offset: f64 = if _mag_stat >= 100 { 18.2 } else { 15.6 };
@@ -277,7 +302,7 @@ fn aggressive_linear_fusion_rifle(_mag_size: f64, _mag_stat: i32, _inv_stat: i32
         0..=69 => 16.5,
         70..=90 => 16.0,
         91..=100 => 15.5,
-        _ => 15.5
+        _ => 15.5,
     };
     let vpp = ((offset * 1.4375) - offset) / 100.0;
     vpp * _inv_stat as f64 + offset
@@ -480,8 +505,8 @@ fn merciless(_inv_stat: i32) -> f64 {
 }
 fn one_thousand_voices(_inv_stat: i32) -> f64 {
     match _inv_stat {
-        80 => 7.0,
-        _ => 8.0,
+        80 => 11.0,
+        _ => 12.0,
     }
 }
 fn parasite(_inv_stat: i32) -> f64 {
@@ -508,6 +533,14 @@ fn telesto(_inv_stat: i32) -> f64 {
         _ => 22.0,
     }
 }
+fn tessellation(_inv_stat: i32) -> f64 {
+    match _inv_stat {
+        33 => 16.0,
+        53 => 19.0,
+        73 => 21.0,
+        _ => 23.0,
+    }
+}
 fn queenbreaker(_inv_stat: i32) -> f64 {
     match _inv_stat {
         40 => 21.0,
@@ -532,11 +565,27 @@ fn tractor_cannon(_inv_stat: i32) -> f64 {
         _ => 21.0,
     }
 }
+fn truth(_inv_stat: i32) -> f64 {
+    match _inv_stat {
+        40 => 9.0,
+        60 => 10.0,
+        80 => 11.0,
+        _ => 11.0,
+    }
+}
 fn two_tailed_fox(_inv_stat: i32) -> f64 {
     match _inv_stat {
         30 => 8.0,
         50 => 9.0,
         70 => 10.0,
         _ => 10.0,
+    }
+}
+fn winterbite(_inv_stat: i32) -> f64 {
+    match _inv_stat {
+        0 => 9.0,
+        20 => 12.0,
+        40 => 15.0,
+        _ => 17.0,
     }
 }

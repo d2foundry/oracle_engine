@@ -844,7 +844,7 @@ pub fn year_1_perks() {
             )
             .unwrap();
 
-            let p_data = precision.get_damage_profile();
+            let p_data = precision.get_damage_profile(_input.pvp);
 
             let lightweight_body = _input.calc_data.curr_firing_data.damage;
             let lightweight_crit = _input.calc_data.curr_firing_data.crit_mult;

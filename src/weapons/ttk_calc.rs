@@ -47,7 +47,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
     let mut ttk_data: Vec<ResillienceSummary> = Vec::new();
     let mut persistent_data: HashMap<String, f64> = HashMap::new();
 
-    let tmp_dmg_prof = _weapon.get_damage_profile();
+    let tmp_dmg_prof = _weapon.get_damage_profile(true);
     let impact_dmg = tmp_dmg_prof.0;
     let explosion_dmg = tmp_dmg_prof.1;
     let mut crit_mult = tmp_dmg_prof.2;
@@ -217,7 +217,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
             );
             ///////////////////////////////
 
-            let tmp_dmg_prof = _weapon.get_damage_profile();
+            let tmp_dmg_prof = _weapon.get_damage_profile(true);
             let impact_dmg = tmp_dmg_prof.0;
             let explosion_dmg = tmp_dmg_prof.1;
 
