@@ -413,12 +413,16 @@ pub fn year_1_perks() {
         Perks::OpeningShot,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let aim_assist = if _input.is_enhanced { 25 } else { 20 };
-                let range = if _input.is_enhanced { 30 } else { 25 };
+                let mut aim_assist:f64 = if _input.is_enhanced { 25.0 } else { 20.0 };
+                let mut range: f64 = if _input.is_enhanced { 30.0 } else { 25.0 };
                 let mut out = HashMap::new();
+                if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
+                    aim_assist /= 2.0;
+                    range /= 2.0;
+                }
                 if _input.value > 0 {
-                    out.insert(StatHashes::AIM_ASSIST.into(), aim_assist);
-                    out.insert(StatHashes::RANGE.into(), range);
+                    out.insert(StatHashes::AIM_ASSIST.into(), aim_assist.ceil() as i32);
+                    out.insert(StatHashes::RANGE.into(), range.ceil() as i32);
                 }
                 out
             },
@@ -428,12 +432,15 @@ pub fn year_1_perks() {
     add_rmr(
         Perks::OpeningShot,
         Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
-            let mut range = if _input.is_enhanced { 30 } else { 25 };
+            let mut range: f64 = if _input.is_enhanced { 30.0 } else { 25.0 };
             if _input.calc_data.total_shots_fired != 0.0 || _input.value == 0 {
-                range = 0;
+                range = 0.0;
             };
+            if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
+                range /= 2.0;
+            }
             RangeModifierResponse {
-                range_stat_add: range,
+                range_stat_add: range.ceil() as i32,
                 range_all_scale: 1.0,
                 range_hip_scale: 1.0,
                 range_zoom_scale: 1.0,
