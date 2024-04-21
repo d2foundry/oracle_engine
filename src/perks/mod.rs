@@ -514,6 +514,7 @@ pub enum Perks {
     Unrepentant = 2641107734,
     ArcConductor = 2516532331,
     VoidLeech = 3441203855,
+    PerpetualLoophole = 2171805903,
     InverseRelationship = 1833111001,
     Spindle = 1180907940,
     TheRightChoice = 34498892,
@@ -539,6 +540,8 @@ pub enum Perks {
     TargetAquired = 939227542,
     TractorCannon = 1210807262,
     MarksmanSights = 1408087975,
+    BigFrigidGlaive = 1207608520,
+    WeightedEdge = 75282108,
 
     #[num_enum(default)]
     Ignore = 69420,
