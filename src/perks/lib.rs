@@ -141,6 +141,7 @@ pub struct DamageModifierResponse {
     pub impact_dmg_scale: f64,
     pub explosive_dmg_scale: f64,
     pub crit_scale: f64,
+    pub melee_dmg_scale: f64,
 }
 impl Default for DamageModifierResponse {
     fn default() -> Self {
@@ -148,6 +149,7 @@ impl Default for DamageModifierResponse {
             impact_dmg_scale: 1.0,
             explosive_dmg_scale: 1.0,
             crit_scale: 1.0,
+            melee_dmg_scale: 1.0,
         }
     }
 }
@@ -157,7 +159,7 @@ impl DamageModifierResponse {
         Self {
             impact_dmg_scale: modifier,
             explosive_dmg_scale: modifier,
-            // pending: melee_dmg_scale
+            melee_dmg_scale: modifier,
             ..Default::default()
         }
     }
@@ -423,4 +425,5 @@ pub struct DamageProfile {
     pub explosion_dmg: f64,
     pub crit_mult: f64,
     pub damage_delay: f64,
+    pub melee_dmg: f64,
 }
