@@ -544,5 +544,17 @@ pub fn exotic_armor() {
             }
             stats
         }),
-    )
+    );
+    add_dmr(
+        Perks::TritonVice,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 || _input.calc_data.weapon_type != &WeaponType::GLAIVE {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                melee_dmg_scale: 2.0,
+                ..Default::default()
+            }
+        }),
+    );
 }
