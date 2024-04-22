@@ -405,7 +405,7 @@ pub struct ModifierResponseSummary {
     pub statbump: Option<HashMap<BungieHash, StatBump>>,
 }
 
-#[derive(Debug, Clone, PartialEq, Serialize, Default)]
+#[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct DamageProfile {
     pub impact_dmg: f64,
     pub explosion_dmg: f64,
