@@ -104,7 +104,7 @@ pub fn exotic_armor() {
             DamageModifierResponse {
                 impact_dmg_scale: modifier,
                 explosive_dmg_scale: modifier,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );

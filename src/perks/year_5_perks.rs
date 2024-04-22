@@ -77,7 +77,7 @@ pub fn year_5_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: dmg_boost,
                 explosive_dmg_scale: dmg_boost,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -136,6 +136,7 @@ pub fn year_5_perks() {
                 impact_dmg_scale: dmg_scale,
                 explosive_dmg_scale: dmg_scale,
                 crit_scale,
+                ..Default::default()
             }
         }),
     );
@@ -330,7 +331,7 @@ pub fn year_5_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: buff + 1.0,
                 explosive_dmg_scale: buff + 1.0,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -348,7 +349,7 @@ pub fn year_5_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -408,7 +409,7 @@ pub fn year_5_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.30,
                 explosive_dmg_scale: 1.30,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -537,7 +538,7 @@ pub fn year_5_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: scalar,
                 explosive_dmg_scale: scalar,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );

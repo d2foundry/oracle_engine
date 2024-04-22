@@ -55,7 +55,7 @@ pub fn year_1_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: out_dmg_scale,
                 explosive_dmg_scale: out_dmg_scale,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -137,9 +137,8 @@ pub fn year_1_perks() {
                     crit_mult *= 0.95;
                 }
                 return DamageModifierResponse {
-                    impact_dmg_scale: 1.0,
-                    explosive_dmg_scale: 1.0,
                     crit_scale: crit_mult,
+                    ..Default::default()
                 };
             };
             DamageModifierResponse::default()
@@ -168,9 +167,8 @@ pub fn year_1_perks() {
                 DamageModifierResponse::default()
             } else {
                 DamageModifierResponse {
-                    impact_dmg_scale: 1.0,
                     explosive_dmg_scale: 1.3,
-                    crit_scale: 1.0,
+                    ..Default::default()
                 }
             }
         }),
@@ -197,9 +195,8 @@ pub fn year_1_perks() {
             } else {
                 // let damage_mult = ((1.0 /  _input.calc_data.base_crit_mult) * 0.15) + 1.0;
                 DamageModifierResponse {
-                    impact_dmg_scale: 1.0,
                     explosive_dmg_scale: 1.3,
-                    crit_scale: 1.0,
+                    ..Default::default()
                 }
             }
         }),
@@ -389,8 +386,7 @@ pub fn year_1_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
                 impact_dmg_scale: 1.1,
-                explosive_dmg_scale: 1.0,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -599,7 +595,7 @@ pub fn year_1_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -615,7 +611,7 @@ pub fn year_1_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -631,7 +627,7 @@ pub fn year_1_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 - damage_mult,
                 explosive_dmg_scale: 1.0 - damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -716,7 +712,7 @@ pub fn year_1_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -855,6 +851,7 @@ pub fn year_1_perks() {
                 impact_dmg_scale: precision_body / lightweight_body,
                 explosive_dmg_scale: precision_body / lightweight_body,
                 crit_scale: precision_crit / lightweight_crit,
+                ..Default::default()
             }
         }),
     );

@@ -30,7 +30,7 @@ pub fn year_4_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + dmg_boost,
                 explosive_dmg_scale: 1.0 + dmg_boost,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -90,7 +90,7 @@ pub fn year_4_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + dmg_boost,
                 explosive_dmg_scale: 1.0 + dmg_boost,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -238,7 +238,7 @@ pub fn year_4_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + dmg,
                 explosive_dmg_scale: 1.0 + dmg,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -439,7 +439,7 @@ pub fn year_4_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + dmg,
                 explosive_dmg_scale: 1.0 + dmg,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -482,7 +482,7 @@ pub fn year_4_perks() {
                 DamageModifierResponse {
                     impact_dmg_scale: 1.0 + damage_mult,
                     explosive_dmg_scale: 1.0 + damage_mult,
-                    crit_scale: 1.0,
+                    ..Default::default()
                 }
             } else {
                 DamageModifierResponse::default()
@@ -501,7 +501,7 @@ pub fn year_4_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );

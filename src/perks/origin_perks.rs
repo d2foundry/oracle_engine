@@ -73,7 +73,7 @@ pub fn origin_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -177,7 +177,7 @@ pub fn origin_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );

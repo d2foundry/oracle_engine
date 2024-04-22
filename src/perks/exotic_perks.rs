@@ -44,7 +44,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_buff,
                 explosive_dmg_scale: damage_buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -137,7 +137,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_buff,
                 explosive_dmg_scale: damage_buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -178,8 +178,7 @@ pub fn exotic_perks() {
             };
             DamageModifierResponse {
                 crit_scale: crit_mult,
-                explosive_dmg_scale: 1.0,
-                impact_dmg_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -274,7 +273,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + (val as f64) * 0.1,
                 explosive_dmg_scale: 1.0 + (val as f64) * 0.1,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -289,7 +288,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_buff,
                 explosive_dmg_scale: damage_buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -304,7 +303,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_buff,
                 explosive_dmg_scale: damage_buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -411,6 +410,7 @@ pub fn exotic_perks() {
                 explosive_dmg_scale: 1.48,
                 impact_dmg_scale: 1.48,
                 crit_scale,
+                ..Default::default()
             }
         }),
     );
@@ -427,7 +427,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: dmg_mult,
                 explosive_dmg_scale: dmg_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -441,7 +441,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: dmg_mult,
                 explosive_dmg_scale: dmg_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -457,7 +457,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -493,6 +493,7 @@ pub fn exotic_perks() {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
                 crit_scale: crit_mult,
+                ..Default::default()
             }
         }),
     );
@@ -549,7 +550,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -684,6 +685,7 @@ pub fn exotic_perks() {
                 explosive_dmg_scale: damage_mult,
                 impact_dmg_scale: damage_mult,
                 crit_scale: crit_mult,
+                ..Default::default()
             }
         }),
     );
@@ -702,6 +704,7 @@ pub fn exotic_perks() {
                 explosive_dmg_scale: damage_mult,
                 impact_dmg_scale: damage_mult,
                 crit_scale: crit_mult,
+                ..Default::default()
             }
         }),
     );
@@ -723,7 +726,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 explosive_dmg_scale: damage_mult,
                 impact_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -740,7 +743,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 explosive_dmg_scale: damage_mult,
                 impact_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -753,7 +756,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 explosive_dmg_scale: 1.0 + damage_mult,
                 impact_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -773,7 +776,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -822,10 +825,12 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::FullStop,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.pvp {
+                return DamageModifierResponse::default()
+            }
             DamageModifierResponse {
-                explosive_dmg_scale: 1.0,
-                impact_dmg_scale: 1.0,
-                crit_scale: if !_input.pvp { 2.9 } else { 1.0 },
+                crit_scale: 2.9,
+                ..Default::default()
             }
         }),
     );

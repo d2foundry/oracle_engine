@@ -330,7 +330,7 @@ pub fn other_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -384,7 +384,7 @@ pub fn other_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -400,7 +400,7 @@ pub fn other_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -410,8 +410,7 @@ pub fn other_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
                 impact_dmg_scale: 1.125,
-                explosive_dmg_scale: 1.0,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -422,7 +421,7 @@ pub fn other_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 0.75,
                 explosive_dmg_scale: 0.75,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -434,9 +433,8 @@ pub fn other_perks() {
                 && _input.calc_data.base_crit_mult < 1.15
             {
                 DamageModifierResponse {
-                    impact_dmg_scale: 1.0,
-                    explosive_dmg_scale: 1.0,
                     crit_scale: 0.92,
+                    ..Default::default()
                 }
             } else {
                 DamageModifierResponse::default()
@@ -482,7 +480,7 @@ pub fn other_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.02,
                 explosive_dmg_scale: 1.02,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
