@@ -410,7 +410,7 @@ pub fn buff_perks() {
     add_dmr(
         Perks::GlacialGuard,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value == 0 {
+            if _input.value == 0 || _input.calc_data.damage_type != &DamageType::STASIS {
                 return DamageModifierResponse::default();
             }
             let mult = surge_buff(_input.cached_data, 4, _input.pvp);
