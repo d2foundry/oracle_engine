@@ -150,6 +150,7 @@ pub enum Perks {
     TritonVice = 187957397,
     GlacialGuard = 185514250,
     BurningFists = 384759955,
+    WarlordsSigil = 2731901709,
 
     //parts
     ImpactCasing = 3796465595,
