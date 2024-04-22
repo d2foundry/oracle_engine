@@ -557,4 +557,24 @@ pub fn exotic_armor() {
             }
         }),
     );
+    add_dmr(
+        Perks::WarlordsSigil,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let melee_buff = match _input.value {
+                1 => 1.55,
+                2 => 2.10,
+                3 => 2.65,
+                4 => 3.2,
+                5 => 3.75,
+                _ => 3.75
+            };
+            DamageModifierResponse {
+                melee_dmg_scale: melee_buff,
+                ..Default::default()
+            }
+        }),
+    );
 }
