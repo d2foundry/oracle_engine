@@ -260,7 +260,7 @@ fn hash_to_perk_option_data(hash: u32) -> Option<PerkOptionData> {
         Perks::WellRounded => Some(PerkOptionData::stacking(2)),
 
         //season 18 | year 5
-        Perks::GutShot => Some(PerkOptionData::constant()),
+        Perks::GutShot => Some(PerkOptionData::toggle()),
         Perks::Pugilist => Some(PerkOptionData::toggle()),
         Perks::Slickdraw => Some(PerkOptionData::constant()),
         Perks::UnderOver => Some(PerkOptionData::constant()),
