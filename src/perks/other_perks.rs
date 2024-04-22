@@ -567,6 +567,21 @@ pub fn other_perks() {
             }
         }),
     );
+
+    add_dmr(
+        Perks::BannerOfWar,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            // TODO for glaives handle syntho/wormgod reducing this to 1.125/1.05 respectively
+            DamageModifierResponse {
+                melee_dmg_scale: 1.25,
+                ..Default::default()
+            }
+        }),
+    );
+
     add_dmr(
         Perks::SupportFrame,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
