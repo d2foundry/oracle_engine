@@ -398,4 +398,30 @@ pub fn buff_perks() {
             }
         }),
     );
+    add_dmr(
+        Perks::BurningFists,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let buffs = match _input.value {
+                1 => (1.0, 1.0),
+                2 => (1.2, 1.0),
+                3 => (1.25, 1.2),
+                4 => (1.3, 1.25),
+                5 => (1.35, 1.25),
+                _ => (1.35, 1.25)
+            };
+            let weapon_buff = if _input.pvp {
+                emp_buff(_input.cached_data, buffs.1)
+            } else {
+                emp_buff(_input.cached_data, buffs.0)
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: weapon_buff,
+                explosive_dmg_scale: weapon_buff,
+                ..Default::default()
+            }
+        }),
+    );
 }
