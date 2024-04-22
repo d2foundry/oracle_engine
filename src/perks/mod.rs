@@ -152,6 +152,7 @@ pub enum Perks {
     TritonVice = 187957397,
     GlacialGuard = 185514250,
     DoomFang = 1155472387,
+    BurningFists = 384759955,
 
     //parts
     ImpactCasing = 3796465595,
