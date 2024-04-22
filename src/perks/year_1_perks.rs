@@ -849,8 +849,8 @@ pub fn year_1_perks() {
             let lightweight_body = _input.calc_data.curr_firing_data.damage;
             let lightweight_crit = _input.calc_data.curr_firing_data.crit_mult;
 
-            let precision_body = p_data.0;
-            let precision_crit = p_data.2;
+            let precision_body = p_data.impact_dmg;
+            let precision_crit = p_data.crit_mult;
             DamageModifierResponse {
                 impact_dmg_scale: precision_body / lightweight_body,
                 explosive_dmg_scale: precision_body / lightweight_body,

@@ -8,7 +8,7 @@ use crate::{
         get_handling_modifier, get_magazine_modifier, get_range_modifier, get_reload_modifier,
         get_reserve_modifier, get_velocity_modifier,
         lib::{
-            CalculationInput, DamageModifierResponse, FiringModifierResponse,
+            CalculationInput, DamageModifierResponse, DamageProfile, FiringModifierResponse,
             HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
             RangeModifierResponse, ReloadModifierResponse,
         },
@@ -320,9 +320,9 @@ impl Weapon {
             pve_damage_modifiers = DamageModifierResponse::default();
         };
         let tmp_dmg_prof = self.get_damage_profile(_pvp);
-        let impact_dmg = tmp_dmg_prof.0;
-        let explosion_dmg = tmp_dmg_prof.1;
-        let crit_mult = tmp_dmg_prof.2;
+        let impact_dmg = tmp_dmg_prof.impact_dmg;
+        let explosion_dmg = tmp_dmg_prof.explosion_dmg;
+        let crit_mult = tmp_dmg_prof.crit_mult;
 
         let fd = self.firing_data;
         let extra_charge_delay = if self.weapon_type == WeaponType::FUSIONRIFLE {
@@ -368,7 +368,7 @@ impl Weapon {
 }
 
 impl Weapon {
-    pub fn get_damage_profile(&self, _pvp: bool) -> (f64, f64, f64, f64) {
+    pub fn get_damage_profile(&self, _pvp: bool) -> DamageProfile {
         let mut impact = if _pvp {
             self.firing_data.damage
         } else {
@@ -392,7 +392,12 @@ impl Weapon {
             }
             delay = epr.delyed;
         }
-        (impact, explosion, crit, delay)
+        DamageProfile {
+            impact_dmg: impact,
+            explosion_dmg: explosion,
+            crit_mult: crit,
+            damage_delay: delay,
+        }
     }
 }
 

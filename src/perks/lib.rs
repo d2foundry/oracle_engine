@@ -404,3 +404,11 @@ pub struct ModifierResponseSummary {
     pub drmr: Option<DamageResistModifierResponse>,
     pub statbump: Option<HashMap<BungieHash, StatBump>>,
 }
+
+#[derive(Debug, Clone, PartialEq, Serialize, Default)]
+pub struct DamageProfile {
+    pub impact_dmg: f64,
+    pub explosion_dmg: f64,
+    pub crit_mult: f64,
+    pub damage_delay: f64,
+}

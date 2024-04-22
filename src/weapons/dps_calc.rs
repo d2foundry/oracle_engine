@@ -121,10 +121,10 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
     let ammo_type = weapon.ammo_type;
 
     let tmp_dmg_prof = weapon.get_damage_profile(true);
-    let impact_dmg = tmp_dmg_prof.0;
-    let explosion_dmg = tmp_dmg_prof.1;
-    let crit_mult = tmp_dmg_prof.2;
-    // let damage_delay = tmp_dmg_prof.3;
+    let impact_dmg = tmp_dmg_prof.impact_dmg;
+    let explosion_dmg = tmp_dmg_prof.explosion_dmg;
+    let crit_mult = tmp_dmg_prof.crit_mult;
+    // let damage_delay = tmp_dmg_prof.damage_delay;
 
     let base_mag = weapon.calc_ammo_sizes(None, None, false).mag_size;
     let maximum_shots = if base_mag * 5 < 15 { 15 } else { base_mag * 5 };
