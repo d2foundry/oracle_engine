@@ -572,7 +572,7 @@ impl Weapon {
             .perk_val()
             .clamp(0, 100)
             .into();
-        if self.perks.get(&1449897496).is_some() && self.weapon_type == WeaponType::BOW {
+        if self.perks.contains_key(&1449897496) && self.weapon_type == WeaponType::BOW {
             return Seconds::INFINITY;
         }
         match self.intrinsic_hash {

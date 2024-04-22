@@ -43,16 +43,16 @@ pub struct ResillienceSummary {
     pub optimal_ttk: OptimalKillData,
 }
 
-pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
+pub fn calc_ttk(weapon: &Weapon, overshield: f64) -> Vec<ResillienceSummary> {
     let mut ttk_data: Vec<ResillienceSummary> = Vec::new();
     let mut persistent_data: HashMap<String, f64> = HashMap::new();
 
-    let tmp_dmg_prof = _weapon.get_damage_profile(true);
+    let tmp_dmg_prof = weapon.get_damage_profile(true);
     let impact_dmg = tmp_dmg_prof.0;
     let explosion_dmg = tmp_dmg_prof.1;
     let mut crit_mult = tmp_dmg_prof.2;
     // let damage_delay = tmp_dmg_prof.3;
-    if _weapon.weapon_type == WeaponType::SHOTGUN && _weapon.firing_data.burst_size == 12 {
+    if weapon.weapon_type == WeaponType::SHOTGUN && weapon.firing_data.burst_size == 12 {
         crit_mult = 1.0; // shawty has no crits
     }
 
@@ -74,20 +74,20 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
             persistent_data.insert("empowering".to_string(), 1.0);
             persistent_data.insert("debuff".to_string(), 1.0);
             persistent_data.insert("surge".to_string(), 1.0);
-            let calc_input = _weapon.pvp_calc_input(
+            let calc_input = weapon.pvp_calc_input(
                 opt_bullets_fired,
                 opt_bullets_hit,
                 opt_time_taken,
-                (_overshield - opt_damage_dealt) > 0.0,
+                (overshield - opt_damage_dealt) > 0.0,
             );
             let dmg_mods = get_dmg_modifier(
-                _weapon.list_perks().clone(),
+                weapon.list_perks().clone(),
                 &calc_input,
                 true,
                 &mut persistent_data,
             );
             let firing_mods = get_firing_modifier(
-                _weapon.list_perks().clone(),
+                weapon.list_perks().clone(),
                 &calc_input,
                 true,
                 &mut persistent_data,
@@ -100,12 +100,12 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
             let head_diff = ((impact_dmg * dmg_mods.impact_dmg_scale) * critical_multiplier)
                 - (impact_dmg * dmg_mods.impact_dmg_scale);
 
-            let shot_burst_delay = (_weapon.firing_data.burst_delay + firing_mods.burst_delay_add)
+            let shot_burst_delay = (weapon.firing_data.burst_delay + firing_mods.burst_delay_add)
                 * firing_mods.burst_delay_scale;
             let shot_inner_burst_delay =
-                _weapon.firing_data.inner_burst_delay * firing_mods.inner_burst_scale;
+                weapon.firing_data.inner_burst_delay * firing_mods.inner_burst_scale;
             let shot_burst_size =
-                _weapon.firing_data.burst_size as f64 + firing_mods.burst_size_add;
+                weapon.firing_data.burst_size as f64 + firing_mods.burst_size_add;
 
             let mut shot_delay = if opt_bullets_hit % shot_burst_size > 0.0 && opt_bullets_hit > 0.0
             {
@@ -116,25 +116,25 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
                 shot_burst_delay
             };
 
-            if _weapon.hash == 4289226715 { // vex mythoclast
-            } else if _weapon.weapon_type == WeaponType::LINEARFUSIONRIFLE {
+            if weapon.hash == 4289226715 { // vex mythoclast
+            } else if weapon.weapon_type == WeaponType::LINEARFUSIONRIFLE {
                 shot_delay *= 1.95;
-            } else if _weapon.weapon_type == WeaponType::FUSIONRIFLE {
+            } else if weapon.weapon_type == WeaponType::FUSIONRIFLE {
                 shot_delay *= 1.45;
             }
 
-            let ammo_fired = if _weapon.firing_data.one_ammo {
+            let ammo_fired = if weapon.firing_data.one_ammo {
                 opt_bullets_hit / shot_burst_size
             } else {
                 opt_bullets_fired
             };
             if ammo_fired - mag_expended
-                >= _weapon
+                >= weapon
                     .calc_ammo_sizes(Some(calc_input.clone()), Some(&mut persistent_data), true)
                     .mag_size
                     .into()
             {
-                shot_delay += _weapon
+                shot_delay += weapon
                     .calc_reload_time(Some(calc_input.clone()), Some(&mut persistent_data), true)
                     .reload_time;
                 mag_expended += ammo_fired;
@@ -197,39 +197,39 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
             persistent_data.insert("empowering".to_string(), 1.0);
             persistent_data.insert("debuff".to_string(), 1.0);
             persistent_data.insert("surge".to_string(), 1.0);
-            let calc_input = _weapon.pvp_calc_input(
+            let calc_input = weapon.pvp_calc_input(
                 bdy_bullets_fired,
                 bdy_bullets_hit,
                 bdy_time_taken,
-                (_overshield - bdy_damage_dealt) > 0.0,
+                (overshield - bdy_damage_dealt) > 0.0,
             );
             let dmg_mods = get_dmg_modifier(
-                _weapon.list_perks().clone(),
+                weapon.list_perks().clone(),
                 &calc_input,
                 true,
                 &mut persistent_data,
             );
             let firing_mods = get_firing_modifier(
-                _weapon.list_perks().clone(),
+                weapon.list_perks().clone(),
                 &calc_input,
                 true,
                 &mut persistent_data,
             );
             ///////////////////////////////
 
-            let tmp_dmg_prof = _weapon.get_damage_profile(true);
+            let tmp_dmg_prof = weapon.get_damage_profile(true);
             let impact_dmg = tmp_dmg_prof.0;
             let explosion_dmg = tmp_dmg_prof.1;
 
             let body_damage = (impact_dmg * dmg_mods.impact_dmg_scale)
                 + (explosion_dmg * dmg_mods.explosive_dmg_scale);
 
-            let shot_burst_delay = (_weapon.firing_data.burst_delay + firing_mods.burst_delay_add)
+            let shot_burst_delay = (weapon.firing_data.burst_delay + firing_mods.burst_delay_add)
                 * firing_mods.burst_delay_scale;
             let shot_inner_burst_delay =
-                _weapon.firing_data.inner_burst_delay * firing_mods.inner_burst_scale;
+                weapon.firing_data.inner_burst_delay * firing_mods.inner_burst_scale;
             let shot_burst_size =
-                _weapon.firing_data.burst_size as f64 + firing_mods.burst_size_add;
+                weapon.firing_data.burst_size as f64 + firing_mods.burst_size_add;
 
             let mut shot_delay = if bdy_bullets_hit % shot_burst_size > 0.0 && bdy_bullets_hit > 0.0
             {
@@ -240,25 +240,25 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
                 shot_burst_delay
             };
 
-            if _weapon.hash == 4289226715 { //vex mythoclast
-            } else if _weapon.weapon_type == WeaponType::LINEARFUSIONRIFLE {
+            if weapon.hash == 4289226715 { //vex mythoclast
+            } else if weapon.weapon_type == WeaponType::LINEARFUSIONRIFLE {
                 shot_delay *= 1.95;
-            } else if _weapon.weapon_type == WeaponType::FUSIONRIFLE {
+            } else if weapon.weapon_type == WeaponType::FUSIONRIFLE {
                 shot_delay *= 1.45;
             }
 
-            let ammo_fired = if _weapon.firing_data.one_ammo {
+            let ammo_fired = if weapon.firing_data.one_ammo {
                 bdy_bullets_hit / shot_burst_size
             } else {
                 bdy_bullets_fired
             };
             if ammo_fired - mag_expended
-                >= _weapon
+                >= weapon
                     .calc_ammo_sizes(Some(calc_input.clone()), Some(&mut persistent_data), true)
                     .mag_size
                     .into()
             {
-                shot_delay += _weapon
+                shot_delay += weapon
                     .calc_reload_time(Some(calc_input.clone()), Some(&mut persistent_data), true)
                     .reload_time;
                 mag_expended += ammo_fired;
@@ -292,7 +292,7 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
 }
 
 impl Weapon {
-    pub fn calc_ttk(&self, _overshield: f64) -> Vec<ResillienceSummary> {
-        calc_ttk(self, _overshield)
+    pub fn calc_ttk(&self, overshield: f64) -> Vec<ResillienceSummary> {
+        calc_ttk(self, overshield)
     }
 }

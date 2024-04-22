@@ -116,7 +116,9 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         //origin | year 5+
         Perks::VeistStinger => Some(PerkOptionData::toggle()),
-        Perks::HakkeBreach => Some(PerkOptionData::options(["Vehicle", "Stasis Crystals", "Other Constructs"].to_vec())),
+        Perks::HakkeBreach => Some(PerkOptionData::options(
+            ["Vehicle", "Stasis Crystals", "Other Constructs"].to_vec(),
+        )),
         Perks::Alacrity => Some(PerkOptionData::toggle()),
         Perks::FluidDynamics => Some(PerkOptionData::toggle()),
         Perks::QuietMoment => Some(PerkOptionData::toggle()),

@@ -205,20 +205,20 @@ pub struct FiringResponse {
 impl FiringResponse {
     pub fn apply_pve_bonuses(
         &mut self,
-        _rpl_mult: f64,
-        _gpl_mult: f64,
-        _pve_mult: f64,
-        _combatant_mult: f64,
+        rpl_mult: f64,
+        gpl_mult: f64,
+        pve_mult: f64,
+        combatant_mult: f64,
     ) {
         crate::logging::log(
             format!(
                 "rpl: {}, gpl: {}, pve: {}, combat_mult: {}",
-                _rpl_mult, _gpl_mult, _pve_mult, _combatant_mult
+                rpl_mult, gpl_mult, pve_mult, combatant_mult
             )
             .as_str(),
             crate::logging::LogLevel::Debug.into(),
         );
-        self.pve_impact_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
-        self.pve_explosion_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
+        self.pve_impact_damage *= rpl_mult * gpl_mult * pve_mult * combatant_mult;
+        self.pve_explosion_damage *= rpl_mult * gpl_mult * pve_mult * combatant_mult;
     }
 }

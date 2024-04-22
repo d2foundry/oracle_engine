@@ -72,7 +72,7 @@ pub struct Perk {
 pub fn enhanced_check(_hash: u32) -> (u32, bool) {
     let mut result = _hash;
     let mut found = false;
-    for (_, (h, r)) in database::ENHANCE_PERK_MAPPING.iter().enumerate() {
+    for (h, r) in database::ENHANCE_PERK_MAPPING.iter() {
         if _hash == *h {
             result = *r;
             found = true;

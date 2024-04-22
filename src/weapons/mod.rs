@@ -52,9 +52,9 @@ impl Default for Stat {
 }
 
 impl From<i32> for Stat {
-    fn from(_val: i32) -> Self {
+    fn from(val: i32) -> Self {
         Stat {
-            base_value: _val,
+            base_value: val,
             part_value: 0,
             perk_value: 0,
         }
@@ -83,12 +83,12 @@ pub struct Weapon {
     pub ammo_type: AmmoType,
 }
 impl Weapon {
-    pub fn add_perk(&mut self, _perk: Perk) {
-        self.perks.insert(_perk.hash, _perk);
+    pub fn add_perk(&mut self, perk: Perk) {
+        self.perks.insert(perk.hash, perk);
         self.update_stats();
     }
-    pub fn remove_perk(&mut self, _perk_hash: u32) {
-        self.perks.remove(&_perk_hash);
+    pub fn remove_perk(&mut self, perk_hash: u32) {
+        self.perks.remove(&perk_hash);
         self.update_stats();
     }
     pub fn reset_perks(&mut self) {
@@ -112,10 +112,10 @@ impl Weapon {
         }
         perk_map
     }
-    pub fn change_perk_val(&mut self, _perk_hash: u32, _val: u32) {
-        let perk_opt = self.perks.get_mut(&_perk_hash);
+    pub fn change_perk_val(&mut self, perk_hash: u32, val: u32) {
+        let perk_opt = self.perks.get_mut(&perk_hash);
         if let Some(perk) = perk_opt {
-            perk.value = _val;
+            perk.value = val;
         }
         self.update_stats();
     }
@@ -152,7 +152,7 @@ impl Weapon {
         )
     }
 
-    pub fn sparse_calc_input(&self, _total_shots_fired: i32, _total_time: f64) -> CalculationInput {
+    pub fn sparse_calc_input(&self, total_shots_fired: i32, total_time: f64) -> CalculationInput {
         CalculationInput::construct_pve_sparse(
             self.intrinsic_hash,
             &self.firing_data,
@@ -164,16 +164,16 @@ impl Weapon {
             self.firing_data.damage,
             self.firing_data.crit_mult,
             self.calc_ammo_sizes(None, None, false).mag_size,
-            _total_shots_fired,
-            _total_time,
+            total_shots_fired,
+            total_time,
         )
     }
     pub fn pvp_calc_input(
         &self,
-        _total_shots_fired: f64,
-        _total_shots_hit: f64,
-        _total_time: f64,
-        _overshield: bool,
+        total_shots_fired: f64,
+        total_shots_hit: f64,
+        total_time: f64,
+        overshield: bool,
     ) -> CalculationInput {
         let base_mag = self.calc_ammo_sizes(None, None, true).mag_size as f64;
         let mut tmp = CalculationInput::construct_pvp(
@@ -186,14 +186,14 @@ impl Weapon {
             self.firing_data.damage,
             self.firing_data.crit_mult,
             base_mag,
-            _overshield,
+            overshield,
             self.calc_handling_times(None, None, true),
         );
-        tmp.time_this_mag = _total_time;
-        tmp.time_total = _total_time;
-        tmp.shots_fired_this_mag = _total_shots_fired;
-        tmp.total_shots_fired = _total_shots_fired;
-        tmp.total_shots_hit = _total_shots_hit;
+        tmp.time_this_mag = total_time;
+        tmp.time_total = total_time;
+        tmp.shots_fired_this_mag = total_shots_fired;
+        tmp.total_shots_fired = total_shots_fired;
+        tmp.total_shots_hit = total_shots_hit;
         tmp.damage_type = &self.damage_type;
         tmp
     }

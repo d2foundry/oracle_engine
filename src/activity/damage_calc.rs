@@ -13,8 +13,7 @@ pub struct DifficultyData {
 
 const WEAPON_DELTA_EXPONENT: f64 = 0.00672;
 
-#[derive(Debug, Clone)]
-#[derive(Default)]
+#[derive(Debug, Clone, Default)]
 pub enum DifficultyOptions {
     #[default]
     NORMAL = 1,
@@ -97,10 +96,10 @@ pub(super) fn rpl_mult(_rpl: f64) -> f64 {
     (1.0 + ((1.0 / 30.0) * _rpl)) / (4.0 / 3.0)
 }
 
-pub(super) fn get_gear_delta_mult(_activity: &Activity) -> f64 {
-    let difficulty_data: DifficultyData = _activity.difficulty.get_difficulty_data();
+pub(super) fn get_gear_delta_mult(activity: &Activity) -> f64 {
+    let difficulty_data: DifficultyData = activity.difficulty.get_difficulty_data();
 
-    let epl = _activity.player.power as i32 - _activity.rpl as i32;
+    let epl = activity.player.power as i32 - activity.rpl as i32;
 
     if epl < -99 {
         return 0.0;
@@ -120,16 +119,16 @@ pub(super) fn get_gear_delta_mult(_activity: &Activity) -> f64 {
     gear_delta_mult
 }
 
-pub(super) fn get_wep_delta_mult(_activity: &Activity) -> f64 {
-    let difficulty_data: DifficultyData = _activity.difficulty.get_difficulty_data();
+pub(super) fn get_wep_delta_mult(activity: &Activity) -> f64 {
+    let difficulty_data: DifficultyData = activity.difficulty.get_difficulty_data();
 
-    let cap = if _activity.cap < difficulty_data.cap {
-        _activity.cap
+    let cap = if activity.cap < difficulty_data.cap {
+        activity.cap
     } else {
         difficulty_data.cap
     };
 
-    let epl = (_activity.player.wep_power as i32 - _activity.rpl as i32).clamp(-100, cap);
+    let epl = (activity.player.wep_power as i32 - activity.rpl as i32).clamp(-100, cap);
 
     if epl < -99 {
         return 0.0;
@@ -150,25 +149,9 @@ pub(super) fn get_wep_delta_mult(_activity: &Activity) -> f64 {
     wep_delta_mult
 }
 
-// add_remove_pve_bonuses(
-//     _rpl: f64,
-//     _pl: u32,
-//     _combatant_mult: f64,
-//     _difficulty: DifficultyOptions,
-//     _damage: f64,
-// ) -> f64 {
-//     let rpl_mult = rpl_mult(_rpl);
-//     let mut tmp_activity = Activity::default();
-//     tmp_activity.difficulty = _difficulty;
-//     tmp_activity.rpl = _rpl as u32;
-//     let gpl_delta = gpl_delta(tmp_activity, _pl);
+pub fn remove_pve_bonuses(damage: f64, combatant_mult: f64, activity: &Activity) -> f64 {
+    let rpl_mult = rpl_mult(activity.rpl as f64);
+    let gpl_delta = get_gear_delta_mult(activity);
 
-//     _damage / (gpl_delta * rpl_mult * _combatant_mult)
-// }
-
-pub fn remove_pve_bonuses(_damage: f64, _combatant_mult: f64, _activity: &Activity) -> f64 {
-    let rpl_mult = rpl_mult(_activity.rpl as f64);
-    let gpl_delta = get_gear_delta_mult(_activity);
-
-    _damage / (gpl_delta * rpl_mult * _combatant_mult)
+    damage / (gpl_delta * rpl_mult * combatant_mult)
 }

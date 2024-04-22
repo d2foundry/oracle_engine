@@ -10,8 +10,8 @@ pub enum AmmoType {
     UNKNOWN = 0,
 }
 impl From<u32> for AmmoType {
-    fn from(_value: u32) -> AmmoType {
-        match _value {
+    fn from(value: u32) -> AmmoType {
+        match value {
             1 => AmmoType::PRIMARY,
             2 => AmmoType::SPECIAL,
             3 => AmmoType::HEAVY,

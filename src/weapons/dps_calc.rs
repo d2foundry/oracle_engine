@@ -11,10 +11,10 @@ use crate::perks::*;
 use crate::types::rs_types::DpsResponse;
 
 //first entry in tuple is refund to mag, second is too reserves
-pub fn calc_refund(_shots_hit_this_mag: i32, _refunds: Vec<RefundResponse>) -> (i32, i32) {
+pub fn calc_refund(shots_hit_this_mag: i32, refunds: Vec<RefundResponse>) -> (i32, i32) {
     let mut refund_ammount = (0, 0);
-    for refund in _refunds {
-        if _shots_hit_this_mag % refund.requirement == 0 {
+    for refund in refunds {
+        if shots_hit_this_mag % refund.requirement == 0 {
             refund_ammount.0 += refund.refund_mag;
             refund_ammount.1 += refund.refund_reserves;
         }
@@ -55,35 +55,35 @@ impl ExtraDamageBuffInfo {
     }
 }
 pub fn calc_extra_dmg(
-    _total_time: f64,
-    _extra_dmg_entries: Vec<ExtraDamageResponse>,
-    _dmg_buffs: ExtraDamageBuffInfo,
+    total_time: f64,
+    extra_dmg_entries: Vec<ExtraDamageResponse>,
+    dmg_buffs: ExtraDamageBuffInfo,
 ) -> ExtraDamageResult {
     let mut extra_time = 0.0;
     let mut extra_dmg = 0.0;
     let mut extra_hits = 0;
     let mut extra_time_dmg: Vec<(f64, f64)> = Vec::new();
-    for entry in _extra_dmg_entries {
+    for entry in extra_dmg_entries {
         if entry.additive_damage > 0.0 {
             if entry.hit_at_same_time {
                 let mut bonus_dmg = entry.additive_damage * entry.times_to_hit as f64;
-                bonus_dmg *= _dmg_buffs.get_buff_amount(&entry);
+                bonus_dmg *= dmg_buffs.get_buff_amount(&entry);
                 extra_dmg += bonus_dmg;
                 if entry.increment_total_time {
                     extra_time += entry.time_for_additive_damage
                 };
-                extra_time_dmg.push((_total_time + entry.time_for_additive_damage, bonus_dmg));
+                extra_time_dmg.push((total_time + entry.time_for_additive_damage, bonus_dmg));
                 extra_hits += entry.times_to_hit;
             } else if !entry.is_dot {
                 for i in 0..entry.times_to_hit {
                     let mut bonus_dmg = entry.additive_damage;
-                    bonus_dmg *= _dmg_buffs.get_buff_amount(&entry);
+                    bonus_dmg *= dmg_buffs.get_buff_amount(&entry);
                     extra_dmg += bonus_dmg;
                     if entry.increment_total_time {
                         extra_time += entry.time_for_additive_damage
                     };
                     extra_time_dmg.push((
-                        _total_time + entry.time_for_additive_damage * i as f64,
+                        total_time + entry.time_for_additive_damage * i as f64,
                         bonus_dmg,
                     ));
                     extra_hits += 1;
@@ -92,13 +92,13 @@ pub fn calc_extra_dmg(
                 //all dot does is increment time backwards
                 for i in 0..entry.times_to_hit {
                     let mut bonus_dmg = entry.additive_damage;
-                    bonus_dmg *= _dmg_buffs.get_buff_amount(&entry);
+                    bonus_dmg *= dmg_buffs.get_buff_amount(&entry);
                     extra_dmg += bonus_dmg;
                     if entry.increment_total_time {
                         extra_time += entry.time_for_additive_damage
                     };
                     extra_time_dmg.push((
-                        _total_time - entry.time_for_additive_damage * i as f64,
+                        total_time - entry.time_for_additive_damage * i as f64,
                         bonus_dmg,
                     ));
                     extra_hits += 1;
@@ -114,8 +114,8 @@ pub fn calc_extra_dmg(
     }
 }
 
-pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> DpsResponse {
-    let weapon = Rc::new(_weapon.clone());
+pub fn complex_dps_calc(weapon: Weapon, enemy: Enemy, pl_dmg_mult: f64) -> DpsResponse {
+    let weapon = Rc::new(weapon.clone());
     let stats = weapon.stats.clone();
     let weapon_type = weapon.weapon_type;
     let ammo_type = weapon.ammo_type;
@@ -129,7 +129,7 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
     let base_mag = weapon.calc_ammo_sizes(None, None, false).mag_size;
     let maximum_shots = if base_mag * 5 < 15 { 15 } else { base_mag * 5 };
 
-    let firing_settings = _weapon.firing_data;
+    let firing_settings = weapon.firing_data;
     let perks = weapon.list_perks();
 
     let burst_size = firing_settings.burst_size as f64;
@@ -188,7 +188,7 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
                 weapon_type: &weapon_type,
                 stats: &stats,
                 perk_value_map: &weapon.perk_value_map_update(),
-                enemy_type: &_enemy.type_,
+                enemy_type: &enemy.type_,
                 shots_fired_this_mag: shots_this_mag as f64,
                 total_shots_fired: total_shots_fired as f64,
                 total_shots_hit: total_shots_hit as f64,
@@ -220,8 +220,8 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
             let dmg = {
                 ((impact_dmg * dmg_mods.impact_dmg_scale) * (crit_mult * dmg_mods.crit_scale)
                     + (explosion_dmg * dmg_mods.explosive_dmg_scale))
-                    * _pl_dmg_mult
-                    * weapon.damage_mods.get_mod(&_enemy.type_)
+                    * pl_dmg_mult
+                    * weapon.damage_mods.get_mod(&enemy.type_)
                     * weapon.damage_mods.pve
             };
 
@@ -290,7 +290,7 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
                 weapon_type: &weapon_type,
                 stats: &stats,
                 perk_value_map: &weapon.perk_value_map_update(),
-                enemy_type: &_enemy.type_,
+                enemy_type: &enemy.type_,
                 shots_fired_this_mag: shots_this_mag as f64,
                 total_shots_fired: total_shots_fired as f64,
                 total_shots_hit: total_shots_hit as f64,
@@ -312,12 +312,12 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
                 &mut pers_calc_data,
             );
             let buffs = ExtraDamageBuffInfo {
-                pl_buff: _pl_dmg_mult,
+                pl_buff: pl_dmg_mult,
                 impact_buff: dmg_mods.impact_dmg_scale,
                 explosive_buff: dmg_mods.explosive_dmg_scale,
                 pve_buff: weapon.damage_mods.pve,
                 crit_buff: crit_mult * dmg_mods.crit_scale,
-                combatant_buff: weapon.damage_mods.get_mod(&_enemy.type_),
+                combatant_buff: weapon.damage_mods.get_mod(&enemy.type_),
             };
             let tmp_out_data = calc_extra_dmg(total_time, extra_dmg_responses, buffs);
             total_damage += tmp_out_data.extra_dmg;
@@ -398,7 +398,7 @@ pub fn complex_dps_calc(_weapon: Weapon, _enemy: Enemy, _pl_dmg_mult: f64) -> Dp
             weapon_type: &weapon_type,
             stats: &stats,
             perk_value_map: &weapon.perk_value_map_update(),
-            enemy_type: &_enemy.type_,
+            enemy_type: &enemy.type_,
             shots_fired_this_mag: shots_this_mag as f64,
             total_shots_fired: total_shots_fired as f64,
             total_shots_hit: total_shots_hit as f64,
