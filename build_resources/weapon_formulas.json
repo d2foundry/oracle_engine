@@ -1235,7 +1235,7 @@
         "2898674462": {"name": "Vexcaliber",          "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 1.25},
         "2898674457": {"name": "Vexcaliber",          "cat": "default", "subFam": "Vexcaliber",  "magProf": "default", "pve": 1.25},
         "1956005708": {"name": "Rapid-Fire Glaive",   "cat": "default", "subFam": "Lightweight", "magProf": "default", "pve": 1.25},
-        "1207608520": {"name": "Winterbite",          "cat": "zero",    "subFam": "zero",        "magProf": "winterbite"},
+        "1207608520": {"name": "Winterbite",          "cat": "zero",    "subFam": "Winterbite",  "magProf": "winterbite"},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0546,"offset_start": 15.0,"vpp_end": 0.198,"offset_end": 30.33, "floor_percent": 0.33},
@@ -1259,11 +1259,12 @@
             }
         },
         "subFam": {
-            "Lightweight": {"damage":120.769, "crit_mult":-25.5, "pve_damage":108.07, "pve_crit_mult":-25.5,  "burst_delay":22.0, "burst_size":1, "inner_burst_delay":0},
-            "Aggressive":  {"damage":147.538, "crit_mult":-25.5, "pve_damage":133.75, "pve_crit_mult":-25.5,  "burst_delay":30.0, "burst_size":1, "inner_burst_delay":0},
-            "Adaptive":    {"damage":136.462, "crit_mult":-25.5, "pve_damage":120.91, "pve_crit_mult":-25.5,  "burst_delay":27.0, "burst_size":1, "inner_burst_delay":0},
-            "Vexcaliber":  {"damage":32.962,  "crit_mult":-25.5, "pve_damage":30.87,  "pve_crit_mult":-25.5,  "burst_delay":22.0, "burst_size":5, "inner_burst_delay":0, "one_ammo":true},
-            "zero":        {"damage":0.0, "crit_mult":0.0, "pve_damage":0.0, "pve_crit_mult":0.0, "burst_delay":0.0, "burst_size":1, "inner_burst_delay":0}
+            "Lightweight": {"damage":120.899, "crit_mult":-25.5, "melee": 84, "pve_damage":107.801, "pve_crit_mult":-25.5, "pve_melee": 70, "burst_delay":22.0, "burst_size":1, "inner_burst_delay":0},
+            "Aggressive":  {"damage":147.457, "crit_mult":-25.5, "melee": 84, "pve_damage":131.483, "pve_crit_mult":-25.5, "pve_melee": 70, "burst_delay":30.0, "burst_size":1, "inner_burst_delay":0},
+            "Adaptive":    {"damage":136.577, "crit_mult":-25.5, "melee": 84, "pve_damage":121.781, "pve_crit_mult":-25.5, "pve_melee": 70, "burst_delay":27.0, "burst_size":1, "inner_burst_delay":0},
+            "Vexcaliber":  {"damage":33.231,  "crit_mult":-25.5, "melee": 84, "pve_damage":36.596,  "pve_crit_mult":-25.5, "pve_melee": 70, "burst_delay":22.0, "burst_size":5, "inner_burst_delay":0, "one_ammo":true},
+            "Winterbite":  {"damage":570,     "crit_mult":-25.5, "melee": 84, "pve_damage":508.25,     "pve_crit_mult":-25.5, "pve_melee": 70, "burst_delay":30.0, "burst_size":1, "inner_burst_delay":0},
+            "zero":        {"damage":0.0, "crit_mult":0.0, "melee": 0.0, "pve_damage":0.0, "pve_crit_mult":0.0, "pve_melee": 0.0, "burst_delay":0.0, "burst_size":1, "inner_burst_delay":0}
 
         },
         "magProf": {
