@@ -481,7 +481,7 @@ pub struct ModifierResponseInput<'a> {
     pvp: bool,
     cached_data: &'a mut HashMap<String, f64>,
 }
-type ModifierFunction<T> = Box<dyn Fn(ModifierResponseInput) -> T>;
+type ModifierFunction<T> = fn(ModifierResponseInput) -> T;
 type StatMap = HashMap<BungieHash, StatBump>;
 type ModifierMap<T> = HashMap<Perks, ModifierFunction<T>>;
 

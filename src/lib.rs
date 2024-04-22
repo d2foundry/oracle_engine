@@ -31,7 +31,8 @@ use lol_alloc::{AssumeSingleThreaded, FreeListAllocator};
 // SAFETY: This application is single threaded, so using AssumeSingleThreaded is allowed.
 #[cfg(target_arch = "wasm32")]
 #[global_allocator]
-static ALLOCATOR: AssumeSingleThreaded<FreeListAllocator> = unsafe { AssumeSingleThreaded::new(FreeListAllocator::new()) };
+static ALLOCATOR: AssumeSingleThreaded<FreeListAllocator> =
+    unsafe { AssumeSingleThreaded::new(FreeListAllocator::new()) };
 
 mod built_info {
     include!(concat!(env!("OUT_DIR"), "/built.rs"));
@@ -237,10 +238,7 @@ pub fn get_weapon_range(dynamic_traits: bool, pvp: bool) -> Result<JsRangeRespon
 }
 
 #[wasm_bindgen(js_name = "getWeaponHandlingTimes")]
-pub fn get_weapon_handling(
-    dynamic_traits: bool,
-    pvp: bool,
-) -> Result<JsHandlingResponse, JsValue> {
+pub fn get_weapon_handling(dynamic_traits: bool, pvp: bool) -> Result<JsHandlingResponse, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
     if dynamic_traits {
         Ok(weapon
@@ -328,11 +326,7 @@ pub fn get_weapon_firing_data(
 }
 
 #[wasm_bindgen(js_name = "getWeaponFlinch")]
-pub fn get_weapon_flinch(
-    dynamic_traits: bool,
-    pvp: bool,
-    resilience: u8,
-) -> Result<f64, JsValue> {
+pub fn get_weapon_flinch(dynamic_traits: bool, pvp: bool, resilience: u8) -> Result<f64, JsValue> {
     let weapon = PERS_DATA.with(|perm_data| perm_data.borrow().weapon.clone());
     if dynamic_traits {
         Ok(weapon.calc_flinch_resist(
@@ -409,10 +403,8 @@ pub fn get_scalar_response(pvp: bool) -> Result<JsScalarResponse, JsValue> {
     let mut cached_data = HashMap::new();
     let rmr = perks::get_range_modifier(weapon.list_perks(), &input_data, pvp, &mut cached_data);
     let rsmr = perks::get_reload_modifier(weapon.list_perks(), &input_data, pvp, &mut cached_data);
-    let mmr =
-        perks::get_magazine_modifier(weapon.list_perks(), &input_data, pvp, &mut cached_data);
-    let hmr =
-        perks::get_handling_modifier(weapon.list_perks(), &input_data, pvp, &mut cached_data);
+    let mmr = perks::get_magazine_modifier(weapon.list_perks(), &input_data, pvp, &mut cached_data);
+    let hmr = perks::get_handling_modifier(weapon.list_perks(), &input_data, pvp, &mut cached_data);
     let imr = perks::get_reserve_modifier(weapon.list_perks(), &input_data, pvp, &mut cached_data);
     Ok(JsScalarResponse {
         ads_range_scalar: rmr.range_zoom_scale,

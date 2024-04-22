@@ -21,25 +21,23 @@ use super::{
 pub fn year_1_perks() {
     add_sbr(
         Perks::ThreatDetector,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let stats = match input.value {
-                    0 => (0, 0, 0),
-                    1 => (15, 15, 25),
-                    _ => (40, 55, 100),
-                };
-                let mut out = HashMap::new();
-                out.insert(StatHashes::STABILITY.into(), stats.0);
-                out.insert(StatHashes::RELOAD.into(), stats.1);
-                out.insert(StatHashes::HANDLING.into(), stats.2);
-                out
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let stats = match input.value {
+                0 => (0, 0, 0),
+                1 => (15, 15, 25),
+                _ => (40, 55, 100),
+            };
+            let mut out = HashMap::new();
+            out.insert(StatHashes::STABILITY.into(), stats.0);
+            out.insert(StatHashes::RELOAD.into(), stats.1);
+            out.insert(StatHashes::HANDLING.into(), stats.2);
+            out
+        },
     );
 
     add_dmr(
         Perks::HighImpactReserves,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             let mut out_dmg_scale = 1.0;
             let base = if input.pvp { 0.03 } else { 0.121 };
             let max = if input.pvp { 0.06 } else { 0.256 };
@@ -57,36 +55,34 @@ pub fn year_1_perks() {
                 explosive_dmg_scale: out_dmg_scale,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     //Confirmed by harm <3
     add_hmr(
         Perks::ThreatDetector,
-        Box::new(
-            |input: ModifierResponseInput| -> HandlingModifierResponse {
-                let val = clamp(input.value, 0, 2) as i32;
-                let stat = match val {
-                    0 => 0,
-                    1 => 25,
-                    2 => 100,
-                    _ => 100,
-                };
-                let time_scale = 0.9_f64.powi(val);
-                HandlingModifierResponse {
-                    stat_add: stat,
-                    draw_scale: time_scale,
-                    stow_scale: time_scale,
-                    ads_scale: time_scale,
-                    ..Default::default()
-                }
-            },
-        ),
+        |input: ModifierResponseInput| -> HandlingModifierResponse {
+            let val = clamp(input.value, 0, 2) as i32;
+            let stat = match val {
+                0 => 0,
+                1 => 25,
+                2 => 100,
+                _ => 100,
+            };
+            let time_scale = 0.9_f64.powi(val);
+            HandlingModifierResponse {
+                stat_add: stat,
+                draw_scale: time_scale,
+                stow_scale: time_scale,
+                ads_scale: time_scale,
+                ..Default::default()
+            }
+        },
     );
 
     add_rsmr(
         Perks::ThreatDetector,
-        Box::new(|input: ModifierResponseInput| -> ReloadModifierResponse {
+        |input: ModifierResponseInput| -> ReloadModifierResponse {
             let mut reload = 0;
             if input.value == 1 {
                 reload = 15;
@@ -97,39 +93,37 @@ pub fn year_1_perks() {
                 reload_stat_add: reload,
                 reload_time_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_mmr(
         Perks::AmbitiousAssassin,
-        Box::new(
-            |input: ModifierResponseInput| -> MagazineModifierResponse {
-                let val = clamp(input.value, 0, 15) as f64;
-                if input.calc_data.total_shots_fired == 0.0 {
-                    let mut mag_mult = 1.0;
-                    if *input.calc_data.ammo_type == AmmoType::PRIMARY {
-                        mag_mult += 0.2 * val;
-                    } else {
-                        mag_mult += 0.1 * val;
-                    };
-                    return MagazineModifierResponse {
-                        magazine_stat_add: 0,
-                        magazine_scale: clamp(mag_mult, 1.0, 2.5),
-                        magazine_add: 0.0,
-                    };
+        |input: ModifierResponseInput| -> MagazineModifierResponse {
+            let val = clamp(input.value, 0, 15) as f64;
+            if input.calc_data.total_shots_fired == 0.0 {
+                let mut mag_mult = 1.0;
+                if *input.calc_data.ammo_type == AmmoType::PRIMARY {
+                    mag_mult += 0.2 * val;
+                } else {
+                    mag_mult += 0.1 * val;
                 };
-                MagazineModifierResponse {
+                return MagazineModifierResponse {
                     magazine_stat_add: 0,
-                    magazine_scale: 1.0,
+                    magazine_scale: clamp(mag_mult, 1.0, 2.5),
                     magazine_add: 0.0,
-                }
-            },
-        ),
+                };
+            };
+            MagazineModifierResponse {
+                magazine_stat_add: 0,
+                magazine_scale: 1.0,
+                magazine_add: 0.0,
+            }
+        },
     );
 
     add_dmr(
         Perks::BoxBreathing,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             if input.calc_data.total_shots_fired == 0.0 && input.value > 0 {
                 let mut crit_mult =
                     (input.calc_data.base_crit_mult + 1.0) / input.calc_data.base_crit_mult;
@@ -143,12 +137,12 @@ pub fn year_1_perks() {
                 };
             };
             DamageModifierResponse::default()
-        }),
+        },
     );
 
     add_fmr(
         Perks::Desperado,
-        Box::new(|input: ModifierResponseInput| -> FiringModifierResponse {
+        |input: ModifierResponseInput| -> FiringModifierResponse {
             let mut delay_mult = 1.0;
             let duration = if input.is_enhanced { 7.0 } else { 6.0 };
             if input.calc_data.time_total < duration && input.value > 0 {
@@ -158,12 +152,12 @@ pub fn year_1_perks() {
                 burst_delay_scale: delay_mult,
                 ..Default::default()
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::ExplosivePayload,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             if input.pvp {
                 DamageModifierResponse::default()
             } else {
@@ -173,25 +167,23 @@ pub fn year_1_perks() {
                     crit_scale: 1.0,
                 }
             }
-        }),
+        },
     );
 
     add_epr(
         Perks::ExplosivePayload,
-        Box::new(
-            |_: ModifierResponseInput| -> ExplosivePercentResponse {
-                ExplosivePercentResponse {
-                    percent: 0.5,
-                    delyed: 0.0,
-                    retain_base_total: true,
-                }
-            },
-        ),
+        |_: ModifierResponseInput| -> ExplosivePercentResponse {
+            ExplosivePercentResponse {
+                percent: 0.5,
+                delyed: 0.0,
+                retain_base_total: true,
+            }
+        },
     );
 
     add_dmr(
         Perks::TimedPayload,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             if input.pvp {
                 DamageModifierResponse::default()
             } else {
@@ -202,44 +194,40 @@ pub fn year_1_perks() {
                     crit_scale: 1.0,
                 }
             }
-        }),
+        },
     );
 
     add_epr(
         Perks::TimedPayload,
-        Box::new(
-            |_: ModifierResponseInput| -> ExplosivePercentResponse {
-                ExplosivePercentResponse {
-                    percent: 0.5,
-                    delyed: 0.6,
-                    retain_base_total: true,
-                }
-            },
-        ),
+        |_: ModifierResponseInput| -> ExplosivePercentResponse {
+            ExplosivePercentResponse {
+                percent: 0.5,
+                delyed: 0.6,
+                retain_base_total: true,
+            }
+        },
     );
 
     add_sbr(
         Perks::FieldPrep,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut out = HashMap::new();
-                if input.value > 0 {
-                    let reload = if input.is_enhanced { 55 } else { 50 };
-                    out.insert(StatHashes::RELOAD.into(), reload);
-                };
-                let mut reserves = if input.is_enhanced { 40 } else { 30 };
-                if *input.calc_data.weapon_type == WeaponType::GRENADELAUNCHER {
-                    reserves -= 10;
-                };
-                out.insert(StatHashes::INVENTORY_SIZE.into(), reserves);
-                out
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let mut out = HashMap::new();
+            if input.value > 0 {
+                let reload = if input.is_enhanced { 55 } else { 50 };
+                out.insert(StatHashes::RELOAD.into(), reload);
+            };
+            let mut reserves = if input.is_enhanced { 40 } else { 30 };
+            if *input.calc_data.weapon_type == WeaponType::GRENADELAUNCHER {
+                reserves -= 10;
+            };
+            out.insert(StatHashes::INVENTORY_SIZE.into(), reserves);
+            out
+        },
     );
 
     add_rsmr(
         Perks::FieldPrep,
-        Box::new(|input: ModifierResponseInput| -> ReloadModifierResponse {
+        |input: ModifierResponseInput| -> ReloadModifierResponse {
             let mut reload = 0;
             let mut reload_mult = 1.0;
             if input.value > 0 {
@@ -250,81 +238,73 @@ pub fn year_1_perks() {
                 reload_stat_add: reload,
                 reload_time_scale: reload_mult,
             }
-        }),
+        },
     );
 
     add_imr(
         Perks::FieldPrep,
-        Box::new(
-            |input: ModifierResponseInput| -> InventoryModifierResponse {
-                InventoryModifierResponse {
-                    inv_stat_add: if input.is_enhanced { 40 } else { 30 },
-                    ..Default::default()
-                }
-            },
-        ),
+        |input: ModifierResponseInput| -> InventoryModifierResponse {
+            InventoryModifierResponse {
+                inv_stat_add: if input.is_enhanced { 40 } else { 30 },
+                ..Default::default()
+            }
+        },
     );
 
     add_hmr(
         Perks::FieldPrep,
-        Box::new(
-            |input: ModifierResponseInput| -> HandlingModifierResponse {
-                if input.value >= 1 {
-                    HandlingModifierResponse {
-                        stow_scale: 0.8,
-                        draw_scale: 0.8,
-                        ..Default::default()
-                    }
-                } else {
-                    HandlingModifierResponse::default()
+        |input: ModifierResponseInput| -> HandlingModifierResponse {
+            if input.value >= 1 {
+                HandlingModifierResponse {
+                    stow_scale: 0.8,
+                    draw_scale: 0.8,
+                    ..Default::default()
                 }
-            },
-        ),
+            } else {
+                HandlingModifierResponse::default()
+            }
+        },
     );
 
     add_sbr(
         Perks::FirmlyPlanted,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut handling = if input.is_enhanced { 35 } else { 30 };
-                let mut stabiltiy = if input.is_enhanced { 25 } else { 20 };
-                if *input.calc_data.weapon_type == WeaponType::FUSIONRIFLE {
-                    handling /= 2;
-                    stabiltiy /= 2;
-                };
-                let mut out = HashMap::new();
-                if input.value > 0 {
-                    out.insert(StatHashes::HANDLING.into(), handling);
-                    out.insert(StatHashes::STABILITY.into(), stabiltiy);
-                }
-                out
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let mut handling = if input.is_enhanced { 35 } else { 30 };
+            let mut stabiltiy = if input.is_enhanced { 25 } else { 20 };
+            if *input.calc_data.weapon_type == WeaponType::FUSIONRIFLE {
+                handling /= 2;
+                stabiltiy /= 2;
+            };
+            let mut out = HashMap::new();
+            if input.value > 0 {
+                out.insert(StatHashes::HANDLING.into(), handling);
+                out.insert(StatHashes::STABILITY.into(), stabiltiy);
+            }
+            out
+        },
     );
 
     add_hmr(
         Perks::FirmlyPlanted,
-        Box::new(
-            |input: ModifierResponseInput| -> HandlingModifierResponse {
-                let mut handling = if input.is_enhanced { 35 } else { 30 };
-                if *input.calc_data.weapon_type == WeaponType::FUSIONRIFLE {
-                    handling /= 2;
-                };
-                if input.value > 0 {
-                    HandlingModifierResponse {
-                        stat_add: handling,
-                        ..Default::default()
-                    }
-                } else {
-                    HandlingModifierResponse::default()
+        |input: ModifierResponseInput| -> HandlingModifierResponse {
+            let mut handling = if input.is_enhanced { 35 } else { 30 };
+            if *input.calc_data.weapon_type == WeaponType::FUSIONRIFLE {
+                handling /= 2;
+            };
+            if input.value > 0 {
+                HandlingModifierResponse {
+                    stat_add: handling,
+                    ..Default::default()
                 }
-            },
-        ),
+            } else {
+                HandlingModifierResponse::default()
+            }
+        },
     );
 
     add_fmr(
         Perks::FullAutoTrigger,
-        Box::new(|input: ModifierResponseInput| -> FiringModifierResponse {
+        |input: ModifierResponseInput| -> FiringModifierResponse {
             let mut delay_mult = 1.0;
             if *input.calc_data.weapon_type == WeaponType::SHOTGUN {
                 delay_mult = 0.91;
@@ -335,38 +315,36 @@ pub fn year_1_perks() {
                 inner_burst_scale: 1.0,
                 burst_size_add: 0.0,
             }
-        }),
+        },
     );
 
     add_rr(
         Perks::TripleTap,
-        Box::new(|_: ModifierResponseInput| -> RefundResponse {
+        |_: ModifierResponseInput| -> RefundResponse {
             RefundResponse {
                 crit: true,
                 requirement: 3,
                 refund_mag: 1,
                 refund_reserves: 0,
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::HipFireGrip,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut out = HashMap::new();
-                if input.value > 0 {
-                    out.insert(StatHashes::AIM_ASSIST.into(), 15);
-                    out.insert(StatHashes::STABILITY.into(), 25);
-                };
-                out
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let mut out = HashMap::new();
+            if input.value > 0 {
+                out.insert(StatHashes::AIM_ASSIST.into(), 15);
+                out.insert(StatHashes::STABILITY.into(), 25);
+            };
+            out
+        },
     );
 
     add_rmr(
         Perks::HipFireGrip,
-        Box::new(|input: ModifierResponseInput| -> RangeModifierResponse {
+        |input: ModifierResponseInput| -> RangeModifierResponse {
             let mut hf_range_scale = 1.2;
             if *input.calc_data.weapon_type == WeaponType::FUSIONRIFLE
                 || *input.calc_data.weapon_type == WeaponType::SHOTGUN
@@ -381,46 +359,42 @@ pub fn year_1_perks() {
                 range_hip_scale: hf_range_scale,
                 range_zoom_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::MovingTarget,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let aim_assist = if input.is_enhanced { 11 } else { 10 };
-                let mut out = HashMap::new();
-                if input.value >= 1 {
-                    out.insert(StatHashes::AIM_ASSIST.into(), aim_assist);
-                }
-                out
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let aim_assist = if input.is_enhanced { 11 } else { 10 };
+            let mut out = HashMap::new();
+            if input.value >= 1 {
+                out.insert(StatHashes::AIM_ASSIST.into(), aim_assist);
+            }
+            out
+        },
     );
 
     add_sbr(
         Perks::OpeningShot,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut aim_assist: f64 = if input.is_enhanced { 25.0 } else { 20.0 };
-                let mut range: f64 = if input.is_enhanced { 30.0 } else { 25.0 };
-                let mut out = HashMap::new();
-                if *input.calc_data.ammo_type == AmmoType::SPECIAL {
-                    aim_assist /= 2.0;
-                    range /= 2.0;
-                }
-                if input.value > 0 {
-                    out.insert(StatHashes::AIM_ASSIST.into(), aim_assist.ceil() as i32);
-                    out.insert(StatHashes::RANGE.into(), range.ceil() as i32);
-                }
-                out
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let mut aim_assist: f64 = if input.is_enhanced { 25.0 } else { 20.0 };
+            let mut range: f64 = if input.is_enhanced { 30.0 } else { 25.0 };
+            let mut out = HashMap::new();
+            if *input.calc_data.ammo_type == AmmoType::SPECIAL {
+                aim_assist /= 2.0;
+                range /= 2.0;
+            }
+            if input.value > 0 {
+                out.insert(StatHashes::AIM_ASSIST.into(), aim_assist.ceil() as i32);
+                out.insert(StatHashes::RANGE.into(), range.ceil() as i32);
+            }
+            out
+        },
     );
 
     add_rmr(
         Perks::OpeningShot,
-        Box::new(|input: ModifierResponseInput| -> RangeModifierResponse {
+        |input: ModifierResponseInput| -> RangeModifierResponse {
             let mut range: f64 = if input.is_enhanced { 30.0 } else { 25.0 };
             if input.calc_data.total_shots_fired != 0.0 || input.value == 0 {
                 range = 0.0;
@@ -434,25 +408,23 @@ pub fn year_1_perks() {
                 range_hip_scale: 1.0,
                 range_zoom_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::Outlaw,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut out = HashMap::new();
-                if input.value > 0 {
-                    out.insert(StatHashes::RELOAD.into(), 70);
-                }
-                out
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let mut out = HashMap::new();
+            if input.value > 0 {
+                out.insert(StatHashes::RELOAD.into(), 70);
+            }
+            out
+        },
     );
 
     add_rsmr(
         Perks::Outlaw,
-        Box::new(|input: ModifierResponseInput| -> ReloadModifierResponse {
+        |input: ModifierResponseInput| -> ReloadModifierResponse {
             let duration = if input.is_enhanced { 7.0 } else { 6.0 };
             if input.value > 0 && input.calc_data.time_total < duration {
                 ReloadModifierResponse {
@@ -462,39 +434,35 @@ pub fn year_1_perks() {
             } else {
                 ReloadModifierResponse::default()
             }
-        }),
+        },
     );
 
     add_vmr(
         Perks::RangeFinder,
-        Box::new(
-            |_: ModifierResponseInput| -> VelocityModifierResponse {
-                VelocityModifierResponse {
-                    velocity_scaler: 1.05,
-                }
-            },
-        ),
+        |_: ModifierResponseInput| -> VelocityModifierResponse {
+            VelocityModifierResponse {
+                velocity_scaler: 1.05,
+            }
+        },
     );
 
     add_sbr(
         Perks::SlideShot,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let stability = if input.is_enhanced { 35 } else { 30 };
-                let range = if input.is_enhanced { 25 } else { 20 };
-                let mut out = HashMap::new();
-                if input.value > 0 {
-                    out.insert(StatHashes::STABILITY.into(), stability);
-                    out.insert(StatHashes::RANGE.into(), range);
-                }
-                out
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let stability = if input.is_enhanced { 35 } else { 30 };
+            let range = if input.is_enhanced { 25 } else { 20 };
+            let mut out = HashMap::new();
+            if input.value > 0 {
+                out.insert(StatHashes::STABILITY.into(), stability);
+                out.insert(StatHashes::RANGE.into(), range);
+            }
+            out
+        },
     );
 
     add_rmr(
         Perks::SlideShot,
-        Box::new(|input: ModifierResponseInput| -> RangeModifierResponse {
+        |input: ModifierResponseInput| -> RangeModifierResponse {
             let range;
             if *input.calc_data.weapon_type == WeaponType::FUSIONRIFLE {
                 range = 0; //only applies to first proj so like should do alot less
@@ -507,74 +475,66 @@ pub fn year_1_perks() {
                 range_stat_add: range,
                 ..Default::default()
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::SlideWays,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let stability = if input.is_enhanced { 25 } else { 20 };
-                let handling = if input.is_enhanced { 25 } else { 20 };
-                let mut out = HashMap::new();
-                if input.value > 0 {
-                    out.insert(StatHashes::STABILITY.into(), stability);
-                    out.insert(StatHashes::HANDLING.into(), handling);
-                }
-                out
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let stability = if input.is_enhanced { 25 } else { 20 };
+            let handling = if input.is_enhanced { 25 } else { 20 };
+            let mut out = HashMap::new();
+            if input.value > 0 {
+                out.insert(StatHashes::STABILITY.into(), stability);
+                out.insert(StatHashes::HANDLING.into(), handling);
+            }
+            out
+        },
     );
 
     add_hmr(
         Perks::SlideWays,
-        Box::new(
-            |input: ModifierResponseInput| -> HandlingModifierResponse {
-                let handling = if input.value > 0 { 20 } else { 0 };
-                HandlingModifierResponse {
-                    stat_add: handling,
-                    ..Default::default()
-                }
-            },
-        ),
+        |input: ModifierResponseInput| -> HandlingModifierResponse {
+            let handling = if input.value > 0 { 20 } else { 0 };
+            HandlingModifierResponse {
+                stat_add: handling,
+                ..Default::default()
+            }
+        },
     );
 
     add_hmr(
         Perks::Snapshot,
-        Box::new(
-            |input: ModifierResponseInput| -> HandlingModifierResponse {
-                let mut ads_mult = 0.5;
-                if *input.calc_data.ammo_type == AmmoType::SPECIAL {
-                    ads_mult = 0.8; //its 0.8 from my testing idk
-                };
-                HandlingModifierResponse {
-                    ads_scale: ads_mult,
-                    ..Default::default()
-                }
-            },
-        ),
+        |input: ModifierResponseInput| -> HandlingModifierResponse {
+            let mut ads_mult = 0.5;
+            if *input.calc_data.ammo_type == AmmoType::SPECIAL {
+                ads_mult = 0.8; //its 0.8 from my testing idk
+            };
+            HandlingModifierResponse {
+                ads_scale: ads_mult,
+                ..Default::default()
+            }
+        },
     );
 
     add_sbr(
         Perks::TapTheTrigger,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut stability = if input.is_enhanced { 44 } else { 40 };
-                if *input.calc_data.weapon_type == WeaponType::FUSIONRIFLE {
-                    stability /= 4;
-                }
-                let mut out = HashMap::new();
-                if input.value > 0 {
-                    out.insert(StatHashes::STABILITY.into(), stability);
-                }
-                out
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let mut stability = if input.is_enhanced { 44 } else { 40 };
+            if *input.calc_data.weapon_type == WeaponType::FUSIONRIFLE {
+                stability /= 4;
+            }
+            let mut out = HashMap::new();
+            if input.value > 0 {
+                out.insert(StatHashes::STABILITY.into(), stability);
+            }
+            out
+        },
     );
 
     add_dmr(
         Perks::Rampage,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             let val = clamp(input.value, 0, 3);
             let mut damage_mult = 1.1_f64.powi(val as i32) - 1.0;
             let duration = if input.is_enhanced { 5.0 } else { 4.0 };
@@ -590,12 +550,12 @@ pub fn year_1_perks() {
                 explosive_dmg_scale: 1.0 + damage_mult,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::KillClip,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             let mut damage_mult = if input.value > 0 { 0.25 } else { 0.0 };
             let duration = if input.is_enhanced { 5.0 } else { 4.0 };
             if input.calc_data.time_total > duration {
@@ -606,12 +566,12 @@ pub fn year_1_perks() {
                 explosive_dmg_scale: 1.0 + damage_mult,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::BackupPlan,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             let mut damage_mult = if input.value > 0 { 0.2 } else { 0.0 };
             let duration = if input.is_enhanced { 2.2 } else { 2.0 };
             if input.calc_data.time_total > duration {
@@ -622,12 +582,12 @@ pub fn year_1_perks() {
                 explosive_dmg_scale: 1.0 - damage_mult,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_fmr(
         Perks::BackupPlan,
-        Box::new(|input: ModifierResponseInput| -> FiringModifierResponse {
+        |input: ModifierResponseInput| -> FiringModifierResponse {
             let mut firing_mult = if input.value > 0 { 0.7 } else { 1.0 };
             let duration = if input.is_enhanced { 2.2 } else { 2.0 };
             if input.calc_data.time_total > duration {
@@ -637,47 +597,43 @@ pub fn year_1_perks() {
                 burst_delay_scale: firing_mult,
                 ..Default::default()
             }
-        }),
+        },
     );
 
     add_hmr(
         Perks::BackupPlan,
-        Box::new(
-            |input: ModifierResponseInput| -> HandlingModifierResponse {
-                let mut handling_add = if input.value > 0 { 100 } else { 0 };
-                let duration = if input.is_enhanced { 2.2 } else { 2.0 };
-                if input.calc_data.time_total > duration {
-                    handling_add = 0;
-                };
-                HandlingModifierResponse {
-                    stat_add: handling_add,
-                    ..Default::default()
-                }
-            },
-        ),
+        |input: ModifierResponseInput| -> HandlingModifierResponse {
+            let mut handling_add = if input.value > 0 { 100 } else { 0 };
+            let duration = if input.is_enhanced { 2.2 } else { 2.0 };
+            if input.calc_data.time_total > duration {
+                handling_add = 0;
+            };
+            HandlingModifierResponse {
+                stat_add: handling_add,
+                ..Default::default()
+            }
+        },
     );
 
     add_sbr(
         Perks::BackupPlan,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut handling = if input.value > 0 { 100 } else { 0 };
-                let duration = if input.is_enhanced { 2.2 } else { 2.0 };
-                if input.calc_data.time_total > duration {
-                    handling = 0;
-                };
-                let mut out = HashMap::new();
-                if input.value > 0 {
-                    out.insert(StatHashes::HANDLING.into(), handling);
-                }
-                out
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let mut handling = if input.value > 0 { 100 } else { 0 };
+            let duration = if input.is_enhanced { 2.2 } else { 2.0 };
+            if input.calc_data.time_total > duration {
+                handling = 0;
+            };
+            let mut out = HashMap::new();
+            if input.value > 0 {
+                out.insert(StatHashes::HANDLING.into(), handling);
+            }
+            out
+        },
     );
 
     add_edr(
         Perks::ClusterBomb,
-        Box::new(|_: ModifierResponseInput| -> ExtraDamageResponse {
+        |_: ModifierResponseInput| -> ExtraDamageResponse {
             ExtraDamageResponse {
                 additive_damage: 350.0 * 0.04,
                 combatant_scale: true,
@@ -689,12 +645,12 @@ pub fn year_1_perks() {
                 hit_at_same_time: true,
                 is_dot: false,
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::DisruptionBreak,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             let mut damage_mult = if input.value > 0 { 0.5 } else { 0.0 };
             let duration = if input.is_enhanced { 5.0 } else { 4.0 };
             if input.calc_data.time_total > duration
@@ -707,86 +663,76 @@ pub fn year_1_perks() {
                 explosive_dmg_scale: 1.0 + damage_mult,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_hmr(
         Perks::QuickDraw,
-        Box::new(
-            |input: ModifierResponseInput| -> HandlingModifierResponse {
-                if input.value > 0 {
-                    HandlingModifierResponse {
-                        draw_add: 100,
-                        draw_scale: 0.95,
-                        ..Default::default()
-                    }
-                } else {
-                    HandlingModifierResponse::default()
+        |input: ModifierResponseInput| -> HandlingModifierResponse {
+            if input.value > 0 {
+                HandlingModifierResponse {
+                    draw_add: 100,
+                    draw_scale: 0.95,
+                    ..Default::default()
                 }
-            },
-        ),
+            } else {
+                HandlingModifierResponse::default()
+            }
+        },
     );
 
     add_sbr(
         Perks::QuickDraw,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut map = HashMap::new();
-                if input.value > 0 {
-                    map.insert(StatHashes::HANDLING.into(), 100);
-                }
-                map
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let mut map = HashMap::new();
+            if input.value > 0 {
+                map.insert(StatHashes::HANDLING.into(), 100);
+            }
+            map
+        },
     );
 
     add_hmr(
         Perks::PulseMonitor,
-        Box::new(
-            |input: ModifierResponseInput| -> HandlingModifierResponse {
-                if input.value > 0 {
-                    HandlingModifierResponse {
-                        stat_add: 50,
-                        draw_scale: 0.95,
-                        stow_scale: 0.95,
-                        ..Default::default()
-                    }
-                } else {
-                    HandlingModifierResponse::default()
+        |input: ModifierResponseInput| -> HandlingModifierResponse {
+            if input.value > 0 {
+                HandlingModifierResponse {
+                    stat_add: 50,
+                    draw_scale: 0.95,
+                    stow_scale: 0.95,
+                    ..Default::default()
                 }
-            },
-        ),
+            } else {
+                HandlingModifierResponse::default()
+            }
+        },
     );
 
     add_sbr(
         Perks::PulseMonitor,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut map = HashMap::new();
-                if input.value > 0 {
-                    map.insert(StatHashes::HANDLING.into(), 50);
-                }
-                map
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let mut map = HashMap::new();
+            if input.value > 0 {
+                map.insert(StatHashes::HANDLING.into(), 50);
+            }
+            map
+        },
     );
 
     add_sbr(
         Perks::UnderDog,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut map = HashMap::new();
-                if input.value > 0 {
-                    map.insert(StatHashes::RELOAD.into(), 100);
-                }
-                map
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let mut map = HashMap::new();
+            if input.value > 0 {
+                map.insert(StatHashes::RELOAD.into(), 100);
+            }
+            map
+        },
     );
 
     add_rsmr(
         Perks::UnderDog,
-        Box::new(|input: ModifierResponseInput| -> ReloadModifierResponse {
+        |input: ModifierResponseInput| -> ReloadModifierResponse {
             if input.value > 0 {
                 ReloadModifierResponse {
                     reload_stat_add: 100,
@@ -795,35 +741,33 @@ pub fn year_1_perks() {
             } else {
                 ReloadModifierResponse::default()
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::UnderPressure,
-        Box::new(
-            |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut map = HashMap::new();
-                let buff = if input.is_enhanced { 35 } else { 30 };
-                if input.value > 0 {
-                    map.insert(StatHashes::STABILITY.into(), buff);
-                }
-                map
-            },
-        ),
+        |input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+            let mut map = HashMap::new();
+            let buff = if input.is_enhanced { 35 } else { 30 };
+            if input.value > 0 {
+                map.insert(StatHashes::STABILITY.into(), buff);
+            }
+            map
+        },
     );
     add_fmr(
         Perks::PhaseMag,
-        Box::new(|_: ModifierResponseInput| -> FiringModifierResponse {
+        |_: ModifierResponseInput| -> FiringModifierResponse {
             FiringModifierResponse {
                 burst_delay_add: 1.0 / 30.0,
                 ..Default::default()
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::PhaseMag,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             //set up precision smg to get damage values from
             let precision = Weapon::generate_weapon(
                 0, 24,         //smg
@@ -845,6 +789,6 @@ pub fn year_1_perks() {
                 explosive_dmg_scale: precision_body / lightweight_body,
                 crit_scale: precision_crit / lightweight_crit,
             }
-        }),
+        },
     );
 }

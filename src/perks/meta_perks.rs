@@ -21,7 +21,7 @@ use super::{
 pub fn meta_perks() {
     add_dmr(
         Perks::BuiltIn,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             let mut crit_scale = 1.0;
             let mut dmg_scale = 1.0;
             if *input.calc_data.weapon_type == WeaponType::LINEARFUSIONRIFLE && !input.pvp {
@@ -63,12 +63,12 @@ pub fn meta_perks() {
                 impact_dmg_scale: dmg_scale,
                 explosive_dmg_scale: dmg_scale,
             }
-        }),
+        },
     );
 
     add_fmr(
         Perks::BuiltIn,
-        Box::new(|input: ModifierResponseInput| -> FiringModifierResponse {
+        |input: ModifierResponseInput| -> FiringModifierResponse {
             #[allow(unused_mut)]
             let mut delay_add = 0.0;
 
@@ -115,85 +115,79 @@ pub fn meta_perks() {
                 burst_delay_add: delay_add,
                 ..Default::default()
             }
-        }),
+        },
     );
 
     add_epr(
         Perks::BuiltIn,
-        Box::new(
-            |input: ModifierResponseInput| -> ExplosivePercentResponse {
-                if *input.calc_data.weapon_type == WeaponType::GRENADELAUNCHER {
-                    let blast_radius_struct =
-                        input.calc_data.stats.get(&StatHashes::BLAST_RADIUS.into());
+        |input: ModifierResponseInput| -> ExplosivePercentResponse {
+            if *input.calc_data.weapon_type == WeaponType::GRENADELAUNCHER {
+                let blast_radius_struct =
+                    input.calc_data.stats.get(&StatHashes::BLAST_RADIUS.into());
 
-                    let blast_radius = blast_radius_struct.cloned().unwrap_or_default().perk_val();
+                let blast_radius = blast_radius_struct.cloned().unwrap_or_default().perk_val();
 
-                    if input.calc_data.ammo_type == &AmmoType::SPECIAL {
-                        return ExplosivePercentResponse {
-                            percent: 0.5 + 0.003 * blast_radius as f64,
-                            delyed: 0.0,
-                            retain_base_total: true,
-                        };
-                    } else if input.calc_data.ammo_type == &AmmoType::HEAVY {
-                        return ExplosivePercentResponse {
-                            percent: 0.7 + 0.00175 * blast_radius as f64,
-                            delyed: 0.0,
-                            retain_base_total: true,
-                        };
-                    };
-                }
-                if *input.calc_data.weapon_type == WeaponType::ROCKET
-                    && input.calc_data.intrinsic_hash < 1000
-                //ensures not exotic
-                {
+                if input.calc_data.ammo_type == &AmmoType::SPECIAL {
                     return ExplosivePercentResponse {
-                        percent: 0.778,
+                        percent: 0.5 + 0.003 * blast_radius as f64,
                         delyed: 0.0,
                         retain_base_total: true,
                     };
-                }
-                ExplosivePercentResponse {
-                    percent: 0.0,
+                } else if input.calc_data.ammo_type == &AmmoType::HEAVY {
+                    return ExplosivePercentResponse {
+                        percent: 0.7 + 0.00175 * blast_radius as f64,
+                        delyed: 0.0,
+                        retain_base_total: true,
+                    };
+                };
+            }
+            if *input.calc_data.weapon_type == WeaponType::ROCKET
+                && input.calc_data.intrinsic_hash < 1000
+            //ensures not exotic
+            {
+                return ExplosivePercentResponse {
+                    percent: 0.778,
                     delyed: 0.0,
                     retain_base_total: true,
-                }
-            },
-        ),
+                };
+            }
+            ExplosivePercentResponse {
+                percent: 0.0,
+                delyed: 0.0,
+                retain_base_total: true,
+            }
+        },
     );
 
     add_hmr(
         Perks::DexterityMod,
-        Box::new(
-            |input: ModifierResponseInput| -> HandlingModifierResponse {
-                let swap_scale = if input.value > 0 {
-                    0.85 - clamp(input.value, 1, 3) as f64 * 0.05
-                } else {
-                    1.0
-                };
-                HandlingModifierResponse {
-                    stow_scale: swap_scale,
-                    draw_scale: swap_scale,
-                    ..Default::default()
-                }
-            },
-        ),
+        |input: ModifierResponseInput| -> HandlingModifierResponse {
+            let swap_scale = if input.value > 0 {
+                0.85 - clamp(input.value, 1, 3) as f64 * 0.05
+            } else {
+                1.0
+            };
+            HandlingModifierResponse {
+                stow_scale: swap_scale,
+                draw_scale: swap_scale,
+                ..Default::default()
+            }
+        },
     );
 
     add_hmr(
         Perks::TargetingMod,
-        Box::new(
-            |input: ModifierResponseInput| -> HandlingModifierResponse {
-                HandlingModifierResponse {
-                    ads_scale: if input.value > 0 { 0.75 } else { 1.0 },
-                    ..Default::default()
-                }
-            },
-        ),
+        |input: ModifierResponseInput| -> HandlingModifierResponse {
+            HandlingModifierResponse {
+                ads_scale: if input.value > 0 { 0.75 } else { 1.0 },
+                ..Default::default()
+            }
+        },
     );
 
     add_sbr(
         Perks::TargetingMod,
-        Box::new(|input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if input.value == 1 {
                 stats.insert(StatHashes::AIM_ASSIST.into(), 5);
@@ -203,32 +197,30 @@ pub fn meta_perks() {
                 stats.insert(StatHashes::AIM_ASSIST.into(), 10);
             }
             stats
-        }),
+        },
     );
 
     add_imr(
         Perks::ReserveMod,
-        Box::new(
-            |input: ModifierResponseInput| -> InventoryModifierResponse {
-                let inv_buff = match input.value {
-                    0 => 0,
-                    1 => 20,
-                    2 => 40,
-                    3 => 50,
-                    _ => 50,
-                };
-                InventoryModifierResponse {
-                    inv_stat_add: inv_buff,
-                    inv_scale: 1.0,
-                    ..Default::default()
-                }
-            },
-        ),
+        |input: ModifierResponseInput| -> InventoryModifierResponse {
+            let inv_buff = match input.value {
+                0 => 0,
+                1 => 20,
+                2 => 40,
+                3 => 50,
+                _ => 50,
+            };
+            InventoryModifierResponse {
+                inv_stat_add: inv_buff,
+                inv_scale: 1.0,
+                ..Default::default()
+            }
+        },
     );
 
     add_sbr(
         Perks::ReserveMod,
-        Box::new(|input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |input: ModifierResponseInput| -> HashMap<u32, i32> {
             let inv_buff = match input.value {
                 0 => 0,
                 1 => 20,
@@ -239,12 +231,12 @@ pub fn meta_perks() {
             let mut stats = HashMap::new();
             stats.insert(StatHashes::INVENTORY_SIZE.into(), inv_buff);
             stats
-        }),
+        },
     );
 
     add_rsmr(
         Perks::LoaderMod,
-        Box::new(|input: ModifierResponseInput| -> ReloadModifierResponse {
+        |input: ModifierResponseInput| -> ReloadModifierResponse {
             let stat = match input.value {
                 0 => 0,
                 1 => 10,
@@ -257,12 +249,12 @@ pub fn meta_perks() {
                 reload_stat_add: stat,
                 reload_time_scale: mult,
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::LoaderMod,
-        Box::new(|input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             let buff = match input.value {
                 0 => 0,
@@ -272,12 +264,12 @@ pub fn meta_perks() {
             };
             stats.insert(StatHashes::RELOAD.into(), buff);
             stats
-        }),
+        },
     );
 
     add_flmr(
         Perks::UnflinchingMod,
-        Box::new(|input: ModifierResponseInput| -> FlinchModifierResponse {
+        |input: ModifierResponseInput| -> FlinchModifierResponse {
             if input.value > 2 {
                 FlinchModifierResponse { flinch_scale: 0.6 }
             } else if input.value == 2 {
@@ -287,48 +279,48 @@ pub fn meta_perks() {
             } else {
                 FlinchModifierResponse::default()
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::RallyBarricade,
-        Box::new(|_: ModifierResponseInput| -> HashMap<u32, i32> {
+        |_: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             stats.insert(StatHashes::STABILITY.into(), 30);
             stats.insert(StatHashes::RELOAD.into(), 100);
             stats
-        }),
+        },
     );
 
     add_flmr(
         Perks::RallyBarricade,
-        Box::new(|_input: ModifierResponseInput| -> FlinchModifierResponse {
+        |_input: ModifierResponseInput| -> FlinchModifierResponse {
             FlinchModifierResponse { flinch_scale: 0.5 }
-        }),
+        },
     );
 
     add_rsmr(
         Perks::RallyBarricade,
-        Box::new(|_: ModifierResponseInput| -> ReloadModifierResponse {
+        |_: ModifierResponseInput| -> ReloadModifierResponse {
             ReloadModifierResponse {
                 reload_stat_add: 100,
                 reload_time_scale: 0.9,
             }
-        }),
+        },
     );
 
     add_rmr(
         Perks::RallyBarricade,
-        Box::new(|_: ModifierResponseInput| -> RangeModifierResponse {
+        |_: ModifierResponseInput| -> RangeModifierResponse {
             RangeModifierResponse {
                 range_all_scale: 1.1,
                 ..Default::default()
             }
-        }),
+        },
     );
     add_fmr(
         Perks::AdeptChargeTime,
-        Box::new(|input: ModifierResponseInput| -> FiringModifierResponse {
+        |input: ModifierResponseInput| -> FiringModifierResponse {
             FiringModifierResponse {
                 burst_delay_add: match *input.calc_data.weapon_type {
                     WeaponType::FUSIONRIFLE => -0.040,
@@ -337,6 +329,6 @@ pub fn meta_perks() {
                 },
                 ..Default::default()
             }
-        }),
+        },
     );
 }

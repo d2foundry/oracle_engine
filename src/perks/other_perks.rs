@@ -20,7 +20,7 @@ use super::{
 pub fn other_perks() {
     add_rsmr(
         Perks::AlloyMag,
-        Box::new(|input: ModifierResponseInput| -> ReloadModifierResponse {
+        |input: ModifierResponseInput| -> ReloadModifierResponse {
             if input.value > 0 {
                 ReloadModifierResponse {
                     reload_stat_add: 0,
@@ -29,12 +29,12 @@ pub fn other_perks() {
             } else {
                 ReloadModifierResponse::default()
             }
-        }),
+        },
     );
 
     add_rsmr(
         Perks::RapidFireFrame,
-        Box::new(|input: ModifierResponseInput| -> ReloadModifierResponse {
+        |input: ModifierResponseInput| -> ReloadModifierResponse {
             if input.value > 0 || input.calc_data.weapon_type == &WeaponType::SHOTGUN {
                 ReloadModifierResponse {
                     reload_stat_add: 0,
@@ -43,84 +43,76 @@ pub fn other_perks() {
             } else {
                 ReloadModifierResponse::default()
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::PrecisionFrame,
-        Box::new(|input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if input.calc_data.weapon_type == &WeaponType::HANDCANNON {
                 stats.insert(StatHashes::AIRBORNE.into(), 25);
             }
             stats
-        }),
+        },
     );
 
     add_hmr(
         Perks::SwapMag,
-        Box::new(
-            |_: ModifierResponseInput| -> HandlingModifierResponse {
-                HandlingModifierResponse {
-                    draw_scale: 0.9,
-                    stow_scale: 0.9,
-                    ..Default::default()
-                }
-            },
-        ),
+        |_: ModifierResponseInput| -> HandlingModifierResponse {
+            HandlingModifierResponse {
+                draw_scale: 0.9,
+                stow_scale: 0.9,
+                ..Default::default()
+            }
+        },
     );
 
     add_hmr(
         Perks::QuickAccessSling,
-        Box::new(
-            |_: ModifierResponseInput| -> HandlingModifierResponse {
-                HandlingModifierResponse {
-                    draw_scale: 0.9,
-                    stow_scale: 0.9,
-                    ..Default::default()
-                }
-            },
-        ),
+        |_: ModifierResponseInput| -> HandlingModifierResponse {
+            HandlingModifierResponse {
+                draw_scale: 0.9,
+                stow_scale: 0.9,
+                ..Default::default()
+            }
+        },
     );
 
     add_hmr(
         Perks::FreehandGrip,
-        Box::new(
-            |_: ModifierResponseInput| -> HandlingModifierResponse {
-                HandlingModifierResponse {
-                    draw_scale: 0.95,
-                    ..Default::default()
-                }
-            },
-        ),
+        |_: ModifierResponseInput| -> HandlingModifierResponse {
+            HandlingModifierResponse {
+                draw_scale: 0.95,
+                ..Default::default()
+            }
+        },
     );
 
     add_sbr(
         Perks::Amplified,
-        Box::new(|_: ModifierResponseInput| -> HashMap<u32, i32> {
+        |_: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             stats.insert(StatHashes::HANDLING.into(), 40);
             stats
-        }),
+        },
     );
 
     add_hmr(
         Perks::Amplified,
-        Box::new(
-            |_: ModifierResponseInput| -> HandlingModifierResponse {
-                HandlingModifierResponse {
-                    stat_add: 40,
-                    draw_scale: 0.95,
-                    stow_scale: 0.95,
-                    ..Default::default()
-                }
-            },
-        ),
+        |_: ModifierResponseInput| -> HandlingModifierResponse {
+            HandlingModifierResponse {
+                stat_add: 40,
+                draw_scale: 0.95,
+                stow_scale: 0.95,
+                ..Default::default()
+            }
+        },
     );
 
     add_rsmr(
         Perks::Frequency,
-        Box::new(|input: ModifierResponseInput| -> ReloadModifierResponse {
+        |input: ModifierResponseInput| -> ReloadModifierResponse {
             if input.value > 0 {
                 ReloadModifierResponse {
                     reload_stat_add: 50,
@@ -129,23 +121,23 @@ pub fn other_perks() {
             } else {
                 ReloadModifierResponse::default()
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::Tempering,
-        Box::new(|input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if input.value > 0 {
                 stats.insert(StatHashes::RELOAD.into(), 50);
             };
             stats
-        }),
+        },
     );
 
     add_rsmr(
         Perks::FlowState,
-        Box::new(|input: ModifierResponseInput| -> ReloadModifierResponse {
+        |input: ModifierResponseInput| -> ReloadModifierResponse {
             if input.value > 0 {
                 ReloadModifierResponse {
                     reload_stat_add: 50,
@@ -154,34 +146,34 @@ pub fn other_perks() {
             } else {
                 ReloadModifierResponse::default()
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::FlowState,
-        Box::new(|input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if input.value > 0 {
                 stats.insert(StatHashes::RELOAD.into(), 50);
             };
             stats
-        }),
+        },
     );
 
     add_sbr(
         Perks::Tempering,
-        Box::new(|input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if input.value > 0 {
                 stats.insert(StatHashes::AIRBORNE.into(), 20);
             };
             stats
-        }),
+        },
     );
 
     add_sbr(
         Perks::OnYourMark,
-        Box::new(|input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             let val = clamp(input.value, 0, 3) as i32;
             if input.value > 0 {
@@ -189,36 +181,34 @@ pub fn other_perks() {
                 stats.insert(StatHashes::RELOAD.into(), 20 * val);
             };
             stats
-        }),
+        },
     );
 
     add_hmr(
         Perks::OnYourMark,
-        Box::new(
-            |input: ModifierResponseInput| -> HandlingModifierResponse {
-                let val = clamp(input.value, 0, 3) as i32;
-                HandlingModifierResponse {
-                    stat_add: 20 * val,
-                    ..Default::default()
-                }
-            },
-        ),
+        |input: ModifierResponseInput| -> HandlingModifierResponse {
+            let val = clamp(input.value, 0, 3) as i32;
+            HandlingModifierResponse {
+                stat_add: 20 * val,
+                ..Default::default()
+            }
+        },
     );
 
     add_rsmr(
         Perks::OnYourMark,
-        Box::new(|input: ModifierResponseInput| -> ReloadModifierResponse {
+        |input: ModifierResponseInput| -> ReloadModifierResponse {
             let val = clamp(input.value, 0, 3) as i32;
             ReloadModifierResponse {
                 reload_stat_add: 20 * val,
                 reload_time_scale: if input.value > 0 { 0.93 } else { 1.0 },
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::HeatRises,
-        Box::new(|input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             let mut buff = 20;
             if input.value > 0 {
@@ -226,12 +216,12 @@ pub fn other_perks() {
             };
             stats.insert(StatHashes::AIRBORNE.into(), buff);
             stats
-        }),
+        },
     );
 
     add_sbr(
         Perks::Hedrons,
-        Box::new(|input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             if input.value > 0 {
                 stats.insert(StatHashes::AIRBORNE.into(), 20);
@@ -239,12 +229,12 @@ pub fn other_perks() {
                 stats.insert(StatHashes::STABILITY.into(), 30);
             };
             stats
-        }),
+        },
     );
 
     add_dmr(
         Perks::BossSpec,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             let damage_mult = if *input.calc_data.enemy_type == EnemyType::BOSS && !input.pvp {
                 1.077
             } else {
@@ -255,12 +245,12 @@ pub fn other_perks() {
                 explosive_dmg_scale: damage_mult,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::MajorSpec,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             if !matches!(
                 *input.calc_data.enemy_type,
                 EnemyType::ELITE | EnemyType::MINIBOSS | EnemyType::CHAMPION
@@ -274,12 +264,12 @@ pub fn other_perks() {
                 explosive_dmg_scale: damage_mult,
                 ..Default::default()
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::BigOnesSpec,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             if !matches!(
                 *input.calc_data.enemy_type,
                 EnemyType::ELITE | EnemyType::MINIBOSS | EnemyType::CHAMPION | EnemyType::BOSS
@@ -293,12 +283,12 @@ pub fn other_perks() {
                 explosive_dmg_scale: damage_mult,
                 ..Default::default()
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::MinorSpec,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             let damage_mult = if input.calc_data.enemy_type == &EnemyType::MINOR && !input.pvp {
                 1.077
             } else {
@@ -309,12 +299,12 @@ pub fn other_perks() {
                 explosive_dmg_scale: damage_mult,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::TakenSpec,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             let damage_mult = if input.value > 0 && !input.pvp {
                 1.1
             } else {
@@ -325,34 +315,34 @@ pub fn other_perks() {
                 explosive_dmg_scale: damage_mult,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::SpikeGrenades,
-        Box::new(|_: ModifierResponseInput| -> DamageModifierResponse {
+        |_: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
                 impact_dmg_scale: 1.125,
                 explosive_dmg_scale: 1.0,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::DisorientingGrenades,
-        Box::new(|_: ModifierResponseInput| -> DamageModifierResponse {
+        |_: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
                 impact_dmg_scale: 0.75,
                 explosive_dmg_scale: 0.75,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::FullChoke,
-        Box::new(|input: ModifierResponseInput| -> DamageModifierResponse {
+        |input: ModifierResponseInput| -> DamageModifierResponse {
             if input.calc_data.weapon_type == &WeaponType::SHOTGUN
                 && input.calc_data.base_crit_mult < 1.15
             {
@@ -364,12 +354,12 @@ pub fn other_perks() {
             } else {
                 DamageModifierResponse::default()
             }
-        }),
+        },
     );
 
     add_fmr(
         Perks::AcceleratedCoils,
-        Box::new(|input: ModifierResponseInput| -> FiringModifierResponse {
+        |input: ModifierResponseInput| -> FiringModifierResponse {
             if input.calc_data.weapon_type == &WeaponType::LINEARFUSIONRIFLE {
                 return FiringModifierResponse {
                     burst_delay_add: -0.033,
@@ -380,12 +370,12 @@ pub fn other_perks() {
                 burst_delay_add: -0.040,
                 ..Default::default()
             }
-        }),
+        },
     );
 
     add_fmr(
         Perks::LiquidCoils,
-        Box::new(|input: ModifierResponseInput| -> FiringModifierResponse {
+        |input: ModifierResponseInput| -> FiringModifierResponse {
             if input.calc_data.weapon_type == &WeaponType::LINEARFUSIONRIFLE {
                 return FiringModifierResponse {
                     burst_delay_add: 0.033,
@@ -396,34 +386,34 @@ pub fn other_perks() {
                 burst_delay_add: 0.040,
                 ..Default::default()
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::LiquidCoils,
-        Box::new(|_: ModifierResponseInput| -> DamageModifierResponse {
+        |_: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
                 impact_dmg_scale: 1.02,
                 explosive_dmg_scale: 1.02,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::AcceleratedCoils,
-        Box::new(|_: ModifierResponseInput| -> DamageModifierResponse {
+        |_: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
                 impact_dmg_scale: 0.98,
                 explosive_dmg_scale: 0.98,
                 ..Default::default()
             }
-        }),
+        },
     );
 
     add_fmr(
         Perks::AssaultMag,
-        Box::new(|input: ModifierResponseInput| -> FiringModifierResponse {
+        |input: ModifierResponseInput| -> FiringModifierResponse {
             let hash = input.calc_data.intrinsic_hash;
             let tick_amount = if hash == 904 {
                 3.0
@@ -440,12 +430,12 @@ pub fn other_perks() {
             } else {
                 FiringModifierResponse::default()
             }
-        }),
+        },
     );
 
     add_sbr(
         Perks::ThreadOfAscent,
-        Box::new(|input: ModifierResponseInput| -> HashMap<u32, i32> {
+        |input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut map = HashMap::new();
             if input.value > 0 {
                 map.insert(StatHashes::AIRBORNE.into(), 30);
@@ -453,30 +443,28 @@ pub fn other_perks() {
                 map.insert(StatHashes::HANDLING.into(), 40);
             }
             map
-        }),
+        },
     );
 
     add_hmr(
         Perks::ThreadOfAscent,
-        Box::new(
-            |input: ModifierResponseInput| -> HandlingModifierResponse {
-                if input.value > 0 {
-                    HandlingModifierResponse {
-                        stat_add: 40,
-                        draw_scale: 0.925,
-                        stow_scale: 0.925,
-                        ..Default::default()
-                    }
-                } else {
-                    HandlingModifierResponse::default()
+        |input: ModifierResponseInput| -> HandlingModifierResponse {
+            if input.value > 0 {
+                HandlingModifierResponse {
+                    stat_add: 40,
+                    draw_scale: 0.925,
+                    stow_scale: 0.925,
+                    ..Default::default()
                 }
-            },
-        ),
+            } else {
+                HandlingModifierResponse::default()
+            }
+        },
     );
 
     add_rsmr(
         Perks::ThreadOfAscent,
-        Box::new(|input: ModifierResponseInput| -> ReloadModifierResponse {
+        |input: ModifierResponseInput| -> ReloadModifierResponse {
             if input.value > 0 {
                 ReloadModifierResponse {
                     reload_time_scale: 0.925,
@@ -485,17 +473,17 @@ pub fn other_perks() {
             } else {
                 ReloadModifierResponse::default()
             }
-        }),
+        },
     );
 
     add_dmr(
         Perks::ImpactCasing,
-        Box::new(|_: ModifierResponseInput| -> DamageModifierResponse {
+        |_: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
                 impact_dmg_scale: 1.1,
                 explosive_dmg_scale: 1.0,
                 crit_scale: 1.0,
             }
-        }),
+        },
     );
 }

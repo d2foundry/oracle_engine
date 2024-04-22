@@ -104,8 +104,7 @@ pub fn calc_ttk(weapon: &Weapon, overshield: f64) -> Vec<ResillienceSummary> {
                 * firing_mods.burst_delay_scale;
             let shot_inner_burst_delay =
                 weapon.firing_data.inner_burst_delay * firing_mods.inner_burst_scale;
-            let shot_burst_size =
-                weapon.firing_data.burst_size as f64 + firing_mods.burst_size_add;
+            let shot_burst_size = weapon.firing_data.burst_size as f64 + firing_mods.burst_size_add;
 
             let mut shot_delay = if opt_bullets_hit % shot_burst_size > 0.0 && opt_bullets_hit > 0.0
             {
@@ -228,8 +227,7 @@ pub fn calc_ttk(weapon: &Weapon, overshield: f64) -> Vec<ResillienceSummary> {
                 * firing_mods.burst_delay_scale;
             let shot_inner_burst_delay =
                 weapon.firing_data.inner_burst_delay * firing_mods.inner_burst_scale;
-            let shot_burst_size =
-                weapon.firing_data.burst_size as f64 + firing_mods.burst_size_add;
+            let shot_burst_size = weapon.firing_data.burst_size as f64 + firing_mods.burst_size_add;
 
             let mut shot_delay = if bdy_bullets_hit % shot_burst_size > 0.0 && bdy_bullets_hit > 0.0
             {
