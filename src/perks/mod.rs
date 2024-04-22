@@ -448,6 +448,7 @@ pub enum Perks {
     Tempering = 362132290,
     ThreadOfAscent = 4208512216,
     Amplified = 880704824,
+    BannerOfWar = 988980154,
 
     //kinetic exotic
     CranialSpike = 1319823571,
