@@ -405,21 +405,27 @@ pub fn buff_perks() {
                 return DamageModifierResponse::default();
             }
             let buffs = match _input.value {
-                1 => (1.0, 1.0),
-                2 => (1.2, 1.0),
-                3 => (1.25, 1.2),
-                4 => (1.3, 1.25),
-                5 => (1.35, 1.25),
-                _ => (1.35, 1.25)
+                1 => (1.0, 1.0, 1.55, 1.4),
+                2 => (1.2, 1.0, 2.10, 1.8),
+                3 => (1.25, 1.2, 2.65, 2.2),
+                4 => (1.3, 1.25, 3.2, 2.6),
+                5 => (1.35, 1.25, 3.75, 3.0),
+                _ => (1.35, 1.25, 3.75, 3.0)
             };
             let weapon_buff = if _input.pvp {
                 emp_buff(_input.cached_data, buffs.1)
             } else {
                 emp_buff(_input.cached_data, buffs.0)
             };
+            let melee_buff = if _input.calc_data.weapon_type == &WeaponType::GLAIVE {
+                buffs.3
+            } else {
+                buffs.2
+            };
             DamageModifierResponse {
                 impact_dmg_scale: weapon_buff,
                 explosive_dmg_scale: weapon_buff,
+                melee_dmg_scale: melee_buff,
                 ..Default::default()
             }
         }),
