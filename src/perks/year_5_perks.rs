@@ -111,6 +111,9 @@ pub fn year_5_perks() {
     add_dmr(
         Perks::GutShot,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
             let high_weapons = [
                 WeaponType::AUTORIFLE,
                 WeaponType::HANDCANNON,
