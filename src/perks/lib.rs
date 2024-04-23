@@ -143,6 +143,7 @@ impl<'a> CalculationInput<'a> {
     }
 }
 
+#[non_exhaustive]
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct DamageModifierResponse {
     pub impact_dmg_scale: f64,

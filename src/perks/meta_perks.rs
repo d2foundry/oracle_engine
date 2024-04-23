@@ -62,6 +62,7 @@ pub fn meta_perks() {
                 crit_scale,
                 impact_dmg_scale: dmg_scale,
                 explosive_dmg_scale: dmg_scale,
+                ..Default::default()
             }
         }),
     );
