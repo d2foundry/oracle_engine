@@ -13,28 +13,28 @@ use crate::{
 use super::{FiringData, Weapon};
 
 fn get_data_pointers(
-    _weapon_type_id: u8,
+    weapon_type_id: u8,
     intrinsic_hash: BungieHash,
     weapon_hash: BungieHash,
 ) -> Option<DataPointers> {
     let pointer_map: HashMap<WeaponPath, DataPointers> = HashMap::from(database::DATA_POINTERS);
-    if let Some(weapon) = pointer_map.get(&WeaponPath(_weapon_type_id as u32, weapon_hash)) {
+    if let Some(weapon) = pointer_map.get(&WeaponPath(weapon_type_id as u32, weapon_hash)) {
         return Some(*weapon);
     }
     pointer_map
-        .get(&WeaponPath(_weapon_type_id as u32, intrinsic_hash))
+        .get(&WeaponPath(weapon_type_id as u32, intrinsic_hash))
         .cloned()
 }
 
 impl Weapon {
     pub fn generate_weapon(
-        _hash: u32,
-        _weapon_type_id: u8,
-        _intrinsic_hash: u32,
-        _ammo_type_id: u32,
-        _damage_type_id: u32,
+        hash: u32,
+        weapon_type_id: u8,
+        intrinsic_hash: u32,
+        ammo_type_id: u32,
+        damage_type_id: u32,
     ) -> Option<Weapon> {
-        let data_pointer_result = get_data_pointers(_weapon_type_id, _intrinsic_hash, _hash);
+        let data_pointer_result = get_data_pointers(weapon_type_id, intrinsic_hash, hash);
 
         let data_pointer = data_pointer_result?;
 
@@ -50,13 +50,13 @@ impl Weapon {
 
         let ammo_formula: AmmoFormula = database::AMMO_DATA[data_pointer.a];
 
-        let weapon_type = WeaponType::from(_weapon_type_id as u32);
-        let ammo_type = AmmoType::from(_ammo_type_id);
-        let damage_type = DamageType::from(_damage_type_id);
-        let intrinsic_alias = enhanced_check(_intrinsic_hash).0;
+        let weapon_type = WeaponType::from(weapon_type_id as u32);
+        let ammo_type = AmmoType::from(ammo_type_id);
+        let damage_type = DamageType::from(damage_type_id);
+        let intrinsic_alias = enhanced_check(intrinsic_hash).0;
         Some(Weapon {
             intrinsic_hash: intrinsic_alias,
-            hash: _hash,
+            hash,
             perks: HashMap::from([
                 (
                     intrinsic_alias,
@@ -65,7 +65,7 @@ impl Weapon {
                         enhanced: false,
                         value: 0,
                         hash: intrinsic_alias,
-                        raw_hash: _intrinsic_hash,
+                        raw_hash: intrinsic_hash,
                     },
                 ),
                 (

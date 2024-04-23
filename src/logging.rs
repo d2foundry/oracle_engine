@@ -1,5 +1,4 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 pub enum LogLevel {
     Error,
     #[default]
@@ -28,7 +27,6 @@ impl From<LogLevel> for usize {
         }
     }
 }
-
 
 fn get_log_level() -> LogLevel {
     crate::PERS_DATA.with(|perm_data| perm_data.borrow().log_level)

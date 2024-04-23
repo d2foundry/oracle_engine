@@ -1,5 +1,4 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
-#[derive(Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub enum AbilityType {
     GRENADE,
     MELEE,
@@ -13,7 +12,6 @@ pub enum AbilityType {
     #[default]
     UNKNOWN,
 }
-
 
 #[derive(Debug, Clone, Default)]
 pub struct AbilityDamageProfile {
