@@ -69,11 +69,11 @@ pub struct Perk {
     pub raw_hash: u32,
 }
 
-pub fn enhanced_check(_hash: u32) -> (u32, bool) {
-    let mut result = _hash;
+pub fn enhanced_check(hash: u32) -> (u32, bool) {
+    let mut result = hash;
     let mut found = false;
     for (h, r) in database::ENHANCE_PERK_MAPPING.iter() {
-        if _hash == *h {
+        if hash == *h {
             result = *r;
             found = true;
             break;
@@ -690,21 +690,21 @@ fn add_imr(perk: Perks, func: ModifierFunction<InventoryModifierResponse>) {
 }
 
 pub fn get_stat_bumps(
-    _perks: Vec<Perk>,
-    _input_data: CalculationInput,
-    _pvp: bool,
-    _cached_data: &mut HashMap<String, f64>,
+    perks: Vec<Perk>,
+    input_data: CalculationInput,
+    pvp: bool,
+    cached_data: &mut HashMap<String, f64>,
 ) -> [HashMap<u32, i32>; 2] {
     let mut dynamic_stats: HashMap<u32, i32> = HashMap::new();
     let mut static_stats: HashMap<u32, i32> = HashMap::new();
-    for perk in _perks {
+    for perk in perks {
         let perk_stats = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: &_input_data,
-                pvp: _pvp,
-                cached_data: _cached_data,
+                calc_data: &input_data,
+                pvp,
+                cached_data,
             };
             pers_modifier.borrow().get_sbr(perk.hash.into(), inp)
         });
@@ -721,20 +721,20 @@ pub fn get_stat_bumps(
 }
 
 pub fn get_dmg_modifier(
-    _perks: Vec<Perk>,
-    _input_data: &CalculationInput,
-    _pvp: bool,
-    _cached_data: &mut HashMap<String, f64>,
+    perks: Vec<Perk>,
+    input_data: &CalculationInput,
+    pvp: bool,
+    cached_data: &mut HashMap<String, f64>,
 ) -> DamageModifierResponse {
     let mut dmg_modifier = DamageModifierResponse::default();
-    for perk in _perks {
+    for perk in perks {
         let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: _input_data,
-                pvp: _pvp,
-                cached_data: _cached_data,
+                calc_data: input_data,
+                pvp,
+                cached_data,
             };
             pers_modifier.borrow().get_dmr(perk.hash.into(), inp)
         });
@@ -746,20 +746,20 @@ pub fn get_dmg_modifier(
 }
 
 pub fn get_reload_modifier(
-    _perks: Vec<Perk>,
-    _input_data: &CalculationInput,
-    _pvp: bool,
-    _cached_data: &mut HashMap<String, f64>,
+    perks: Vec<Perk>,
+    input_data: &CalculationInput,
+    pvp: bool,
+    cached_data: &mut HashMap<String, f64>,
 ) -> ReloadModifierResponse {
     let mut reload_modifier = ReloadModifierResponse::default();
-    for perk in _perks {
+    for perk in perks {
         let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: _input_data,
-                pvp: _pvp,
-                cached_data: _cached_data,
+                calc_data: input_data,
+                pvp,
+                cached_data,
             };
             pers_modifier.borrow().get_rsmr(perk.hash.into(), inp)
         });
@@ -770,20 +770,20 @@ pub fn get_reload_modifier(
 }
 
 pub fn get_firing_modifier(
-    _perks: Vec<Perk>,
-    _input_data: &CalculationInput,
-    _pvp: bool,
-    _cached_data: &mut HashMap<String, f64>,
+    perks: Vec<Perk>,
+    input_data: &CalculationInput,
+    pvp: bool,
+    cached_data: &mut HashMap<String, f64>,
 ) -> FiringModifierResponse {
     let mut firing_modifier = FiringModifierResponse::default();
-    for perk in _perks {
+    for perk in perks {
         let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: _input_data,
-                pvp: _pvp,
-                cached_data: _cached_data,
+                calc_data: input_data,
+                pvp,
+                cached_data,
             };
             pers_modifier.borrow().get_fmr(perk.hash.into(), inp)
         });
@@ -796,20 +796,20 @@ pub fn get_firing_modifier(
 }
 
 pub fn get_handling_modifier(
-    _perks: Vec<Perk>,
-    _input_data: &CalculationInput,
-    _pvp: bool,
-    _cached_data: &mut HashMap<String, f64>,
+    perks: Vec<Perk>,
+    input_data: &CalculationInput,
+    pvp: bool,
+    cached_data: &mut HashMap<String, f64>,
 ) -> HandlingModifierResponse {
     let mut handling_modifier = HandlingModifierResponse::default();
-    for perk in _perks {
+    for perk in perks {
         let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: _input_data,
-                pvp: _pvp,
-                cached_data: _cached_data,
+                calc_data: input_data,
+                pvp,
+                cached_data,
             };
             pers_modifier.borrow().get_hmr(perk.hash.into(), inp)
         });
@@ -825,20 +825,20 @@ pub fn get_handling_modifier(
 }
 
 pub fn get_magazine_modifier(
-    _perks: Vec<Perk>,
-    _input_data: &CalculationInput,
-    _pvp: bool,
-    _cached_data: &mut HashMap<String, f64>,
+    perks: Vec<Perk>,
+    input_data: &CalculationInput,
+    pvp: bool,
+    cached_data: &mut HashMap<String, f64>,
 ) -> MagazineModifierResponse {
     let mut magazine_modifier = MagazineModifierResponse::default();
-    for perk in _perks {
+    for perk in perks {
         let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: _input_data,
-                pvp: _pvp,
-                cached_data: _cached_data,
+                calc_data: input_data,
+                pvp,
+                cached_data,
             };
             pers_modifier.borrow().get_mmr(perk.hash.into(), inp)
         });
@@ -850,20 +850,20 @@ pub fn get_magazine_modifier(
 }
 
 pub fn get_reserve_modifier(
-    _perks: Vec<Perk>,
-    _input_data: &CalculationInput,
-    _pvp: bool,
-    _cached_data: &mut HashMap<String, f64>,
+    perks: Vec<Perk>,
+    input_data: &CalculationInput,
+    pvp: bool,
+    cached_data: &mut HashMap<String, f64>,
 ) -> InventoryModifierResponse {
     let mut reserve_modifier = InventoryModifierResponse::default();
-    for perk in _perks {
+    for perk in perks {
         let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: _input_data,
-                pvp: _pvp,
-                cached_data: _cached_data,
+                calc_data: input_data,
+                pvp,
+                cached_data,
             };
             pers_modifier.borrow().get_imr(perk.hash.into(), inp)
         });
@@ -875,20 +875,20 @@ pub fn get_reserve_modifier(
 }
 
 pub fn get_range_modifier(
-    _perks: Vec<Perk>,
-    _input_data: &CalculationInput,
-    _pvp: bool,
-    _cached_data: &mut HashMap<String, f64>,
+    perks: Vec<Perk>,
+    input_data: &CalculationInput,
+    pvp: bool,
+    cached_data: &mut HashMap<String, f64>,
 ) -> RangeModifierResponse {
     let mut range_modifier = RangeModifierResponse::default();
-    for perk in _perks {
+    for perk in perks {
         let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: _input_data,
-                pvp: _pvp,
-                cached_data: _cached_data,
+                calc_data: input_data,
+                pvp,
+                cached_data,
             };
             pers_modifier.borrow().get_rmr(perk.hash.into(), inp)
         });
@@ -901,20 +901,20 @@ pub fn get_range_modifier(
 }
 
 pub fn get_refund_modifier(
-    _perks: Vec<Perk>,
-    _input_data: &CalculationInput,
-    _pvp: bool,
-    _cached_data: &mut HashMap<String, f64>,
+    perks: Vec<Perk>,
+    input_data: &CalculationInput,
+    pvp: bool,
+    cached_data: &mut HashMap<String, f64>,
 ) -> Vec<RefundResponse> {
     let mut refund_modifier = vec![];
-    for perk in _perks {
+    for perk in perks {
         let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: _input_data,
-                pvp: _pvp,
-                cached_data: _cached_data,
+                calc_data: input_data,
+                pvp,
+                cached_data,
             };
             pers_modifier.borrow().get_rr(perk.hash.into(), inp)
         });
@@ -926,20 +926,20 @@ pub fn get_refund_modifier(
 }
 
 pub fn get_extra_damage(
-    _perks: Vec<Perk>,
-    _input_data: &CalculationInput,
-    _pvp: bool,
-    _cached_data: &mut HashMap<String, f64>,
+    perks: Vec<Perk>,
+    input_data: &CalculationInput,
+    pvp: bool,
+    cached_data: &mut HashMap<String, f64>,
 ) -> Vec<ExtraDamageResponse> {
     let mut extra_damage = vec![];
-    for perk in _perks {
+    for perk in perks {
         let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: _input_data,
-                pvp: _pvp,
-                cached_data: _cached_data,
+                calc_data: input_data,
+                pvp,
+                cached_data,
             };
             pers_modifier.borrow().get_edr(perk.hash.into(), inp)
         });
@@ -976,18 +976,18 @@ pub fn get_extra_damage(
 // }
 
 pub fn get_explosion_data(
-    _perks: Vec<Perk>,
-    _input_data: &CalculationInput,
-    _pvp: bool,
+    perks: Vec<Perk>,
+    input_data: &CalculationInput,
+    pvp: bool,
 ) -> ExplosivePercentResponse {
     let mut highest_so_far = ExplosivePercentResponse::default();
-    for perk in _perks {
+    for perk in perks {
         let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: _input_data,
-                pvp: _pvp,
+                calc_data: input_data,
+                pvp,
                 cached_data: &mut HashMap::new(),
             };
             pers_modifier.borrow().get_epr(perk.hash.into(), inp)
@@ -1000,20 +1000,20 @@ pub fn get_explosion_data(
 }
 
 pub fn get_flinch_modifier(
-    _perks: Vec<Perk>,
-    _input_data: &CalculationInput,
-    _pvp: bool,
-    _cached_data: &mut HashMap<String, f64>,
+    perks: Vec<Perk>,
+    input_data: &CalculationInput,
+    pvp: bool,
+    cached_data: &mut HashMap<String, f64>,
 ) -> FlinchModifierResponse {
     let mut flinch = FlinchModifierResponse::default();
-    for perk in _perks {
+    for perk in perks {
         let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: _input_data,
-                pvp: _pvp,
-                cached_data: _cached_data,
+                calc_data: input_data,
+                pvp,
+                cached_data,
             };
             pers_modifier.borrow().get_flmr(perk.hash.into(), inp)
         });
@@ -1023,20 +1023,20 @@ pub fn get_flinch_modifier(
 }
 
 pub fn get_velocity_modifier(
-    _perks: Vec<Perk>,
-    _input_data: &CalculationInput,
-    _pvp: bool,
-    _cached_data: &mut HashMap<String, f64>,
+    perks: Vec<Perk>,
+    input_data: &CalculationInput,
+    pvp: bool,
+    cached_data: &mut HashMap<String, f64>,
 ) -> VelocityModifierResponse {
     let mut velocity = VelocityModifierResponse::default();
-    for perk in _perks {
+    for perk in perks {
         let tmp = PERK_FUNC_MAP.with(|pers_modifier| {
             let inp = ModifierResponseInput {
                 is_enhanced: perk.enhanced,
                 value: perk.value,
-                calc_data: _input_data,
-                pvp: _pvp,
-                cached_data: _cached_data,
+                calc_data: input_data,
+                pvp,
+                cached_data,
             };
             pers_modifier.borrow().get_vmr(perk.hash.into(), inp)
         });
@@ -1048,18 +1048,18 @@ pub fn get_velocity_modifier(
 impl Weapon {
     pub fn get_modifier_summary(
         &self,
-        _calc_input: Option<CalculationInput>,
-        _pvp: bool,
-        _cached_data: Option<&mut HashMap<String, f64>>,
+        calc_input: Option<CalculationInput>,
+        pvp: bool,
+        cached_data: Option<&mut HashMap<String, f64>>,
     ) -> HashMap<BungieHash, ModifierResponseSummary> {
         let mut default_cached_data = HashMap::new();
-        let cached_data = _cached_data.unwrap_or(&mut default_cached_data);
+        let cached_data = cached_data.unwrap_or(&mut default_cached_data);
         let mut buffer: HashMap<u32, ModifierResponseSummary> = HashMap::new();
-        if _calc_input.is_none() {
+        if calc_input.is_none() {
             return buffer;
         }
 
-        let calc_input = _calc_input.unwrap();
+        let calc_input = calc_input.unwrap();
 
         for perk in self.list_perks() {
             let mod_buffer = PERK_FUNC_MAP.with(|pers_modifier| {
@@ -1070,7 +1070,7 @@ impl Weapon {
                     is_enhanced: perk.enhanced,
                     value: perk.value,
                     calc_data: &calc_input,
-                    pvp: _pvp,
+                    pvp,
                     cached_data,
                 };
                 let modifier = perk_modifiers.get_rmr(perk.hash.into(), inp);
@@ -1082,7 +1082,7 @@ impl Weapon {
                     is_enhanced: perk.enhanced,
                     value: perk.value,
                     calc_data: &calc_input,
-                    pvp: _pvp,
+                    pvp,
                     cached_data,
                 };
                 let modifier = perk_modifiers.get_dmr(perk.hash.into(), inp);
@@ -1094,7 +1094,7 @@ impl Weapon {
                     is_enhanced: perk.enhanced,
                     value: perk.value,
                     calc_data: &calc_input,
-                    pvp: _pvp,
+                    pvp,
                     cached_data,
                 };
                 let modifier = perk_modifiers.get_hmr(perk.hash.into(), inp);
@@ -1106,7 +1106,7 @@ impl Weapon {
                     is_enhanced: perk.enhanced,
                     value: perk.value,
                     calc_data: &calc_input,
-                    pvp: _pvp,
+                    pvp,
                     cached_data,
                 };
                 let modifier = perk_modifiers.get_fmr(perk.hash.into(), inp);
@@ -1118,7 +1118,7 @@ impl Weapon {
                     is_enhanced: perk.enhanced,
                     value: perk.value,
                     calc_data: &calc_input,
-                    pvp: _pvp,
+                    pvp,
                     cached_data,
                 };
                 let modifier = perk_modifiers.get_flmr(perk.hash.into(), inp);
@@ -1130,7 +1130,7 @@ impl Weapon {
                     is_enhanced: perk.enhanced,
                     value: perk.value,
                     calc_data: &calc_input,
-                    pvp: _pvp,
+                    pvp,
                     cached_data,
                 };
                 let modifier = perk_modifiers.get_rsmr(perk.hash.into(), inp);
@@ -1142,7 +1142,7 @@ impl Weapon {
                     is_enhanced: perk.enhanced,
                     value: perk.value,
                     calc_data: &calc_input,
-                    pvp: _pvp,
+                    pvp,
                     cached_data,
                 };
                 let modifier = perk_modifiers.get_mmr(perk.hash.into(), inp);
@@ -1154,7 +1154,7 @@ impl Weapon {
                     is_enhanced: perk.enhanced,
                     value: perk.value,
                     calc_data: &calc_input,
-                    pvp: _pvp,
+                    pvp,
                     cached_data,
                 };
                 let modifier = perk_modifiers.get_imr(perk.hash.into(), inp);
@@ -1166,7 +1166,7 @@ impl Weapon {
                     is_enhanced: perk.enhanced,
                     value: perk.value,
                     calc_data: &calc_input,
-                    pvp: _pvp,
+                    pvp,
                     cached_data,
                 };
                 let stat_mod = perk_modifiers.get_sbr(perk.hash.into(), inp);

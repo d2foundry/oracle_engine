@@ -92,8 +92,8 @@ impl From<i32> for DifficultyOptions {
     }
 }
 
-pub(super) fn rpl_mult(_rpl: f64) -> f64 {
-    (1.0 + ((1.0 / 30.0) * _rpl)) / (4.0 / 3.0)
+pub(super) fn rpl_mult(rpl: f64) -> f64 {
+    (1.0 + ((1.0 / 30.0) * rpl)) / (4.0 / 3.0)
 }
 
 pub(super) fn get_gear_delta_mult(activity: &Activity) -> f64 {

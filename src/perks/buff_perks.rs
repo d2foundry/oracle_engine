@@ -12,18 +12,18 @@ use super::{
     ModifierResponseInput, Perks,
 };
 
-fn emp_buff(cached_data: &mut HashMap<String, f64>, _desired_buff: f64) -> f64 {
+fn emp_buff(cached_data: &mut HashMap<String, f64>, desired_buff: f64) -> f64 {
     let current_buff = cached_data.get("empowering").unwrap_or(&1.0).to_owned();
-    if current_buff >= _desired_buff {
+    if current_buff >= desired_buff {
         1.0
     } else {
-        cached_data.insert("empowering".to_string(), _desired_buff);
-        _desired_buff / current_buff
+        cached_data.insert("empowering".to_string(), desired_buff);
+        desired_buff / current_buff
     }
 }
 
-fn surge_buff(cached_data: &mut HashMap<String, f64>, _value: u32, _pvp: bool) -> f64 {
-    let desired_buff = match (_pvp, _value) {
+fn surge_buff(cached_data: &mut HashMap<String, f64>, value: u32, pvp: bool) -> f64 {
+    let desired_buff = match (pvp, value) {
         (_, 0) => 1.00,
         (true, 1) => 1.03,
         (true, 2) => 1.045,
@@ -44,13 +44,13 @@ fn surge_buff(cached_data: &mut HashMap<String, f64>, _value: u32, _pvp: bool) -
     }
 }
 
-fn gbl_debuff(_cached_data: &mut HashMap<String, f64>, _desired_buff: f64) -> f64 {
+fn gbl_debuff(_cached_data: &mut HashMap<String, f64>, desired_buff: f64) -> f64 {
     let current_buff = _cached_data.get("debuff").unwrap_or(&1.0).to_owned();
-    if current_buff >= _desired_buff {
+    if current_buff >= desired_buff {
         1.0
     } else {
-        _cached_data.insert("debuff".to_string(), _desired_buff);
-        _desired_buff / current_buff
+        _cached_data.insert("debuff".to_string(), desired_buff);
+        desired_buff / current_buff
     }
 }
 
