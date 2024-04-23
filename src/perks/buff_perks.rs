@@ -44,12 +44,12 @@ fn surge_buff(cached_data: &mut HashMap<String, f64>, value: u32, pvp: bool) -> 
     }
 }
 
-fn gbl_debuff(_cached_data: &mut HashMap<String, f64>, desired_buff: f64) -> f64 {
-    let current_buff = _cached_data.get("debuff").unwrap_or(&1.0).to_owned();
+fn gbl_debuff(cached_data: &mut HashMap<String, f64>, desired_buff: f64) -> f64 {
+    let current_buff = cached_data.get("debuff").unwrap_or(&1.0).to_owned();
     if current_buff >= desired_buff {
         1.0
     } else {
-        _cached_data.insert("debuff".to_string(), desired_buff);
+        cached_data.insert("debuff".to_string(), desired_buff);
         desired_buff / current_buff
     }
 }
