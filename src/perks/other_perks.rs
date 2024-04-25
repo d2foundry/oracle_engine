@@ -322,11 +322,14 @@ pub fn other_perks() {
     add_dmr(
         Perks::BossSpec,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let damage_mult = if *_input.calc_data.enemy_type == EnemyType::BOSS && !_input.pvp {
-                1.077
-            } else {
-                1.0
-            };
+            if !matches!(
+                *_input.calc_data.enemy_type,
+                EnemyType::BOSS | EnemyType::CHAMPION | EnemyType::MINIBOSS | EnemyType::VEHICLE
+            ) || _input.pvp
+            {
+                return DamageModifierResponse::default();
+            }
+            let damage_mult = 1.0777;
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
@@ -338,14 +341,10 @@ pub fn other_perks() {
     add_dmr(
         Perks::MajorSpec,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if !matches!(
-                *_input.calc_data.enemy_type,
-                EnemyType::ELITE | EnemyType::MINIBOSS | EnemyType::CHAMPION
-            ) || _input.pvp
-            {
+            if !matches!(*_input.calc_data.enemy_type, EnemyType::ELITE) || _input.pvp {
                 return DamageModifierResponse::default();
             }
-            let damage_mult = 1.077;
+            let damage_mult = 1.0777;
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
@@ -359,12 +358,16 @@ pub fn other_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             if !matches!(
                 *_input.calc_data.enemy_type,
-                EnemyType::ELITE | EnemyType::MINIBOSS | EnemyType::CHAMPION | EnemyType::BOSS
+                EnemyType::ELITE
+                    | EnemyType::MINIBOSS
+                    | EnemyType::CHAMPION
+                    | EnemyType::BOSS
+                    | EnemyType::VEHICLE
             ) || _input.pvp
             {
                 return DamageModifierResponse::default();
             }
-            let damage_mult = 1.077;
+            let damage_mult = 1.0777;
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
@@ -376,11 +379,10 @@ pub fn other_perks() {
     add_dmr(
         Perks::MinorSpec,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let damage_mult = if _input.calc_data.enemy_type == &EnemyType::MINOR && !_input.pvp {
-                1.077
-            } else {
-                1.0
-            };
+            if !matches!(*_input.calc_data.enemy_type, EnemyType::MINOR) || _input.pvp {
+                return DamageModifierResponse::default();
+            }
+            let damage_mult = 1.0777;
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
