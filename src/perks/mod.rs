@@ -285,7 +285,10 @@ pub enum Perks {
     //season 9 | year 3
     ClownCartridge = 2284787283,
     ElementalCapacitor = 3511092054,
-    #[num_enum(alternatives = [3547298847, ])] // grav lance cat
+    #[num_enum(alternatives = [
+        3547298847, // grav lance cat
+        1234111636, // malf cat
+    ])]
     Vorpal = 1546637391,
 
     //season 10 | year 3
