@@ -286,7 +286,8 @@ pub enum Perks {
     ClownCartridge = 2284787283,
     ElementalCapacitor = 3511092054,
     #[num_enum(alternatives = [
-        3547298847, // grav lance cat
+        3547298847, // grav lance old cat
+        1620506139, // grav lance cat
         1234111636, // malf cat
     ])]
     Vorpal = 1546637391,
