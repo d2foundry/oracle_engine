@@ -288,7 +288,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::LooseChange => Some(PerkOptionData::toggle()),
         Perks::HighGround => Some(PerkOptionData::toggle()),
         Perks::HeadRush => Some(PerkOptionData::toggle()),
-        Perks::EnlightendAction => Some(PerkOptionData::stacking(5)),
+        Perks::EnlightendAction => Some(PerkOptionData::stacking(12)),
         Perks::SwordLogic => Some(PerkOptionData::stacking(4)),
         //season 23 | year 6
         Perks::Onslaught => Some(PerkOptionData::stacking(3)),
