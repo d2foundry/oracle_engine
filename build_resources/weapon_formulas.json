@@ -2,7 +2,7 @@
     "Auto Rifle": {
         "878286503":  {"name": "Rapid-Fire Frame",   "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
         "944506345":  {"name": "SUROS Regime",       "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
-        "961505134":  {"name": "Tommy's Matchbook",  "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
+        "961505134":  {"name": "Tommy's Matchbook",  "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "tommy" },
         "1019291327": {"name": "High-Impact Frame",  "cat": "default",  "subFam": "High-Impact", "magProf": "small" },
         "1294026524": {"name": "Adaptive Frame",     "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
         "1458010786": {"name": "Lightweight",        "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
@@ -72,6 +72,10 @@
             },
             "sweet_buiss": {
                 "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 150.0},
+                "reserve_id": 0
+            },
+            "tommy": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 100.0},
                 "reserve_id": 0
             }
         }
