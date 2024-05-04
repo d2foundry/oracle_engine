@@ -122,6 +122,47 @@ pub fn year_4_perks() {
         ),
     );
 
+    add_dmr(
+        Perks::BluntExecutionRounds,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let duration = if _input.is_enhanced { 11.0 } else { 10.0 };
+            let dmg_boost = if _input.calc_data.time_total > duration
+                || _input.calc_data.total_shots_fired > _input.calc_data.curr_firing_data.burst_size.into()
+                || _input.value == 0
+            {
+                0.0
+            } else if _input.pvp {
+                1.0
+            } else {
+                5.0
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: 1.0 + dmg_boost,
+                explosive_dmg_scale: 1.0 + dmg_boost,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_hmr(
+        Perks::BluntExecutionRounds,
+        Box::new(|_input: ModifierResponseInput| -> HandlingModifierResponse {
+            let duration = if _input.is_enhanced { 11.0 } else { 10.0 };
+            let handling = if _input.calc_data.time_total > duration
+                || _input.calc_data.total_shots_fired > _input.calc_data.curr_firing_data.burst_size.into()
+                || _input.value == 0
+            {
+                0
+            } else {
+                100
+            };
+            HandlingModifierResponse {
+                stat_add: handling,
+                ..Default::default()
+            }
+        }),
+    );
+
     add_fmr(
         Perks::Cornered,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {

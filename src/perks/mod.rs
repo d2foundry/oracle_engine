@@ -341,6 +341,7 @@ pub enum Perks {
     Harmony = 438098033,
     PerpetualMotion = 1428297954,
     Adagio = 3673922083,
+    BluntExecutionRounds = 454085387,
 
     //season 16 | year 5
     BaitAndSwitch = 3078487919,
