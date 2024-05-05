@@ -242,8 +242,13 @@ pub enum Perks {
     RangeFinder = 2846385770,
     #[num_enum(alternatives = [1683379515, ])] //Arbalest
     DisruptionBreak = 3871884143,
-    #[num_enum(alternatives = [2360754333, 2079505485, ])] //Acrius
-    TrenchBarrel = 806159697,
+    #[num_enum(alternatives = [
+        806159697,  // s3 barrel
+        2079505485, // acrius old cat
+        4233905577, // acrius dummy cat
+        456628588,  // acrius cat
+    ])]
+    TrenchBarrel = 2360754333,
     Desperado = 3047969693,
     BoxBreathing = 2551157718,
 
