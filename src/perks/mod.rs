@@ -469,7 +469,6 @@ pub enum Perks {
     WhisperCatalyst = 1340292993,
     DarkDescent = 3333994164,
     TargetAquired = 939227542,
-    SleeperCatalyst = 2142466730,
     TractorCannon = 1210807262,
     MarksmanSights = 1408087975,
 
