@@ -282,6 +282,11 @@ pub enum Perks {
     UnderDog = 205890336,
     ExplosiveLight = 3194351027,
     EyeOfTheStorm = 699525795,
+    #[num_enum(alternatives = [
+        2162261876, // mida old cat
+        800074992,  // mida dummy cat
+        3466057365, // mida cat
+    ])]
     NoDistractions = 2866798147,
 
     //season 8 | year 3
