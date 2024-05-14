@@ -62,7 +62,7 @@ pub fn buff_perks() {
         Perks::WellOfRadiance,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let buff = emp_buff(_input.cached_data, 1.25);
-            DamageModifierResponse::basic_dmg_mod(buff)
+            DamageModifierResponse::basic_dmg_buff(buff)
         }),
     );
 
@@ -74,7 +74,7 @@ pub fn buff_perks() {
             }
             let des_buff = if _input.pvp { 1.15 } else { 1.35 };
             let buff = emp_buff(_input.cached_data, des_buff);
-            DamageModifierResponse::basic_dmg_mod(buff)
+            DamageModifierResponse::basic_dmg_buff(buff)
         }),
     );
 
@@ -84,7 +84,7 @@ pub fn buff_perks() {
             let des_buff = if _input.pvp { 1.1 } else { 1.25 };
             let buff = emp_buff(_input.cached_data, des_buff);
             _input.cached_data.insert("radiant".to_string(), 1.0);
-            DamageModifierResponse::basic_dmg_mod(buff)
+            DamageModifierResponse::basic_dmg_buff(buff)
         }),
     );
 
@@ -95,7 +95,7 @@ pub fn buff_perks() {
                 return DamageModifierResponse::default();
             }
             let buff = surge_buff(_input.cached_data, _input.value, _input.pvp);
-            DamageModifierResponse::surge_mod(buff)
+            DamageModifierResponse::surge_buff(buff)
         }),
     );
 
@@ -104,7 +104,7 @@ pub fn buff_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let des_buff = if _input.pvp { 1.35 } else { 1.4 };
             let buff = emp_buff(_input.cached_data, des_buff);
-            DamageModifierResponse::basic_dmg_mod(buff)
+            DamageModifierResponse::basic_dmg_buff(buff)
         }),
     );
 
@@ -113,7 +113,7 @@ pub fn buff_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let des_buff = if _input.pvp { 1.15 } else { 1.2 };
             let buff = emp_buff(_input.cached_data, des_buff);
-            DamageModifierResponse::basic_dmg_mod(buff)
+            DamageModifierResponse::basic_dmg_buff(buff)
         }),
     );
 
@@ -121,7 +121,7 @@ pub fn buff_perks() {
         Perks::WardOfDawn,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let buff = emp_buff(_input.cached_data, 1.25);
-            DamageModifierResponse::basic_dmg_mod(buff)
+            DamageModifierResponse::basic_dmg_buff(buff)
         }),
     );
 
@@ -130,7 +130,7 @@ pub fn buff_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let des_buff = if _input.pvp { 1.0 } else { 1.35 };
             let buff = emp_buff(_input.cached_data, des_buff);
-            DamageModifierResponse::basic_dmg_mod(buff)
+            DamageModifierResponse::basic_dmg_buff(buff)
         }),
     );
 
@@ -161,7 +161,7 @@ pub fn buff_perks() {
                 pve_values[clamp(_input.value, 0, 3) as usize]
             };
             let buff = emp_buff(_input.cached_data, des_buff);
-            DamageModifierResponse::basic_dmg_mod(buff)
+            DamageModifierResponse::basic_dmg_buff(buff)
         }),
     );
 
@@ -189,7 +189,7 @@ pub fn buff_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let des_debuff = if _input.pvp { 1.075 } else { 1.15 };
             let debuff = gbl_debuff(_input.cached_data, des_debuff);
-            DamageModifierResponse::basic_dmg_mod(debuff)
+            DamageModifierResponse::basic_dmg_buff(debuff)
         }),
     );
 
@@ -198,7 +198,7 @@ pub fn buff_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let des_debuff = if _input.pvp { 1.5 } else { 1.3 };
             let debuff = gbl_debuff(_input.cached_data, des_debuff);
-            DamageModifierResponse::basic_dmg_mod(debuff)
+            DamageModifierResponse::basic_dmg_buff(debuff)
         }),
     );
 
@@ -207,7 +207,7 @@ pub fn buff_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let des_debuff = if _input.pvp { 1.5 } else { 1.3 };
             let debuff = gbl_debuff(_input.cached_data, des_debuff);
-            DamageModifierResponse::basic_dmg_mod(debuff)
+            DamageModifierResponse::basic_dmg_buff(debuff)
         }),
     );
     add_dmr(
@@ -215,7 +215,7 @@ pub fn buff_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let des_debuff = if _input.pvp { 1.5 } else { 1.3 };
             let debuff = gbl_debuff(_input.cached_data, des_debuff);
-            DamageModifierResponse::basic_dmg_mod(debuff)
+            DamageModifierResponse::basic_dmg_buff(debuff)
         }),
     );
     add_dmr(
@@ -223,7 +223,7 @@ pub fn buff_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             if _input.value > 0 {
                 let debuff = gbl_debuff(_input.cached_data, 1.3);
-                DamageModifierResponse::basic_dmg_mod(debuff)
+                DamageModifierResponse::basic_dmg_buff(debuff)
             } else {
                 DamageModifierResponse::default()
             }
@@ -240,14 +240,14 @@ pub fn buff_perks() {
                 pve_values[clamp(_input.value, 0, 4) as usize]
             };
             let debuff = gbl_debuff(_input.cached_data, des_debuff);
-            DamageModifierResponse::basic_dmg_mod(debuff)
+            DamageModifierResponse::basic_dmg_buff(debuff)
         }),
     );
     add_dmr(
         Perks::SurgeMod,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let damage_mod = surge_buff(_input.cached_data, _input.value, _input.pvp);
-            DamageModifierResponse::surge_mod(damage_mod)
+            DamageModifierResponse::surge_buff(damage_mod)
         }),
     );
     add_sbr(
@@ -269,7 +269,7 @@ pub fn buff_perks() {
         Perks::EternalWarrior,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let damage_mod = surge_buff(_input.cached_data, _input.value, _input.pvp);
-            DamageModifierResponse::surge_mod(damage_mod)
+            DamageModifierResponse::surge_buff(damage_mod)
         }),
     );
 
@@ -281,7 +281,7 @@ pub fn buff_perks() {
             } else {
                 1.0
             };
-            DamageModifierResponse::surge_mod(buff)
+            DamageModifierResponse::surge_buff(buff)
         }),
     );
     add_dmr(
@@ -296,7 +296,7 @@ pub fn buff_perks() {
             } else {
                 1.0
             };
-            DamageModifierResponse::surge_mod(buff)
+            DamageModifierResponse::surge_buff(buff)
         }),
     );
     add_dmr(
@@ -308,7 +308,7 @@ pub fn buff_perks() {
 
             let buff = surge_buff(_input.cached_data, 2, _input.pvp);
 
-            DamageModifierResponse::surge_mod(buff)
+            DamageModifierResponse::surge_buff(buff)
         }),
     );
     add_dmr(
@@ -318,7 +318,7 @@ pub fn buff_perks() {
                 return DamageModifierResponse::default();
             }
             let mult = surge_buff(_input.cached_data, 4, _input.pvp);
-            DamageModifierResponse::surge_mod(mult)
+            DamageModifierResponse::surge_buff(mult)
         }),
     );
     add_dmr(
@@ -328,7 +328,7 @@ pub fn buff_perks() {
                 return DamageModifierResponse::default();
             }
             let mult = surge_buff(_input.cached_data, 4, _input.pvp);
-            DamageModifierResponse::surge_mod(mult)
+            DamageModifierResponse::surge_buff(mult)
         }),
     );
     add_dmr(

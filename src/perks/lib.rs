@@ -161,7 +161,7 @@ impl Default for DamageModifierResponse {
 }
 impl DamageModifierResponse {
     // damage modifier that affects all damage types
-    pub fn basic_dmg_mod(modifier: f64) -> Self {
+    pub fn basic_dmg_buff(modifier: f64) -> Self {
         Self {
             impact_dmg_scale: modifier,
             explosive_dmg_scale: modifier,
@@ -170,7 +170,7 @@ impl DamageModifierResponse {
         }
     }
     // damage modifier that does not affect melee damage
-    pub fn surge_mod(modifier: f64) -> Self {
+    pub fn surge_buff(modifier: f64) -> Self {
         Self {
             impact_dmg_scale: modifier,
             explosive_dmg_scale: modifier,

@@ -101,7 +101,7 @@ pub fn exotic_armor() {
                 return DamageModifierResponse::default();
             }
             let modifier = 1.0 + (0.3 - health_percent);
-            DamageModifierResponse::basic_dmg_mod(modifier)
+            DamageModifierResponse::basic_dmg_buff(modifier)
         }),
     );
 
