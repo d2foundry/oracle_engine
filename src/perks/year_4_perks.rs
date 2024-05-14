@@ -126,16 +126,13 @@ pub fn year_4_perks() {
         Perks::BluntExecutionRounds,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let duration = if _input.is_enhanced { 11.0 } else { 10.0 };
-            let dmg_boost = if _input.calc_data.time_total > duration
+            if _input.calc_data.time_total > duration
                 || _input.calc_data.total_shots_fired > _input.calc_data.curr_firing_data.burst_size.into()
                 || _input.value == 0
             {
-                0.0
-            } else if _input.pvp {
-                1.0
-            } else {
-                5.0
-            };
+                return DamageModifierResponse::default();
+            }
+            let dmg_boost = if _input.pvp { 1.0 } else { 5.0 };
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + dmg_boost,
                 explosive_dmg_scale: 1.0 + dmg_boost,
@@ -148,17 +145,13 @@ pub fn year_4_perks() {
         Perks::BluntExecutionRounds,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let duration = if _input.is_enhanced { 11.0 } else { 10.0 };
-            let handling = if _input.calc_data.time_total > duration
+            if _input.calc_data.time_total > duration
                 || _input.calc_data.total_shots_fired > _input.calc_data.curr_firing_data.burst_size.into()
                 || _input.value == 0
             {
-                0
-            } else {
-                100
-            };
-            let mut out = HashMap::new();
-            out.insert(StatHashes::HANDLING.into(), handling);
-            out
+                return HashMap::new();
+            }
+            HashMap::from([(StatHashes::HANDLING.into(), 100)])
         }),
     );
 
@@ -166,16 +159,14 @@ pub fn year_4_perks() {
         Perks::BluntExecutionRounds,
         Box::new(|_input: ModifierResponseInput| -> HandlingModifierResponse {
             let duration = if _input.is_enhanced { 11.0 } else { 10.0 };
-            let handling = if _input.calc_data.time_total > duration
+            if _input.calc_data.time_total > duration
                 || _input.calc_data.total_shots_fired > _input.calc_data.curr_firing_data.burst_size.into()
                 || _input.value == 0
             {
-                0
-            } else {
-                100
-            };
+                return HandlingModifierResponse::default();
+            }
             HandlingModifierResponse {
-                stat_add: handling,
+                stat_add: 100,
                 ..Default::default()
             }
         }),
