@@ -1265,9 +1265,11 @@ pub fn exotic_perks() {
         Perks::WhisperedBreathing,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             if _input.value > 0 {
+                // approximate crit and damage scalars for now
                 let mut crit_mult =
-                    (_input.calc_data.base_crit_mult + 1.0) / _input.calc_data.base_crit_mult;
+                    (_input.calc_data.base_crit_mult + 1.2207) / _input.calc_data.base_crit_mult;
                 return DamageModifierResponse {
+                    impact_dmg_scale: 1.1078,
                     crit_scale: crit_mult,
                     ..Default::default()
                 };
