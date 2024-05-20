@@ -77,7 +77,7 @@ pub fn year_5_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: dmg_boost,
                 explosive_dmg_scale: dmg_boost,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -111,6 +111,9 @@ pub fn year_5_perks() {
     add_dmr(
         Perks::GutShot,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
             let high_weapons = [
                 WeaponType::AUTORIFLE,
                 WeaponType::HANDCANNON,
@@ -133,6 +136,7 @@ pub fn year_5_perks() {
                 impact_dmg_scale: dmg_scale,
                 explosive_dmg_scale: dmg_scale,
                 crit_scale,
+                ..Default::default()
             }
         }),
     );
@@ -310,7 +314,11 @@ pub fn year_5_perks() {
 
             let percent_of_mag = _input.calc_data.shots_fired_this_mag / _input.calc_data.base_mag;
 
-            let buff = if percent_of_mag < 0.125 {
+            let buff = if (percent_of_mag < 0.125
+                && *_input.calc_data.weapon_type != WeaponType::SUBMACHINEGUN)
+                || (percent_of_mag < 0.2
+                    && *_input.calc_data.weapon_type == WeaponType::SUBMACHINEGUN)
+            {
                 0.0
             } else if percent_of_mag > formula_end {
                 high_end_dmg
@@ -323,25 +331,25 @@ pub fn year_5_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: buff + 1.0,
                 explosive_dmg_scale: buff + 1.0,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
 
     add_dmr(
-        Perks::OverUnder,
+        Perks::UnderOver,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let mut buff = 1.0_f64;
             if _input.calc_data.has_overshield {
-                buff += 0.2;
-            }
-            if _input.is_enhanced {
-                buff *= 1.05;
+                buff += if _input.pvp { 0.2 } else { 1.25 };
+                if _input.is_enhanced {
+                    buff *= 1.05;
+                }
             }
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -395,14 +403,13 @@ pub fn year_5_perks() {
     add_dmr(
         Perks::BaitAndSwitch,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value > 0 {
-                DamageModifierResponse {
-                    impact_dmg_scale: 1.35,
-                    explosive_dmg_scale: 1.35,
-                    crit_scale: 1.0,
-                }
-            } else {
-                DamageModifierResponse::default()
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 1.30,
+                explosive_dmg_scale: 1.30,
+                ..Default::default()
             }
         }),
     );
@@ -531,7 +538,7 @@ pub fn year_5_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: scalar,
                 explosive_dmg_scale: scalar,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );

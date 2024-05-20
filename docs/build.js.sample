@@ -1,0 +1,53 @@
+const D2Calc = require('../pkg');
+
+const API_ROOT = "https://www.bungie.net/Platform/Destiny2/"
+const API_KEY = "<YOUR BUNGIE API KEY HERE>"
+const API_KEY_HEADER = {"X-API-Key": API_KEY}
+
+const WEAPON_STAT_HASHES = [
+    1591432999,
+    1345609583,
+    3614673599,
+    447667954,
+    943549884,
+    1931675084,
+    3871231066,
+    1240592695,
+    2715839340,
+    4188031367,
+    1842278586,
+    155624089,
+    2523465841,
+    3555269338
+]
+
+function getWeaponDefinition(entityHash) {
+    return fetch(API_ROOT + `Manifest/DestinyInventoryItemDefinition/${entityHash}/`, {headers: API_KEY_HEADER})
+        .then(response => response.json())
+}
+
+(async () => {
+    let hash = 1751893422
+    const weaponDef = await getWeaponDefinition(hash);
+    let weapon_dict = weaponDef.Response
+    if (weapon_dict["itemType"] != 3) {
+        throw new Error("Not a weapon")
+    }
+
+    let weapon_family = weapon_dict["itemSubType"]
+    let weapon_subfamily = weapon_dict["sockets"]["socketEntries"][0]["singleInitialItemHash"]
+    let dmg_type = weapon_dict["defaultDamageTypeHash"]
+    let weapon_ammo = weapon_dict["equippingBlock"]["ammoType"]
+    D2Calc.setWeapon(hash, weapon_family, weapon_subfamily, weapon_ammo, dmg_type)
+
+    let all_stats = new Map()
+    for (let stat of weapon_dict["investmentStats"]) {
+        if (WEAPON_STAT_HASHES.includes(stat["statTypeHash"])) {
+            all_stats.set(stat["statTypeHash"],stat["value"])
+        }
+    }
+    D2Calc.setStats(all_stats)
+    // weapon initialized
+    // put everything you are testing below this
+    console.log(D2Calc.stringifyWeapon())
+})();

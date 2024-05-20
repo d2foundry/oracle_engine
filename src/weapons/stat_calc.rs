@@ -8,7 +8,7 @@ use crate::{
         get_handling_modifier, get_magazine_modifier, get_range_modifier, get_reload_modifier,
         get_reserve_modifier, get_velocity_modifier,
         lib::{
-            CalculationInput, DamageModifierResponse, FiringModifierResponse,
+            CalculationInput, DamageModifierResponse, DamageProfile, FiringModifierResponse,
             HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
             RangeModifierResponse, ReloadModifierResponse,
         },
@@ -319,10 +319,10 @@ impl Weapon {
             pvp_damage_modifiers = DamageModifierResponse::default();
             pve_damage_modifiers = DamageModifierResponse::default();
         };
-        let tmp_dmg_prof = self.get_damage_profile();
-        let impact_dmg = tmp_dmg_prof.0;
-        let explosion_dmg = tmp_dmg_prof.1;
-        let crit_mult = tmp_dmg_prof.2;
+        let tmp_dmg_prof = self.get_damage_profile(_pvp);
+        let impact_dmg = tmp_dmg_prof.impact_dmg;
+        let explosion_dmg = tmp_dmg_prof.explosion_dmg;
+        let crit_mult = tmp_dmg_prof.crit_mult;
 
         let fd = self.firing_data;
         let extra_charge_delay = if self.weapon_type == WeaponType::FUSIONRIFLE {
@@ -368,26 +368,36 @@ impl Weapon {
 }
 
 impl Weapon {
-    pub fn get_damage_profile(&self) -> (f64, f64, f64, f64) {
-        let impact;
-        let mut explosion = 0.0_f64;
-        let mut crit = 1.0_f64;
-        let delay;
-
-        let epr = get_explosion_data(self.list_perks(), &self.static_calc_input(), false);
-        if epr.percent <= 0.0 {
-            impact = self.firing_data.damage;
-            crit = self.firing_data.crit_mult;
-            delay = 0.0;
+    pub fn get_damage_profile(&self, _pvp: bool) -> DamageProfile {
+        let mut impact = if _pvp {
+            self.firing_data.damage
         } else {
-            impact = self.firing_data.damage * (1.0 - epr.percent);
-            explosion = self.firing_data.damage * epr.percent;
-            if epr.retain_base_total && self.firing_data.crit_mult > 1.0 {
-                crit = (self.firing_data.crit_mult - 1.0) / (1.0 - epr.percent) + 1.0
+            self.firing_data.pve_damage
+        };
+        let mut explosion = 0.0_f64;
+        let mut crit = if _pvp {
+            self.firing_data.crit_mult
+        } else {
+            self.firing_data.pve_crit_mult
+        };
+        let mut delay = 0.0;
+
+        let epr = get_explosion_data(self.list_perks(), &self.static_calc_input(), _pvp);
+        if epr.percent > 0.0 {
+            explosion = impact * epr.percent;
+            impact *= 1.0 - epr.percent;
+
+            if epr.retain_base_total {
+                crit = (crit - 1.0) / (1.0 - epr.percent) + 1.0;
             }
             delay = epr.delyed;
         }
-        (impact, explosion, crit, delay)
+        DamageProfile {
+            impact_dmg: impact,
+            explosion_dmg: explosion,
+            crit_mult: crit,
+            damage_delay: delay,
+        }
     }
 }
 
@@ -490,7 +500,7 @@ fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f6
         (WeaponType::SHOTGUN, 536517534) => 1.2,  //Duality
         (WeaponType::SHOTGUN, _) => 1.0,
 
-        (WeaponType::FUSIONRIFLE, VEX_MYTHOCLAST) => 1.5,
+        (WeaponType::FUSIONRIFLE, VEX_MYTHOCLAST) => 1.7,
         (WeaponType::FUSIONRIFLE, _) => 1.3,
 
         (WeaponType::TRACERIFLE, _) => 1.6,
@@ -524,8 +534,8 @@ impl Weapon {
                         .unwrap_or(&Stat::new())
                         .perk_val()
                         .clamp(0, 100),
-                ) * 0.4
-                    + 60.0
+                ) * 0.52
+                    + 78.0
             }
             WeaponType::GRENADELAUNCHER => {
                 f64::from(

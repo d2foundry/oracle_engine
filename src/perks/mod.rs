@@ -94,6 +94,7 @@ pub enum Perks {
 
     Radiant = 1380009033,
     Weaken = 1464159054,
+    Sever = 2519102437,
     WellOfRadiance = 2274196887,
     WardOfDawn = 4260353953,
     BannerShield = 4260353952,
@@ -242,8 +243,13 @@ pub enum Perks {
     RangeFinder = 2846385770,
     #[num_enum(alternatives = [1683379515, ])] //Arbalest
     DisruptionBreak = 3871884143,
-    #[num_enum(alternatives = [2360754333, 2079505485, ])] //Acrius
-    TrenchBarrel = 806159697,
+    #[num_enum(alternatives = [
+        806159697,  // s3 barrel
+        2079505485, // acrius old cat
+        4233905577, // acrius dummy cat
+        456628588,  // acrius cat
+    ])]
+    TrenchBarrel = 2360754333,
     Desperado = 3047969693,
     BoxBreathing = 2551157718,
 
@@ -255,7 +261,7 @@ pub enum Perks {
     FeedingFrenzy = 2779035018,
     #[num_enum(alternatives = [1266037486, ])] //R0
     FourthTimesTheCharm = 1354429876,
-    #[num_enum(alternatives = [1557274655, ])] //touch of malice cat
+    #[num_enum(alternatives = [1557274655, 2578928835, ])] //touch of malice cat and crafted outbreak
     RapidHit = 247725512,
 
     //season 5 | year 2
@@ -277,6 +283,11 @@ pub enum Perks {
     UnderDog = 205890336,
     ExplosiveLight = 3194351027,
     EyeOfTheStorm = 699525795,
+    #[num_enum(alternatives = [
+        2162261876, // mida old cat
+        800074992,  // mida dummy cat
+        3466057365, // mida cat
+    ])]
     NoDistractions = 2866798147,
 
     //season 8 | year 3
@@ -285,7 +296,11 @@ pub enum Perks {
     //season 9 | year 3
     ClownCartridge = 2284787283,
     ElementalCapacitor = 3511092054,
-    #[num_enum(alternatives = [3547298847, ])] // grav lance cat
+    #[num_enum(alternatives = [
+        3547298847, // grav lance old cat, to be removed after UI update
+        1620506139, // grav lance cat
+        1234111636, // malf cat
+    ])]
     Vorpal = 1546637391,
 
     //season 10 | year 3
@@ -327,6 +342,7 @@ pub enum Perks {
     Harmony = 438098033,
     PerpetualMotion = 1428297954,
     Adagio = 3673922083,
+    BluntExecutionRounds = 454085387,
 
     //season 16 | year 5
     BaitAndSwitch = 3078487919,
@@ -347,7 +363,7 @@ pub enum Perks {
     GutShot = 1365187766,
     Pugilist = 691659142,
     Slickdraw = 1821614984,
-    OverUnder = 1870851715,
+    UnderOver = 1870851715,
 
     //season 19 | year 5
     CascadePoint = 3751912585,
@@ -360,7 +376,7 @@ pub enum Perks {
     //season 20 | year 6
     KeepAway = 3619207468,
     ParacausalAffinity = 3215448563,
-    EnviousAssasin = 968510818,
+    EnviousAssassin = 968510818,
 
     //season 21 | year 6
     CollectiveAction = 3324494224,
@@ -377,6 +393,11 @@ pub enum Perks {
     HeadRush = 2565067140,
     EnlightendAction = 3828510309,
     SwordLogic = 31345821,
+
+    //season 23 | year 6
+    Onslaught = 95528736,
+    DesperateMeasures = 2109543898,
+    MasterOfArms = 3081867624,
 
     //subclass
     OnYourMark = 3066103999,
@@ -448,6 +469,10 @@ pub enum Perks {
     ColdFusion = 1036269296,
     BlackHole = 3905543891,
     TemporalUnlimiter = 806917387,
+    IonicReturn = 501717180,
+    Unrepentant = 2641107734,
+    ArcConductor = 2516532331,
+    VoidLeech = 3441203855,
 
     //heavy exotic
     ReignHavoc = 4148158229,
@@ -456,7 +481,6 @@ pub enum Perks {
     WhisperCatalyst = 1340292993,
     DarkDescent = 3333994164,
     TargetAquired = 939227542,
-    SleeperCatalyst = 2142466730,
     TractorCannon = 1210807262,
     MarksmanSights = 1408087975,
 

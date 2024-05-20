@@ -132,9 +132,8 @@ pub fn year_3_perks() {
         Perks::LastingImpression,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
-                impact_dmg_scale: 1.0,
                 explosive_dmg_scale: 1.25,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -159,7 +158,7 @@ pub fn year_3_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );

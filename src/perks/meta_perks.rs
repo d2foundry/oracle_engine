@@ -58,11 +58,11 @@ pub fn meta_perks() {
                 let stat = (charge_time.perk_val() - charge_time.base_value) as f64;
                 dmg_scale *= 1.0 - (0.6 * stat) / total_damage;
             }
-
             DamageModifierResponse {
                 crit_scale,
                 impact_dmg_scale: dmg_scale,
                 explosive_dmg_scale: dmg_scale,
+                ..Default::default()
             }
         }),
     );
@@ -126,7 +126,7 @@ pub fn meta_perks() {
                 if *_input.calc_data.weapon_type == WeaponType::GRENADELAUNCHER {
                     let blast_radius_struct =
                         _input.calc_data.stats.get(&StatHashes::BLAST_RADIUS.into());
-                        
+
                     let blast_radius = blast_radius_struct.cloned().unwrap_or_default().perk_val();
 
                     if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
@@ -211,13 +211,13 @@ pub fn meta_perks() {
         Perks::ReserveMod,
         Box::new(
             |_input: ModifierResponseInput| -> InventoryModifierResponse {
-                let mut inv_buff = if _input.value > 0 { 20 } else { 0 };
-                if _input.value == 2 {
-                    inv_buff += 20;
-                }
-                if _input.value > 2 {
-                    inv_buff += 30;
-                }
+                let inv_buff = match _input.value {
+                    0 => 0,
+                    1 => 20,
+                    2 => 40,
+                    3 => 50,
+                    _ => 50,
+                };
                 InventoryModifierResponse {
                     inv_stat_add: inv_buff,
                     inv_scale: 1.0,
@@ -230,13 +230,13 @@ pub fn meta_perks() {
     add_sbr(
         Perks::ReserveMod,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
-            let mut inv_buff = if _input.value > 0 { 20 } else { 0 };
-            if _input.value == 2 {
-                inv_buff += 15;
-            }
-            if _input.value > 2 {
-                inv_buff += 20;
-            }
+            let inv_buff = match _input.value {
+                0 => 0,
+                1 => 20,
+                2 => 40,
+                3 => 50,
+                _ => 50,
+            };
             let mut stats = HashMap::new();
             stats.insert(StatHashes::INVENTORY_SIZE.into(), inv_buff);
             stats

@@ -46,25 +46,6 @@ pub fn other_perks() {
         }),
     );
 
-    add_imr(
-        Perks::RapidFireFrame,
-        Box::new(
-            |_input: ModifierResponseInput| -> InventoryModifierResponse {
-                match *_input.calc_data.weapon_type {
-                    WeaponType::SNIPER => InventoryModifierResponse {
-                        inv_scale: 1.3,
-                        ..Default::default()
-                    },
-                    WeaponType::SHOTGUN => InventoryModifierResponse {
-                        inv_add: 8,
-                        ..Default::default()
-                    },
-                    _ => InventoryModifierResponse::default(),
-                }
-            },
-        ),
-    );
-
     add_sbr(
         Perks::PrecisionFrame,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
@@ -341,15 +322,18 @@ pub fn other_perks() {
     add_dmr(
         Perks::BossSpec,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let damage_mult = if *_input.calc_data.enemy_type == EnemyType::BOSS && !_input.pvp {
-                1.077
-            } else {
-                1.0
-            };
+            if !matches!(
+                *_input.calc_data.enemy_type,
+                EnemyType::BOSS | EnemyType::CHAMPION | EnemyType::MINIBOSS | EnemyType::VEHICLE
+            ) || _input.pvp
+            {
+                return DamageModifierResponse::default();
+            }
+            let damage_mult = 1.0777;
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -357,14 +341,10 @@ pub fn other_perks() {
     add_dmr(
         Perks::MajorSpec,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if !matches!(
-                *_input.calc_data.enemy_type,
-                EnemyType::ELITE | EnemyType::MINIBOSS | EnemyType::CHAMPION
-            ) || _input.pvp
-            {
+            if !matches!(*_input.calc_data.enemy_type, EnemyType::ELITE) || _input.pvp {
                 return DamageModifierResponse::default();
             }
-            let damage_mult = 1.077;
+            let damage_mult = 1.0777;
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
@@ -378,12 +358,16 @@ pub fn other_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             if !matches!(
                 *_input.calc_data.enemy_type,
-                EnemyType::ELITE | EnemyType::MINIBOSS | EnemyType::CHAMPION | EnemyType::BOSS
+                EnemyType::ELITE
+                    | EnemyType::MINIBOSS
+                    | EnemyType::CHAMPION
+                    | EnemyType::BOSS
+                    | EnemyType::VEHICLE
             ) || _input.pvp
             {
                 return DamageModifierResponse::default();
             }
-            let damage_mult = 1.077;
+            let damage_mult = 1.0777;
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
@@ -395,15 +379,14 @@ pub fn other_perks() {
     add_dmr(
         Perks::MinorSpec,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let damage_mult = if _input.calc_data.enemy_type == &EnemyType::MINOR && !_input.pvp {
-                1.077
-            } else {
-                1.0
-            };
+            if !matches!(*_input.calc_data.enemy_type, EnemyType::MINOR) || _input.pvp {
+                return DamageModifierResponse::default();
+            }
+            let damage_mult = 1.0777;
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -419,7 +402,7 @@ pub fn other_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -428,9 +411,8 @@ pub fn other_perks() {
         Perks::SpikeGrenades,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
-                impact_dmg_scale: 1.5,
-                explosive_dmg_scale: 1.0,
-                crit_scale: 1.0,
+                impact_dmg_scale: 1.125,
+                ..Default::default()
             }
         }),
     );
@@ -441,7 +423,7 @@ pub fn other_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 0.75,
                 explosive_dmg_scale: 0.75,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -453,9 +435,8 @@ pub fn other_perks() {
                 && _input.calc_data.base_crit_mult < 1.15
             {
                 DamageModifierResponse {
-                    impact_dmg_scale: 1.0,
-                    explosive_dmg_scale: 1.0,
                     crit_scale: 0.92,
+                    ..Default::default()
                 }
             } else {
                 DamageModifierResponse::default()
@@ -501,7 +482,7 @@ pub fn other_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.02,
                 explosive_dmg_scale: 1.02,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );

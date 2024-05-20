@@ -157,18 +157,14 @@ pub fn year_6_perks() {
     );
 
     add_mmr(
-        Perks::EnviousAssasin,
+        Perks::EnviousAssassin,
         Box::new(
             |_input: ModifierResponseInput| -> MagazineModifierResponse {
                 let val = _input.value as f64;
-                //i dont know why this if is here? - harm
-                if _input.calc_data.total_shots_fired == 0.0 {
-                    return MagazineModifierResponse {
-                        magazine_scale: 1.0 + clamp(0.1 * val, 0.0, 1.5),
-                        ..Default::default()
-                    };
-                };
-                MagazineModifierResponse::default()
+                MagazineModifierResponse {
+                    magazine_scale: 1.0 + clamp(0.1 * val, 0.0, 2.0),
+                    ..Default::default()
+                }
             },
         ),
     );
@@ -338,7 +334,7 @@ pub fn year_6_perks() {
     add_dmr(
         Perks::PrecisionInstrument,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let max_percent = if _input.is_enhanced { 0.26 } else { 0.25 };
+            let max_percent = if _input.is_enhanced { 0.30 } else { 0.25 };
             let max_stacks = 6.0;
             let shots_hit = _input.calc_data.total_shots_hit;
 
@@ -371,7 +367,10 @@ pub fn year_6_perks() {
                 if _input.value == 0 {
                     return HashMap::new();
                 }
-                HashMap::from([(StatHashes::RELOAD.into(), 50)])
+                HashMap::from([
+                    (StatHashes::RELOAD.into(), 50),
+                    (StatHashes::AIM_ASSIST.into(), 20),
+                ])
             },
         ),
     );
@@ -437,13 +436,32 @@ pub fn year_6_perks() {
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
                 let shots_hit = _input.calc_data.total_shots_hit as i32;
                 let value = _input.value as i32;
-                let stat_per_stack = 10;
-                let max_stacks = 5;
+                let max_stacks = 12;
+                let stacks_per_hit = match _input.calc_data.weapon_type {
+                    WeaponType::HANDCANNON => 3,
+                    _ => 1,
+                };
+                let stacks = clamp(value + (shots_hit * stacks_per_hit), 0, max_stacks);
 
-                let stat_bump = clamp(value + shots_hit, 0, max_stacks) * stat_per_stack;
+                let buff = match stacks {
+                    0 => 0,
+                    1 => 2,
+                    2 => 7,
+                    3 => 12,
+                    4 => 15,
+                    5 => 20,
+                    6 => 25,
+                    7 => 30,
+                    8 => 35,
+                    9 => 38,
+                    10 => 40,
+                    11 => 45,
+                    12 => 50,
+                    _ => 50,
+                };
                 HashMap::from([
-                    (StatHashes::RELOAD.into(), stat_bump),
-                    (StatHashes::HANDLING.into(), stat_bump),
+                    (StatHashes::RELOAD.into(), buff),
+                    (StatHashes::HANDLING.into(), buff),
                 ])
             },
         ),
@@ -454,12 +472,31 @@ pub fn year_6_perks() {
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 let shots_hit = _input.calc_data.total_shots_hit as i32;
                 let value = _input.value as i32;
-                let stat_per_stack = 10;
-                let max_stacks = 5;
+                let max_stacks = 12;
+                let stacks_per_hit = match _input.calc_data.weapon_type {
+                    WeaponType::HANDCANNON => 3,
+                    _ => 1,
+                };
+                let stacks = clamp(value + (shots_hit * stacks_per_hit), 0, max_stacks);
 
-                let stat_bump = clamp(value + shots_hit, 0, max_stacks) * stat_per_stack;
+                let buff = match stacks {
+                    0 => 0,
+                    1 => 2,
+                    2 => 7,
+                    3 => 12,
+                    4 => 15,
+                    5 => 20,
+                    6 => 25,
+                    7 => 30,
+                    8 => 35,
+                    9 => 38,
+                    10 => 40,
+                    11 => 45,
+                    12 => 50,
+                    _ => 50,
+                };
                 HandlingModifierResponse {
-                    stat_add: stat_bump,
+                    stat_add: buff,
                     ..Default::default()
                 }
             },
@@ -470,12 +507,31 @@ pub fn year_6_perks() {
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
             let shots_hit = _input.calc_data.total_shots_hit as i32;
             let value = _input.value as i32;
-            let stat_per_stack = 10;
-            let max_stacks = 5;
+            let max_stacks = 12;
+            let stacks_per_hit = match _input.calc_data.weapon_type {
+                WeaponType::HANDCANNON => 3,
+                _ => 1,
+            };
+            let stacks = clamp(value + (shots_hit * stacks_per_hit), 0, max_stacks);
 
-            let stat_bump = clamp(value + shots_hit, 0, max_stacks) * stat_per_stack;
+            let buff = match stacks {
+                0 => 0,
+                1 => 2,
+                2 => 7,
+                3 => 12,
+                4 => 15,
+                5 => 20,
+                6 => 25,
+                7 => 30,
+                8 => 35,
+                9 => 38,
+                10 => 40,
+                11 => 45,
+                12 => 50,
+                _ => 50,
+            };
             ReloadModifierResponse {
-                reload_stat_add: stat_bump,
+                reload_stat_add: buff,
                 ..Default::default()
             }
         }),
@@ -534,5 +590,85 @@ pub fn year_6_perks() {
                 }
             },
         ),
+    );
+    add_fmr(
+        Perks::Onslaught,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            let buff = match _input.value {
+                0 => 1.0,
+                1 => 0.84,
+                2 => 0.72,
+                3 => 0.63,
+                _ => 0.63,
+            };
+            FiringModifierResponse {
+                burst_delay_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
+    add_rsmr(
+        Perks::Onslaught,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            let buff = match _input.value {
+                0 => 0,
+                1 => 15,
+                2 => 25,
+                3 => 35,
+                _ => 35,
+            };
+            ReloadModifierResponse {
+                reload_stat_add: buff,
+                ..Default::default()
+            }
+        }),
+    );
+    add_sbr(
+        Perks::Onslaught,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let buff = match _input.value {
+                0 => 0,
+                1 => 15,
+                2 => 25,
+                3 => 35,
+                _ => 35,
+            };
+            HashMap::from([(StatHashes::RELOAD.into(), buff)])
+        }),
+    );
+    add_dmr(
+        Perks::Sever,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let debuff = if _input.pvp { 0.85 } else { 1.0 };
+            DamageModifierResponse {
+                impact_dmg_scale: debuff,
+                explosive_dmg_scale: debuff,
+                ..Default::default()
+            }
+        }),
+    );
+    add_dmr(
+        Perks::DesperateMeasures,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = _input.value.clamp(0, 3) as f64 * 0.1 + 1.0;
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
+    add_dmr(
+        Perks::MasterOfArms,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 1.15,
+                explosive_dmg_scale: 1.15,
+                ..Default::default()
+            }
+        }),
     );
 }

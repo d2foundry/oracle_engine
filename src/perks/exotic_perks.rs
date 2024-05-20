@@ -44,7 +44,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_buff,
                 explosive_dmg_scale: damage_buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -137,7 +137,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_buff,
                 explosive_dmg_scale: damage_buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -178,8 +178,7 @@ pub fn exotic_perks() {
             };
             DamageModifierResponse {
                 crit_scale: crit_mult,
-                explosive_dmg_scale: 1.0,
-                impact_dmg_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -274,7 +273,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + (val as f64) * 0.1,
                 explosive_dmg_scale: 1.0 + (val as f64) * 0.1,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -289,7 +288,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_buff,
                 explosive_dmg_scale: damage_buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -304,7 +303,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_buff,
                 explosive_dmg_scale: damage_buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -411,6 +410,7 @@ pub fn exotic_perks() {
                 explosive_dmg_scale: 1.48,
                 impact_dmg_scale: 1.48,
                 crit_scale,
+                ..Default::default()
             }
         }),
     );
@@ -427,7 +427,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: dmg_mult,
                 explosive_dmg_scale: dmg_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -441,7 +441,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: dmg_mult,
                 explosive_dmg_scale: dmg_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -457,7 +457,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -493,6 +493,7 @@ pub fn exotic_perks() {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
                 crit_scale: crit_mult,
+                ..Default::default()
             }
         }),
     );
@@ -549,7 +550,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -684,6 +685,7 @@ pub fn exotic_perks() {
                 explosive_dmg_scale: damage_mult,
                 impact_dmg_scale: damage_mult,
                 crit_scale: crit_mult,
+                ..Default::default()
             }
         }),
     );
@@ -702,6 +704,7 @@ pub fn exotic_perks() {
                 explosive_dmg_scale: damage_mult,
                 impact_dmg_scale: damage_mult,
                 crit_scale: crit_mult,
+                ..Default::default()
             }
         }),
     );
@@ -723,7 +726,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 explosive_dmg_scale: damage_mult,
                 impact_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -740,7 +743,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 explosive_dmg_scale: damage_mult,
                 impact_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -753,7 +756,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 explosive_dmg_scale: 1.0 + damage_mult,
                 impact_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -773,7 +776,7 @@ pub fn exotic_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -822,10 +825,12 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::FullStop,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.pvp {
+                return DamageModifierResponse::default()
+            }
             DamageModifierResponse {
-                explosive_dmg_scale: 1.0,
-                impact_dmg_scale: 1.0,
-                crit_scale: if !_input.pvp { 2.9 } else { 1.0 },
+                crit_scale: 2.9,
+                ..Default::default()
             }
         }),
     );
@@ -1054,15 +1059,20 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::TemporalUnlimiter,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let buff = if _input.pvp { 7.545 } else { 14.0 };
-            if _input.value > 0 {
-                return DamageModifierResponse {
-                    impact_dmg_scale: buff,
-                    crit_scale: 1.875,
-                    ..Default::default()
-                };
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
             }
-            DamageModifierResponse::default()
+            let mut buff = if _input.pvp { 7.545 } else { 14.0 };
+            //season 23
+            //https://www.bungie.net/7/en/News/Article/season-23-weapons-preview
+            if *_input.calc_data.enemy_type == EnemyType::CHAMPION {
+                buff *= 2.0;
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                crit_scale: 1.875,
+                ..Default::default()
+            }
         }),
     );
 
@@ -1148,4 +1158,94 @@ pub fn exotic_perks() {
             }
         }),
     );
+    add_dmr(
+        Perks::IonicReturn,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let current_crit = _input.calc_data.curr_firing_data.crit_mult;
+            let crit_scale = (current_crit + (34.0 / 51.0)) / current_crit;
+            DamageModifierResponse {
+                impact_dmg_scale: 1.15,
+                crit_scale,
+                ..Default::default()
+            }
+        }),
+    );
+    add_dmr(
+        Perks::Unrepentant,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 || _input.pvp {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 3.0,
+                ..Default::default()
+            }
+        }),
+    );
+    add_fmr(
+        Perks::Unrepentant,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            let shots_in_super_burst: f64 = 6.0;
+            if _input.calc_data.total_shots_hit >= shots_in_super_burst || _input.value == 0 {
+                return FiringModifierResponse::default();
+            }
+            FiringModifierResponse {
+                burst_size_add: 3.0,
+                ..Default::default()
+            }
+        }),
+    );
+    add_dmr(
+        Perks::ArcConductor,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 1.1,
+                explosive_dmg_scale: 1.1,
+                ..Default::default()
+            }
+        }),
+    );
+    add_hmr(
+        Perks::ArcConductor,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
+                HandlingModifierResponse {
+                    stat_add: 100,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+    add_sbr(
+        Perks::ArcConductor,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            if _input.value == 1 {
+                stats.insert(StatHashes::HANDLING.into(), 100);
+            }
+            stats
+        }),
+    );
+    add_dmr(
+        Perks::VoidLeech,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 || _input.pvp {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 1.2,
+                explosive_dmg_scale: 1.2,
+                ..Default::default()
+            }
+        }),
+    )
 }

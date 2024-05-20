@@ -410,7 +410,7 @@ pub fn buff_perks() {
     add_dmr(
         Perks::GlacialGuard,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value == 0 {
+            if _input.value == 0 || _input.calc_data.damage_type != &DamageType::STASIS {
                 return DamageModifierResponse::default();
             }
             let mult = surge_buff(_input.cached_data, 4, _input.pvp);
@@ -421,43 +421,4 @@ pub fn buff_perks() {
             }
         }),
     );
-    add_rsmr(
-        Perks::AeonForce,
-        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value == 0 {
-                return ReloadModifierResponse::default();
-            }
-            ReloadModifierResponse {
-                reload_stat_add: 10,
-                reload_time_scale: 0.85,
-            }
-        }),
-    );
-    add_sbr(
-        Perks::AeonForce,
-        Box::new(
-            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                if _input.value == 0 {
-                    return HashMap::new();
-                }
-                use StatHashes::*;
-                HashMap::from([(RELOAD.into(), 10), (HANDLING.into(), 10)])
-            },
-        ),
-    );
-    add_hmr(
-        Perks::AeonForce,
-        Box::new(
-            |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                if _input.value == 0 {
-                    return HandlingModifierResponse::default();
-                }
-                HandlingModifierResponse {
-                    stow_add: 10,
-                    draw_add: 10,
-                    ..Default::default()
-                }
-            },
-        ),
-    )
 }

@@ -30,22 +30,6 @@ pub fn exotic_armor() {
         }),
     );
 
-    add_dmr(
-        Perks::MechaneersTricksleeves,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value == 0 || *_input.calc_data.weapon_type != WeaponType::SIDEARM {
-                return DamageModifierResponse::default();
-            };
-
-            let damage_mult = if _input.pvp { 1.35 } else { 2.0 };
-            DamageModifierResponse {
-                explosive_dmg_scale: damage_mult,
-                impact_dmg_scale: damage_mult,
-                ..Default::default()
-            }
-        }),
-    );
-
     //doesnt work for sturm overcharge, (maybe) memento
     add_dmr(
         Perks::LuckyPants,
@@ -120,7 +104,7 @@ pub fn exotic_armor() {
             DamageModifierResponse {
                 impact_dmg_scale: modifier,
                 explosive_dmg_scale: modifier,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -174,15 +158,15 @@ pub fn exotic_armor() {
     add_dmr(
         Perks::MechaneersTricksleeves,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mult = if _input.pvp { 1.35 } else { 2.0 };
-            if _input.value > 0 && _input.calc_data.weapon_type == &WeaponType::SIDEARM {
-                DamageModifierResponse {
-                    explosive_dmg_scale: mult,
-                    impact_dmg_scale: mult,
-                    ..Default::default()
-                }
-            } else {
-                DamageModifierResponse::default()
+            if _input.value == 0 || *_input.calc_data.weapon_type != WeaponType::SIDEARM {
+                return DamageModifierResponse::default();
+            };
+
+            let damage_mult = if _input.pvp { 1.10 } else { 2.0 };
+            DamageModifierResponse {
+                explosive_dmg_scale: damage_mult,
+                impact_dmg_scale: damage_mult,
+                ..Default::default()
             }
         }),
     );
@@ -274,22 +258,6 @@ pub fn exotic_armor() {
         ),
     );
 
-    add_dmr(
-        Perks::NoBackupPlans,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if *_input.calc_data.weapon_type != WeaponType::SHOTGUN || _input.value == 0 {
-                return DamageModifierResponse::default();
-            }
-
-            let buff = if _input.pvp { 1.10 } else { 1.35 };
-            DamageModifierResponse {
-                impact_dmg_scale: buff,
-                explosive_dmg_scale: buff,
-                ..Default::default()
-            }
-        }),
-    );
-
     add_sbr(
         Perks::ActiumWarRig,
         Box::new(
@@ -336,7 +304,7 @@ pub fn exotic_armor() {
                 let mut stats = HashMap::new();
                 if _input.calc_data.weapon_type == &WeaponType::SUBMACHINEGUN {
                     stats.insert(StatHashes::AIRBORNE.into(), 40);
-                    stats.insert(StatHashes::HANDLING.into(), 100);
+                    stats.insert(StatHashes::HANDLING.into(), 50);
                 };
                 stats
             },
@@ -349,10 +317,10 @@ pub fn exotic_armor() {
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 if _input.calc_data.weapon_type == &WeaponType::SUBMACHINEGUN {
                     return HandlingModifierResponse {
-                        stat_add: 100,
+                        stat_add: 50,
                         ads_scale: 1.0,
-                        draw_scale: 0.6,
-                        stow_scale: 0.6,
+                        draw_scale: 0.8,
+                        stow_scale: 0.8,
                         ..Default::default()
                     };
                 }
