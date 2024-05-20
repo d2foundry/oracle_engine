@@ -421,4 +421,43 @@ pub fn buff_perks() {
             }
         }),
     );
+    add_rsmr(
+        Perks::AeonForce,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
+            ReloadModifierResponse {
+                reload_stat_add: 30,
+                reload_time_scale: 0.85,
+            }
+        }),
+    );
+    add_sbr(
+        Perks::AeonForce,
+        Box::new(
+            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+                if _input.value == 0 {
+                    return HashMap::new();
+                }
+                use StatHashes::*;
+                HashMap::from([(RELOAD.into(), 30), (HANDLING.into(), 40)])
+            },
+        ),
+    );
+    add_hmr(
+        Perks::AeonForce,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
+                HandlingModifierResponse {
+                    stow_add: 40,
+                    draw_add: 40,
+                    ..Default::default()
+                }
+            },
+        ),
+    )
 }
