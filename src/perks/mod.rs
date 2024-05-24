@@ -223,6 +223,9 @@ pub enum Perks {
     ExplosivePayload = 3038247973,
     FirmlyPlanted = 280464955,
     FullAutoTrigger = 2117683199,
+    #[num_enum(alternatives = [
+        2578928833, // crafted outbreak
+    ])]
     HeadSeeker = 460017080,
     HighImpactReserves = 2213355989,
     HipFireGrip = 1866048759,
@@ -263,8 +266,10 @@ pub enum Perks {
     FeedingFrenzy = 2779035018,
     #[num_enum(alternatives = [1266037486, ])] //R0
     FourthTimesTheCharm = 1354429876,
-    #[num_enum(alternatives = [1557274655, 2578928835, ])]
-    //touch of malice cat and crafted outbreak
+    #[num_enum(alternatives = [
+        1557274655, // touch of malice cat
+        2578928835, // crafted outbreak
+    ])]
     RapidHit = 247725512,
 
     //season 5 | year 2
@@ -330,6 +335,9 @@ pub enum Perks {
     //season 14 | year 4
     Cornered = 1799762209,
     AdrenalineJunkie = 11612903,
+    #[num_enum(alternatives = [
+        2578928832, // crafted outbreak
+    ])]
     RewindRounds = 3418782618,
     HeatingUp = 1570042021,
     FireFly = 3824105627,
