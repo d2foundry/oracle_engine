@@ -213,7 +213,7 @@ pub enum Perks {
     Outlaw = 1168162263,
     BackupPlan = 1600092898,
     #[num_enum(alternatives = [
-        777589559, // whisper
+        777589559, // crafted whisper
     ])]
     FieldPrep = 2869569095,
     #[num_enum(alternatives = [3551326236, ])] //huckleberry
@@ -293,7 +293,7 @@ pub enum Perks {
         2162261876, // mida old cat
         800074992,  // mida dummy cat
         3466057365, // mida cat
-        777589556,  // whisper
+        777589556,  // crafted whisper
     ])]
     NoDistractions = 2866798147,
     ArchersGambit = 3414324643,
@@ -402,7 +402,7 @@ pub enum Perks {
     HighGround = 2319119708,
     HeadRush = 2565067140,
     #[num_enum(alternatives = [
-        777589557, // whisper
+        777589557, // crafted whisper
     ])]
     EnlightendAction = 3828510309,
     SwordLogic = 31345821,
