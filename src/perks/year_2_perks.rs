@@ -400,7 +400,7 @@ pub fn year_2_perks() {
                 return FiringModifierResponse::default();
             }
             FiringModifierResponse {
-                burst_delay_scale: 0.66,
+                burst_delay_scale: 0.4,
                 ..Default::default()
             }
         }),
