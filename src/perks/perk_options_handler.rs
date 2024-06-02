@@ -285,7 +285,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::InvisibleHand => Some(PerkOptionData::toggle()),
         Perks::UnsatedHunger => Some(PerkOptionData::toggle()),
         Perks::Discord => Some(PerkOptionData::toggle()),
-        Perks::EddyCurrent => Some(PerkOptionData::options(["Off", "Base", "Amplified"].to_vec())),
+        Perks::EddyCurrent => Some(PerkOptionData::options(["Base", "Amplified"].to_vec())),
         
         //season 22 | year 6
         Perks::PrecisionInstrument => Some(PerkOptionData::stacking(6)),
