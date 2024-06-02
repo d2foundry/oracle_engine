@@ -260,7 +260,8 @@ pub enum Perks {
     FeedingFrenzy = 2779035018,
     #[num_enum(alternatives = [1266037486, ])] //R0
     FourthTimesTheCharm = 1354429876,
-    #[num_enum(alternatives = [1557274655, 2578928835, ])] //touch of malice cat and crafted outbreak
+    #[num_enum(alternatives = [1557274655, 2578928835, ])]
+    //touch of malice cat and crafted outbreak
     RapidHit = 247725512,
 
     //season 5 | year 2
@@ -288,6 +289,7 @@ pub enum Perks {
         3466057365, // mida cat
     ])]
     NoDistractions = 2866798147,
+    ArchersGambit = 3414324643,
 
     //season 8 | year 3
     //TODO
@@ -384,6 +386,8 @@ pub enum Perks {
     InvisibleHand = 3018146897,
     UnsatedHunger = 2053642371,
     Discord = 3978468247,
+    #[num_enum(alternatives = [4218954970, ])]
+    EddyCurrent = 684456054,
 
     //seaqson 22 | year 6
     PrecisionInstrument = 555281244,

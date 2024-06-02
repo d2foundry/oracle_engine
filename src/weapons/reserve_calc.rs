@@ -241,8 +241,8 @@ fn glaives(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
 }
 
 fn sniper_rifles(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
-    let vpp = if _mag_stat >= 100 { 0.14 } else { 0.12 };
-    let offset = if _mag_stat >= 100 { 14.0 } else { 12.0 };
+    let vpp = if _mag_stat >= 100 { 0.11 } else { 0.9 }; 
+    let offset = if _mag_stat >= 100 { 17.0 } else { 15.0 };  
     vpp * _inv_stat as f64 + offset
 }
 fn whisper_of_the_worm(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
@@ -543,10 +543,10 @@ fn tessellation(_inv_stat: i32) -> f64 {
 }
 fn queenbreaker(_inv_stat: i32) -> f64 {
     match _inv_stat {
-        40 => 21.0,
-        60 => 22.0,
-        80 => 24.0,
-        _ => 24.0,
+        40 => 24.0,
+        60 => 25.0,
+        80 => 27.0,
+        _ => 27.0,
     }
 }
 fn wardcliff_coil(_inv_stat: i32) -> f64 {
@@ -567,10 +567,10 @@ fn tractor_cannon(_inv_stat: i32) -> f64 {
 }
 fn truth(_inv_stat: i32) -> f64 {
     match _inv_stat {
-        40 => 9.0,
-        60 => 10.0,
-        80 => 11.0,
-        _ => 11.0,
+        40 => 12.0,
+        60 => 13.0,
+        80 => 14.0,
+        _ => 14.0,
     }
 }
 fn two_tailed_fox(_inv_stat: i32) -> f64 {

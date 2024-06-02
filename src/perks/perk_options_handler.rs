@@ -195,6 +195,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::ExplosiveLight => Some(PerkOptionData::toggle()),
         Perks::EyeOfTheStorm => Some(PerkOptionData::toggle()),
         Perks::NoDistractions => Some(PerkOptionData::toggle()),
+        Perks::ArchersGambit => Some(PerkOptionData::toggle()),
 
         //season 8 | year 3
         //TODO
@@ -284,6 +285,8 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::InvisibleHand => Some(PerkOptionData::toggle()),
         Perks::UnsatedHunger => Some(PerkOptionData::toggle()),
         Perks::Discord => Some(PerkOptionData::toggle()),
+        Perks::EddyCurrent => Some(PerkOptionData::options(["Off", "Base", "Amplified"].to_vec())),
+        
         //season 22 | year 6
         Perks::PrecisionInstrument => Some(PerkOptionData::stacking(6)),
         Perks::LooseChange => Some(PerkOptionData::toggle()),
