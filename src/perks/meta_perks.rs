@@ -27,7 +27,10 @@ pub fn meta_perks() {
             if *_input.calc_data.weapon_type == WeaponType::LINEARFUSIONRIFLE && !_input.pvp {
                 crit_scale *= 1.15;
             };
-            if *_input.calc_data.damage_type == DamageType::KINETIC && !_input.pvp {
+            if *_input.calc_data.damage_type == DamageType::KINETIC
+                && !_input.pvp
+                && *_input.calc_data.enemy_type != EnemyType::BOSS
+            {
                 if _input.calc_data.ammo_type == &AmmoType::PRIMARY {
                     dmg_scale *= 1.1;
                 } else if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
@@ -36,11 +39,29 @@ pub fn meta_perks() {
             };
 
             if *_input.calc_data.ammo_type == AmmoType::PRIMARY
-                && _input.calc_data.intrinsic_hash > 1000
                 && *_input.calc_data.enemy_type == EnemyType::MINOR
                 && !_input.pvp
+                && _input.calc_data.intrinsic_hash > 1000
             {
-                dmg_scale *= 1.4;
+                dmg_scale *= 1.3
+            }
+            if *_input.calc_data.enemy_type == EnemyType::MINOR && !_input.pvp {
+                dmg_scale *= match *_input.calc_data.weapon_type {
+                    WeaponType::SIDEARM
+                    | WeaponType::TRACERIFLE
+                    | WeaponType::SCOUTRIFLE
+                    | WeaponType::BOW => 1.2,
+                    WeaponType::AUTORIFLE | WeaponType::PULSERIFLE => 1.15,
+                    WeaponType::SUBMACHINEGUN => 1.1,
+                    WeaponType::HANDCANNON => 1.05,
+                    _ => 1.0,
+                };
+            }
+            if *_input.calc_data.enemy_type == EnemyType::ELITE && !_input.pvp {
+                dmg_scale *= match *_input.calc_data.weapon_type {
+                    WeaponType::TRACERIFLE => 1.2,
+                    _ => 1.0,
+                };
             }
 
             if *_input.calc_data.weapon_type == WeaponType::LINEARFUSIONRIFLE

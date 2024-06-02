@@ -381,7 +381,7 @@ pub fn year_6_perks() {
             if _input.value == 0 {
                 return DamageModifierResponse::default();
             }
-            let mult = if _input.pvp { 1.1 } else { 1.2 };
+            let mult = if _input.pvp { 1.15 } else { 1.25 };
 
             DamageModifierResponse {
                 impact_dmg_scale: mult,
@@ -671,4 +671,37 @@ pub fn year_6_perks() {
             }
         }),
     );
+    add_rsmr(
+        Perks::EddyCurrent,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
+            let buff = match _input.value {
+                0 => unreachable!(),
+                1 => 20,
+                2.. => 60,
+            };
+            ReloadModifierResponse {
+                reload_stat_add: buff,
+                reload_time_scale: 0.95,
+            }
+        }),
+    );
+    add_sbr(
+        Perks::EddyCurrent,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            if _input.value == 0 {
+                return stats;
+            }
+            let buff = match _input.value {
+                0 => unreachable!(),
+                1 => 20,
+                2.. => 60,
+            };            
+            stats.insert(StatHashes::RELOAD.into(), buff);
+            stats
+        }),
+    )
 }

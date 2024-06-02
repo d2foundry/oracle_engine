@@ -405,7 +405,7 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::HakkeHeavyBurst,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let crit_scale = (1.5 + 5.0 / 51.0) / _input.calc_data.base_crit_mult;
+            let crit_scale = 1.828 / _input.calc_data.base_crit_mult;
             DamageModifierResponse {
                 explosive_dmg_scale: 1.48,
                 impact_dmg_scale: 1.48,
@@ -826,7 +826,7 @@ pub fn exotic_perks() {
         Perks::FullStop,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             if _input.pvp {
-                return DamageModifierResponse::default()
+                return DamageModifierResponse::default();
             }
             DamageModifierResponse {
                 crit_scale: 2.9,

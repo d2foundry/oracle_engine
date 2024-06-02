@@ -393,4 +393,16 @@ pub fn year_2_perks() {
             }
         }),
     );
+    add_fmr(
+        Perks::ArchersGambit,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            if _input.value == 0 {
+                return FiringModifierResponse::default();
+            }
+            FiringModifierResponse {
+                burst_delay_scale: 0.4,
+                ..Default::default()
+            }
+        }),
+    );
 }
