@@ -421,6 +421,21 @@ pub fn buff_perks() {
             }
         }),
     );
+    add_dmr(
+        Perks::NoBackupPlans,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if *_input.calc_data.weapon_type != WeaponType::SHOTGUN || _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let desired_buff = if _input.pvp { 1.10 } else { 1.35 };
+            let buff = emp_buff(_input.cached_data, desired_buff);
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
     add_rsmr(
         Perks::AeonForce,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
