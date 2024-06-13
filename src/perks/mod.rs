@@ -12,6 +12,7 @@ pub mod year_3_perks;
 pub mod year_4_perks;
 pub mod year_5_perks;
 pub mod year_6_perks;
+pub mod year_7_perks;
 
 use std::borrow::BorrowMut;
 use std::collections::HashMap;
@@ -42,6 +43,7 @@ use self::{
     year_4_perks::*,
     year_5_perks::*,
     year_6_perks::*,
+    year_7_perks::*,
 };
 
 use crate::weapons::Weapon;
@@ -402,6 +404,9 @@ pub enum Perks {
     DesperateMeasures = 2109543898,
     MasterOfArms = 3081867624,
 
+    //episode 1 | year 7
+    ChaosReshaped = 3640170453,
+
     //subclass
     OnYourMark = 3066103999,
     Hedrons = 3469412970,
@@ -538,6 +543,7 @@ pub fn map_perks() {
         year_4_perks();
         year_5_perks();
         year_6_perks();
+        year_7_perks();
         meta_perks();
         exotic_perks();
         exotic_armor();

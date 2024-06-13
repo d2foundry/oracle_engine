@@ -116,7 +116,9 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         //origin | year 5+
         Perks::VeistStinger => Some(PerkOptionData::toggle()),
-        Perks::HakkeBreach => Some(PerkOptionData::options(["Vehicle", "Stasis Crystals", "Other Constructs"].to_vec())),
+        Perks::HakkeBreach => Some(PerkOptionData::options(
+            ["Vehicle", "Stasis Crystals", "Other Constructs"].to_vec(),
+        )),
         Perks::Alacrity => Some(PerkOptionData::toggle()),
         Perks::FluidDynamics => Some(PerkOptionData::toggle()),
         Perks::QuietMoment => Some(PerkOptionData::toggle()),
@@ -286,7 +288,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::UnsatedHunger => Some(PerkOptionData::toggle()),
         Perks::Discord => Some(PerkOptionData::toggle()),
         Perks::EddyCurrent => Some(PerkOptionData::options(["Base", "Amplified"].to_vec())),
-        
+
         //season 22 | year 6
         Perks::PrecisionInstrument => Some(PerkOptionData::stacking(6)),
         Perks::LooseChange => Some(PerkOptionData::toggle()),
@@ -298,6 +300,9 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Onslaught => Some(PerkOptionData::stacking(3)),
         Perks::DesperateMeasures => Some(PerkOptionData::stacking(3)),
         Perks::MasterOfArms => Some(PerkOptionData::toggle()),
+
+        //episode 1 | year 7
+        Perks::ChaosReshaped => Some(PerkOptionData::stacking(2)),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),

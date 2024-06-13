@@ -839,7 +839,7 @@ dependencies = [
 
 [[package]]
 name = "oracle_engine"
-version = "7.3.6-pve"
+version = "8.0.0"
 dependencies = [
  "built",
  "console_error_panic_hook",
