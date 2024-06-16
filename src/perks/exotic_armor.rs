@@ -384,8 +384,9 @@ pub fn exotic_armor() {
                 if _input.calc_data.intrinsic_hash == 1863355414
                     || _input.calc_data.intrinsic_hash == 2965975126
                     || _input.calc_data.intrinsic_hash == 2724693746
+                    || _input.calc_data.intrinsic_hash == 4184462049
                 {
-                    //Thorn, Osteo Striga, Touch of Malice
+                    //Thorn, Osteo Striga, Touch of Malice, Necrochasm
                     stats.insert(StatHashes::AIRBORNE.into(), 30);
                 };
                 stats
