@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
 use crate::{
-    console_log,
     d2_enums::{AmmoType, BungieHash, DamageType, StatBump, StatHashes, WeaponType},
     logging::extern_log,
     weapons::Weapon,

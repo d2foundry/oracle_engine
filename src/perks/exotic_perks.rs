@@ -1,5 +1,5 @@
 //This also includes intrinsic perks, not just exotic
-use std::{collections::HashMap, f32::NEG_INFINITY};
+use std::collections::HashMap;
 
 use serde::__private::de;
 
@@ -1284,7 +1284,8 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::TheRightChoice,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if ((_input.calc_data.total_shots_fired - 1.0) / 7.0) == 0.0 { // every 1,8,15... so on
+            if ((_input.calc_data.total_shots_fired - 1.0) / 7.0) == 0.0 {
+                // every 1,8,15... so on
                 let buff = if _input.pvp { 1.15 } else { 3.525 };
                 return DamageModifierResponse {
                     impact_dmg_scale: buff,

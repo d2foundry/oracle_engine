@@ -493,8 +493,8 @@
         "2564164194": {"name": "Arbalest",         "cat": "arbalest", "subFam": "Special",      "magProf": "arbalest", "pve":1.101},
         "3884127242": {"name": "Sleeper Simulant", "cat": "exotic",   "subFam": "SleeperSim",   "magProf": "sleeper" },
         "2881100038": {"name": "Lorentz Driver",   "cat": "default",  "subFam": "Special",      "magProf": "lorentz", "pve":1.101},
-        "3530948111": {"name": "Adaptive Burst", "cat": "default",  "subFam": "Aggressive",   "magProf": "aggressive", "pve":1.101},
-        "3284383335": {"name": "Euphony", "cat": "default",  "subFam": "Euphony",   "magProf": "aggressive", "pve":1.101},
+        "3530948111": {"name": "Adaptive Burst", "cat": "default",  "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst", "pve":1.101},
+        "3284383335": {"name": "Euphony", "cat": "default",  "subFam": "Euphony",   "magProf": "adaptive_burst", "pve":1.101},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
@@ -531,7 +531,7 @@
         "subFam": {
             "Precision":    {"damage": 166.0, "crit_mult": 99,  "pve_damage": 174.3, "pve_crit_mult": 99,"burst_delay": 16, "burst_size": 1, "inner_burst_delay": 0},
             "Special":      {"damage": 133.0, "crit_mult": 114, "pve_damage": 139.65, "pve_crit_mult": 114, "burst_delay": 16, "burst_size": 1, "inner_burst_delay": 0},
-            "Aggressive":   {"damage": 79.0, "crit_mult": 99,   "pve_damage": 82.95, "pve_crit_mult": 99,  "burst_delay": 16, "burst_size": 3, "inner_burst_delay": 5, "one_ammo": true},
+            "Adaptive_Burst":   {"damage": 79.0, "crit_mult": 99,   "pve_damage": 82.95, "pve_crit_mult": 99,  "burst_delay": 16, "burst_size": 3, "inner_burst_delay": 5, "one_ammo": true},
             "Euphony":      {"damage": 39.139, "crit_mult": 99,   "pve_damage": 39.139, "pve_crit_mult": 99,  "burst_delay": 16, "burst_size": 3, "inner_burst_delay": 5, "one_ammo": true},
             "QueenBreaker": {"damage": 131, "crit_mult": 51,    "pve_damage": 137.55, "pve_crit_mult": 51,  "burst_delay": 9,  "burst_size": 1, "inner_burst_delay": 0},
             "SleeperSim":   {"damage": 726, "crit_mult": -15,   "pve_damage": 762.3, "pve_crit_mult": -15, "burst_delay": 31, "burst_size": 1, "inner_burst_delay": 0}
@@ -541,7 +541,7 @@
                 "mag": {"evpp": 0.0, "vpp": 0.02857142857, "offset": 3.16785714285714},
                 "reserve_id": 221
             },
-            "aggressive": {
+            "adaptive_burst": {
                 "mag": {"evpp": 0.0, "vpp": 0.02857142857, "offset": 3.16785714285714},
                 "reserve_id": 2202
             },

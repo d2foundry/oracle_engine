@@ -21,7 +21,7 @@ enum ReserveIDs {
     RapidFireSniper,
     RapidFireShotgun,
     HighInventoryRockets,
-    AggressiveLinearFusionRifle,
+    AdaptiveBurstLinearFusionRifle,
     RocketAssistedFrame,
 
     //kinetic exotic special
@@ -86,7 +86,7 @@ impl From<u32> for ReserveIDs {
             1201 => ReserveIDs::RapidFireSniper,
             701 => ReserveIDs::RapidFireShotgun,
             1002 => ReserveIDs::HighInventoryRockets,
-            2202 => ReserveIDs::AggressiveLinearFusionRifle,
+            2202 => ReserveIDs::AdaptiveBurstLinearFusionRifle,
             1701 => ReserveIDs::RocketAssistedFrame,
 
             //kinetic exotic special
@@ -148,8 +148,8 @@ pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _
         ReserveIDs::LinearFusions => linear_fusion_rifle(_mag_size, _mag_stat, _inv_stat),
         ReserveIDs::LargeMachineGuns => rapid_fire_machinegun(_mag_size, _mag_stat, _inv_stat),
         ReserveIDs::HighInventoryRockets => high_inventory_rockets(_mag_size, _mag_stat, _inv_stat),
-        ReserveIDs::AggressiveLinearFusionRifle => {
-            aggressive_linear_fusion_rifle(_mag_size, _mag_stat, _inv_stat)
+        ReserveIDs::AdaptiveBurstLinearFusionRifle => {
+            adaptive_burst_linear_fusion_rifle(_mag_size, _mag_stat, _inv_stat)
         }
         ReserveIDs::SpecialGrenadeLaunchers => {
             special_grenade_launcher(_mag_size, _mag_stat, _inv_stat)
@@ -297,7 +297,7 @@ fn fusions(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     let offset = 9.6;
     vpp * _inv_stat as f64 + offset
 }
-fn aggressive_linear_fusion_rifle(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
+fn adaptive_burst_linear_fusion_rifle(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     let offset = match _mag_stat {
         0..=69 => 16.5,
         70..=90 => 16.0,
