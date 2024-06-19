@@ -15,11 +15,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 20
+          registry-url: 'https://npm.pkg.github.com'
       - run: curl https://sh.rustup.rs -sSf | sh -s -- -y
       - run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
       - run: cargo build
       - run: wasm-pack build --target nodejs
-
+      - run: cd pkg
+      - run: echo $(cat package.json | jq -c '.name="@SirBerg/oracle_engine"') > package.json
   publish-gpr:
     needs: build
     runs-on: ubuntu-latest
@@ -32,7 +34,7 @@ jobs:
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
-      - run: npm ci
+      - run: cd pkg
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
