@@ -84,6 +84,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         //intrinsics
         Perks::RapidFireFrame => Some(PerkOptionData::toggle()),
         Perks::PrecisionFrame => Some(PerkOptionData::static_()),
+        Perks::SupportFrame => Some(PerkOptionData::toggle()),
 
         //armor
 
@@ -303,6 +304,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         //episode 1 | year 7
         Perks::ChaosReshaped => Some(PerkOptionData::stacking(2)),
+        Perks::CircleOfLife => Some(PerkOptionData::toggle()),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
@@ -393,6 +395,9 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Unrepentant => Some(PerkOptionData::toggle()),
         Perks::ArcConductor => Some(PerkOptionData::toggle()),
         Perks::VoidLeech => Some(PerkOptionData::toggle()),
+        Perks::InverseRelationship => Some(PerkOptionData::stacking(3)),
+        Perks::Spindle => Some(PerkOptionData::stacking(25)),
+        Perks::TheRightChoice => Some(PerkOptionData::static_()),
 
         Perks::DragonShadow => Some(PerkOptionData::toggle()),
         Perks::OphidianAspect => Some(PerkOptionData::static_()),

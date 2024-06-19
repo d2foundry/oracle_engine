@@ -33,4 +33,18 @@ pub fn year_7_perks() {
             }
         }),
     );
+    add_dmr(
+        Perks::CircleOfLife,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let buff = if _input.pvp { 1.125 } else { 1.25 };
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    )
 }
