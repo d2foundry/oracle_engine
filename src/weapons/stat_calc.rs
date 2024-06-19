@@ -645,6 +645,10 @@ impl Weapon {
                 "shots_to_proc_restoration".to_string(),
                 self.get_health_info().shots_to_proc_restoration,
             );
+            buffer.insert(
+                "percent_energy_drained_per_shot".to_string(),
+                self.get_health_info().percent_energy_drained_per_shot,
+            );
         }
         if self.weapon_type == WeaponType::BOW {
             buffer.insert("perfect_draw".to_string(), self.calc_perfect_draw());
@@ -655,13 +659,15 @@ impl Weapon {
 }
 impl Weapon {
     pub fn get_health_info(&self) -> HealthResponse {
-        let (health_per_shot, shots_to_proc_restoration) = match &self.weapon_type {
-            WeaponType::AUTORIFLE => (13.0, 6.0),
-            _ => (0.0, 0.0),
-        };
+        let (health_per_shot, shots_to_proc_restoration, percent_energy_drained_per_shot) =
+            match &self.weapon_type {
+                WeaponType::AUTORIFLE => (12.0, 6.0, 2.0),
+                _ => (0.0, 0.0, 0.0),
+            };
         HealthResponse {
             health_per_shot,
             shots_to_proc_restoration,
+            percent_energy_drained_per_shot,
         }
     }
 }

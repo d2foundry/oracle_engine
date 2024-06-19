@@ -106,6 +106,7 @@ pub enum Perks {
     //intrinsics
     RapidFireFrame = 902,
     PrecisionFrame = 906,
+    SupportFrame = 912, // 2622129339
 
     //armor
     DexterityMod = 1001,
@@ -406,6 +407,7 @@ pub enum Perks {
 
     //episode 1 | year 7
     ChaosReshaped = 3640170453,
+    CircleOfLife = 2298656195,
 
     //subclass
     OnYourMark = 3066103999,
@@ -481,6 +483,9 @@ pub enum Perks {
     Unrepentant = 2641107734,
     ArcConductor = 2516532331,
     VoidLeech = 3441203855,
+    InverseRelationship = 1833111001,
+    Spindle = 1180907940,
+    TheRightChoice = 34498892,
 
     //heavy exotic
     ReignHavoc = 4148158229,

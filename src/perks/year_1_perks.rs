@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 
 use crate::{
+    console_log,
     d2_enums::{AmmoType, BungieHash, DamageType, StatBump, StatHashes, WeaponType},
     logging::extern_log,
     weapons::Weapon,
@@ -409,7 +410,7 @@ pub fn year_1_perks() {
         Perks::OpeningShot,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut aim_assist:f64 = if _input.is_enhanced { 25.0 } else { 20.0 };
+                let mut aim_assist: f64 = if _input.is_enhanced { 25.0 } else { 20.0 };
                 let mut range: f64 = if _input.is_enhanced { 30.0 } else { 25.0 };
                 let mut out = HashMap::new();
                 if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
