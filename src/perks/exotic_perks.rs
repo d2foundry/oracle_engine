@@ -1247,5 +1247,53 @@ pub fn exotic_perks() {
                 ..Default::default()
             }
         }),
+    );
+    add_dmr(
+        Perks::InverseRelationship,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let buff = match (_input.value, _input.pvp) {
+                (0, _) => 1.0,
+                (1, false) => 1.1,
+                (2, false) => 1.2,
+                (3.., false) => 1.4,
+                (1, true) => 1.01,
+                (2, true) => 1.025,
+                (3.., true) => 1.05,
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
+    add_dmr(
+        Perks::Spindle,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let buff = 1.0 + (0.02 * _input.value as f64);
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
+    add_dmr(
+        Perks::TheRightChoice,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if ((_input.calc_data.total_shots_fired - 1.0) / 7.0) == 0.0 {
+                // every 1,8,15... so on
+                let buff = if _input.pvp { 1.15 } else { 3.525 };
+                return DamageModifierResponse {
+                    impact_dmg_scale: buff,
+                    explosive_dmg_scale: buff,
+                    ..Default::default()
+                };
+            }
+            DamageModifierResponse::default()
+        }),
     )
 }

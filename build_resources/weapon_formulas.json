@@ -5,6 +5,8 @@
         "961505134":  {"name": "Tommy's Matchbook",  "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "tommy" },
         "1019291327": {"name": "High-Impact Frame",  "cat": "default",  "subFam": "High-Impact", "magProf": "small" },
         "1294026524": {"name": "Adaptive Frame",     "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
+        "4129629253": {"name": "Khvostov 7G-0X",     "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
+        "2622129339": {"name": "Support Frame",      "cat": "default",  "subFam": "Support-Frame",    "magProf": "medium" },
         "1458010786": {"name": "Lightweight",        "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
         "2694044463": {"name": "Jiangshi AR1",       "cat": "default",  "subFam": "Precision",  "magProf": "medium" },
         "1484442054": {"name": "Monte Carlo",        "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
@@ -53,6 +55,7 @@
             "Rapid-Fire":  {"damage": 13.433, "crit_mult": 10.38,  "pve_damage": 13.41, "pve_crit_mult": 0,  "burst_delay": 2.5, "burst_size": 1, "inner_burst_delay": 0},
             "High-Impact": {"damage": 22.061, "crit_mult": 16, "pve_damage": 22.000, "pve_crit_mult": 5, "burst_delay": 5,   "burst_size": 1, "inner_burst_delay": 0},
             "Adaptive":    {"damage": 15.033, "crit_mult": 14, "pve_damage": 15.009, "pve_crit_mult": 3, "burst_delay": 3,   "burst_size": 1, "inner_burst_delay": 0},
+            "Support-Frame": {"damage": 18.626, "crit_mult": 5.45, "pve_damage": 18.626, "pve_crit_mult": 5.45, "burst_delay": 3,   "burst_size": 1, "inner_burst_delay": 0},
             "Precision":   {"damage": 19.038, "crit_mult": 14, "pve_damage": 20.000, "pve_crit_mult": 3, "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0},
             "Cerberus":    {"damage": 18.615, "crit_mult": 17, "pve_damage": 18.000, "pve_crit_mult": 10, "burst_delay": 5,   "burst_size": 4, "inner_burst_delay": 0},
             "SweetBuiss":  {"damage": 15.161, "crit_mult": -5, "pve_damage": 15.000, "pve_crit_mult": -5, "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0}
@@ -91,8 +94,8 @@
         "3239299468": {"name": "Ticuu's Divination", "cat": "exotic",  "subFam": "Precision",   "magProf": "default"},
         "2226793914": {"name": "Hierarchy Of Needs", "cat": "exotic",  "subFam": "Hierarchy",   "magProf": "default"},
         "2636679416": {"name": "Verglass Curve",     "cat": "exotic",  "subFam": "Lightweight", "magProf": "default"},
+        "2910326942": {"name": "Wish-Keeper",        "cat": "exotic",  "subFam": "Precision",   "magProf": "default"},
         "696969":     {"name": "Test_Bow",           "cat": "test",    "subFam": "test",        "magProf": "test"},
-
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
@@ -163,7 +166,7 @@
         "2518716062": {"name": "Aggressive Frame",    "cat": "default", "subFam": "Aggressive",  "magProf": "default"  },
         "3610750208": {"name": "Vex Mythoclast",      "cat": "Vex",     "subFam": "Vex",         "magProf": "Vex"      },
         "2585427437": {"name": "Delicate Tomb",       "cat": "default", "subFam": "Rapid-Fire",  "magProf": "delicateTomb"  },
-        "2769013282": {"name": "Tessellation",        "cat": "zero",    "subFam": "zero",        "magProf": "tessellation"},
+        "2769013282": {"name": "Tessellation",        "cat": "zero",    "subFam": "Adaptive",    "magProf": "tessellation"},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0404, "offset_start": 10.73, "vpp_end": 0.318, "offset_end": 14.705, "floor_percent": 0.45, "fusion": true},
@@ -292,7 +295,8 @@
         "4130495068": {"name": "Precision Frame",   "cat": "heavy",   "subFam": "Precision",    "magProf": "adaptive", "pve":1.20 },
         "1174163613": {"name": "Parasite",          "cat": "parasite","subFam": "Parasite",     "magProf": "parasite" },
         "1759472859": {"name": "Double Fire",       "cat": "special", "subFam": "TODO",         "magProf": "special" },
-        "2571259936": {"name": "Compressed Wave Frame", "cat": "zero","subFam": "zero",         "magProf": "adaptive"},
+        "3758615625": {"name": "Micro-Missile Frame", "cat": "special", "subFam": "TODO",       "magProf": "special" },
+        "2571259936": {"name": "Compressed Wave Frame", "cat": "heavy","subFam": "zero",        "magProf": "adaptive"},
         "3183537623": {"name": "Ex Driris",          "cat": "zero",   "subFam": "zero",         "magProf": "exDiris"},
         "cat": {
             "special": {
@@ -396,6 +400,7 @@
         "1294026524": {"name": "Adaptive Frame",   "cat": "default",  "subFam": "Adaptive",    "magProf": "small"},
         "3757612024": {"name": "Luna's Howl",   "cat": "default",  "subFam": "Adaptive",    "magProf": "small"},
         "2763843899": {"name": "Luna's Howl",   "cat": "default",  "subFam": "Adaptive",    "magProf": "small"},
+        "153979399":  {"name": "Not Forgotten",   "cat": "default",  "subFam": "Adaptive",    "magProf": "small"},
         "1322370662": {"name": "Precision Frame",  "cat": "default",  "subFam": "Precision",   "magProf": "large"},
         "1791592647": {"name": "Malfeasance",      "cat": "default",  "subFam": "Precision",   "magProf": "large"},
         "1863355414": {"name": "Thorn",            "cat": "default",  "subFam": "Adaptive",    "magProf": "small"},
@@ -488,8 +493,8 @@
         "2564164194": {"name": "Arbalest",         "cat": "arbalest", "subFam": "Special",      "magProf": "arbalest", "pve":1.101},
         "3884127242": {"name": "Sleeper Simulant", "cat": "exotic",   "subFam": "SleeperSim",   "magProf": "sleeper" },
         "2881100038": {"name": "Lorentz Driver",   "cat": "default",  "subFam": "Special",      "magProf": "lorentz", "pve":1.101},
-        "3530948111": {"name": "Aggressive Frame", "cat": "default",  "subFam": "Aggressive",   "magProf": "aggressive", "pve":1.101},
-
+        "3530948111": {"name": "Adaptive Burst", "cat": "default",  "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst", "pve":1.101},
+        "3284383335": {"name": "Euphony", "cat": "default",  "subFam": "Euphony",   "magProf": "adaptive_burst", "pve":1.101},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
@@ -526,7 +531,8 @@
         "subFam": {
             "Precision":    {"damage": 166.0, "crit_mult": 99,  "pve_damage": 174.3, "pve_crit_mult": 99,"burst_delay": 16, "burst_size": 1, "inner_burst_delay": 0},
             "Special":      {"damage": 133.0, "crit_mult": 114, "pve_damage": 139.65, "pve_crit_mult": 114, "burst_delay": 16, "burst_size": 1, "inner_burst_delay": 0},
-            "Aggressive":   {"damage": 79.0, "crit_mult": 99,   "pve_damage": 82.95, "pve_crit_mult": 99,  "burst_delay": 16, "burst_size": 3, "inner_burst_delay": 5, "one_ammo": true},
+            "Adaptive_Burst":   {"damage": 79.0, "crit_mult": 99,   "pve_damage": 82.95, "pve_crit_mult": 99,  "burst_delay": 16, "burst_size": 3, "inner_burst_delay": 5, "one_ammo": true},
+            "Euphony":      {"damage": 39.139, "crit_mult": 99,   "pve_damage": 39.139, "pve_crit_mult": 99,  "burst_delay": 16, "burst_size": 3, "inner_burst_delay": 5, "one_ammo": true},
             "QueenBreaker": {"damage": 131, "crit_mult": 51,    "pve_damage": 137.55, "pve_crit_mult": 51,  "burst_delay": 9,  "burst_size": 1, "inner_burst_delay": 0},
             "SleeperSim":   {"damage": 726, "crit_mult": -15,   "pve_damage": 762.3, "pve_crit_mult": -15, "burst_delay": 31, "burst_size": 1, "inner_burst_delay": 0}
         },
@@ -535,7 +541,7 @@
                 "mag": {"evpp": 0.0, "vpp": 0.02857142857, "offset": 3.16785714285714},
                 "reserve_id": 221
             },
-            "aggressive": {
+            "adaptive_burst": {
                 "mag": {"evpp": 0.0, "vpp": 0.02857142857, "offset": 3.16785714285714},
                 "reserve_id": 2202
             },
@@ -561,6 +567,7 @@
         "878286503":  {"name": "Rapid-Fire Frame",    "cat": "default",   "subFam": "Rapid-Fire",   "magProf": "large", "pve": 1.1},
         "1019291327": {"name": "High-Impact Frame",   "cat": "default",   "subFam": "High-Impact",  "magProf": "small", "pve": 1.1},
         "1294026524": {"name": "Adaptive Frame",      "cat": "default",   "subFam": "Adaptive",     "magProf": "small", "pve": 1.1},
+        "3468089894": {"name": "Aggressive Frame",    "cat": "default",   "subFam": "Aggressive",     "magProf": "small", "pve": 1.1},
         "2261491232": {"name": "Xenophage",           "cat": "Xenophage", "subFam": "Xenophage",    "magProf": "xenophage", "pve":2.75},
         "2608508147": {"name": "Heir Apparent",       "cat": "default",   "subFam": "HeirApparent", "magProf": "hierapparent"},
         "4148158229": {"name": "Thunderlord",         "cat": "default",   "subFam": "Adaptive",     "magProf": "small"},
@@ -603,6 +610,7 @@
         "subFam": {
             "High-Impact": {"damage": 47.574,  "crit_mult": -5,  "pve_damage": 39.601,  "pve_crit_mult": -5,    "burst_delay": 5,  "burst_size": 1, "inner_burst_delay": 0.0},
             "Adaptive":    {"damage": 40.99,  "crit_mult": -5,  "pve_damage": 34.261,  "pve_crit_mult": -5,    "burst_delay": 4,  "burst_size": 1, "inner_burst_delay": 0.0},
+            "Aggressive":  {"damage": 36.154,  "crit_mult": -10,  "pve_damage": 36.154,  "pve_crit_mult": -10,    "burst_delay": 3,  "burst_size": 1, "inner_burst_delay": 0.0},
             "Rapid-Fire":  {"damage": 25.515,  "crit_mult": -10, "pve_damage": 21.4,  "pve_crit_mult": -10,   "burst_delay": 2,  "burst_size": 1, "inner_burst_delay": 0.0},
             "Xenophage":   {"damage": 160.5,   "crit_mult": -25.5, "pve_damage": 160.5,   "pve_crit_mult": -25.5, "burst_delay": 15, "burst_size": 1, "inner_burst_delay": 0.0},
             "HeirApparent":{"damage": 32.1,   "crit_mult": -5,  "pve_damage": 32.1,   "pve_crit_mult": -5,    "burst_delay": 2,  "burst_size": 1, "inner_burst_delay": 0.0}
@@ -647,6 +655,8 @@
         "891750167":  {"name": "Revision Zero III",      "cat": "revisionZero",   "subFam": "Aggressive",    "magProf": "aggressive"},
         "891750166":  {"name": "Revision Zero II",       "cat": "revisionZero",   "subFam": "Aggressive",    "magProf": "aggressive"},
         "3834106778": {"name": "Revision Zero I",        "cat": "revisionZero",   "subFam": "Aggressive",    "magProf": "aggressive"},
+        "427899681":  {"name": "Red Death Reformed",     "cat": "default",    "subFam": "High-Impact",  "magProf": "default"},
+        "1634975868": {"name": "Heavy Burst",            "cat": "default",    "subFam": "HeavyBurst",  "magProf": "graviton"},
         "69420":      {"name": "test_weapon",            "cat": "test",      "subFam": "test",          "magProf": "test"},
         "cat": {
             "default": {
@@ -688,6 +698,7 @@
             "Lightweight":   {"damage": 17.07, "crit_mult": 16.5,  "pve_damage": 19.2, "pve_crit_mult": 8,    "burst_delay": 8,  "burst_size": 3, "inner_burst_delay": 2},
             "VigilanceWing": {"damage": 15.972, "crit_mult": 8,  "pve_damage": 18.9, "pve_crit_mult": -2,   "burst_delay": 9,  "burst_size": 5, "inner_burst_delay": 2},
             "GravitonLance": {"damage": 19.038, "crit_mult": 19, "pve_damage": 19.018, "pve_crit_mult": 8,    "burst_delay": 10, "burst_size": 2, "inner_burst_delay": 2},
+            "HeavyBurst": {"damage": 22.91, "crit_mult": 16.728, "pve_damage": 22.91, "pve_crit_mult": 16.728,    "burst_delay": 10, "burst_size": 2, "inner_burst_delay": 2}, 
             "test":          {"damage": 10.0, "crit_mult": 25.5,   "pve_damage": 10.0, "pve_crit_mult": 25.5,  "burst_delay": 2,  "burst_size": 5, "inner_burst_delay": 2}
         },
         "magProf": {
@@ -992,11 +1003,11 @@
         "1458010786": {"name": "Lightweight Frame",     "cat": "default"   , "subFam": "Lightweight",      "magProf": "small", "pve": 1.291},
         "1636108362": {"name": "Precision Frame",       "cat": "default"   , "subFam": "Precision",        "magProf": "small"},
         "2121086290": {"name": "Rat King",              "cat": "default"   , "subFam": "Adaptive",         "magProf": "small"},
-        "3330548924": {"name": "Aggressive Burst",      "cat": "default"   , "subFam": "Aggressive_Burst", "magProf": "aggressive_burst"},
+        "3330548924": {"name": "Heavy Burst",           "cat": "default"   , "subFam": "Heavy_Burst",      "magProf": "heavy_burst"},
         "3449390870": {"name": "Adaptive Frame",        "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst"},
         "2641107734": {"name": "Trespasser",            "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst"},
         "2984682260": {"name": "Forerunner",            "cat": "Forerunner", "subFam": "Forerunner",       "magProf": "forerunner"},
-        "1903618525": {"name": "Final Warning",         "cat": "default"   , "subFam": "zero",             "magProf": "small"},
+        "1903618525": {"name": "Final Warning",         "cat": "default"   , "subFam": "Final-Warning",       "magProf": "small"},
         "2928496916": {"name": "Rocket-Assisted Frame", "cat": "zero",       "subFam": "zero",             "magProf": "rocket_assisted"},
         "cat": {
             "default": {
@@ -1031,10 +1042,11 @@
             }
         },
         "subFam": {
+            "Final-Warning":    {"damage":25.114,   "crit_mult":4, "pve_damage":25.00,   "pve_crit_mult":-5, "burst_delay":4, "burst_size":1, "inner_burst_delay":0},
             "Rapid-Fire":       {"damage":25.114,   "crit_mult":4, "pve_damage":25.00,   "pve_crit_mult":-5, "burst_delay":4, "burst_size":1, "inner_burst_delay":0},
             "Precision":        {"damage":40.154,   "crit_mult":5, "pve_damage":40.00,   "pve_crit_mult":-5, "burst_delay":7, "burst_size":1, "inner_burst_delay":0},
-            "Aggressive_Burst": {"damage":30.077,   "crit_mult":5, "pve_damage":30.00,   "pve_crit_mult":-5, "burst_delay":8, "burst_size":2, "inner_burst_delay":3},
-            "Adaptive_Burst":   {"damage":20.091,  "crit_mult":16, "pve_damage":20.00,  "pve_crit_mult":5,  "burst_delay":7, "burst_size":3, "inner_burst_delay":2},
+            "Heavy_Burst":      {"damage":30.077,   "crit_mult":5, "pve_damage":30.00,   "pve_crit_mult":-5, "burst_delay":8, "burst_size":2, "inner_burst_delay":3},
+            "Adaptive_Burst":   {"damage":20.091,  "crit_mult":16, "pve_damage":20.00,   "pve_crit_mult":5,  "burst_delay":7, "burst_size":3, "inner_burst_delay":2},
             "Adaptive":         {"damage":36.083,   "crit_mult":5, "pve_damage":36.00,   "pve_crit_mult":-5, "burst_delay":6, "burst_size":1, "inner_burst_delay":0},
             "Lightweight":      {"damage":31.038,   "crit_mult":5, "pve_damage":31.00,   "pve_crit_mult":-5, "burst_delay":5, "burst_size":1, "inner_burst_delay":0},
             "Forerunner":       {"damage":47.231,  "crit_mult":16, "pve_damage":39.114,  "pve_crit_mult":15, "burst_delay":9, "burst_size":1, "inner_burst_delay":0},
@@ -1056,7 +1068,7 @@
                 "round_to": 3,
                 "reserve_id": 0
             },
-            "aggressive_burst": {
+            "heavy_burst": {
                 "mag": {"evpp": 0.0, "vpp": 0.2, "offset": 18},
                 "round_to": 1,
                 "reserve_id": 0
@@ -1081,6 +1093,7 @@
         "2909403175": {"name": "Cloudstrike",         "cat": "default", "subFam": "Rapid-Fire", "magProf": "rapidfire", "pve": 1.265},
         "3081173348": {"name": "Borealis",            "cat": "default", "subFam": "Aggressive", "magProf": "default", "pve": 1.265},
         "3468089894": {"name": "Aggressive Frame",    "cat": "default", "subFam": "Aggressive", "magProf": "default", "pve": 1.265},
+        "2905188646": {"name": "Still Hunt",          "cat": "default", "subFam": "Adaptive",   "magProf": "default", "pve": 1.265},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},

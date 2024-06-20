@@ -15,8 +15,8 @@ use crate::{
         Perks,
     },
     types::rs_types::{
-        AmmoFormula, AmmoResponse, FiringResponse, HandlingFormula, HandlingResponse, RangeFormula,
-        RangeResponse, ReloadFormula, ReloadResponse,
+        AmmoFormula, AmmoResponse, FiringResponse, HandlingFormula, HandlingResponse,
+        HealthResponse, RangeFormula, RangeResponse, ReloadFormula, ReloadResponse,
     },
 };
 
@@ -488,14 +488,14 @@ fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f6
         (WeaponType::AUTORIFLE, 901) => 1.7,
         (WeaponType::AUTORIFLE, _) => 1.6,
 
-        (WeaponType::PULSERIFLE, 2874284214) => 1.8,
+        (WeaponType::PULSERIFLE, 903) => 1.8,
         (WeaponType::PULSERIFLE, _) => 1.7,
 
         (WeaponType::BOW, _) => 1.8,
 
         (WeaponType::SCOUTRIFLE, _) => 2.0,
 
-        (WeaponType::SHOTGUN, 918679156) => 1.2,
+        (WeaponType::SHOTGUN, 906) => 1.2,
         (WeaponType::SHOTGUN, 1394384862) => 1.2, //Chaperone
         (WeaponType::SHOTGUN, 536517534) => 1.2,  //Duality
         (WeaponType::SHOTGUN, _) => 1.0,
@@ -636,11 +636,38 @@ impl Weapon {
             // add "| WeaponType::SWORD" to matches when swords work
             buffer.insert("shield_duration".to_string(), self.calc_shield_duration());
         }
-
+        if matches!(self.intrinsic_hash, 912) {
+            buffer.insert(
+                "health_per_shot".to_string(),
+                self.get_health_info().health_per_shot,
+            );
+            buffer.insert(
+                "shots_to_proc_restoration".to_string(),
+                self.get_health_info().shots_to_proc_restoration,
+            );
+            buffer.insert(
+                "percent_energy_drained_per_shot".to_string(),
+                self.get_health_info().percent_energy_drained_per_shot,
+            );
+        }
         if self.weapon_type == WeaponType::BOW {
             buffer.insert("perfect_draw".to_string(), self.calc_perfect_draw());
         }
 
         buffer
+    }
+}
+impl Weapon {
+    pub fn get_health_info(&self) -> HealthResponse {
+        let (health_per_shot, shots_to_proc_restoration, percent_energy_drained_per_shot) =
+            match &self.weapon_type {
+                WeaponType::AUTORIFLE => (12.0, 6.0, 2.0),
+                _ => (0.0, 0.0, 0.0),
+            };
+        HealthResponse {
+            health_per_shot,
+            shots_to_proc_restoration,
+            percent_energy_drained_per_shot,
+        }
     }
 }
