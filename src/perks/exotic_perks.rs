@@ -1284,7 +1284,7 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::TheRightChoice,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if ((_input.calc_data.total_shots_fired - 1.0) / 7.0) == 0.0 {
+            if ((_input.calc_data.total_shots_fired + 6.0) % 7.0) == 0.0 {
                 // every 1,8,15... so on
                 let buff = if _input.pvp { 1.15 } else { 3.525 };
                 return DamageModifierResponse {
