@@ -346,4 +346,37 @@ pub fn buff_perks() {
             }
         }),
     );
+
+    add_dmr(
+        Perks::BurningFists,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let buffs = match _input.value {
+                1 => (1.55, 1.4, 1.0, 1.0),
+                2 => (2.10, 1.8, 1.2, 1.0),
+                3 => (2.65, 2.2, 1.25, 1.2),
+                4 => (3.2, 2.6, 1.3, 1.25),
+                5 => (3.75, 3.0, 1.35, 1.25),
+                _ => (3.75, 3.0, 1.35, 1.25)
+            };
+            let melee_buff = if _input.calc_data.weapon_type == &WeaponType::GLAIVE {
+                 buffs.1
+            } else {
+                 buffs.0
+            };
+            let weapon_buff = if _input.pvp {
+                emp_buff(_input.cached_data, buffs.3)
+            } else {
+                emp_buff(_input.cached_data, buffs.2)
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: weapon_buff,
+                explosive_dmg_scale: weapon_buff,
+                melee_dmg_scale: melee_buff,
+                ..Default::default()
+            }
+        }),
+    );
 }
