@@ -1248,6 +1248,36 @@ pub fn exotic_perks() {
             }
         }),
     );
+
+    add_rr(
+        Perks::WhiteNail,
+        Box::new(|_input: ModifierResponseInput| -> RefundResponse {
+            RefundResponse {
+                crit: true,
+                requirement: 3,
+                refund_mag: 3,
+                refund_reserves: -2,
+            }
+        }),
+    );
+
+    add_dmr(
+        Perks::WhisperedBreathing,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value > 0 {
+                // approximate crit and damage scalars for now
+                let mut crit_mult =
+                    (_input.calc_data.base_crit_mult + 1.2207) / _input.calc_data.base_crit_mult;
+                return DamageModifierResponse {
+                    impact_dmg_scale: 1.1078,
+                    crit_scale: crit_mult,
+                    ..Default::default()
+                };
+            };
+            DamageModifierResponse::default()
+        }),
+    );
+
     add_dmr(
         Perks::InverseRelationship,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {

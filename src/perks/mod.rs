@@ -212,6 +212,9 @@ pub enum Perks {
     ])]
     Outlaw = 1168162263,
     BackupPlan = 1600092898,
+    #[num_enum(alternatives = [
+        777589559, // crafted whisper
+    ])]
     FieldPrep = 2869569095,
     #[num_enum(alternatives = [3551326236, ])] //huckleberry
     Rampage = 3425386926,
@@ -295,6 +298,7 @@ pub enum Perks {
         2162261876, // mida old cat
         800074992,  // mida dummy cat
         3466057365, // mida cat
+        777589556,  // crafted whisper
     ])]
     NoDistractions = 2866798147,
     ArchersGambit = 3414324643,
@@ -405,6 +409,9 @@ pub enum Perks {
     LooseChange = 1119449540,
     HighGround = 2319119708,
     HeadRush = 2565067140,
+    #[num_enum(alternatives = [
+        777589557, // crafted whisper
+    ])]
     EnlightendAction = 3828510309,
     SwordLogic = 31345821,
 
@@ -499,7 +506,17 @@ pub enum Perks {
     ReignHavoc = 4148158229,
     WormsHunger = 1174163613,
     WormByproduct = 1679262379,
-    WhisperCatalyst = 1340292993,
+    #[num_enum(alternatives = [
+        4285971293, // II
+        4285971292, // III
+        4285971291, // IV
+    ])]
+    WhiteNail = 281315705,
+    #[num_enum(alternatives = [
+        1340292993, // s3 dummy cat
+        2732814938, // s3 cat
+    ])]
+    WhisperedBreathing = 3732232161,
     DarkDescent = 3333994164,
     TargetAquired = 939227542,
     TractorCannon = 1210807262,
