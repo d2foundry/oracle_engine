@@ -466,6 +466,7 @@ pub enum Perks {
     Broadhead = 2287699930,
     HuntersTrace = 891750160,
     Desperation = 525593296,
+    ChargedWithBlight = 2094939076,
 
     //energy exotic
     LagragianSight = 2881100038,
