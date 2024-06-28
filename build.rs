@@ -473,13 +473,29 @@ fn construct_enhance_perk_mapping(formula_file: &mut File, cached: &mut CachedBu
                     ["en"]
                     .as_object()
                     .unwrap();
-                let item_data_raw = reqwest::blocking::get(format!(
-                    "https://www.bungie.net{}",
-                    content_paths["DestinyInventoryItemDefinition"]
-                        .as_str()
-                        .unwrap()
-                ));
-                println!("cargo:warning=downloaded new manifest");
+
+                let item_data_raw: Result<reqwest::blocking::Response, reqwest::Error>;
+
+                // build a blocking client with a 90s timeout to prevent dl failures due to poverty
+                if let Ok(client) = reqwest::blocking::Client::builder()
+                    .timeout(std::time::Duration::from_secs(90))
+                    .build() {
+                    item_data_raw = client.get(format!(
+                        "https://www.bungie.net{}",
+                        content_paths["DestinyInventoryItemDefinition"]
+                            .as_str()
+                            .unwrap()
+                    )).send();
+                } else {
+                    panic!("cargo:warning=error creating reqwest client for initial manifest download");
+                }
+
+                if item_data_raw.is_ok() {
+                    println!("cargo:warning=downloaded new manifest");
+                } else {
+                    panic!("cargo:warning=something went wrong with the destiny item def download!");
+                };
+
                 cached.procedural_intrinsic_mappings.clear();
                 let item_data_json: Value =
                     serde_json::from_str(&item_data_raw.unwrap().text().unwrap()).unwrap();
