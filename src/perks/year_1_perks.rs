@@ -180,7 +180,7 @@ pub fn year_1_perks() {
             |_input: ModifierResponseInput| -> ExplosivePercentResponse {
                 ExplosivePercentResponse {
                     percent: 0.5,
-                    delyed: 0.0,
+                    delay: 0.0,
                     retain_base_total: true,
                 }
             },
@@ -208,7 +208,7 @@ pub fn year_1_perks() {
             |_input: ModifierResponseInput| -> ExplosivePercentResponse {
                 ExplosivePercentResponse {
                     percent: 0.5,
-                    delyed: 0.6,
+                    delay: 0.6,
                     retain_base_total: true,
                 }
             },
