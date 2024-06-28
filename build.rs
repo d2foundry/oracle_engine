@@ -478,7 +478,7 @@ fn construct_enhance_perk_mapping(formula_file: &mut File, cached: &mut CachedBu
 
                 // build a blocking client with a 90s timeout to prevent dl failures due to poverty
                 if let Ok(client) = reqwest::blocking::Client::builder()
-                    .timeout(std::time::Duration::from_secs(90))
+                    .timeout(None)
                     .build() {
                     item_data_raw = client.get(format!(
                         "https://www.bungie.net{}",
