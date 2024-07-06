@@ -1325,5 +1325,46 @@ pub fn exotic_perks() {
             }
             DamageModifierResponse::default()
         }),
+    );
+    add_dmr(
+        Perks::PickYourPoison,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 1.2,
+                explosive_dmg_scale: 1.2,
+                //crit is 2x without body increase
+                crit_scale: 2.0 / 1.2,
+            }
+        }),
+    );
+    add_dmr(
+        Perks::StringTheory,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if *_input
+                .calc_data
+                .perk_value_map
+                .get(&Perks::PickYourPoison.into())
+                .unwrap_or(&0)
+                == 0
+            {
+                return DamageModifierResponse::default();
+            }
+            let damage_buff = if matches!(
+                _input.calc_data.enemy_type,
+                EnemyType::MINIBOSS | EnemyType::BOSS
+            ) {
+                1.05
+            } else {
+                1.1
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: damage_buff,
+                explosive_dmg_scale: damage_buff,
+                ..Default::default()
+            }
+        }),
     )
 }
