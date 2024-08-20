@@ -237,6 +237,8 @@ pub struct JsFiringResponse {
     pub pvp_explosion_damage: f64,
     #[wasm_bindgen(js_name = "pvpCritMult", readonly)]
     pub pvp_crit_mult: f64,
+    #[wasm_bindgen(js_name = "pvpMeleeDamage", readonly)]
+    pub pvp_melee_damage: f64,
 
     #[wasm_bindgen(js_name = "pveImpactDamage", readonly)]
     pub pve_impact_damage: f64,
@@ -244,6 +246,8 @@ pub struct JsFiringResponse {
     pub pve_explosion_damage: f64,
     #[wasm_bindgen(js_name = "pveCritMult", readonly)]
     pub pve_crit_mult: f64,
+    #[wasm_bindgen(js_name = "pveMeleeDamage", readonly)]
+    pub pve_melee_damage: f64,
 
     #[wasm_bindgen(js_name = "burstDelay", readonly)]
     pub burst_delay: f64,
@@ -262,9 +266,11 @@ impl From<FiringResponse> for JsFiringResponse {
             pvp_impact_damage: firing.pvp_impact_damage,
             pvp_explosion_damage: firing.pvp_explosion_damage,
             pvp_crit_mult: firing.pvp_crit_mult,
+            pvp_melee_damage: firing.pvp_melee_damage,
             pve_impact_damage: firing.pve_impact_damage,
             pve_explosion_damage: firing.pve_explosion_damage,
             pve_crit_mult: firing.pve_crit_mult,
+            pve_melee_damage: firing.pve_melee_damage,
             burst_delay: firing.burst_delay,
             inner_burst_delay: firing.inner_burst_delay,
             burst_size: firing.burst_size,
