@@ -127,7 +127,8 @@ pub fn year_4_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let duration = if _input.is_enhanced { 11.0 } else { 10.0 };
             if _input.calc_data.time_total > duration
-                || _input.calc_data.total_shots_fired > _input.calc_data.curr_firing_data.burst_size.into()
+                || _input.calc_data.total_shots_fired
+                    > _input.calc_data.curr_firing_data.burst_size.into()
                 || _input.value == 0
             {
                 return DamageModifierResponse::default();
@@ -146,7 +147,8 @@ pub fn year_4_perks() {
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let duration = if _input.is_enhanced { 11.0 } else { 10.0 };
             if _input.calc_data.time_total > duration
-                || _input.calc_data.total_shots_fired > _input.calc_data.curr_firing_data.burst_size.into()
+                || _input.calc_data.total_shots_fired
+                    > _input.calc_data.curr_firing_data.burst_size.into()
                 || _input.value == 0
             {
                 return HashMap::new();
@@ -157,19 +159,22 @@ pub fn year_4_perks() {
 
     add_hmr(
         Perks::BluntExecutionRounds,
-        Box::new(|_input: ModifierResponseInput| -> HandlingModifierResponse {
-            let duration = if _input.is_enhanced { 11.0 } else { 10.0 };
-            if _input.calc_data.time_total > duration
-                || _input.calc_data.total_shots_fired > _input.calc_data.curr_firing_data.burst_size.into()
-                || _input.value == 0
-            {
-                return HandlingModifierResponse::default();
-            }
-            HandlingModifierResponse {
-                stat_add: 100,
-                ..Default::default()
-            }
-        }),
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                let duration = if _input.is_enhanced { 11.0 } else { 10.0 };
+                if _input.calc_data.time_total > duration
+                    || _input.calc_data.total_shots_fired
+                        > _input.calc_data.curr_firing_data.burst_size.into()
+                    || _input.value == 0
+                {
+                    return HandlingModifierResponse::default();
+                }
+                HandlingModifierResponse {
+                    stat_add: 100,
+                    ..Default::default()
+                }
+            },
+        ),
     );
 
     add_fmr(
@@ -454,11 +459,12 @@ pub fn year_4_perks() {
         Perks::Reconstruction,
         Box::new(
             |_input: ModifierResponseInput| -> MagazineModifierResponse {
-                let mag_scale = if _input.value > 0 { 2.0 } else { 1.0 };
+                if _input.value == 0 {
+                    return MagazineModifierResponse::default();
+                }
                 MagazineModifierResponse {
-                    magazine_stat_add: 0,
-                    magazine_scale: mag_scale,
-                    magazine_add: 0.0,
+                    magazine_add: _input.calc_data.base_mag,
+                    ..Default::default()
                 }
             },
         ),

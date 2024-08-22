@@ -2,7 +2,7 @@ use crate::{
     d2_enums::{AmmoType, BungieHash, DamageSource, DamageType, StatBump, StatHashes, WeaponType},
     enemies::EnemyType,
     types::rs_types::{FiringData, HandlingResponse},
-    weapons::Stat,
+    weapons::{Stat, Weapon},
 };
 use serde::Serialize;
 use std::{cell::RefCell, collections::HashMap, ops::Mul};
@@ -108,36 +108,28 @@ impl<'a> CalculationInput<'a> {
         }
     }
     #[allow(clippy::too_many_arguments)]
-    pub fn construct_static(
-        _intrinsic_hash: u32,
-        _firing_data: &'a FiringData,
-        _stats: &'a HashMap<u32, Stat>,
-        _perk_value_map: &'a HashMap<u32, u32>,
-        _weapon_type: &'a WeaponType,
-        _ammo_type: &'a AmmoType,
-        _damage_type: &'a DamageType,
-        _crit_mult: f64,
-    ) -> Self {
+    pub fn construct_static(weapon: &'a Weapon) -> Self {
+        let ammo = weapon.calc_ammo_sizes(None, None, true);
         Self {
-            intrinsic_hash: _intrinsic_hash,
-            curr_firing_data: _firing_data,
-            base_crit_mult: _crit_mult,
+            intrinsic_hash: weapon.intrinsic_hash,
+            curr_firing_data: &weapon.firing_data,
+            base_crit_mult: weapon.firing_data.crit_mult,
             shots_fired_this_mag: 0.0,
             total_shots_fired: 0.0,
             total_shots_hit: 0.0,
-            base_mag: 10.0,
-            curr_mag: 10.0,
-            reserves_left: 100.0,
+            base_mag: ammo.mag_size as f64,
+            curr_mag: ammo.mag_size as f64,
+            reserves_left: ammo.reserve_size as f64,
             time_total: 0.0,
             time_this_mag: 0.0,
-            stats: _stats,
-            weapon_type: _weapon_type,
-            damage_type: _damage_type,
-            ammo_type: _ammo_type,
+            stats: &weapon.stats,
+            weapon_type: &weapon.weapon_type,
+            damage_type: &weapon.damage_type,
+            ammo_type: &weapon.ammo_type,
             handling_data: HandlingResponse::default(),
             num_reloads: 0.0,
             enemy_type: &EnemyType::ENCLAVE,
-            perk_value_map: _perk_value_map,
+            perk_value_map: &weapon.perk_value_map,
             has_overshield: false,
         }
     }
