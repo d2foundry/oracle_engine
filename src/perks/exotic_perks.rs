@@ -1373,5 +1373,24 @@ pub fn exotic_perks() {
                 ..Default::default()
             }
         }),
-    )
+    );
+        Perks::Judgement,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let hits_needed = if _input.pvp { 5 } else { 14 };
+            if _input.calc_data.shots_fired_this_mag < (hits_needed as f64) && _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+
+            let buff = match (_input.calc_data.intrinsic_hash, _input.pvp) {
+                (1797707170, _) | (_, true) => 1.3,
+                (_, false) => 1.15,
+            };
+
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
 }
