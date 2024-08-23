@@ -1330,21 +1330,17 @@ pub fn exotic_perks() {
         Perks::PickYourPoison,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             match _input.value {
-                0 => return DamageModifierResponse::default(),
-                1 => {
-                    return DamageModifierResponse {
-                        crit_scale: 2.0,
-                        ..Default::default()
-                    }
-                }
-                _ => {
-                    return DamageModifierResponse {
-                        impact_dmg_scale: 1.2,
-                        explosive_dmg_scale: 1.2,
-                        crit_scale: 1.0 / 1.2,
-                    }
-                }
-            };
+                0 => DamageModifierResponse::default(),
+                1 => DamageModifierResponse {
+                    crit_scale: 2.0,
+                    ..Default::default()
+                },
+                _ => DamageModifierResponse {
+                    impact_dmg_scale: 1.2,
+                    explosive_dmg_scale: 1.2,
+                    crit_scale: 1.0 / 1.2,
+                },
+            }
         }),
     );
     add_dmr(
@@ -1374,6 +1370,7 @@ pub fn exotic_perks() {
             }
         }),
     );
+    add_dmr(
         Perks::Judgement,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let hits_needed = if _input.pvp { 5 } else { 14 };
