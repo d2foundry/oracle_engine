@@ -1,5 +1,5 @@
 //This also includes intrinsic perks, not just exotic
-use std::collections::HashMap;
+use std::{collections::HashMap, default};
 
 use serde::__private::de;
 
@@ -1266,7 +1266,7 @@ pub fn exotic_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             if _input.value > 0 {
                 // approximate crit and damage scalars for now
-                let mut crit_mult =
+                let crit_mult =
                     (_input.calc_data.base_crit_mult + 1.2207) / _input.calc_data.base_crit_mult;
                 return DamageModifierResponse {
                     impact_dmg_scale: 1.1078,
@@ -1329,15 +1329,22 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::PickYourPoison,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value == 0 {
-                return DamageModifierResponse::default();
-            }
-            DamageModifierResponse {
-                impact_dmg_scale: 1.2,
-                explosive_dmg_scale: 1.2,
-                //crit is 2x without body increase
-                crit_scale: 2.0 / 1.2,
-            }
+            match _input.value {
+                0 => return DamageModifierResponse::default(),
+                1 => {
+                    return DamageModifierResponse {
+                        crit_scale: 2.0,
+                        ..Default::default()
+                    }
+                }
+                _ => {
+                    return DamageModifierResponse {
+                        impact_dmg_scale: 1.2,
+                        explosive_dmg_scale: 1.2,
+                        crit_scale: 1.0 / 1.2,
+                    }
+                }
+            };
         }),
     );
     add_dmr(

@@ -129,7 +129,7 @@
             }
         },
         "subFam": {
-            "Precision":   {"damage": 85.115, "crit_mult": 0, "pve_damage": 100.74, "pve_crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
+            "Precision":   {"damage": 90.0, "crit_mult": -2.5, "pve_damage": 100.74, "pve_crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "Lightweight": {"damage": 77.692, "crit_mult": 5, "pve_damage": 85.61, "pve_crit_mult": 5, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "Trinity":     {"damage": 29.077, "crit_mult": 0, "pve_damage": 34.3, "pve_crit_mult": 0, "burst_delay": 0, "burst_size": 3, "inner_burst_delay": 0, "one_ammo":true},
             "Hierarchy":   {"damage": 82.308, "crit_mult": 5, "pve_damage": 100.74,  "pve_crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
@@ -876,7 +876,7 @@
             "Rapid-Fire":  {"damage":28.154, "crit_mult":22, "pve_damage":27.50, "pve_crit_mult":10, "burst_delay":7,  "burst_size":1, "inner_burst_delay":0},
             "Lightweight": {"damage":32.143, "crit_mult":26, "pve_damage":32.025, "pve_crit_mult":13, "burst_delay":9,  "burst_size":1, "inner_burst_delay":0},
             "Precision":   {"damage":38.077, "crit_mult":16, "pve_damage":38.00, "pve_crit_mult":5,  "burst_delay":10, "burst_size":1, "inner_burst_delay":0},
-            "Aggressive":  {"damage":54.077, "crit_mult":10, "pve_damage":54.00, "pve_crit_mult":-1, "burst_delay":15, "burst_size":1, "inner_burst_delay":0}
+            "Aggressive":  {"damage":54.077, "crit_mult":10, "pve_damage":70.2, "pve_crit_mult":-1, "burst_delay":15, "burst_size":1, "inner_burst_delay":0}
         },
         "magProf": {
             "default": {
@@ -1007,7 +1007,7 @@
         "3449390870": {"name": "Adaptive Frame",        "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst"},
         "2641107734": {"name": "Trespasser",            "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst"},
         "2984682260": {"name": "Forerunner",            "cat": "Forerunner", "subFam": "Forerunner",       "magProf": "forerunner"},
-        "1903618525": {"name": "Final Warning",         "cat": "default"   , "subFam": "Final-Warning",       "magProf": "small"},
+        "1903618525": {"name": "Final Warning",         "cat": "default"   , "subFam": "Final-Warning",       "magProf": "final_warning"},
         "2928496916": {"name": "Rocket-Assisted Frame", "cat": "zero",       "subFam": "zero",             "magProf": "rocket_assisted"},
         "cat": {
             "default": {
@@ -1081,6 +1081,11 @@
                 "mag": {"evpp": 0.0, "vpp": 0.0921261, "offset": 9.403},
                 "round_to": 3,
                 "reserve_id": 1701
+            },
+            "final_warning": {
+                "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 20},
+                "round_to": 1,
+                "reserve_id": 0
             }
         }
     },
