@@ -1,5 +1,5 @@
 //This also includes intrinsic perks, not just exotic
-use std::collections::HashMap;
+use std::{collections::HashMap, default};
 
 use serde::__private::de;
 
@@ -1324,6 +1324,50 @@ pub fn exotic_perks() {
                 };
             }
             DamageModifierResponse::default()
+        }),
+    );
+    add_dmr(
+        Perks::PickYourPoison,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            match _input.value {
+                0 => DamageModifierResponse::default(),
+                1 => DamageModifierResponse {
+                    crit_scale: 2.0,
+                    ..Default::default()
+                },
+                _ => DamageModifierResponse {
+                    impact_dmg_scale: 1.2,
+                    explosive_dmg_scale: 1.2,
+                    crit_scale: 1.0 / 1.2,
+                },
+            }
+        }),
+    );
+    add_dmr(
+        Perks::StringTheory,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if *_input
+                .calc_data
+                .perk_value_map
+                .get(&Perks::PickYourPoison.into())
+                .unwrap_or(&0)
+                == 0
+            {
+                return DamageModifierResponse::default();
+            }
+            let damage_buff = if matches!(
+                _input.calc_data.enemy_type,
+                EnemyType::MINIBOSS | EnemyType::BOSS
+            ) {
+                1.05
+            } else {
+                1.1
+            };
+            DamageModifierResponse {
+                impact_dmg_scale: damage_buff,
+                explosive_dmg_scale: damage_buff,
+                ..Default::default()
+            }
         }),
     );
     add_dmr(

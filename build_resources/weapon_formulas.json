@@ -1007,7 +1007,7 @@
         "3449390870": {"name": "Adaptive Frame",        "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst"},
         "2641107734": {"name": "Trespasser",            "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst"},
         "2984682260": {"name": "Forerunner",            "cat": "Forerunner", "subFam": "Forerunner",       "magProf": "forerunner"},
-        "1903618525": {"name": "Final Warning",         "cat": "default"   , "subFam": "Final-Warning",       "magProf": "small"},
+        "1903618525": {"name": "Final Warning",         "cat": "default"   , "subFam": "Final-Warning",       "magProf": "final_warning"},
         "2928496916": {"name": "Rocket-Assisted Frame", "cat": "zero",       "subFam": "zero",             "magProf": "rocket_assisted"},
         "cat": {
             "default": {
@@ -1081,6 +1081,11 @@
                 "mag": {"evpp": 0.0, "vpp": 0.0921261, "offset": 9.403},
                 "round_to": 3,
                 "reserve_id": 1701
+            },
+            "final_warning": {
+                "mag": {"evpp": 0.0, "vpp": 0.0, "offset": 20},
+                "round_to": 1,
+                "reserve_id": 0
             }
         }
     },
