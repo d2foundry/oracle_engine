@@ -101,11 +101,7 @@ pub fn exotic_armor() {
                 return DamageModifierResponse::default();
             }
             let modifier = 1.0 + (0.3 - health_percent);
-            DamageModifierResponse {
-                impact_dmg_scale: modifier,
-                explosive_dmg_scale: modifier,
-                ..Default::default()
-            }
+            DamageModifierResponse::basic_dmg_buff(modifier)
         }),
     );
 

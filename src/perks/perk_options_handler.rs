@@ -330,7 +330,8 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Stormbringer => Some(PerkOptionData::static_()),
         Perks::PrismaticInferno => Some(PerkOptionData::static_()),
         Perks::ReignHavoc => Some(PerkOptionData::toggle()),
-        Perks::WhisperCatalyst => Some(PerkOptionData::toggle()),
+        Perks::WhiteNail => Some(PerkOptionData::static_()),
+        Perks::WhisperedBreathing => Some(PerkOptionData::toggle()),
         Perks::Roadborn => Some(PerkOptionData::toggle()),
         Perks::SwoopingTalons => Some(PerkOptionData::toggle()),
         Perks::CalculatedBalance => Some(PerkOptionData::toggle()),
@@ -433,6 +434,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::TritonVice => Some(PerkOptionData::toggle()),
         Perks::Foetracers => Some(PerkOptionData::toggle()),
         Perks::GlacialGuard => Some(PerkOptionData::toggle()),
+        Perks::Judgement => Some(PerkOptionData::toggle()),
 
         //misc
         Perks::UmbralSharpening => Some(PerkOptionData::stacking(5)),

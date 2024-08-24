@@ -1248,6 +1248,36 @@ pub fn exotic_perks() {
             }
         }),
     );
+
+    add_rr(
+        Perks::WhiteNail,
+        Box::new(|_input: ModifierResponseInput| -> RefundResponse {
+            RefundResponse {
+                crit: true,
+                requirement: 3,
+                refund_mag: 3,
+                refund_reserves: -2,
+            }
+        }),
+    );
+
+    add_dmr(
+        Perks::WhisperedBreathing,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value > 0 {
+                // approximate crit and damage scalars for now
+                let crit_mult =
+                    (_input.calc_data.base_crit_mult + 1.2207) / _input.calc_data.base_crit_mult;
+                return DamageModifierResponse {
+                    impact_dmg_scale: 1.1078,
+                    crit_scale: crit_mult,
+                    ..Default::default()
+                };
+            };
+            DamageModifierResponse::default()
+        }),
+    );
+
     add_dmr(
         Perks::InverseRelationship,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
@@ -1295,5 +1325,25 @@ pub fn exotic_perks() {
             }
             DamageModifierResponse::default()
         }),
-    )
+    );
+    add_dmr(
+        Perks::Judgement,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let hits_needed = if _input.pvp { 5 } else { 14 };
+            if _input.calc_data.shots_fired_this_mag < (hits_needed as f64) && _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+
+            let buff = match (_input.calc_data.intrinsic_hash, _input.pvp) {
+                (1797707170, _) | (_, true) => 1.3,
+                (_, false) => 1.15,
+            };
+
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
 }

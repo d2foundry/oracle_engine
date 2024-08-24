@@ -129,7 +129,7 @@
             }
         },
         "subFam": {
-            "Precision":   {"damage": 85.115, "crit_mult": 0, "pve_damage": 100.74, "pve_crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
+            "Precision":   {"damage": 90.0, "crit_mult": -2.5, "pve_damage": 100.74, "pve_crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "Lightweight": {"damage": 77.692, "crit_mult": 5, "pve_damage": 85.61, "pve_crit_mult": 5, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
             "Trinity":     {"damage": 29.077, "crit_mult": 0, "pve_damage": 34.3, "pve_crit_mult": 0, "burst_delay": 0, "burst_size": 3, "inner_burst_delay": 0, "one_ammo":true},
             "Hierarchy":   {"damage": 82.308, "crit_mult": 5, "pve_damage": 100.74,  "pve_crit_mult": 0, "burst_delay": 0, "burst_size": 1, "inner_burst_delay": 0},
@@ -876,7 +876,7 @@
             "Rapid-Fire":  {"damage":28.154, "crit_mult":22, "pve_damage":27.50, "pve_crit_mult":10, "burst_delay":7,  "burst_size":1, "inner_burst_delay":0},
             "Lightweight": {"damage":32.143, "crit_mult":26, "pve_damage":32.025, "pve_crit_mult":13, "burst_delay":9,  "burst_size":1, "inner_burst_delay":0},
             "Precision":   {"damage":38.077, "crit_mult":16, "pve_damage":38.00, "pve_crit_mult":5,  "burst_delay":10, "burst_size":1, "inner_burst_delay":0},
-            "Aggressive":  {"damage":54.077, "crit_mult":10, "pve_damage":54.00, "pve_crit_mult":-1, "burst_delay":15, "burst_size":1, "inner_burst_delay":0}
+            "Aggressive":  {"damage":54.077, "crit_mult":10, "pve_damage":70.2, "pve_crit_mult":-1, "burst_delay":15, "burst_size":1, "inner_burst_delay":0}
         },
         "magProf": {
             "default": {
@@ -1110,7 +1110,7 @@
             "Rapid-Fire": {"damage":85.002 ,  "crit_mult":99,  "pve_damage":90.952,  "pve_crit_mult":99, "burst_delay":13, "burst_size":1, "inner_burst_delay":0},
             "Adaptive":   {"damage":118.999 , "crit_mult":89,  "pve_damage":127.329, "pve_crit_mult":89, "burst_delay":20, "burst_size":1, "inner_burst_delay":0},
             "Aggressive": {"damage":135.007, "crit_mult":102, "pve_damage":144.457, "pve_crit_mult":102, "burst_delay":25, "burst_size":1, "inner_burst_delay":0},
-            "Whisper":    {"damage":170, "crit_mult":153, "pve_damage":181.9, "pve_crit_mult":153, "burst_delay":25, "burst_size":1, "inner_burst_delay":0}
+            "Whisper":    {"damage":170, "crit_mult":102, "pve_damage":181.9, "pve_crit_mult":102, "burst_delay":25, "burst_size":1, "inner_burst_delay":0}
         },
         "magProf": {
             "default": {
@@ -1241,7 +1241,7 @@
         "571267712":  {"name": "Prometheus Lens", "cat": "default", "subFam": "Adaptive", "magProf": "default"},
         "1036269296": {"name": "Coldheart",       "cat": "default", "subFam": "Adaptive", "magProf": "default"},
         "1657401727": {"name": "Ruinous Effigy",  "cat": "default", "subFam": "Adaptive", "magProf": "default"},
-        "1797707170": {"name": "Divinity",        "cat": "default", "subFam": "Adaptive", "magProf": "default"},
+        "1797707170": {"name": "Divinity",        "cat": "default", "subFam": "Divinity", "magProf": "default"},
         "1294026524": {"name": "Adaptive Frame",  "cat": "default", "subFam": "Adaptive", "magProf": "default"},
         "3164944314": {"name": "Ager's Scepter",  "cat": "default", "subFam": "Adaptive", "magProf": "default"},
         "3172115769": {"name": "The Navigator",   "cat": "default", "subFam": "Adaptive", "magProf": "default"},
@@ -1258,7 +1258,8 @@
             }
         },
         "subFam": {
-            "Adaptive": {"damage":15.038, "crit_mult":-9, "pve_damage":12.511, "pve_crit_mult":-8, "burst_delay":2.0, "burst_size":1, "inner_burst_delay":0.0}
+            "Adaptive": {"damage":15.038, "crit_mult":-9, "pve_damage":12.511, "pve_crit_mult":-8, "burst_delay":2.0, "burst_size":1, "inner_burst_delay":0.0},
+            "Divinity": {"damage":7.329, "crit_mult":-6, "pve_damage":12.511, "pve_crit_mult":-8, "burst_delay":2.0, "burst_size":1, "inner_burst_delay":0.0}
         },
         "magProf": {
             "default": {
