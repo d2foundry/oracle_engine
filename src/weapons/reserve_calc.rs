@@ -241,7 +241,7 @@ fn glaives(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
 }
 
 fn sniper_rifles(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
-    let vpp = if _mag_stat >= 100 { 0.11 } else { 0.9 }; 
+    let vpp = if _mag_stat >= 100 { 0.11 } else { 0.09 }; 
     let offset = if _mag_stat >= 100 { 17.0 } else { 15.0 };  
     vpp * _inv_stat as f64 + offset
 }
