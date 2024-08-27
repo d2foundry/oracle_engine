@@ -242,6 +242,7 @@ pub enum Perks {
     #[num_enum(alternatives = [1409312565, ])] //cloudstrike
     TripleTap = 3400784728,
     UnderPressure = 1645158859,
+    #[num_enum(alternatives = [205890336])] //old underdog changed to pulse, kept hash though
     PulseMonitor = 972757866,
 
     //season 2 | year 1
@@ -291,7 +292,6 @@ pub enum Perks {
     Swashbuckler = 4082225868,
 
     //season 7 | year 2
-    UnderDog = 205890336,
     ExplosiveLight = 3194351027,
     EyeOfTheStorm = 699525795,
     #[num_enum(alternatives = [

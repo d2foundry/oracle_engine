@@ -779,33 +779,6 @@ pub fn year_1_perks() {
     );
 
     add_sbr(
-        Perks::UnderDog,
-        Box::new(
-            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut map = HashMap::new();
-                if _input.value > 0 {
-                    map.insert(StatHashes::RELOAD.into(), 100);
-                }
-                map
-            },
-        ),
-    );
-
-    add_rsmr(
-        Perks::UnderDog,
-        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value > 0 {
-                ReloadModifierResponse {
-                    reload_stat_add: 100,
-                    reload_time_scale: 0.9,
-                }
-            } else {
-                ReloadModifierResponse::default()
-            }
-        }),
-    );
-
-    add_sbr(
         Perks::UnderPressure,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
