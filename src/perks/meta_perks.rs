@@ -361,4 +361,18 @@ pub fn meta_perks() {
             }
         }),
     );
+    add_sbr(
+        Perks::InFlightCompensatorMod,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            let buff = match _input.value {
+                0 => 0,
+                1 => 15,
+                2 => 25,
+                3.. => 30,
+            };
+            stats.insert(StatHashes::AIRBORNE.into(), buff);
+            stats
+        }),
+    )
 }
