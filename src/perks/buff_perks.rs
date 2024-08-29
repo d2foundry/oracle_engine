@@ -346,4 +346,18 @@ pub fn buff_perks() {
             }
         }),
     );
+    add_dmr(
+        Perks::DoomFang,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if *_input.calc_data.damage_type != DamageType::VOID || _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let buff = surge_buff(_input.cached_data, _input.value, _input.pvp);
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
+            }
+        }),
+    );
 }
