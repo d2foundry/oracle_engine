@@ -21,7 +21,7 @@ enum ReserveIDs {
     RapidFireSniper,
     RapidFireShotgun,
     HighInventoryRockets,
-    AggressiveLinearFusionRifle,
+    AdaptiveBurstLinearFusionRifle,
     RocketAssistedFrame,
 
     //kinetic exotic special
@@ -86,7 +86,7 @@ impl From<u32> for ReserveIDs {
             1201 => ReserveIDs::RapidFireSniper,
             701 => ReserveIDs::RapidFireShotgun,
             1002 => ReserveIDs::HighInventoryRockets,
-            2202 => ReserveIDs::AggressiveLinearFusionRifle,
+            2202 => ReserveIDs::AdaptiveBurstLinearFusionRifle,
             1701 => ReserveIDs::RocketAssistedFrame,
 
             //kinetic exotic special
@@ -148,8 +148,8 @@ pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _
         ReserveIDs::LinearFusions => linear_fusion_rifle(_mag_size, _mag_stat, _inv_stat),
         ReserveIDs::LargeMachineGuns => rapid_fire_machinegun(_mag_size, _mag_stat, _inv_stat),
         ReserveIDs::HighInventoryRockets => high_inventory_rockets(_mag_size, _mag_stat, _inv_stat),
-        ReserveIDs::AggressiveLinearFusionRifle => {
-            aggressive_linear_fusion_rifle(_mag_size, _mag_stat, _inv_stat)
+        ReserveIDs::AdaptiveBurstLinearFusionRifle => {
+            adaptive_burst_linear_fusion_rifle(_mag_size, _mag_stat, _inv_stat)
         }
         ReserveIDs::SpecialGrenadeLaunchers => {
             special_grenade_launcher(_mag_size, _mag_stat, _inv_stat)
@@ -241,8 +241,8 @@ fn glaives(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
 }
 
 fn sniper_rifles(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
-    let vpp = if _mag_stat >= 100 { 0.14 } else { 0.12 };
-    let offset = if _mag_stat >= 100 { 14.0 } else { 12.0 };
+    let vpp = if _mag_stat >= 100 { 0.11 } else { 0.09 }; 
+    let offset = if _mag_stat >= 100 { 17.0 } else { 15.0 };  
     vpp * _inv_stat as f64 + offset
 }
 fn whisper_of_the_worm(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
@@ -297,7 +297,7 @@ fn fusions(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     let offset = 9.6;
     vpp * _inv_stat as f64 + offset
 }
-fn aggressive_linear_fusion_rifle(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
+fn adaptive_burst_linear_fusion_rifle(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     let offset = match _mag_stat {
         0..=69 => 16.5,
         70..=90 => 16.0,
@@ -543,10 +543,10 @@ fn tessellation(_inv_stat: i32) -> f64 {
 }
 fn queenbreaker(_inv_stat: i32) -> f64 {
     match _inv_stat {
-        40 => 21.0,
-        60 => 22.0,
-        80 => 24.0,
-        _ => 24.0,
+        40 => 24.0,
+        60 => 25.0,
+        80 => 27.0,
+        _ => 27.0,
     }
 }
 fn wardcliff_coil(_inv_stat: i32) -> f64 {
@@ -567,10 +567,10 @@ fn tractor_cannon(_inv_stat: i32) -> f64 {
 }
 fn truth(_inv_stat: i32) -> f64 {
     match _inv_stat {
-        40 => 9.0,
-        60 => 10.0,
-        80 => 11.0,
-        _ => 11.0,
+        40 => 12.0,
+        60 => 13.0,
+        80 => 14.0,
+        _ => 14.0,
     }
 }
 fn two_tailed_fox(_inv_stat: i32) -> f64 {

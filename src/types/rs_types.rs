@@ -153,6 +153,13 @@ pub struct ReloadResponse {
 }
 
 #[derive(Debug, Clone, Default)]
+pub struct HealthResponse {
+    pub health_per_shot: f64,
+    pub shots_to_proc_restoration: f64,
+    pub percent_energy_drained_per_shot: f64,
+}
+
+#[derive(Debug, Clone, Default)]
 pub struct DpsResponse {
     pub dps_per_mag: Vec<f64>,
     pub time_damage_data: Vec<(f64, f64)>,

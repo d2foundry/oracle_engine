@@ -266,9 +266,25 @@ pub fn origin_perks() {
             let mut map = HashMap::new();
             if _input.value > 0 {
                 map.insert(StatHashes::RELOAD.into(), 40);
+                map.insert(StatHashes::HANDLING.into(), 20);
             }
             map
         }),
+    );
+
+    add_hmr(
+        Perks::QuietMoment,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
+                HandlingModifierResponse {
+                    stat_add: 20,
+                    ..Default::default()
+                }
+            },
+        ),
     );
 
     add_rsmr(

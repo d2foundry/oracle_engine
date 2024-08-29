@@ -563,4 +563,17 @@ pub fn other_perks() {
             }
         }),
     );
+    add_dmr(
+        Perks::SupportFrame,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 1.1,
+                explosive_dmg_scale: 1.1,
+                ..Default::default()
+            }
+        }),
+    )
 }
