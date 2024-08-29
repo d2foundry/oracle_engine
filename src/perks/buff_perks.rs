@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::d2_enums::{AmmoType, DamageType, StatHashes, WeaponType};
+use crate::d2_enums::{AmmoType, BungieHash, DamageType, StatBump, StatHashes, WeaponType};
 
 use super::{
     add_dmr, add_epr, add_fmr, add_hmr, add_mmr, add_rmr, add_rsmr, add_sbr, add_vmr, clamp,
@@ -345,6 +345,44 @@ pub fn buff_perks() {
                 ..Default::default()
             }
         }),
+    );
+    add_rsmr(
+        Perks::AeonForce,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
+            }
+            ReloadModifierResponse {
+                reload_stat_add: 30,
+                reload_time_scale: 0.85,
+            }
+        }),
+    );
+    add_sbr(
+        Perks::AeonForce,
+        Box::new(
+            |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
+                if _input.value == 0 {
+                    return HashMap::new();
+                }
+                use StatHashes::*;
+                HashMap::from([(RELOAD.into(), 30), (HANDLING.into(), 40)])
+            },
+        ),
+    );
+    add_hmr(
+        Perks::AeonForce,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
+                HandlingModifierResponse {
+                    stat_add: 40,
+                    ..Default::default()
+                }
+            },
+        ),
     );
     add_dmr(
         Perks::DoomFang,

@@ -144,6 +144,7 @@ pub enum Perks {
     BallindorseWrathweavers = 2894608781,
     Gyrfalcon = 3809192347,
     AeonInsight = 3651607301,
+    AeonForce = 3268255645,
     Felwinters = 622433369,
     SanguineAlchemy = 1420473289,
     EternalWarrior = 926976844,
