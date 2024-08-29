@@ -143,6 +143,7 @@ impl<'a> CalculationInput<'a> {
     }
 }
 
+#[non_exhaustive]
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct DamageModifierResponse {
     pub impact_dmg_scale: f64,
@@ -155,6 +156,25 @@ impl Default for DamageModifierResponse {
             impact_dmg_scale: 1.0,
             explosive_dmg_scale: 1.0,
             crit_scale: 1.0,
+        }
+    }
+}
+impl DamageModifierResponse {
+    // damage modifier that affects all damage types
+    pub fn basic_dmg_buff(modifier: f64) -> Self {
+        Self {
+            impact_dmg_scale: modifier,
+            explosive_dmg_scale: modifier,
+            // pending: melee_dmg_scale
+            ..Default::default()
+        }
+    }
+    // damage modifier that does not affect melee damage
+    pub fn surge_buff(modifier: f64) -> Self {
+        Self {
+            impact_dmg_scale: modifier,
+            explosive_dmg_scale: modifier,
+            ..Default::default()
         }
     }
 }
@@ -403,4 +423,12 @@ pub struct ModifierResponseSummary {
     pub imr: Option<InventoryModifierResponse>,
     pub drmr: Option<DamageResistModifierResponse>,
     pub statbump: Option<HashMap<BungieHash, StatBump>>,
+}
+
+#[derive(Debug, Copy, Clone, PartialEq, Serialize)]
+pub struct DamageProfile {
+    pub impact_dmg: f64,
+    pub explosion_dmg: f64,
+    pub crit_mult: f64,
+    pub damage_delay: f64,
 }

@@ -21,6 +21,8 @@ pub struct WeaponPath(pub u32, pub u32);
 pub struct FiringData {
     pub damage: f64,
     pub crit_mult: f64,
+    pub pve_damage: f64,
+    pub pve_crit_mult: f64,
     pub burst_delay: f64,
     pub inner_burst_delay: f64,
     pub burst_size: i32,
@@ -148,6 +150,13 @@ pub struct ReloadResponse {
     pub reload_time: f64,
     pub ammo_time: f64,
     pub timestamp: u64,
+}
+
+#[derive(Debug, Clone, Default)]
+pub struct HealthResponse {
+    pub health_per_shot: f64,
+    pub shots_to_proc_restoration: f64,
+    pub percent_energy_drained_per_shot: f64,
 }
 
 #[derive(Debug, Clone, Default)]

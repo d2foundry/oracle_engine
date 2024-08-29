@@ -27,7 +27,10 @@ pub fn meta_perks() {
             if *_input.calc_data.weapon_type == WeaponType::LINEARFUSIONRIFLE && !_input.pvp {
                 crit_scale *= 1.15;
             };
-            if *_input.calc_data.damage_type == DamageType::KINETIC && !_input.pvp {
+            if *_input.calc_data.damage_type == DamageType::KINETIC
+                && !_input.pvp
+                && *_input.calc_data.enemy_type != EnemyType::BOSS
+            {
                 if _input.calc_data.ammo_type == &AmmoType::PRIMARY {
                     dmg_scale *= 1.1;
                 } else if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
@@ -36,11 +39,29 @@ pub fn meta_perks() {
             };
 
             if *_input.calc_data.ammo_type == AmmoType::PRIMARY
-                && _input.calc_data.intrinsic_hash > 1000
                 && *_input.calc_data.enemy_type == EnemyType::MINOR
                 && !_input.pvp
+                && _input.calc_data.intrinsic_hash > 1000
             {
-                dmg_scale *= 1.4;
+                dmg_scale *= 1.3
+            }
+            if *_input.calc_data.enemy_type == EnemyType::MINOR && !_input.pvp {
+                dmg_scale *= match *_input.calc_data.weapon_type {
+                    WeaponType::SIDEARM
+                    | WeaponType::TRACERIFLE
+                    | WeaponType::SCOUTRIFLE
+                    | WeaponType::BOW => 1.2,
+                    WeaponType::AUTORIFLE | WeaponType::PULSERIFLE => 1.15,
+                    WeaponType::SUBMACHINEGUN => 1.1,
+                    WeaponType::HANDCANNON => 1.05,
+                    _ => 1.0,
+                };
+            }
+            if *_input.calc_data.enemy_type == EnemyType::ELITE && !_input.pvp {
+                dmg_scale *= match *_input.calc_data.weapon_type {
+                    WeaponType::TRACERIFLE => 1.2,
+                    _ => 1.0,
+                };
             }
 
             if *_input.calc_data.weapon_type == WeaponType::LINEARFUSIONRIFLE
@@ -58,39 +79,11 @@ pub fn meta_perks() {
                 let stat = (charge_time.perk_val() - charge_time.base_value) as f64;
                 dmg_scale *= 1.0 - (0.6 * stat) / total_damage;
             }
-            if _input.pvp {
-                if _input.calc_data.intrinsic_hash == 425960662 {
-                    dmg_scale *= 0.8;
-                } else if _input.calc_data.intrinsic_hash == 2984682260 {
-                    dmg_scale *= 1.2;
-                    crit_scale *= 1.1475;
-                } else if *_input.calc_data.weapon_type == WeaponType::SIDEARM
-                    || *_input.calc_data.weapon_type == WeaponType::SCOUTRIFLE
-                    || *_input.calc_data.weapon_type == WeaponType::AUTORIFLE
-                    || *_input.calc_data.weapon_type == WeaponType::PULSERIFLE
-                {
-                    crit_scale *= 1.14;
-                } else if *_input.calc_data.weapon_type == WeaponType::BOW {
-                    dmg_scale *= 0.85;
-                } else if *_input.calc_data.weapon_type == WeaponType::HANDCANNON {
-                    crit_scale *= 1.158;
-                    dmg_scale *= 0.95;
-                } else if *_input.calc_data.weapon_type == WeaponType::SUBMACHINEGUN {
-                    crit_scale *= 1.16;
-                    dmg_scale *= 0.97;
-                } else if *_input.calc_data.weapon_type == WeaponType::FUSIONRIFLE
-                    || *_input.calc_data.weapon_type == WeaponType::SHOTGUN
-                    || *_input.calc_data.weapon_type == WeaponType::TRACERIFLE
-                    || *_input.calc_data.weapon_type == WeaponType::MACHINEGUN
-                    || *_input.calc_data.weapon_type == WeaponType::GLAIVE
-                {
-                    dmg_scale *= 1.2;
-                }
-            }
             DamageModifierResponse {
                 crit_scale,
                 impact_dmg_scale: dmg_scale,
                 explosive_dmg_scale: dmg_scale,
+                ..Default::default()
             }
         }),
     );

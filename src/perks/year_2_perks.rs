@@ -50,9 +50,8 @@ pub fn year_2_perks() {
                 DamageModifierResponse::default()
             } else {
                 DamageModifierResponse {
-                    impact_dmg_scale: 1.0,
                     explosive_dmg_scale: 1.3,
-                    crit_scale: 1.0,
+                    ..Default::default()
                 }
             }
         }),
@@ -140,8 +139,7 @@ pub fn year_2_perks() {
             }
             DamageModifierResponse {
                 crit_scale: crit_mult,
-                explosive_dmg_scale: 1.0,
-                impact_dmg_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -172,7 +170,7 @@ pub fn year_2_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -273,7 +271,7 @@ pub fn year_2_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -286,9 +284,8 @@ pub fn year_2_perks() {
                 damage_mult = 1.25;
             };
             DamageModifierResponse {
-                impact_dmg_scale: 1.0,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -305,7 +302,7 @@ pub fn year_2_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + dmg_boost,
                 explosive_dmg_scale: 1.0 + dmg_boost,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -321,7 +318,7 @@ pub fn year_2_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -343,7 +340,7 @@ pub fn year_2_perks() {
             DamageModifierResponse {
                 explosive_dmg_scale: mult.0,
                 impact_dmg_scale: mult.1,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -393,6 +390,18 @@ pub fn year_2_perks() {
                 FlinchModifierResponse { flinch_scale: 0.65 }
             } else {
                 FlinchModifierResponse::default()
+            }
+        }),
+    );
+    add_fmr(
+        Perks::ArchersGambit,
+        Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
+            if _input.value == 0 {
+                return FiringModifierResponse::default();
+            }
+            FiringModifierResponse {
+                burst_delay_scale: 0.4,
+                ..Default::default()
             }
         }),
     );

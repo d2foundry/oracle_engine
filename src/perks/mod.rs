@@ -12,6 +12,7 @@ pub mod year_3_perks;
 pub mod year_4_perks;
 pub mod year_5_perks;
 pub mod year_6_perks;
+pub mod year_7_perks;
 
 use std::borrow::BorrowMut;
 use std::collections::HashMap;
@@ -42,6 +43,7 @@ use self::{
     year_4_perks::*,
     year_5_perks::*,
     year_6_perks::*,
+    year_7_perks::*,
 };
 
 use crate::weapons::Weapon;
@@ -104,6 +106,7 @@ pub enum Perks {
     //intrinsics
     RapidFireFrame = 902,
     PrecisionFrame = 906,
+    SupportFrame = 912, // 2622129339
 
     //armor
     DexterityMod = 1001,
@@ -210,6 +213,9 @@ pub enum Perks {
     ])]
     Outlaw = 1168162263,
     BackupPlan = 1600092898,
+    #[num_enum(alternatives = [
+        777589559, // crafted whisper
+    ])]
     FieldPrep = 2869569095,
     #[num_enum(alternatives = [3551326236, ])] //huckleberry
     Rampage = 3425386926,
@@ -221,6 +227,9 @@ pub enum Perks {
     ExplosivePayload = 3038247973,
     FirmlyPlanted = 280464955,
     FullAutoTrigger = 2117683199,
+    #[num_enum(alternatives = [
+        2578928833, // crafted outbreak
+    ])]
     HeadSeeker = 460017080,
     HighImpactReserves = 2213355989,
     HipFireGrip = 1866048759,
@@ -243,8 +252,13 @@ pub enum Perks {
     RangeFinder = 2846385770,
     #[num_enum(alternatives = [1683379515, ])] //Arbalest
     DisruptionBreak = 3871884143,
-    #[num_enum(alternatives = [2360754333, 2079505485, ])] //Acrius
-    TrenchBarrel = 806159697,
+    #[num_enum(alternatives = [
+        806159697,  // s3 barrel
+        2079505485, // acrius old cat
+        4233905577, // acrius dummy cat
+        456628588,  // acrius cat
+    ])]
+    TrenchBarrel = 2360754333,
     Desperado = 3047969693,
     BoxBreathing = 2551157718,
 
@@ -256,7 +270,10 @@ pub enum Perks {
     FeedingFrenzy = 2779035018,
     #[num_enum(alternatives = [1266037486, ])] //R0
     FourthTimesTheCharm = 1354429876,
-    #[num_enum(alternatives = [1557274655, ])] //touch of malice cat
+    #[num_enum(alternatives = [
+        1557274655, // touch of malice cat
+        2578928835, // crafted outbreak
+    ])]
     RapidHit = 247725512,
 
     //season 5 | year 2
@@ -278,7 +295,14 @@ pub enum Perks {
     UnderDog = 205890336,
     ExplosiveLight = 3194351027,
     EyeOfTheStorm = 699525795,
+    #[num_enum(alternatives = [
+        2162261876, // mida old cat
+        800074992,  // mida dummy cat
+        3466057365, // mida cat
+        777589556,  // crafted whisper
+    ])]
     NoDistractions = 2866798147,
+    ArchersGambit = 3414324643,
 
     //season 8 | year 3
     //TODO
@@ -286,7 +310,11 @@ pub enum Perks {
     //season 9 | year 3
     ClownCartridge = 2284787283,
     ElementalCapacitor = 3511092054,
-    #[num_enum(alternatives = [3547298847, ])] // grav lance cat
+    #[num_enum(alternatives = [
+        3547298847, // grav lance old cat, to be removed after UI update
+        1620506139, // grav lance cat
+        1234111636, // malf cat
+    ])]
     Vorpal = 1546637391,
 
     //season 10 | year 3
@@ -312,6 +340,9 @@ pub enum Perks {
     //season 14 | year 4
     Cornered = 1799762209,
     AdrenalineJunkie = 11612903,
+    #[num_enum(alternatives = [
+        2578928832, // crafted outbreak
+    ])]
     RewindRounds = 3418782618,
     HeatingUp = 1570042021,
     FireFly = 3824105627,
@@ -328,6 +359,7 @@ pub enum Perks {
     Harmony = 438098033,
     PerpetualMotion = 1428297954,
     Adagio = 3673922083,
+    BluntExecutionRounds = 454085387,
 
     //season 16 | year 5
     BaitAndSwitch = 3078487919,
@@ -370,18 +402,28 @@ pub enum Perks {
     InvisibleHand = 3018146897,
     UnsatedHunger = 2053642371,
     Discord = 3978468247,
+    #[num_enum(alternatives = [4218954970, ])]
+    EddyCurrent = 684456054,
 
     //seaqson 22 | year 6
     PrecisionInstrument = 555281244,
     LooseChange = 1119449540,
     HighGround = 2319119708,
     HeadRush = 2565067140,
+    #[num_enum(alternatives = [
+        777589557, // crafted whisper
+    ])]
     EnlightendAction = 3828510309,
     SwordLogic = 31345821,
 
     //season 23 | year 6
     Onslaught = 95528736,
     DesperateMeasures = 2109543898,
+    MasterOfArms = 3081867624,
+
+    //episode 1 | year 7
+    ChaosReshaped = 3640170453,
+    CircleOfLife = 2298656195,
 
     //subclass
     OnYourMark = 3066103999,
@@ -425,6 +467,8 @@ pub enum Perks {
     Broadhead = 2287699930,
     HuntersTrace = 891750160,
     Desperation = 525593296,
+    PickYourPoison = 1302052952,
+    StringTheory = 77818606,
 
     //energy exotic
     LagragianSight = 2881100038,
@@ -457,15 +501,28 @@ pub enum Perks {
     Unrepentant = 2641107734,
     ArcConductor = 2516532331,
     VoidLeech = 3441203855,
+    InverseRelationship = 1833111001,
+    Spindle = 1180907940,
+    TheRightChoice = 34498892,
+    Judgement = 1797707170,
 
     //heavy exotic
     ReignHavoc = 4148158229,
     WormsHunger = 1174163613,
     WormByproduct = 1679262379,
-    WhisperCatalyst = 1340292993,
+    #[num_enum(alternatives = [
+        4285971293, // II
+        4285971292, // III
+        4285971291, // IV
+    ])]
+    WhiteNail = 281315705,
+    #[num_enum(alternatives = [
+        1340292993, // s3 dummy cat
+        2732814938, // s3 cat
+    ])]
+    WhisperedBreathing = 3732232161,
     DarkDescent = 3333994164,
     TargetAquired = 939227542,
-    SleeperCatalyst = 2142466730,
     TractorCannon = 1210807262,
     MarksmanSights = 1408087975,
 
@@ -520,6 +577,7 @@ pub fn map_perks() {
         year_4_perks();
         year_5_perks();
         year_6_perks();
+        year_7_perks();
         meta_perks();
         exotic_perks();
         exotic_armor();

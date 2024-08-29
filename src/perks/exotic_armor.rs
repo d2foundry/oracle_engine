@@ -101,11 +101,7 @@ pub fn exotic_armor() {
                 return DamageModifierResponse::default();
             }
             let modifier = 1.0 + (0.3 - health_percent);
-            DamageModifierResponse {
-                impact_dmg_scale: modifier,
-                explosive_dmg_scale: modifier,
-                crit_scale: 1.0,
-            }
+            DamageModifierResponse::basic_dmg_buff(modifier)
         }),
     );
 
@@ -384,8 +380,9 @@ pub fn exotic_armor() {
                 if _input.calc_data.intrinsic_hash == 1863355414
                     || _input.calc_data.intrinsic_hash == 2965975126
                     || _input.calc_data.intrinsic_hash == 2724693746
+                    || _input.calc_data.intrinsic_hash == 4184462049
                 {
-                    //Thorn, Osteo Striga, Touch of Malice
+                    //Thorn, Osteo Striga, Touch of Malice, Necrochasm
                     stats.insert(StatHashes::AIRBORNE.into(), 30);
                 };
                 stats

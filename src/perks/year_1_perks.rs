@@ -55,7 +55,7 @@ pub fn year_1_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: out_dmg_scale,
                 explosive_dmg_scale: out_dmg_scale,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -137,9 +137,8 @@ pub fn year_1_perks() {
                     crit_mult *= 0.95;
                 }
                 return DamageModifierResponse {
-                    impact_dmg_scale: 1.0,
-                    explosive_dmg_scale: 1.0,
                     crit_scale: crit_mult,
+                    ..Default::default()
                 };
             };
             DamageModifierResponse::default()
@@ -168,9 +167,8 @@ pub fn year_1_perks() {
                 DamageModifierResponse::default()
             } else {
                 DamageModifierResponse {
-                    impact_dmg_scale: 1.0,
                     explosive_dmg_scale: 1.3,
-                    crit_scale: 1.0,
+                    ..Default::default()
                 }
             }
         }),
@@ -197,9 +195,8 @@ pub fn year_1_perks() {
             } else {
                 // let damage_mult = ((1.0 /  _input.calc_data.base_crit_mult) * 0.15) + 1.0;
                 DamageModifierResponse {
-                    impact_dmg_scale: 1.0,
                     explosive_dmg_scale: 1.3,
-                    crit_scale: 1.0,
+                    ..Default::default()
                 }
             }
         }),
@@ -389,8 +386,7 @@ pub fn year_1_perks() {
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             DamageModifierResponse {
                 impact_dmg_scale: 1.1,
-                explosive_dmg_scale: 1.0,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -413,12 +409,16 @@ pub fn year_1_perks() {
         Perks::OpeningShot,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let aim_assist = if _input.is_enhanced { 25 } else { 20 };
-                let range = if _input.is_enhanced { 30 } else { 25 };
+                let mut aim_assist: f64 = if _input.is_enhanced { 25.0 } else { 20.0 };
+                let mut range: f64 = if _input.is_enhanced { 30.0 } else { 25.0 };
                 let mut out = HashMap::new();
+                if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
+                    aim_assist /= 2.0;
+                    range /= 2.0;
+                }
                 if _input.value > 0 {
-                    out.insert(StatHashes::AIM_ASSIST.into(), aim_assist);
-                    out.insert(StatHashes::RANGE.into(), range);
+                    out.insert(StatHashes::AIM_ASSIST.into(), aim_assist.ceil() as i32);
+                    out.insert(StatHashes::RANGE.into(), range.ceil() as i32);
                 }
                 out
             },
@@ -428,12 +428,15 @@ pub fn year_1_perks() {
     add_rmr(
         Perks::OpeningShot,
         Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
-            let mut range = if _input.is_enhanced { 30 } else { 25 };
+            let mut range: f64 = if _input.is_enhanced { 30.0 } else { 25.0 };
             if _input.calc_data.total_shots_fired != 0.0 || _input.value == 0 {
-                range = 0;
+                range = 0.0;
             };
+            if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
+                range /= 2.0;
+            }
             RangeModifierResponse {
-                range_stat_add: range,
+                range_stat_add: range.ceil() as i32,
                 range_all_scale: 1.0,
                 range_hip_scale: 1.0,
                 range_zoom_scale: 1.0,
@@ -592,7 +595,7 @@ pub fn year_1_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -608,7 +611,7 @@ pub fn year_1_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -624,7 +627,7 @@ pub fn year_1_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 - damage_mult,
                 explosive_dmg_scale: 1.0 - damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -709,7 +712,7 @@ pub fn year_1_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -837,17 +840,18 @@ pub fn year_1_perks() {
             )
             .unwrap();
 
-            let p_data = precision.get_damage_profile();
+            let p_data = precision.get_damage_profile(_input.pvp);
 
             let lightweight_body = _input.calc_data.curr_firing_data.damage;
             let lightweight_crit = _input.calc_data.curr_firing_data.crit_mult;
 
-            let precision_body = p_data.0;
-            let precision_crit = p_data.2;
+            let precision_body = p_data.impact_dmg;
+            let precision_crit = p_data.crit_mult;
             DamageModifierResponse {
                 impact_dmg_scale: precision_body / lightweight_body,
                 explosive_dmg_scale: precision_body / lightweight_body,
                 crit_scale: precision_crit / lightweight_crit,
+                ..Default::default()
             }
         }),
     );

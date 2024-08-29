@@ -9,6 +9,8 @@ use std::fs::File;
 use std::hash::{Hash, Hasher};
 use std::io::Write;
 
+
+
 /*const ID_TO_NAME: PhfMap<i32, &'static str> = phf_map! {
     6i32 => "Auto Rifle",
     31i32 => "Combat Bow",
@@ -49,14 +51,18 @@ const NAME_TO_ID: PhfMap<&'static str, i32> = phf_map! {
 
 const INTRINSIC_MAP: PhfMap<u32, &'static [&'static str]> = phf_map! {
 901u32 => &["High-Impact Frame"],
-902u32 => &["VEIST Rapid-Fire", "Rapid-Fire Frame"],
-903u32 => &["Adaptive Frame", "Adaptive Glaive"],
-904u32 => &["Aggressive Frame", "Aggressive Glaive"],
+902u32 => &["VEIST Rapid-Fire", "Rapid-Fire Frame", "Rapid-Fire Glaive"],
+903u32 => &["Adaptive Frame", "Adaptive Glaive", "Adaptive Burst"],
+904u32 => &["Aggressive Frame", "Aggressive Glaive", "Aggressive Burst"],
 905u32 => &["Lightweight Frame", "MIDA Synergy"],
-906u32 => &["Precision Frame", "Häkke Precision Frame"],
+906u32 => &["Precision Frame", "Häkke Precision Frame", "Pinpoint Slug Frame"],
 907u32 => &["Double Fire", "Heavy Burst"],
-908u32 => &["Wave Frame"],
-911u32 => &["Legacy PR-55 Frame"]
+908u32 => &["Wave Frame", "Compressed Wave Frame"],
+911u32 => &["Legacy PR-55 Frame"],
+912u32 => &["Support Frame"],
+913u32 => &["Area Denial Frame"],
+914u32 => &["Rocket-Assisted Frame"],
+915u32 => &["Shot Package"]
 };
 
 fn calculate_hash<T: Hash>(t: &T) -> u64 {
@@ -666,6 +672,8 @@ fn default_i32_1() -> i32 {
 pub struct FiringData {
     pub damage: f64,
     pub crit_mult: f64,
+    pub pve_damage: f64,
+    pub pve_crit_mult: f64,
     pub burst_delay: f64,
     pub inner_burst_delay: f64,
     #[serde(default)]
@@ -683,6 +691,8 @@ impl From<SubFamJson> for FiringData {
         FiringData {
             damage: value.damage,
             crit_mult: (value.crit_mult) / 51.0 + 1.5,
+            pve_damage: value.pve_damage,
+            pve_crit_mult: (value.pve_crit_mult) / 51.0 + 1.5,
             burst_delay: value.burst_delay / 30.0,
             inner_burst_delay: value.inner_burst_delay / 30.0,
             burst_size: value.burst_size,
@@ -768,6 +778,8 @@ struct RangeJson {
 struct SubFamJson {
     damage: f64,
     crit_mult: f64,
+    pve_damage: f64,
+    pve_crit_mult: f64,
     burst_delay: f64,
     #[serde(default = "default_i32_1")]
     burst_size: i32,
