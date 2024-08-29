@@ -58,10 +58,16 @@ impl Weapon {
         };
 
         let mut out = self.reload_formula.calc_reload_time_formula(reload_stat);
-        out.reload_time *= modifiers.reload_time_scale;
 
+        //this is some weird math that oddly works?
+        //dont ask me why?????
+        //i HATE BOWS
         if self.weapon_type == WeaponType::BOW {
-            out.reload_time = out.reload_time.clamp(0.6, 5.0);
+            let reload_time = out.reload_time - 0.1;
+            out.reload_time =
+                reload_time * 0.3 * modifiers.reload_time_scale + reload_time * 0.7 + 0.1;
+        } else {
+            out.reload_time *= modifiers.reload_time_scale;
         }
 
         out
