@@ -378,8 +378,7 @@ pub fn buff_perks() {
                     return HandlingModifierResponse::default();
                 }
                 HandlingModifierResponse {
-                    stow_add: 40,
-                    draw_add: 40,
+                    stat_add: 40,
                     ..Default::default()
                 }
             },
