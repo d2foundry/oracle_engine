@@ -427,6 +427,11 @@ pub enum Perks {
     ChaosReshaped = 3640170453,
     CircleOfLife = 2298656195,
 
+    //episode 2 | year 7
+    AirTrigger = 1421772400,
+    //ClosingTime = 1194056669,
+    LoneWolf = 2579169598,
+
     //subclass
     OnYourMark = 3066103999,
     Hedrons = 3469412970,

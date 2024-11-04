@@ -664,9 +664,14 @@ pub fn year_6_perks() {
             if _input.value == 0 {
                 return DamageModifierResponse::default();
             }
+            let buff = match _input.value {
+                0 => 1.0,
+                1 => 1.15,
+                2.. => 1.25,
+            };
             DamageModifierResponse {
-                impact_dmg_scale: 1.15,
-                explosive_dmg_scale: 1.15,
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
                 ..Default::default()
             }
         }),
@@ -699,7 +704,7 @@ pub fn year_6_perks() {
                 0 => unreachable!(),
                 1 => 20,
                 2.. => 60,
-            };            
+            };
             stats.insert(StatHashes::RELOAD.into(), buff);
             stats
         }),

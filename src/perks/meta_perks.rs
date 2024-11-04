@@ -54,12 +54,26 @@ pub fn meta_perks() {
                     WeaponType::AUTORIFLE | WeaponType::PULSERIFLE => 1.15,
                     WeaponType::SUBMACHINEGUN => 1.1,
                     WeaponType::HANDCANNON => 1.05,
+                    WeaponType::SNIPER => 1.6,
                     _ => 1.0,
                 };
             }
             if *_input.calc_data.enemy_type == EnemyType::ELITE && !_input.pvp {
                 dmg_scale *= match *_input.calc_data.weapon_type {
                     WeaponType::TRACERIFLE => 1.2,
+                    WeaponType::SNIPER => 1.75,
+                    _ => 1.0,
+                };
+            }
+            if *_input.calc_data.enemy_type == EnemyType::MINIBOSS && !_input.pvp {
+                dmg_scale *= match *_input.calc_data.weapon_type {
+                    WeaponType::SNIPER => 1.35,
+                    _ => 1.0,
+                };
+            }
+            if *_input.calc_data.enemy_type == EnemyType::CHAMPION && !_input.pvp {
+                dmg_scale *= match *_input.calc_data.weapon_type {
+                    WeaponType::SNIPER => 1.25,
                     _ => 1.0,
                 };
             }

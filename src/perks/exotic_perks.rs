@@ -163,6 +163,7 @@ pub fn exotic_perks() {
             let mut out = HashMap::new();
             if _input.value > 0 {
                 out.insert(StatHashes::HANDLING.into(), 20);
+                out.insert(StatHashes::STABILITY.into(), 20);
                 out.insert(StatHashes::RELOAD.into(), 40);
             };
             out
@@ -218,13 +219,12 @@ pub fn exotic_perks() {
     add_rsmr(
         Perks::Roadborn,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            let mut reload = 0;
-            if _input.value > 0 {
-                reload = 40;
+            if _input.value == 0 {
+                return ReloadModifierResponse::default();
             };
             ReloadModifierResponse {
-                reload_stat_add: reload,
-                reload_time_scale: 1.0,
+                reload_stat_add: 40,
+                reload_time_scale: 0.75,
             }
         }),
     );
@@ -397,6 +397,7 @@ pub fn exotic_perks() {
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
             FiringModifierResponse {
                 burst_size_add: -2.0,
+                burst_delay_add: -0.033,
                 ..Default::default()
             }
         }),
@@ -405,10 +406,10 @@ pub fn exotic_perks() {
     add_dmr(
         Perks::HakkeHeavyBurst,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let crit_scale = 1.828 / _input.calc_data.base_crit_mult;
+            let crit_scale = 1.8525 / _input.calc_data.base_crit_mult;
             DamageModifierResponse {
-                explosive_dmg_scale: 1.48,
-                impact_dmg_scale: 1.48,
+                explosive_dmg_scale: 1.485,
+                impact_dmg_scale: 1.485,
                 crit_scale,
                 ..Default::default()
             }

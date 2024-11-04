@@ -300,11 +300,15 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         //season 23 | year 6
         Perks::Onslaught => Some(PerkOptionData::stacking(3)),
         Perks::DesperateMeasures => Some(PerkOptionData::stacking(3)),
-        Perks::MasterOfArms => Some(PerkOptionData::toggle()),
+        Perks::MasterOfArms => Some(PerkOptionData::stacking(2)),
 
         //episode 1 | year 7
         Perks::ChaosReshaped => Some(PerkOptionData::stacking(2)),
         Perks::CircleOfLife => Some(PerkOptionData::toggle()),
+
+        //episode 2 | year 7
+        Perks::AirTrigger => Some(PerkOptionData::toggle()),
+        Perks::LoneWolf => Some(PerkOptionData::options(["Base", "Alone"].to_vec())),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),

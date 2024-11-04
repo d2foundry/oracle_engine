@@ -50,7 +50,7 @@ pub fn exotic_armor() {
             let mult = if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
                 0.3
             } else {
-                0.6
+                0.45
             };
 
             DamageModifierResponse {
