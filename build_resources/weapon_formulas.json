@@ -17,6 +17,7 @@
         "3602718766": {"name": "Quicksilver Storm",  "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
         "1385166695": {"name": "Centrifuse",         "cat": "default",  "subFam": "Precision",   "magProf": "small"},
         "4184462049": {"name": "Necrochasm",         "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
+        "3698448090": {"name": "Choir of One",       "cat": "default",  "subFam": "ChoirOfOne",  "magProf": "choirOfOne" },
         
         "cat": {
             "default": {
@@ -58,6 +59,7 @@
             "Support-Frame": {"damage": 18.626, "crit_mult": 5.45, "pve_damage": 18.626, "pve_crit_mult": 5.45, "burst_delay": 3,   "burst_size": 1, "inner_burst_delay": 0},
             "Precision":   {"damage": 19.402, "crit_mult": 13, "pve_damage": 20.000, "pve_crit_mult": 3, "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0},
             "Cerberus":    {"damage": 18.615, "crit_mult": 17, "pve_damage": 18.000, "pve_crit_mult": 10, "burst_delay": 5,   "burst_size": 4, "inner_burst_delay": 0},
+            "ChoirOfOne":  {"damage": 0.0, "crit_mult": 0,  "pve_damage": 0.0, "pve_crit_mult": 0,  "burst_delay": 8, "burst_size": 1, "inner_burst_delay": 0},
             "SweetBuiss":  {"damage": 15.161, "crit_mult": -5, "pve_damage": 15.000, "pve_crit_mult": -5, "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0}
         },
 
@@ -77,6 +79,10 @@
             "sweet_buiss": {
                 "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 150.0},
                 "reserve_id": 0
+            },
+            "choirOfOne": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 25.0},
+                "reserve_id": 3698448090
             },
             "tommy": {
                 "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 100.0},

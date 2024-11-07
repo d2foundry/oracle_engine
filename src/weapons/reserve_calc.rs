@@ -40,6 +40,7 @@ enum ReserveIDs {
     Merciless,
     Telesto,
     Tessellation,
+    ChoirOfOne,
 
     //exotic heavy
     Anarchy,
@@ -105,6 +106,7 @@ impl From<u32> for ReserveIDs {
             656200654 => ReserveIDs::Merciless,
             1927916065 => ReserveIDs::Telesto,
             2769013282 => ReserveIDs::Tessellation,
+            3698448090 => ReserveIDs::ChoirOfOne,
 
             //heavy
             389268985 => ReserveIDs::Anarchy,
@@ -180,6 +182,7 @@ pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _
         ReserveIDs::Merciless => merciless(_inv_stat),
         ReserveIDs::Telesto => telesto(_inv_stat),
         ReserveIDs::Tessellation => tessellation(_inv_stat),
+        ReserveIDs::ChoirOfOne => choir_of_one(_inv_stat),
 
         //exotic heavy
         ReserveIDs::Anarchy => anarchy(_inv_stat),
@@ -308,8 +311,8 @@ fn adaptive_burst_linear_fusion_rifle(_mag_size: f64, _mag_stat: i32, _inv_stat:
     vpp * _inv_stat as f64 + offset
 }
 fn rocket_assisted(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
-    let offset = 15.6;
-    0.08 * _inv_stat as f64 + offset
+    let offset = 34.3;
+    0.15 * _inv_stat as f64 + offset
 }
 fn heavy_compressed_wave(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     let offset = 20.6;
@@ -400,6 +403,14 @@ fn buried_bloodline(_inv_stat: i32) -> f64 {
         70 => 67.0,
         90 => 72.0,
         _ => 75.0,
+    }
+}
+fn choir_of_one(_inv_stat: i32) -> f64 {
+    match _inv_stat {
+        0 => 200.0,
+        1..=20 => 241.0,
+        21..=40 => 280.0,
+        _ => 300.0,
     }
 }
 fn conditional_finality(_inv_stat: i32) -> f64 {
