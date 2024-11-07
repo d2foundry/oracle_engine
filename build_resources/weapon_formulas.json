@@ -59,7 +59,7 @@
             "Support-Frame": {"damage": 18.626, "crit_mult": 5.45, "pve_damage": 18.626, "pve_crit_mult": 5.45, "burst_delay": 3,   "burst_size": 1, "inner_burst_delay": 0},
             "Precision":   {"damage": 19.402, "crit_mult": 13, "pve_damage": 20.000, "pve_crit_mult": 3, "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0},
             "Cerberus":    {"damage": 18.615, "crit_mult": 17, "pve_damage": 18.000, "pve_crit_mult": 10, "burst_delay": 5,   "burst_size": 4, "inner_burst_delay": 0},
-            "ChoirOfOne":  {"damage": 0.0, "crit_mult": 0,  "pve_damage": 0.0, "pve_crit_mult": 0,  "burst_delay": 8, "burst_size": 1, "inner_burst_delay": 0},
+            "ChoirOfOne":  {"damage": 40.27, "crit_mult": 15,  "pve_damage": 40.27, "pve_crit_mult": 15,  "burst_delay": 8, "burst_size": 1, "inner_burst_delay": 0},
             "SweetBuiss":  {"damage": 15.161, "crit_mult": -5, "pve_damage": 15.000, "pve_crit_mult": -5, "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0}
         },
 
@@ -898,6 +898,7 @@
         "895140517":  {"name": "Precision Frame",      "cat": "default",   "subFam": "Precision",   "magProf": "default", "pve":1.245},
         "536517534":  {"name": "Duality",              "cat": "Duality",   "subFam": "Slug",        "magProf": "default", "pve":1.242},
         "918679156":  {"name": "Precision Frame",      "cat": "slug",      "subFam": "Slug",        "magProf": "default", "pve":1.204},
+        "3923638944": {"name": "Heavy Burst",          "cat": "slug",      "subFam": "HeavyBurst",        "magProf": "HeavyBurst", "pve":1.204},
         "996573084":  {"name": "Rapid-Fire Frame",     "cat": "default",   "subFam": "Rapid-Fire",  "magProf": "rapidfire", "pve":0.934},
         "1210807262": {"name": "Tractor Cannon",       "cat": "Tractor",   "subFam": "Tractor", "magProf": "tractor", "pve":1.10},
         "1394384862": {"name": "The Chaperone",        "cat": "slug",      "subFam": "Slug",        "magProf": "default", "pve":1.242},
@@ -967,6 +968,7 @@
             "Conditional": {"damage":26.70,  "crit_mult":-20, "pve_damage":22.25,  "pve_crit_mult":-20, "burst_delay":33, "burst_size":12, "inner_burst_delay":0, "one_ammo": true},
             "Acrius":      {"damage":26.70,  "crit_mult":-20, "pve_damage":22.25,  "pve_crit_mult":-20, "burst_delay":33, "burst_size":12, "inner_burst_delay":0, "one_ammo": true},
             "Slug":        {"damage":180.154, "crit_mult":13, "pve_damage":163.718, "pve_crit_mult":13,  "burst_delay":27, "burst_size":1,  "inner_burst_delay":0, "one_ammo": true},
+            "HeavyBurst":  {"damage":98.995, "crit_mult":13, "pve_damage":98.995, "pve_crit_mult":13,  "burst_delay":27, "burst_size":2,  "inner_burst_delay":2, "one_ammo": true},
             "LoW":         {"damage":41.923,  "crit_mult":-3, "pve_damage":39.0,  "pve_crit_mult":-3,  "burst_delay":6,  "burst_size":5,  "inner_burst_delay":2},
             "Lightweight": {"damage":22.01, "crit_mult":-20, "pve_damage":18.33, "pve_crit_mult":-20,  "burst_delay":22, "burst_size":12, "inner_burst_delay":0, "one_ammo": true},
             "Tractor":     {"damage":22.01, "crit_mult":-20, "pve_damage":18.33, "pve_crit_mult":-20,  "burst_delay":22, "burst_size":12, "inner_burst_delay":0, "one_ammo": true},
@@ -976,6 +978,11 @@
             "default": {
                 "mag": {"evpp": 0.0, "vpp": 0.0375, "offset": 3.625},
                 "reserve_id": 71
+            },
+            "HeavyBurst": {
+                "mag": {"evpp": 0.0, "vpp": 0.075, "offset": 7.25},
+                "round_to": 2,
+                "reserve_id": 702
             },
             "rapidfire": {
                 "mag": {"vpp": 0.0375, "offset": 3.625},
@@ -1106,6 +1113,7 @@
         "3081173348": {"name": "Borealis",            "cat": "default", "subFam": "Aggressive", "magProf": "default", "pve": 1.265},
         "3468089894": {"name": "Aggressive Frame",    "cat": "default", "subFam": "Aggressive", "magProf": "default", "pve": 1.265},
         "2905188646": {"name": "Still Hunt",          "cat": "default", "subFam": "Adaptive",   "magProf": "default", "pve": 1.265},
+        "1111334348": {"name": "Ice Breaker",         "cat": "default", "subFam": "IceBreaker", "magProf": "iceBreaker", "pve": 1.265},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
@@ -1122,6 +1130,7 @@
             "Rapid-Fire": {"damage":85.002 ,  "crit_mult":99,  "pve_damage":90.952,  "pve_crit_mult":99, "burst_delay":13, "burst_size":1, "inner_burst_delay":0},
             "Adaptive":   {"damage":118.999 , "crit_mult":89,  "pve_damage":127.329, "pve_crit_mult":89, "burst_delay":20, "burst_size":1, "inner_burst_delay":0},
             "Aggressive": {"damage":135.007, "crit_mult":102, "pve_damage":144.457, "pve_crit_mult":102, "burst_delay":25, "burst_size":1, "inner_burst_delay":0},
+            "IceBreaker": {"damage":135.007, "crit_mult":102, "pve_damage":144.457, "pve_crit_mult":102, "burst_delay":37, "burst_size":1, "inner_burst_delay":0},
             "Whisper":    {"damage":170, "crit_mult":102, "pve_damage":181.9, "pve_crit_mult":102, "burst_delay":25, "burst_size":1, "inner_burst_delay":0}
         },
         "magProf": {
@@ -1132,6 +1141,10 @@
             "rapidfire": {
                 "mag": {"vpp": 0.03, "offset": 2.49},
                 "reserve_id": 1201
+            },
+            "iceBreaker": {
+                "mag": {"vpp": 0.0, "offset": 10.0},
+                "reserve_id": 0
             },
             "whisper": {
                 "mag": {"vpp": 0.03, "offset": 2.49},

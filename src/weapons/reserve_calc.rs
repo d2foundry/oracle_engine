@@ -23,6 +23,7 @@ enum ReserveIDs {
     HighInventoryRockets,
     AdaptiveBurstLinearFusionRifle,
     RocketAssistedFrame,
+    HeavyBurstShotgun,
 
     //kinetic exotic special
     Arbalest,
@@ -89,6 +90,7 @@ impl From<u32> for ReserveIDs {
             1002 => ReserveIDs::HighInventoryRockets,
             2202 => ReserveIDs::AdaptiveBurstLinearFusionRifle,
             1701 => ReserveIDs::RocketAssistedFrame,
+            702 => ReserveIDs::HeavyBurstShotgun,
 
             //kinetic exotic special
             2564164194 => ReserveIDs::Arbalest,
@@ -163,6 +165,7 @@ pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _
             rapid_grenade_launcher(_mag_size, _mag_stat, _inv_stat)
         }
         ReserveIDs::RocketAssistedFrame => rocket_assisted(_mag_size, _mag_stat, _inv_stat),
+        ReserveIDs::HeavyBurstShotgun => heavy_burst_shotguns(_mag_size, _mag_stat, _inv_stat),
 
         //exotic kinetic special
         ReserveIDs::ForeRunner => forerunner(_mag_size, _mag_stat, _inv_stat),
@@ -266,6 +269,20 @@ fn shotguns(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
         7 => 12.267,
         8 => 12.0,
         _ => 12.0,
+    };
+
+    let vpp = ((offset * (5.0 / 3.0)) - offset) / 100.0;
+    vpp * _inv_stat as f64 + offset
+}
+
+fn heavy_burst_shotguns(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
+    let offset = match _mag_size.ceil() as i32 {
+        6 => 28.0,
+        8 => 26.266,
+        10 => 25.2,
+        12 => 24.534,
+        14 => 24.0,
+        _ => 24.0,
     };
 
     let vpp = ((offset * (5.0 / 3.0)) - offset) / 100.0;
