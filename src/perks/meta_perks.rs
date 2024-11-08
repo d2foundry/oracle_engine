@@ -178,6 +178,15 @@ pub fn meta_perks() {
                         };
                     };
                 }
+                if *_input.calc_data.weapon_type == WeaponType::SIDEARM && _input.calc_data.intrinsic_hash == 914 {
+                    let percent = if _input.pvp {0.536} else {0.822};
+
+                    return ExplosivePercentResponse {
+                        percent,
+                        delyed: 0.0,
+                        retain_base_total: true
+                    };
+                }
                 if *_input.calc_data.weapon_type == WeaponType::ROCKET
                     && _input.calc_data.intrinsic_hash < 1000
                 //ensures not exotic

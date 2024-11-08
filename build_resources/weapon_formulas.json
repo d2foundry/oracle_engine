@@ -1021,8 +1021,8 @@
         "3449390870": {"name": "Adaptive Frame",        "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst"},
         "2641107734": {"name": "Trespasser",            "cat": "default"   , "subFam": "Adaptive_Burst",   "magProf": "adaptive_burst"},
         "2984682260": {"name": "Forerunner",            "cat": "Forerunner", "subFam": "Forerunner",       "magProf": "forerunner"},
-        "1903618525": {"name": "Final Warning",         "cat": "default"   , "subFam": "Final-Warning",       "magProf": "final_warning"},
-        "2928496916": {"name": "Rocket-Assisted Frame", "cat": "zero",       "subFam": "zero",             "magProf": "rocket_assisted"},
+        "1903618525": {"name": "Final Warning",         "cat": "default"   , "subFam": "Final-Warning",    "magProf": "final_warning"},
+        "2928496916": {"name": "Rocket-Assisted Frame", "cat": "default",    "subFam": "RocketAssisted",   "magProf": "rocket_assisted"},
         "cat": {
             "default": {
                 "range":    {"vpp_start": 0.04,"offset_start": 11,"vpp_end": 0.03,"offset_end": 22, "floor_percent": 0.5},
@@ -1064,6 +1064,7 @@
             "Adaptive":         {"damage":36.083,   "crit_mult":5, "pve_damage":36.00,   "pve_crit_mult":-5, "burst_delay":6, "burst_size":1, "inner_burst_delay":0},
             "Lightweight":      {"damage":31.038,   "crit_mult":5, "pve_damage":31.00,   "pve_crit_mult":-5, "burst_delay":5, "burst_size":1, "inner_burst_delay":0},
             "Forerunner":       {"damage":47.231,  "crit_mult":16, "pve_damage":39.114,  "pve_crit_mult":15, "burst_delay":9, "burst_size":1, "inner_burst_delay":0},
+            "RocketAssisted":   {"damage":93.301,  "crit_mult":-20.63, "pve_damage":243.308,  "pve_crit_mult":-20.63, "burst_delay":18, "burst_size":1, "inner_burst_delay":0},
             "zero":             {"damage": 0,      "crit_mult": 0, "pve_damage": 0,      "pve_crit_mult": 0, "burst_delay": 0, "burst_size": 0, "inner_burst_delay": 0}
         },
         "magProf": {
