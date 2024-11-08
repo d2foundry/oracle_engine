@@ -1131,7 +1131,7 @@
             "Rapid-Fire": {"damage":85.002 ,  "crit_mult":99,  "pve_damage":90.952,  "pve_crit_mult":99, "burst_delay":13, "burst_size":1, "inner_burst_delay":0},
             "Adaptive":   {"damage":118.999 , "crit_mult":89,  "pve_damage":127.329, "pve_crit_mult":89, "burst_delay":20, "burst_size":1, "inner_burst_delay":0},
             "Aggressive": {"damage":135.007, "crit_mult":102, "pve_damage":144.457, "pve_crit_mult":102, "burst_delay":25, "burst_size":1, "inner_burst_delay":0},
-            "IceBreaker": {"damage":135.007, "crit_mult":102, "pve_damage":144.457, "pve_crit_mult":102, "burst_delay":37, "burst_size":1, "inner_burst_delay":0},
+            "IceBreaker": {"damage":135.007, "crit_mult":102, "pve_damage":172.554, "pve_crit_mult":102, "burst_delay":37, "burst_size":1, "inner_burst_delay":0},
             "Whisper":    {"damage":170, "crit_mult":102, "pve_damage":181.9, "pve_crit_mult":102, "burst_delay":25, "burst_size":1, "inner_burst_delay":0}
         },
         "magProf": {
