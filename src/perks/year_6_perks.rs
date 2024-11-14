@@ -381,7 +381,14 @@ pub fn year_6_perks() {
             if _input.value == 0 {
                 return DamageModifierResponse::default();
             }
-            let mult = if _input.pvp { 1.15 } else { 1.25 };
+            let mult = match (_input.value, _input.pvp) {
+                (0, _) => 0.0,
+                (1, false) => 1.1,
+                (2, false) => 1.175,
+                (3.., false) => 1.25,
+                (1..=2, true) => 1.1,
+                (3.., true) => 1.15,
+            };
 
             DamageModifierResponse {
                 impact_dmg_scale: mult,
