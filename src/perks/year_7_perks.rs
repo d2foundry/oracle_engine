@@ -95,5 +95,31 @@ pub fn year_7_perks() {
                 }
             },
         ),
-    )
+    );
+    add_sbr(
+        Perks::ClosingTime,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            if _input.value > 0 {
+                stats.insert(StatHashes::RANGE.into(), 10 * _input.value as i32);
+                stats.insert(StatHashes::HANDLING.into(), (20 * _input.value as i32) + 10);
+            }
+            stats
+        }),
+    );
+    add_hmr(
+        Perks::ClosingTime,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    HandlingModifierResponse::default();
+                }
+                HandlingModifierResponse {
+                    stat_add: 25 * _input.value as i32,
+                    ads_scale: 1.0 - (0.1 * _input.value as f64),
+                    ..Default::default()
+                }
+            },
+        ),
+    );
 }

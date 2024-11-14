@@ -429,7 +429,7 @@ pub enum Perks {
 
     //episode 2 | year 7
     AirTrigger = 1421772400,
-    //ClosingTime = 1194056669,
+    ClosingTime = 1194056669,
     LoneWolf = 2579169598,
 
     //subclass

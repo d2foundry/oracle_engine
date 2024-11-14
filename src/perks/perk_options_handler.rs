@@ -308,6 +308,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
 
         //episode 2 | year 7
         Perks::AirTrigger => Some(PerkOptionData::toggle()),
+        Perks::ClosingTime => Some(PerkOptionData::options(["Base", "Max Effect"].to_vec())),
         Perks::LoneWolf => Some(PerkOptionData::options(["Base", "Alone"].to_vec())),
 
         //exotics
