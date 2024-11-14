@@ -116,7 +116,9 @@ pub fn year_7_perks() {
                 }
                 HandlingModifierResponse {
                     stat_add: 25 * _input.value as i32,
-                    ads_scale: 1.0 - (0.1 * _input.value as f64),
+                    stow_scale: 1.0 - (0.1 * _input.value as f64),
+                    draw_scale: 1.0 - (0.1 * _input.value as f64),
+                    ads_scale:  1.0 - (0.1 * _input.value as f64),
                     ..Default::default()
                 }
             },
