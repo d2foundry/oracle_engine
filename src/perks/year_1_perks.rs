@@ -164,6 +164,12 @@ pub fn year_1_perks() {
         Perks::ExplosivePayload,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             if _input.pvp {
+                if *_input.calc_data.weapon_type == WeaponType::HANDCANNON {
+                    return DamageModifierResponse {
+                        explosive_dmg_scale: 0.93,
+                        ..Default::default()
+                    };
+                }
                 DamageModifierResponse::default()
             } else {
                 DamageModifierResponse {

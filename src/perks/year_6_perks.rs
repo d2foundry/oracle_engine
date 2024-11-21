@@ -381,7 +381,14 @@ pub fn year_6_perks() {
             if _input.value == 0 {
                 return DamageModifierResponse::default();
             }
-            let mult = if _input.pvp { 1.15 } else { 1.25 };
+            let mult = match (_input.value, _input.pvp) {
+                (0, _) => 0.0,
+                (1, false) => 1.1,
+                (2, false) => 1.175,
+                (3.., false) => 1.25,
+                (1..=2, true) => 1.1,
+                (3.., true) => 1.15,
+            };
 
             DamageModifierResponse {
                 impact_dmg_scale: mult,
@@ -664,9 +671,14 @@ pub fn year_6_perks() {
             if _input.value == 0 {
                 return DamageModifierResponse::default();
             }
+            let buff = match _input.value {
+                0 => 1.0,
+                1 => 1.15,
+                2.. => 1.25,
+            };
             DamageModifierResponse {
-                impact_dmg_scale: 1.15,
-                explosive_dmg_scale: 1.15,
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
                 ..Default::default()
             }
         }),
@@ -699,7 +711,7 @@ pub fn year_6_perks() {
                 0 => unreachable!(),
                 1 => 20,
                 2.. => 60,
-            };            
+            };
             stats.insert(StatHashes::RELOAD.into(), buff);
             stats
         }),

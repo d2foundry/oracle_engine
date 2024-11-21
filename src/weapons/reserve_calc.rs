@@ -23,6 +23,7 @@ enum ReserveIDs {
     HighInventoryRockets,
     AdaptiveBurstLinearFusionRifle,
     RocketAssistedFrame,
+    HeavyBurstShotgun,
 
     //kinetic exotic special
     Arbalest,
@@ -40,6 +41,7 @@ enum ReserveIDs {
     Merciless,
     Telesto,
     Tessellation,
+    ChoirOfOne,
 
     //exotic heavy
     Anarchy,
@@ -88,6 +90,7 @@ impl From<u32> for ReserveIDs {
             1002 => ReserveIDs::HighInventoryRockets,
             2202 => ReserveIDs::AdaptiveBurstLinearFusionRifle,
             1701 => ReserveIDs::RocketAssistedFrame,
+            702 => ReserveIDs::HeavyBurstShotgun,
 
             //kinetic exotic special
             2564164194 => ReserveIDs::Arbalest,
@@ -105,6 +108,7 @@ impl From<u32> for ReserveIDs {
             656200654 => ReserveIDs::Merciless,
             1927916065 => ReserveIDs::Telesto,
             2769013282 => ReserveIDs::Tessellation,
+            3698448090 => ReserveIDs::ChoirOfOne,
 
             //heavy
             389268985 => ReserveIDs::Anarchy,
@@ -161,6 +165,7 @@ pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _
             rapid_grenade_launcher(_mag_size, _mag_stat, _inv_stat)
         }
         ReserveIDs::RocketAssistedFrame => rocket_assisted(_mag_size, _mag_stat, _inv_stat),
+        ReserveIDs::HeavyBurstShotgun => heavy_burst_shotguns(_mag_size, _mag_stat, _inv_stat),
 
         //exotic kinetic special
         ReserveIDs::ForeRunner => forerunner(_mag_size, _mag_stat, _inv_stat),
@@ -180,6 +185,7 @@ pub fn calc_reserves(_mag_size: f64, _mag_stat: i32, _inv_stat: i32, _id: u32, _
         ReserveIDs::Merciless => merciless(_inv_stat),
         ReserveIDs::Telesto => telesto(_inv_stat),
         ReserveIDs::Tessellation => tessellation(_inv_stat),
+        ReserveIDs::ChoirOfOne => choir_of_one(_inv_stat),
 
         //exotic heavy
         ReserveIDs::Anarchy => anarchy(_inv_stat),
@@ -269,6 +275,20 @@ fn shotguns(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     vpp * _inv_stat as f64 + offset
 }
 
+fn heavy_burst_shotguns(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
+    let offset = match _mag_size.ceil() as i32 {
+        6 => 28.0,
+        8 => 26.266,
+        10 => 25.2,
+        12 => 24.534,
+        14 => 24.0,
+        _ => 24.0,
+    };
+
+    let vpp = ((offset * (5.0 / 3.0)) - offset) / 100.0;
+    vpp * _inv_stat as f64 + offset
+}
+
 fn rapid_fire_shotgun(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     let offset = match _mag_size.ceil() as i32 {
         4 => 14.0,
@@ -308,8 +328,8 @@ fn adaptive_burst_linear_fusion_rifle(_mag_size: f64, _mag_stat: i32, _inv_stat:
     vpp * _inv_stat as f64 + offset
 }
 fn rocket_assisted(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
-    let offset = 15.6;
-    0.08 * _inv_stat as f64 + offset
+    let offset = 34.3;
+    0.15 * _inv_stat as f64 + offset
 }
 fn heavy_compressed_wave(_mag_size: f64, _mag_stat: i32, _inv_stat: i32) -> f64 {
     let offset = 20.6;
@@ -400,6 +420,14 @@ fn buried_bloodline(_inv_stat: i32) -> f64 {
         70 => 67.0,
         90 => 72.0,
         _ => 75.0,
+    }
+}
+fn choir_of_one(_inv_stat: i32) -> f64 {
+    match _inv_stat {
+        0 => 200.0,
+        1..=20 => 241.0,
+        21..=40 => 280.0,
+        _ => 300.0,
     }
 }
 fn conditional_finality(_inv_stat: i32) -> f64 {
