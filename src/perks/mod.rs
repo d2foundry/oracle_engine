@@ -431,6 +431,7 @@ pub enum Perks {
     AirTrigger = 1421772400,
     ClosingTime = 1194056669,
     LoneWolf = 2579169598,
+    SplicerSurge = 3404929162,
 
     //subclass
     OnYourMark = 3066103999,
