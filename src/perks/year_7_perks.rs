@@ -75,9 +75,16 @@ pub fn year_7_perks() {
         Perks::LoneWolf,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
+            let enhance_buff = if _input.is_enhanced { 1 } else { 0 };
             if _input.value > 0 {
-                stats.insert(StatHashes::AIRBORNE.into(), 10 * _input.value as i32);
-                stats.insert(StatHashes::AIM_ASSIST.into(), 10 * _input.value as i32);
+                stats.insert(
+                    StatHashes::AIRBORNE.into(),
+                    (10 + 2 * enhance_buff) * _input.value as i32,
+                );
+                stats.insert(
+                    StatHashes::AIM_ASSIST.into(),
+                    (10 + enhance_buff) * _input.value as i32,
+                );
             }
             stats
         }),
@@ -89,8 +96,9 @@ pub fn year_7_perks() {
                 if _input.value == 0 {
                     HandlingModifierResponse::default();
                 }
+                let enhance_buff = if _input.is_enhanced { 0.05 } else { 0.0 };
                 HandlingModifierResponse {
-                    ads_scale: 1.0 - (0.1 * _input.value as f64),
+                    ads_scale: 1.0 - (0.1 * _input.value as f64) - enhance_buff,
                     ..Default::default()
                 }
             },
@@ -118,10 +126,66 @@ pub fn year_7_perks() {
                     stat_add: 25 * _input.value as i32,
                     stow_scale: 1.0 - (0.1 * _input.value as f64),
                     draw_scale: 1.0 - (0.1 * _input.value as f64),
-                    ads_scale:  1.0 - (0.1 * _input.value as f64),
+                    ads_scale: 1.0 - (0.1 * _input.value as f64),
                     ..Default::default()
                 }
             },
         ),
     );
+    add_sbr(
+        Perks::SplicerSurge,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            let buff = match _input.value {
+                0 => 0,
+                1 => 10,
+                2 => 20,
+                3.. => 45,
+            };
+            if _input.value > 0 {
+                stats.insert(StatHashes::RELOAD.into(), buff);
+                stats.insert(StatHashes::HANDLING.into(), buff);
+            }
+            stats
+        }),
+    );
+    add_sbr(
+        Perks::SplicerSurge,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            let buff = match _input.value {
+                0 => 0,
+                1 => 10,
+                2 => 20,
+                3.. => 45,
+            };
+            if _input.value > 0 {
+                stats.insert(StatHashes::RELOAD.into(), buff);
+                stats.insert(StatHashes::HANDLING.into(), buff);
+            }
+            stats
+        }),
+    );
+    add_rsmr(Perks::SplicerSurge,
+        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
+            if _input.value == 0 {
+                ReloadModifierResponse::default();
+            }
+            let reload_stat_add = match _input.value {
+                0 => 0,
+                1 => 10,
+                2 => 20,
+                3.. => 45,
+            };
+            let reload_time_scale = match _input.value {
+                0 => 1.00,
+                1 => 0.967,
+                2 => 0.934,
+                3.. => 0.9,
+            };
+            ReloadModifierResponse {
+                reload_stat_add,
+                reload_time_scale
+            }
+        }))
 }
