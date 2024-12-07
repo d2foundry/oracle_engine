@@ -704,7 +704,7 @@
             "Adaptive":      {"damage": 21.996, "crit_mult": 8, "pve_damage": 22.812, "pve_crit_mult": 8,    "burst_delay": 10, "burst_size": 3, "inner_burst_delay": 2},
             "Lightweight":   {"damage": 17.006, "crit_mult": 18,  "pve_damage": 19.2, "pve_crit_mult": 8,    "burst_delay": 8,  "burst_size": 3, "inner_burst_delay": 2},
             "VigilanceWing": {"damage": 15.972, "crit_mult": 8,  "pve_damage": 18.9, "pve_crit_mult": -2,   "burst_delay": 9,  "burst_size": 5, "inner_burst_delay": 2},
-            "GravitonLance": {"damage": 22.996, "crit_mult": 18, "pve_damage": 19.018, "pve_crit_mult": 8,    "burst_delay": 9, "burst_size": 2, "inner_burst_delay": 2},
+            "GravitonLance": {"damage": 19.555, "crit_mult": 18, "pve_damage": 19.018, "pve_crit_mult": 8,    "burst_delay": 9, "burst_size": 2, "inner_burst_delay": 2},
             "HeavyBurst": {"damage": 22.996, "crit_mult": 18, "pve_damage": 18.786, "pve_crit_mult": 16.728,    "burst_delay": 9, "burst_size": 2, "inner_burst_delay": 2}, 
             "test":          {"damage": 10.0, "crit_mult": 25.5,   "pve_damage": 10.0, "pve_crit_mult": 25.5,  "burst_delay": 2,  "burst_size": 5, "inner_burst_delay": 2}
         },
