@@ -93,7 +93,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::SwapMag => Some(PerkOptionData::static_()),
         Perks::FullChoke => Some(PerkOptionData::static_()),
         Perks::SpikeGrenades => Some(PerkOptionData::static_()),
-        Perks::AlloyMag => Some(PerkOptionData::options(["Half Mag", "Empty Mag"].to_vec())),
+        Perks::AlloyMag => Some(PerkOptionData::options(["Base", "Max Effect"].to_vec())),
         Perks::LiquidCoils => Some(PerkOptionData::static_()),
         Perks::AcceleratedCoils => Some(PerkOptionData::static_()),
         Perks::ChargetimeMW => Some(PerkOptionData::static_()),
