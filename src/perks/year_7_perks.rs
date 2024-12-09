@@ -132,21 +132,16 @@ pub fn year_7_perks() {
             },
         ),
     );
-    add_sbr(
-        Perks::SplicerSurge,
-        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
-            let mut stats = HashMap::new();
-            let buff = match _input.value {
-                0 => 0,
-                1 => 10,
-                2 => 20,
-                3.. => 45,
-            };
-            if _input.value > 0 {
-                stats.insert(StatHashes::RELOAD.into(), buff);
-                stats.insert(StatHashes::HANDLING.into(), buff);
+    add_rmr(
+        Perks::ClosingTime,
+        Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
+            if _input.value == 0 {
+                RangeModifierResponse::default();
             }
-            stats
+            RangeModifierResponse {
+                range_stat_add: 25 * _input.value as i32,
+                ..Default::default()
+            }
         }),
     );
     add_sbr(
@@ -166,7 +161,25 @@ pub fn year_7_perks() {
             stats
         }),
     );
-    add_rsmr(Perks::SplicerSurge,
+    add_sbr(
+        Perks::SplicerSurge,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            let buff = match _input.value {
+                0 => 0,
+                1 => 10,
+                2 => 20,
+                3.. => 45,
+            };
+            if _input.value > 0 {
+                stats.insert(StatHashes::RELOAD.into(), buff);
+                stats.insert(StatHashes::HANDLING.into(), buff);
+            }
+            stats
+        }),
+    );
+    add_rsmr(
+        Perks::SplicerSurge,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
             if _input.value == 0 {
                 ReloadModifierResponse::default();
@@ -185,7 +198,8 @@ pub fn year_7_perks() {
             };
             ReloadModifierResponse {
                 reload_stat_add,
-                reload_time_scale
+                reload_time_scale,
             }
-        }))
+        }),
+    )
 }
