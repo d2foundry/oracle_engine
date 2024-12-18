@@ -21,13 +21,17 @@ pub fn other_perks() {
     add_rsmr(
         Perks::AlloyMag,
         Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            if _input.value > 0 {
-                ReloadModifierResponse {
-                    reload_stat_add: 0,
-                    reload_time_scale: 0.85,
-                }
-            } else {
-                ReloadModifierResponse::default()
+            if _input.value == 0 {
+                ReloadModifierResponse::default();
+            }
+            let reload_time_scale = match _input.value {
+                0 => 1.0,
+                1 => 0.9,
+                2.. => 0.8
+            }; 
+            ReloadModifierResponse {
+                reload_time_scale,
+                ..Default::default()
             }
         }),
     );
