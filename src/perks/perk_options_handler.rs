@@ -93,7 +93,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::SwapMag => Some(PerkOptionData::static_()),
         Perks::FullChoke => Some(PerkOptionData::static_()),
         Perks::SpikeGrenades => Some(PerkOptionData::static_()),
-        Perks::AlloyMag => Some(PerkOptionData::toggle()),
+        Perks::AlloyMag => Some(PerkOptionData::options(["Base", "Max Effect"].to_vec())),
         Perks::LiquidCoils => Some(PerkOptionData::static_()),
         Perks::AcceleratedCoils => Some(PerkOptionData::static_()),
         Perks::ChargetimeMW => Some(PerkOptionData::static_()),
@@ -310,6 +310,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::AirTrigger => Some(PerkOptionData::toggle()),
         Perks::ClosingTime => Some(PerkOptionData::options(["Base", "Max Effect"].to_vec())),
         Perks::LoneWolf => Some(PerkOptionData::options(["Base", "Alone"].to_vec())),
+        Perks::SplicerSurge => Some(PerkOptionData::stacking(3)),
 
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
