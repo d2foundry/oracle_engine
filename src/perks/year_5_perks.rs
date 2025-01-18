@@ -305,11 +305,12 @@ pub fn year_5_perks() {
         Perks::TargetLock,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let nerf = 0.625; //patch 7.1.5
-            let mut enh_increase = 1.0;
-            if _input.is_enhanced {
-                enh_increase = if _input.pvp { 1.2 } else { 1.125 };
-            }
-
+            let enh_increase = match (_input.is_enhanced, _input.pvp) {
+                (false, _) => 1.0,
+                (true, false) => 1.125,
+                (true, true) => 1.2,
+            };
+            
             let low_end_dmg = 0.0934 * enh_increase * nerf;
             let high_end_dmg = 0.4005 * enh_increase * nerf;
 
