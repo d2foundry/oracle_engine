@@ -305,7 +305,12 @@ pub fn year_5_perks() {
         Perks::TargetLock,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let nerf = 0.625; //patch 7.1.5
-            let enh_increase = if _input.is_enhanced { 1.2 } else { 1.0 };
+            let enh_increase = match (_input.is_enhanced, _input.pvp) {
+                (false, _) => 1.0,
+                (true, false) => 1.125,
+                (true, true) => 1.2,
+            };
+            
             let low_end_dmg = 0.0934 * enh_increase * nerf;
             let high_end_dmg = 0.4005 * enh_increase * nerf;
 
@@ -314,11 +319,7 @@ pub fn year_5_perks() {
 
             let percent_of_mag = _input.calc_data.shots_fired_this_mag / _input.calc_data.base_mag;
 
-            let buff = if (percent_of_mag < 0.125
-                && *_input.calc_data.weapon_type != WeaponType::SUBMACHINEGUN)
-                || (percent_of_mag < 0.2
-                    && *_input.calc_data.weapon_type == WeaponType::SUBMACHINEGUN)
-            {
+            let buff = if percent_of_mag < 0.125 {
                 0.0
             } else if percent_of_mag > formula_end {
                 high_end_dmg
