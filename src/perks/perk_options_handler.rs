@@ -331,7 +331,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::FirstGlance => Some(PerkOptionData::toggle()),
         Perks::PerfectFith => Some(PerkOptionData::static_()),
         Perks::Broadside => Some(PerkOptionData::stacking(4)),
-        Perks::FourthHorsemanCatalyst => Some(PerkOptionData::toggle()),
+        Perks::FourthHorsemanCatalyst => Some(PerkOptionData::static_()),
         Perks::Stormbringer => Some(PerkOptionData::static_()),
         Perks::PrismaticInferno => Some(PerkOptionData::static_()),
         Perks::ReignHavoc => Some(PerkOptionData::toggle()),
