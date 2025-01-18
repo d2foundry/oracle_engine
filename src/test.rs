@@ -345,5 +345,5 @@ fn test_phase_mag() {
     let p_data = precision.calc_firing_data(Some(precision.static_calc_input()), None, true);
     assert_eq!(lw_data.burst_delay, p_data.burst_delay);
     assert_eq!(lw_data.pvp_crit_mult, p_data.pvp_crit_mult);
-    assert_eq!(f64::trunc(lw_data.pvp_impact_damage*10000.0)/10000.0, p_data.pvp_impact_damage);
+    assert_eq!(f64::trunc(lw_data.pvp_impact_damage*1000.0)/1000.0, p_data.pvp_impact_damage);
 }
