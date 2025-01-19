@@ -178,13 +178,15 @@ pub fn meta_perks() {
                         };
                     };
                 }
-                if *_input.calc_data.weapon_type == WeaponType::SIDEARM && _input.calc_data.intrinsic_hash == 914 {
-                    let percent = if _input.pvp {0.536} else {0.822};
+                if *_input.calc_data.weapon_type == WeaponType::SIDEARM
+                    && _input.calc_data.intrinsic_hash == 914
+                {
+                    let percent = if _input.pvp { 0.536 } else { 0.822 };
 
                     return ExplosivePercentResponse {
                         percent,
                         delyed: 0.0,
-                        retain_base_total: true
+                        retain_base_total: true,
                     };
                 }
                 if *_input.calc_data.weapon_type == WeaponType::ROCKET
@@ -228,8 +230,14 @@ pub fn meta_perks() {
         Perks::TargetingMod,
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                let ads_scale = match _input.value {
+                    0 => 1.0,
+                    1 => 0.85,
+                    2 => 0.75,
+                    3.. => 0.7,
+                };
                 HandlingModifierResponse {
-                    ads_scale: if _input.value > 0 { 0.75 } else { 1.0 },
+                    ads_scale,
                     ..Default::default()
                 }
             },
