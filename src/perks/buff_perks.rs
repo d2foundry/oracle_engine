@@ -81,7 +81,7 @@ pub fn buff_perks() {
     add_dmr(
         Perks::Radiant,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let des_buff = if _input.pvp { 1.1 } else { 1.25 };
+            let des_buff = if _input.pvp { 1.1 } else { 1.2 };
             let buff = emp_buff(_input.cached_data, des_buff);
             _input.cached_data.insert("radiant".to_string(), 1.0);
             DamageModifierResponse::basic_dmg_buff(buff)

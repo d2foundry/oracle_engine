@@ -15,7 +15,7 @@
         "3610814281": {"name": "Hard Light",         "cat": "hard_light","subFam": "Adaptive",    "magProf": "medium" },
         "3755070117": {"name": "Sweet Business",     "cat": "default",  "subFam": "SweetBuiss",  "magProf": "sweet_buiss", "pve":1.16},
         "3602718766": {"name": "Quicksilver Storm",  "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
-        "1385166695": {"name": "Centrifuse",         "cat": "default",  "subFam": "Precision",   "magProf": "small"},
+        "1385166695": {"name": "Centrifuse",         "cat": "default",  "subFam": "Precision",   "magProf": "centrifuse"},
         "4184462049": {"name": "Necrochasm",         "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
         "3698448090": {"name": "Choir of One",       "cat": "default",  "subFam": "ChoirOfOne",  "magProf": "choirOfOne" },
         
@@ -74,6 +74,10 @@
             },
             "small": {
                 "mag": {"evpp": 0.0 ,"vpp": 0.2, "offset": 24.5},
+                "reserve_id": 0
+            },
+            "centrifuse": {
+                "mag": {"evpp": 0.0 ,"vpp": 0.0, "offset": 45.0},
                 "reserve_id": 0
             },
             "sweet_buiss": {
@@ -169,7 +173,7 @@
         "1656957541": {"name": "Jötunn",              "cat": "Jotunn",  "subFam": "Jotunn",      "magProf": "jotunn"  },
         "1657056865": {"name": "One Thousand Voices", "cat": "1KV",     "subFam": "1KV",         "magProf": "1kv", "pve":1.142},
         "1927916065": {"name": "Telesto",             "cat": "Telesto", "subFam": "Precision",   "magProf": "telesto"  },
-        "2518716062": {"name": "Aggressive Frame",    "cat": "default", "subFam": "Aggressive",  "magProf": "default"  },
+        "2518716062": {"name": "Aggressive Frame",    "cat": "aggressive", "subFam": "Aggressive",  "magProf": "default"  },
         "3610750208": {"name": "Vex Mythoclast",      "cat": "Vex",     "subFam": "Vex",         "magProf": "Vex"      },
         "2585427437": {"name": "Delicate Tomb",       "cat": "default", "subFam": "Rapid-Fire",  "magProf": "delicateTomb"  },
         "2769013282": {"name": "Tessellation",        "cat": "zero",    "subFam": "Adaptive",    "magProf": "tessellation"},
@@ -183,6 +187,16 @@
                     "ads":  {"vpp": -0.001693741678, "offset": 0.4112330226}
                 },
                 "combatant_scalars": {"vehicle": 2.12, "boss": 2.55, "champion": 2.55, "miniboss": 2.55, "elite": 2.55, "minor": 2.73}
+            },
+            "aggressive": {
+                "range":    {"vpp_start": 0.0404, "offset_start": 14.73, "vpp_end": 0.318, "offset_end": 17.705, "floor_percent": 0.65, "fusion": true},
+                "reload":   {"evpp": 0.0000615281, "vpp": -0.0198054, "offset": 2.82857040000000},
+                "handling": {
+                    "ready":{"vpp": -0.001448069241, "offset": 0.4990612517},
+                    "stow": {"vpp": -0.002863515313, "offset": 0.4445712383},
+                    "ads":  {"vpp": -0.001693741678, "offset": 0.4112330226}
+                },
+                "combatant_scalars": {"vehicle": 2.12, "boss": 2.55, "champion": 2.55, "miniboss": 2.55, "elite": 2.9325, "minor": 3.1395}
             },
             "1KV": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
@@ -323,7 +337,7 @@
                     "stow": {"vpp": -0.00232786, "offset": 0.48726765},
                     "ads":  {"vpp": -0.00187072, "offset": 0.50019128}
                 },
-                "combatant_scalars": {"vehicle": 2.5, "boss": 2.5, "champion": 2.62, "miniboss": 2.62, "elite": 2.62, "minor": 3.125}
+                "combatant_scalars": {"vehicle": 2.5, "boss": 2.25, "champion": 2.62, "miniboss": 2.62, "elite": 2.62, "minor": 3.125}
             },
             "anarchy": {
                 "range":    {"vpp_start": 0.0,"offset_start": 999.0,"vpp_end": 0.0,"offset_end": 999.9, "floor_percent": 0.999},
@@ -535,12 +549,12 @@
         },
 
         "subFam": {
-            "Precision":    {"damage": 166.0, "crit_mult": 99,  "pve_damage": 174.3, "pve_crit_mult": 99,"burst_delay": 16, "burst_size": 1, "inner_burst_delay": 0},
-            "Special":      {"damage": 133.0, "crit_mult": 114, "pve_damage": 139.65, "pve_crit_mult": 114, "burst_delay": 16, "burst_size": 1, "inner_burst_delay": 0},
-            "Adaptive_Burst":   {"damage": 79.0, "crit_mult": 99,   "pve_damage": 82.95, "pve_crit_mult": 99,  "burst_delay": 16, "burst_size": 3, "inner_burst_delay": 5, "one_ammo": true},
-            "Euphony":      {"damage": 39.139, "crit_mult": 99,   "pve_damage": 39.139, "pve_crit_mult": 99,  "burst_delay": 16, "burst_size": 3, "inner_burst_delay": 5, "one_ammo": true},
-            "QueenBreaker": {"damage": 131, "crit_mult": 51,    "pve_damage": 137.55, "pve_crit_mult": 51,  "burst_delay": 9,  "burst_size": 1, "inner_burst_delay": 0},
-            "SleeperSim":   {"damage": 726, "crit_mult": -15,   "pve_damage": 762.3, "pve_crit_mult": -15, "burst_delay": 31, "burst_size": 1, "inner_burst_delay": 0}
+            "Precision":    {"damage": 166.0, "crit_mult": 99,  "pve_damage": 191.73, "pve_crit_mult": 99,"burst_delay": 16, "burst_size": 1, "inner_burst_delay": 0},
+            "Special":      {"damage": 133.0, "crit_mult": 114, "pve_damage": 153.615, "pve_crit_mult": 114, "burst_delay": 16, "burst_size": 1, "inner_burst_delay": 0},
+            "Adaptive_Burst":   {"damage": 79.0, "crit_mult": 99,   "pve_damage": 91.245, "pve_crit_mult": 99,  "burst_delay": 16, "burst_size": 3, "inner_burst_delay": 5, "one_ammo": true},
+            "Euphony":      {"damage": 39.139, "crit_mult": 99,   "pve_damage": 43.053, "pve_crit_mult": 99,  "burst_delay": 16, "burst_size": 3, "inner_burst_delay": 5, "one_ammo": true},
+            "QueenBreaker": {"damage": 131, "crit_mult": 51,    "pve_damage": 151.305, "pve_crit_mult": 51,  "burst_delay": 9,  "burst_size": 1, "inner_burst_delay": 0},
+            "SleeperSim":   {"damage": 726, "crit_mult": -15,   "pve_damage": 838.53, "pve_crit_mult": -15, "burst_delay": 31, "burst_size": 1, "inner_burst_delay": 0}
         },
         "magProf": {
             "default": {

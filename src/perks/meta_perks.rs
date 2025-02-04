@@ -47,14 +47,15 @@ pub fn meta_perks() {
             }
             if *_input.calc_data.enemy_type == EnemyType::MINOR && !_input.pvp {
                 dmg_scale *= match *_input.calc_data.weapon_type {
-                    WeaponType::SIDEARM
-                    | WeaponType::TRACERIFLE
-                    | WeaponType::SCOUTRIFLE
-                    | WeaponType::BOW => 1.2,
-                    WeaponType::AUTORIFLE | WeaponType::PULSERIFLE => 1.15,
-                    WeaponType::SUBMACHINEGUN => 1.1,
+                    WeaponType::SIDEARM | WeaponType::BOW => 1.2,
+                    WeaponType::TRACERIFLE => 1.44,
+                    WeaponType::SCOUTRIFLE => 1.38,
+                    WeaponType::PULSERIFLE => 1.15,
+                    WeaponType::AUTORIFLE => 1.265,
+                    WeaponType::SUBMACHINEGUN => 1.155,
                     WeaponType::HANDCANNON => 1.05,
                     WeaponType::SNIPER => 1.6,
+                    WeaponType::FUSIONRIFLE => 1.3,
                     _ => 1.0,
                 };
             }
@@ -62,18 +63,23 @@ pub fn meta_perks() {
                 dmg_scale *= match *_input.calc_data.weapon_type {
                     WeaponType::TRACERIFLE => 1.2,
                     WeaponType::SNIPER => 1.75,
+                    WeaponType::SCOUTRIFLE => 1.3,
+                    WeaponType::AUTORIFLE => 1.1,
+                    WeaponType::FUSIONRIFLE => 1.3,
                     _ => 1.0,
                 };
             }
             if *_input.calc_data.enemy_type == EnemyType::MINIBOSS && !_input.pvp {
                 dmg_scale *= match *_input.calc_data.weapon_type {
                     WeaponType::SNIPER => 1.35,
+                    WeaponType::FUSIONRIFLE => 1.3,
                     _ => 1.0,
                 };
             }
             if *_input.calc_data.enemy_type == EnemyType::CHAMPION && !_input.pvp {
                 dmg_scale *= match *_input.calc_data.weapon_type {
                     WeaponType::SNIPER => 1.25,
+                    WeaponType::FUSIONRIFLE => 1.3,
                     _ => 1.0,
                 };
             }
