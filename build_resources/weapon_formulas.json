@@ -7,6 +7,7 @@
         "1294026524": {"name": "Adaptive Frame",     "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
         "4129629253": {"name": "Khvostov 7G-0X",     "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
         "2622129339": {"name": "Support Frame",      "cat": "default",  "subFam": "Support-Frame",    "magProf": "medium" },
+        "3488129416": {"name": "Support Frame (Strand)", "cat": "default",  "subFam": "Support-Frame",    "magProf": "medium" },
         "1458010786": {"name": "Lightweight",        "cat": "default",  "subFam": "Rapid-Fire",  "magProf": "large" },
         "2694044463": {"name": "Jiangshi AR1",       "cat": "default",  "subFam": "Precision",  "magProf": "medium" },
         "1484442054": {"name": "Monte Carlo",        "cat": "default",  "subFam": "Adaptive",    "magProf": "medium" },
