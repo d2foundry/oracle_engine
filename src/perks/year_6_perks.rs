@@ -715,5 +715,18 @@ pub fn year_6_perks() {
             stats.insert(StatHashes::RELOAD.into(), buff);
             stats
         }),
+    );
+    add_dmr(
+        Perks::TempestCascade,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 2.0,
+                explosive_dmg_scale: 2.0,
+                ..Default::default()
+            }
+        }),
     )
 }

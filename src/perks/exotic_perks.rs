@@ -556,63 +556,16 @@ pub fn exotic_perks() {
         }),
     );
 
-    add_sbr(
+    add_dmr(
         Perks::Fundamentals,
-        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
-            let mut stats = HashMap::new();
-            if _input.value == 1 {
-                stats.insert(StatHashes::STABILITY.into(), 20);
-                stats.insert(StatHashes::AIM_ASSIST.into(), 10);
-            } else if _input.value == 2 {
-                stats.insert(StatHashes::AIRBORNE.into(), 20);
-                stats.insert(StatHashes::RELOAD.into(), 35);
-            } else if _input.value == 3 {
-                stats.insert(StatHashes::RANGE.into(), 5);
-                stats.insert(StatHashes::HANDLING.into(), 25);
-            };
-            stats
-        }),
-    );
-
-    add_hmr(
-        Perks::Fundamentals,
-        Box::new(
-            |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                let mut handling = 0;
-                if _input.value == 3 {
-                    handling = 25;
-                }
-                HandlingModifierResponse {
-                    stat_add: handling,
-                    ..Default::default()
-                }
-            },
-        ),
-    );
-
-    add_rsmr(
-        Perks::Fundamentals,
-        Box::new(|_input: ModifierResponseInput| -> ReloadModifierResponse {
-            let mut reload = 0;
-            if _input.value == 2 {
-                reload = 35;
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
             }
-            ReloadModifierResponse {
-                reload_stat_add: reload,
-                ..Default::default()
-            }
-        }),
-    );
-
-    add_rmr(
-        Perks::Fundamentals,
-        Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
-            let mut range = 0;
-            if _input.value == 3 {
-                range = 5;
-            }
-            RangeModifierResponse {
-                range_stat_add: range,
+            let buff = if _input.pvp { 1.1 } else { 1.3 };
+            DamageModifierResponse {
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
                 ..Default::default()
             }
         }),
