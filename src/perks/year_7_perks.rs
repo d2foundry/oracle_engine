@@ -219,7 +219,7 @@ pub fn year_7_perks() {
                 (2, true) => 1.2,
                 (3, true) => 1.3,
                 (4, true) => 1.35,
-                (5, true) => 1.4,
+                (5.., true) => 1.4,
                 (_, _) => 1.0,
             };
             DamageModifierResponse::basic_dmg_buff(buff)
