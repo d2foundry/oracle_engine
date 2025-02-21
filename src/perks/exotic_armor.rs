@@ -208,6 +208,19 @@ pub fn exotic_armor() {
         ),
     );
 
+    add_dmr(
+        Perks::SealedAhamkaraGrasps,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let buff = if _input.pvp { 1.2 } else { 1.35 };
+
+            DamageModifierResponse::basic_dmg_buff(buff)
+        }),
+    );
+
+
     //TODO: AUTORELOAD FOR SEALED AHAMKARA GRASPS
     //TODO: LUCKY PANTS AFFECTING ACCURACY CONE
     //LUCKY PANTS ONLY WORKS FOR READY ?!?!?! crazy :(
