@@ -209,18 +209,15 @@ pub fn year_7_perks() {
                 DamageModifierResponse::default();
             }
             let is_kinetic = *_input.calc_data.damage_type == DamageType::KINETIC;
-            let buff = match (_input.value, is_kinetic) {
-                (1, false) => 1.025,
-                (2, false) => 1.1,
-                (3, false) => 1.2,
-                (4, false) => 1.3,
-                (5.., false) => 1.35,
-                (1, true) => 1.1,
-                (2, true) => 1.2,
-                (3, true) => 1.3,
-                (4, true) => 1.35,
-                (5.., true) => 1.4,
-                (_, _) => 1.0,
+            let value = _input.value + is_kinetic as u32;
+            let buff = match value {
+                0 => 1.0,
+                1 => 1.025,
+                2 => 1.1,
+                3 => 1.2,
+                4 => 1.3,
+                5 => 1.35,
+                6.. => 1.4,
             };
             DamageModifierResponse::basic_dmg_buff(buff)
         }),
