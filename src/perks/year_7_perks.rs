@@ -201,5 +201,39 @@ pub fn year_7_perks() {
                 reload_time_scale,
             }
         }),
+    );
+    add_dmr(
+        Perks::ElementalHoning,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                DamageModifierResponse::default();
+            }
+            let is_kinetic = *_input.calc_data.damage_type == DamageType::KINETIC;
+            let value = _input.value + is_kinetic as u32;
+            let buff = match value {
+                0 => 1.0,
+                1 => 1.025,
+                2 => 1.1,
+                3 => 1.2,
+                4 => 1.3,
+                5 => 1.35,
+                6.. => 1.4,
+            };
+            DamageModifierResponse::basic_dmg_buff(buff)
+        }),
+    );
+    add_mmr(
+        Perks::TimelostMagazine,
+        Box::new(
+            |_input: ModifierResponseInput| -> MagazineModifierResponse {
+                if _input.value == 0 {
+                    return MagazineModifierResponse::default();
+                }
+                MagazineModifierResponse {
+                    magazine_scale: 2.0,
+                    ..Default::default()
+                }
+            },
+        ),
     )
 }

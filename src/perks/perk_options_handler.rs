@@ -311,6 +311,10 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::LoneWolf => Some(PerkOptionData::options(["Base", "Alone"].to_vec())),
         Perks::SplicerSurge => Some(PerkOptionData::stacking(3)),
 
+        //episode 3 | year 7
+        Perks::ElementalHoning => Some(PerkOptionData::stacking(5)),
+        Perks::TimelostMagazine => Some(PerkOptionData::toggle()),
+
         //exotics
         Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
         Perks::DarkForgedTrigger => Some(PerkOptionData::toggle()),

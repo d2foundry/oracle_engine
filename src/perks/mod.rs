@@ -433,6 +433,10 @@ pub enum Perks {
     LoneWolf = 2579169598,
     SplicerSurge = 3404929162,
 
+    //episode 3 | year 7
+    ElementalHoning = 1089671869,
+    TimelostMagazine = 2589407652,
+
     //subclass
     OnYourMark = 3066103999,
     Hedrons = 3469412970,
