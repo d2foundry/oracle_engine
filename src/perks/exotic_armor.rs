@@ -544,5 +544,37 @@ pub fn exotic_armor() {
             }
             stats
         }),
-    )
+    );
+    add_dmr(
+        Perks::TritonVice,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 || _input.calc_data.weapon_type != &WeaponType::GLAIVE {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                melee_dmg_scale: 2.0,
+                ..Default::default()
+            }
+        }),
+    );
+    add_dmr(
+        Perks::WarlordsSigil,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let melee_buff = match _input.value {
+                1 => 1.55,
+                2 => 2.10,
+                3 => 2.65,
+                4 => 3.2,
+                5 => 3.75,
+                _ => 3.75
+            };
+            DamageModifierResponse {
+                melee_dmg_scale: melee_buff,
+                ..Default::default()
+            }
+        }),
+    );
 }
