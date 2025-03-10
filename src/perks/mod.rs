@@ -516,7 +516,7 @@ pub enum Perks {
     InverseRelationship = 1833111001,
     Spindle = 1180907940,
     TheRightChoice = 34498892,
-    Judgement = 1797707170,
+    Judgment = 1797707170,
     TempestCascade = 1208312843,
 
     //heavy exotic

@@ -1325,21 +1325,19 @@ pub fn exotic_perks() {
         }),
     );
     add_dmr(
-        Perks::Judgement,
+        Perks::Judgment,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            const JUDGEMENT_HASH: u32 = 1797707170;
-
             let hits_needed = if _input.pvp { 5 } else { 14 };
 
             if _input.calc_data.shots_fired_this_mag < (hits_needed as f64)
-                && _input.calc_data.intrinsic_hash != JUDGEMENT_HASH
+                && _input.calc_data.intrinsic_hash != Perks::Judgment.into()
                 && _input.value == 0
             {
                 return DamageModifierResponse::default();
             }
 
-            let buff = match (_input.calc_data.intrinsic_hash, _input.pvp) {
-                (JUDGEMENT_HASH, _) | (_, true) => 1.3,
+            let buff = match (_input.calc_data.intrinsic_hash.into(), _input.pvp) {
+                (Perks::Judgment, _) | (_, true) => 1.3,
                 (_, false) => 1.15,
             };
 
