@@ -372,14 +372,14 @@ impl ReloadOverrideResponse {
 #[derive(Debug, Clone, PartialEq)]
 pub struct ExplosivePercentResponse {
     pub percent: f64,
-    pub delyed: f64,
+    pub delay: f64,
     pub retain_base_total: bool,
 }
 impl Default for ExplosivePercentResponse {
     fn default() -> Self {
         Self {
             percent: 0.0,
-            delyed: 0.0,
+            delay: 0.0,
             retain_base_total: false,
         }
     }
