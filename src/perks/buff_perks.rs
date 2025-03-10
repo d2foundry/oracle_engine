@@ -67,7 +67,7 @@ pub fn buff_perks() {
     );
 
     add_dmr(
-        Perks::NobleRounds,
+        Perks::BlessingOfTheSky,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             if _input.value == 0 {
                 return DamageModifierResponse::default();
