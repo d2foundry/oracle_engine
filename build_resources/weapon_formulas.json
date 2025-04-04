@@ -259,7 +259,7 @@
             "Jotunn":      {"damage": 326.0,  "crit_mult": -25.5, "pve_damage": 348.82,  "pve_crit_mult": -25.5, "burst_delay": 24.5, "burst_size": 1, "inner_burst_delay": 0  },
             "Bastion":     {"damage": 31.231, "crit_mult": -25.5, "pve_damage": 27.745, "pve_crit_mult": -25.5, "burst_delay": 22,   "burst_size": 21,"inner_burst_delay": 0, "one_ammo": true},
             "Vex":         {"damage": 21.923, "crit_mult": 5, "pve_damage": 23.54, "pve_crit_mult": 5, "burst_delay": 5,  "burst_size": 1, "inner_burst_delay": 0  },
-            "1KV":         {"damage": 0,     "crit_mult": -25.5, "pve_damage": 0, "pve_crit_mult": -25.5, "burst_delay": 0,    "burst_size": 0, "inner_burst_delay": 0  },
+            "1KV":         {"damage": 0,     "crit_mult": -25.5, "pve_damage": 0, "pve_crit_mult": -25.5, "burst_delay": 30,    "burst_size": 0, "inner_burst_delay": 0  },
             "zero":        {"damage": 0,     "crit_mult": 0, "pve_damage": 0, "pve_crit_mult": 0, "burst_delay": 0,    "burst_size": 0, "inner_burst_delay": 0  }
         },
         "magProf": {
@@ -717,7 +717,7 @@
             "High-Impact":   {"damage": 21.496, "crit_mult": 15, "pve_damage": 26.4, "pve_crit_mult": 5,    "burst_delay": 12, "burst_size": 3, "inner_burst_delay": 2},
             "Rapid-Fire":    {"damage": 14.504, "crit_mult": 20, "pve_damage": 16.80, "pve_crit_mult": 10,   "burst_delay": 6,  "burst_size": 3, "inner_burst_delay": 2},
             "Adaptive":      {"damage": 21.996, "crit_mult": 8, "pve_damage": 22.812, "pve_crit_mult": 8,    "burst_delay": 10, "burst_size": 3, "inner_burst_delay": 2},
-            "Lightweight":   {"damage": 20.406, "crit_mult": 3,  "pve_damage": 19.2, "pve_crit_mult": 8,    "burst_delay": 8,  "burst_size": 3, "inner_burst_delay": 2},
+            "Lightweight":   {"damage": 19.7, "crit_mult": 5,  "pve_damage": 19.2, "pve_crit_mult": 8,    "burst_delay": 8,  "burst_size": 3, "inner_burst_delay": 2},
             "VigilanceWing": {"damage": 15.972, "crit_mult": 8,  "pve_damage": 18.9, "pve_crit_mult": -2,   "burst_delay": 9,  "burst_size": 5, "inner_burst_delay": 2},
             "GravitonLance": {"damage": 19.555, "crit_mult": 18, "pve_damage": 19.018, "pve_crit_mult": 8,    "burst_delay": 10, "burst_size": 2, "inner_burst_delay": 2},
             "HeavyBurst": {"damage": 22.996, "crit_mult": 18, "pve_damage": 18.786, "pve_crit_mult": 16.728,    "burst_delay": 9, "burst_size": 2, "inner_burst_delay": 2}, 

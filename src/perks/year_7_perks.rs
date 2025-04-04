@@ -79,11 +79,11 @@ pub fn year_7_perks() {
             if _input.value > 0 {
                 stats.insert(
                     StatHashes::AIRBORNE.into(),
-                    (10 + 2 * enhance_buff) * _input.value as i32,
+                    (15 + 2 * enhance_buff) * _input.value as i32,
                 );
                 stats.insert(
                     StatHashes::AIM_ASSIST.into(),
-                    (10 + enhance_buff) * _input.value as i32,
+                    (5 + enhance_buff) * _input.value as i32,
                 );
             }
             stats
@@ -108,9 +108,15 @@ pub fn year_7_perks() {
         Perks::ClosingTime,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
+            let mut range = 10 * _input.value as i32;
+            let mut handling = (20 * _input.value as  i32) + 10;
+            if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
+                range /= 2;
+                handling /= 2;
+            }
             if _input.value > 0 {
-                stats.insert(StatHashes::RANGE.into(), 10 * _input.value as i32);
-                stats.insert(StatHashes::HANDLING.into(), (20 * _input.value as i32) + 10);
+                stats.insert(StatHashes::RANGE.into(), range);
+                stats.insert(StatHashes::HANDLING.into(), handling);
             }
             stats
         }),
@@ -122,11 +128,17 @@ pub fn year_7_perks() {
                 if _input.value == 0 {
                     HandlingModifierResponse::default();
                 }
+                let mut scalar = 1.0 - (0.1 * _input.value as f64);
+                let mut stat = 25 * _input.value as i32;
+                if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
+                    scalar = 1.0 - (0.05 * _input.value as f64);
+                    stat /= 2;
+                }
                 HandlingModifierResponse {
-                    stat_add: 25 * _input.value as i32,
-                    stow_scale: 1.0 - (0.1 * _input.value as f64),
-                    draw_scale: 1.0 - (0.1 * _input.value as f64),
-                    ads_scale: 1.0 - (0.1 * _input.value as f64),
+                    stat_add: stat,
+                    stow_scale: scalar,
+                    draw_scale: scalar,
+                    ads_scale: scalar,
                     ..Default::default()
                 }
             },
@@ -138,8 +150,12 @@ pub fn year_7_perks() {
             if _input.value == 0 {
                 RangeModifierResponse::default();
             }
+            let mut stat = 25 * _input.value as i32;
+            if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
+                stat /= 2;
+            }
             RangeModifierResponse {
-                range_stat_add: 25 * _input.value as i32,
+                range_stat_add: stat,
                 ..Default::default()
             }
         }),

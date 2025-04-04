@@ -550,8 +550,8 @@ pub fn year_6_perks() {
                 (_, 0) => 1.0,
                 (false, 1..=3) => 1.05 + (0.1 * _input.value as f64),
                 (false, 4..) => 1.5,
-                (true, 1 | 2) => 1.2,
-                (true, 3..) => 1.35,
+                (true, 1 | 2) => 1.15,
+                (true, 3..) => 1.5,
             };
             DamageModifierResponse {
                 impact_dmg_scale: buff,
