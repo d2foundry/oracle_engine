@@ -108,15 +108,15 @@ pub fn year_7_perks() {
         Perks::ClosingTime,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
-            let mut range = 10 * _input.value as i32;
-            let mut handling = (20 * _input.value as  i32) + 10;
+            let mut range = 10.0 * _input.value as f64;
+            let mut handling = (20.0 * _input.value as f64) + 10.0;
             if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
-                range /= 2;
-                handling /= 2;
+                range /= 2.0;
+                handling /= 2.0;
             }
             if _input.value > 0 {
-                stats.insert(StatHashes::RANGE.into(), range);
-                stats.insert(StatHashes::HANDLING.into(), handling);
+                stats.insert(StatHashes::RANGE.into(), range.ceil() as i32);
+                stats.insert(StatHashes::HANDLING.into(), handling.ceil() as i32);
             }
             stats
         }),
@@ -129,13 +129,13 @@ pub fn year_7_perks() {
                     HandlingModifierResponse::default();
                 }
                 let mut scalar = 1.0 - (0.1 * _input.value as f64);
-                let mut stat = 25 * _input.value as i32;
+                let mut stat = 25.0 * _input.value as f64;
                 if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
                     scalar = 1.0 - (0.05 * _input.value as f64);
-                    stat /= 2;
+                    stat /= 2.0;
                 }
                 HandlingModifierResponse {
-                    stat_add: stat,
+                    stat_add: stat.ceil() as i32,
                     stow_scale: scalar,
                     draw_scale: scalar,
                     ads_scale: scalar,
@@ -150,12 +150,12 @@ pub fn year_7_perks() {
             if _input.value == 0 {
                 RangeModifierResponse::default();
             }
-            let mut stat = 25 * _input.value as i32;
+            let mut stat = 25.0 * _input.value as f64;
             if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
-                stat /= 2;
+                stat /= 2.0;
             }
             RangeModifierResponse {
-                range_stat_add: stat,
+                range_stat_add: stat.ceil() as i32,
                 ..Default::default()
             }
         }),
