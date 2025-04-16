@@ -408,7 +408,7 @@ pub fn exotic_armor() {
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
                 let mut stats = HashMap::new();
-                if _input.calc_data.intrinsic_hash == 2144092201 {
+                if _input.calc_data.intrinsic_hash == Perks::NobleRounds.into() {
                     //Lumina
                     stats.insert(StatHashes::AIRBORNE.into(), 30);
                 };

@@ -471,6 +471,7 @@ pub enum Perks {
     RideTheBull = 630329983,
     HuntersTrance = 383825919,
     NobleRounds = 2144092201,
+    BlessingOfTheSky = 743139589,
     StormAndStress = 2238035098,
     Roadborn = 1658733671,
     MarkovChain = 2814973067,
