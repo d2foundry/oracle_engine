@@ -450,6 +450,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::StringTheory => Some(PerkOptionData::static_()),
         Perks::Judgment => Some(PerkOptionData::toggle()),
         Perks::DoomFang => Some(PerkOptionData::stacking(4)),
+        Perks::BurningFists => Some(PerkOptionData::stacking(5)),
 
         //misc
         Perks::UmbralSharpening => Some(PerkOptionData::stacking(5)),
