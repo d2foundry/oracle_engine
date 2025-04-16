@@ -9,9 +9,10 @@ use super::{
     add_dmr, add_edr, add_epr, add_fmr, add_hmr, add_mmr, add_rmr, add_rr, add_rsmr, add_sbr,
     add_vmr, clamp,
     lib::{
-        CalculationInput, DamageModifierResponse, ExtraDamageResponse, FiringModifierResponse,
-        HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
-        RangeModifierResponse, RefundResponse, ReloadModifierResponse, ReloadOverrideResponse,
+        CalculationInput, DamageModifierResponse, ExplosivePercentResponse, ExtraDamageResponse,
+        FiringModifierResponse, HandlingModifierResponse, InventoryModifierResponse,
+        MagazineModifierResponse, RangeModifierResponse, RefundResponse, ReloadModifierResponse,
+        ReloadOverrideResponse,
     },
     ModifierResponseInput, Perks,
 };
@@ -1229,6 +1230,40 @@ pub fn exotic_perks() {
                 };
             };
             DamageModifierResponse::default()
+        }),
+    );
+
+    add_dmr(
+        Perks::PerpetualLoophole,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                melee_dmg_scale: 1.2,
+                ..Default::default()
+            }
+        }),
+    );
+    add_epr(
+        Perks::BigFrigidGlaive,
+        Box::new(|_input: ModifierResponseInput| -> ExplosivePercentResponse {
+            ExplosivePercentResponse {
+                percent: 1.0,
+                ..Default::default()
+            }
+        }),
+    );
+    add_dmr(
+        Perks::WeightedEdge,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                melee_dmg_scale: 1.5,
+                ..Default::default()
+            }
         }),
     );
 

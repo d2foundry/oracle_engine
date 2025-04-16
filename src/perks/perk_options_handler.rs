@@ -391,6 +391,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::HeatRises => Some(PerkOptionData::toggle()),
         Perks::FlowState => Some(PerkOptionData::toggle()),
         Perks::ThreadOfAscent => Some(PerkOptionData::toggle()),
+        Perks::BannerOfWar => Some(PerkOptionData::stacking(4)),
         Perks::WellOfRadiance => Some(PerkOptionData::static_()),
         Perks::Amplified => Some(PerkOptionData::static_()),
         Perks::Radiant => Some(PerkOptionData::static_()),
@@ -407,6 +408,9 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::Unrepentant => Some(PerkOptionData::toggle()),
         Perks::ArcConductor => Some(PerkOptionData::toggle()),
         Perks::VoidLeech => Some(PerkOptionData::toggle()),
+        Perks::PerpetualLoophole => Some(PerkOptionData::toggle()),
+        Perks::BigFrigidGlaive => Some(PerkOptionData::static_()),
+        Perks::WeightedEdge => Some(PerkOptionData::toggle()),
         Perks::InverseRelationship => Some(PerkOptionData::stacking(3)),
         Perks::Spindle => Some(PerkOptionData::stacking(25)),
         Perks::TheRightChoice => Some(PerkOptionData::static_()),
@@ -450,6 +454,8 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::StringTheory => Some(PerkOptionData::static_()),
         Perks::Judgment => Some(PerkOptionData::toggle()),
         Perks::DoomFang => Some(PerkOptionData::stacking(4)),
+        Perks::BurningFists => Some(PerkOptionData::stacking(5)),
+        Perks::WarlordsSigil => Some(PerkOptionData::stacking(5)),
 
         //misc
         Perks::UmbralSharpening => Some(PerkOptionData::stacking(5)),
