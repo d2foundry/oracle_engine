@@ -527,8 +527,8 @@ pub fn year_1_perks() {
         Perks::SlideWays,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let stability = if _input.is_enhanced { 25 } else { 20 };
-                let handling = if _input.is_enhanced { 25 } else { 20 };
+                let stability = if _input.is_enhanced { 33 } else { 30 };
+                let handling = if _input.is_enhanced { 17 } else { 15 };
                 let mut out = HashMap::new();
                 if _input.value > 0 {
                     out.insert(StatHashes::STABILITY.into(), stability);
@@ -543,7 +543,10 @@ pub fn year_1_perks() {
         Perks::SlideWays,
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                let handling = if _input.value > 0 { 20 } else { 0 };
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
+                let handling = if _input.is_enhanced { 17 } else { 15 };
                 HandlingModifierResponse {
                     stat_add: handling,
                     ..Default::default()
