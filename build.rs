@@ -9,8 +9,6 @@ use std::fs::File;
 use std::hash::{Hash, Hasher};
 use std::io::Write;
 
-
-
 /*const ID_TO_NAME: PhfMap<i32, &'static str> = phf_map! {
     6i32 => "Auto Rifle",
     31i32 => "Combat Bow",
@@ -55,14 +53,15 @@ const INTRINSIC_MAP: PhfMap<u32, &'static [&'static str]> = phf_map! {
 903u32 => &["Adaptive Frame", "Adaptive Glaive", "Adaptive Burst"],
 904u32 => &["Aggressive Frame", "Aggressive Glaive", "Aggressive Burst"],
 905u32 => &["Lightweight Frame", "MIDA Synergy"],
-906u32 => &["Precision Frame", "Häkke Precision Frame", "Pinpoint Slug Frame"],
+906u32 => &["Precision Frame", "Häkke Precision Frame"],
 907u32 => &["Double Fire", "Heavy Burst"],
 908u32 => &["Wave Frame", "Compressed Wave Frame"],
 911u32 => &["Legacy PR-55 Frame"],
 912u32 => &["Support Frame"],
 913u32 => &["Area Denial Frame"],
 914u32 => &["Rocket-Assisted Frame"],
-915u32 => &["Shot Package"]
+915u32 => &["Shot Package"],
+916u32 => &["Pinpoint Slug Frame"]
 };
 
 fn calculate_hash<T: Hash>(t: &T) -> u64 {

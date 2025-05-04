@@ -150,7 +150,7 @@ pub fn year_7_perks() {
             if _input.value == 0 {
                 RangeModifierResponse::default();
             }
-            let mut stat = 25.0 * _input.value as f64;
+            let mut stat = 10.0 * _input.value as f64;
             if *_input.calc_data.ammo_type == AmmoType::SPECIAL {
                 stat /= 2.0;
             }

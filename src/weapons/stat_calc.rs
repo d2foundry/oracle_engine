@@ -115,7 +115,7 @@ impl Weapon {
             .unwrap_or(&Stat::new())
             .val();
         let ads_mult = get_ads_multiplier(self.weapon_type, self.intrinsic_hash).unwrap_or(1.0);
-
+        
         let modifiers = if let Some(calc_input) = _calc_input {
             get_range_modifier(self.list_perks(), &calc_input, _pvp, cached_data)
         } else {
@@ -502,7 +502,7 @@ fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f6
 
         (WeaponType::SCOUTRIFLE, _) => 2.0,
 
-        (WeaponType::SHOTGUN, 906) => 1.2,
+        (WeaponType::SHOTGUN, 916) => 1.2,        //Slugs
         (WeaponType::SHOTGUN, 1394384862) => 1.2, //Chaperone
         (WeaponType::SHOTGUN, 536517534) => 1.2,  //Duality
         (WeaponType::SHOTGUN, _) => 1.0,
