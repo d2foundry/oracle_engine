@@ -1016,15 +1016,25 @@ pub fn exotic_perks() {
             if _input.value == 0 {
                 return DamageModifierResponse::default();
             }
-            let mut buff = if _input.pvp { 7.545 } else { 14.0 };
+            
+            let base_body = _input.calc_data.curr_firing_data.damage;
+            let base_crit_mult = _input.calc_data.curr_firing_data.crit_mult;
+
+            const LFR_BODY: f64 = 154.004;
+            const LFR_CRIT_MULT: f64 = 463.516 / LFR_BODY;
+
+            let pve_mult = if _input.pvp { 1.0 } else { 2.85 };
+
             //season 23
             //https://www.bungie.net/7/en/News/Article/season-23-weapons-preview
-            if *_input.calc_data.enemy_type == EnemyType::CHAMPION {
-                buff *= 2.0;
-            }
+            let champ_buff = if *_input.calc_data.enemy_type == EnemyType::CHAMPION {
+                2.0
+            } else {
+                1.0
+            };
             DamageModifierResponse {
-                impact_dmg_scale: buff,
-                crit_scale: 1.875,
+                impact_dmg_scale: LFR_BODY / base_body * champ_buff * pve_mult,
+                crit_scale: LFR_CRIT_MULT / base_crit_mult,
                 ..Default::default()
             }
         }),
