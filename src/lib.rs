@@ -363,7 +363,7 @@ pub fn get_misc_data(_dynamic_traits: bool, _pvp: bool) -> Result<JsValue, JsVal
 pub fn set_encounter(
     _recommend_pl: u32,
     _player_pl: u32,
-    _weapon_pl: u32,
+    _weapon_pl: u32, //TODO: remove weapon_pl field, no longer needed but breaks front end
     _override_cap: i32,
     _difficulty: JsDifficultyOptions,
     _enemy_type: JsEnemyType,
@@ -374,7 +374,6 @@ pub fn set_encounter(
         activity.cap = _override_cap;
         activity.difficulty = _difficulty.into();
         activity.player.power = _player_pl;
-        activity.player.wep_power = _weapon_pl;
     });
     PERS_DATA.with(|perm_data| {
         let enemy = &mut perm_data.borrow_mut().enemy;
