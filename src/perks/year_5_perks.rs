@@ -543,4 +543,17 @@ pub fn year_5_perks() {
             }
         }),
     );
+
+    add_dmr(
+        Perks::CloseToMelee,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                melee_dmg_scale: 1.3,
+                ..Default::default()
+            }
+        }),
+    );
 }

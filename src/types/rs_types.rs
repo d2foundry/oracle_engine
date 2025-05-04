@@ -21,8 +21,10 @@ pub struct WeaponPath(pub u32, pub u32);
 pub struct FiringData {
     pub damage: f64,
     pub crit_mult: f64,
+    pub melee: f64,
     pub pve_damage: f64,
     pub pve_crit_mult: f64,
+    pub pve_melee: f64,
     pub burst_delay: f64,
     pub inner_burst_delay: f64,
     pub burst_size: i32,
@@ -197,10 +199,12 @@ pub struct FiringResponse {
     pub pvp_impact_damage: f64,
     pub pvp_explosion_damage: f64,
     pub pvp_crit_mult: f64,
+    pub pvp_melee_damage: f64,
 
     pub pve_impact_damage: f64,
     pub pve_explosion_damage: f64,
     pub pve_crit_mult: f64,
+    pub pve_melee_damage: f64,
 
     pub burst_delay: f64,
     pub inner_burst_delay: f64,
@@ -228,5 +232,6 @@ impl FiringResponse {
         );
         self.pve_impact_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
         self.pve_explosion_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
+        self.pve_melee_damage *= _rpl_mult * _gpl_mult * _pve_mult * _combatant_mult;
     }
 }

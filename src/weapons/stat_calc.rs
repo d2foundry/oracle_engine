@@ -336,6 +336,7 @@ impl Weapon {
         let impact_dmg = tmp_dmg_prof.impact_dmg;
         let explosion_dmg = tmp_dmg_prof.explosion_dmg;
         let crit_mult = tmp_dmg_prof.crit_mult;
+        let melee_dmg = tmp_dmg_prof.melee_dmg;
 
         let fd = self.firing_data;
         let extra_charge_delay = if self.weapon_type == WeaponType::FUSIONRIFLE {
@@ -364,10 +365,12 @@ impl Weapon {
             pvp_impact_damage: impact_dmg * pvp_damage_modifiers.impact_dmg_scale,
             pvp_explosion_damage: explosion_dmg * pvp_damage_modifiers.explosive_dmg_scale,
             pvp_crit_mult: crit_mult * pvp_damage_modifiers.crit_scale,
+            pvp_melee_damage: melee_dmg * pvp_damage_modifiers.melee_dmg_scale,
 
             pve_impact_damage: impact_dmg * pve_damage_modifiers.impact_dmg_scale,
             pve_explosion_damage: explosion_dmg * pve_damage_modifiers.explosive_dmg_scale,
             pve_crit_mult: crit_mult * pve_damage_modifiers.crit_scale,
+            pve_melee_damage: melee_dmg * pve_damage_modifiers.melee_dmg_scale,
 
             burst_delay,
             burst_size,
@@ -394,6 +397,11 @@ impl Weapon {
             self.firing_data.pve_crit_mult
         };
         let mut delay = 0.0;
+        let melee: f64 = if _pvp {
+            self.firing_data.melee
+        } else {
+            self.firing_data.pve_melee
+        };
 
         let epr = get_explosion_data(self.list_perks(), &self.static_calc_input(), _pvp);
         if epr.percent > 0.0 {
@@ -410,6 +418,7 @@ impl Weapon {
             explosion_dmg: explosion,
             crit_mult: crit,
             damage_delay: delay,
+            melee_dmg: melee
         }
     }
 }
