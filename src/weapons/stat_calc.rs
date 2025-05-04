@@ -115,19 +115,26 @@ impl Weapon {
             .unwrap_or(&Stat::new())
             .val();
         let ads_mult = get_ads_multiplier(self.weapon_type, self.intrinsic_hash).unwrap_or(1.0);
-        
+
         let modifiers = if let Some(calc_input) = _calc_input {
             get_range_modifier(self.list_perks(), &calc_input, _pvp, cached_data)
         } else {
             RangeModifierResponse::default()
         };
 
-        self.range_formula.calc_range_falloff_formula(
-            range_stat,
-            ads_mult,
-            modifiers,
-            self.range_formula.floor_percent,
-        )
+        let pve_floor = self
+            .range_formula
+            .pve_floor_percent
+            .unwrap_or(self.range_formula.floor_percent);
+
+        let floor = if _pvp {
+            self.range_formula.floor_percent
+        } else {
+            pve_floor
+        };
+
+        self.range_formula
+            .calc_range_falloff_formula(range_stat, ads_mult, modifiers, floor)
     }
 }
 

@@ -573,6 +573,8 @@ pub struct RangeFormula {
     pub end: StatQuadraticFormula,
     pub floor_percent: f64,
     #[serde(default)]
+    pub pve_floor_percent: Option<f64>,
+    #[serde(default)]
     pub fusion: bool,
     #[serde(default)]
     pub timestamp: u64,
@@ -603,6 +605,7 @@ impl From<RangeJson> for RangeFormula {
             start,
             end,
             floor_percent: value.floor_percent,
+            pve_floor_percent: value.pve_floor_percent,
             fusion: value.fusion.unwrap_or_default(),
             timestamp: 0,
         }
@@ -770,6 +773,8 @@ struct RangeJson {
     vpp_end: f64,
     offset_end: f64,
     floor_percent: f64,
+    #[serde(default)]
+    pve_floor_percent: Option<f64>,
     fusion: Option<bool>,
 }
 

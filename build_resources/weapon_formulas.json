@@ -926,7 +926,7 @@
         "3787406018": {"name": "Conditional Finality", "cat": "default",   "subFam": "Conditional",  "magProf": "conditional", "pve":1.245},
         "cat": {
             "default": {
-                "range":    {"vpp_start": 0.0294,"offset_start": 3.77,"vpp_end": 0.0,"offset_end": 14.5, "floor_percent": 0.001},
+                "range":    {"vpp_start": 0.0294,"offset_start": 3.77,"vpp_end": 0.0,"offset_end": 14.5, "floor_percent": 0.001, "pve_floor_percent": 0.4},
                 "reload":   {"evpp": 0.0000640462, "vpp": -0.0141721,   "offset": 1.25061},
                 "handling": {
                     "ready":{"vpp": -0.003271255061, "offset": 0.5388744939},

@@ -75,6 +75,7 @@ pub struct RangeFormula {
     pub start: StatQuadraticFormula,
     pub end: StatQuadraticFormula,
     pub floor_percent: f64,
+    pub pve_floor_percent: Option<f64>,
     pub fusion: bool,
     pub timestamp: u64,
 }
