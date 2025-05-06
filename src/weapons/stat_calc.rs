@@ -491,6 +491,7 @@ fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f6
         (WeaponType::SIDEARM, FORERUNNER) => 2.0,
         (WeaponType::SIDEARM, _) => 1.2,
 
+        (WeaponType::SUBMACHINEGUN, 903) => 1.5,
         (WeaponType::SUBMACHINEGUN, _) => 1.4,
 
         (WeaponType::HANDCANNON, LAST_WORD) => 1.1,
