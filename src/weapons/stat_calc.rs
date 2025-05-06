@@ -496,6 +496,7 @@ fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f6
         (WeaponType::HANDCANNON, LAST_WORD) => 1.1,
         (WeaponType::HANDCANNON, CRIMSON) => 1.3,
         (WeaponType::HANDCANNON, ERIANAS_VOW) => 2.4,
+        (WeaponType::HANDCANNON, 907) => 1.6,
         (WeaponType::HANDCANNON, _) => 1.5,
 
         (WeaponType::AUTORIFLE, 901) => 1.7,
