@@ -55,7 +55,7 @@
 
         "subFam": {
             "Rapid-Fire":  {"damage": 13.597, "crit_mult": 10,  "pve_damage": 13.41, "pve_crit_mult": 0,  "burst_delay": 2.5, "burst_size": 1, "inner_burst_delay": 0},
-            "High-Impact": {"damage": 23.003, "crit_mult": 15, "pve_damage": 22.000, "pve_crit_mult": 5, "burst_delay": 5,   "burst_size": 1, "inner_burst_delay": 0},
+            "High-Impact": {"damage": 24.0, "crit_mult": 15, "pve_damage": 22.000, "pve_crit_mult": 5, "burst_delay": 5,   "burst_size": 1, "inner_burst_delay": 0},
             "Adaptive":    {"damage": 15.033, "crit_mult": 13, "pve_damage": 15.009, "pve_crit_mult": 3, "burst_delay": 3,   "burst_size": 1, "inner_burst_delay": 0},
             "Support-Frame": {"damage": 18.626, "crit_mult": 5.45, "pve_damage": 18.626, "pve_crit_mult": 5.45, "burst_delay": 3,   "burst_size": 1, "inner_burst_delay": 0},
             "Precision":   {"damage": 19.402, "crit_mult": 13, "pve_damage": 20.000, "pve_crit_mult": 3, "burst_delay": 4,   "burst_size": 1, "inner_burst_delay": 0},
