@@ -258,7 +258,7 @@
             "Aggressive":  {"damage": 53.989, "crit_mult": -25.5, "pve_damage": 49.22, "pve_crit_mult": -25.5, "burst_delay": 20 ,  "burst_size": 7, "inner_burst_delay": 0, "one_ammo": true},
             "Jotunn":      {"damage": 326.0,  "crit_mult": -25.5, "pve_damage": 348.82,  "pve_crit_mult": -25.5, "burst_delay": 24.5, "burst_size": 1, "inner_burst_delay": 0  },
             "Bastion":     {"damage": 31.231, "crit_mult": -25.5, "pve_damage": 27.745, "pve_crit_mult": -25.5, "burst_delay": 22,   "burst_size": 21,"inner_burst_delay": 0, "one_ammo": true},
-            "Vex":         {"damage": 23.003, "crit_mult": 15, "pve_damage": 23.54, "pve_crit_mult": 5, "burst_delay": 5,  "burst_size": 1, "inner_burst_delay": 0  },
+            "Vex":         {"damage": 24.0, "crit_mult": 15, "pve_damage": 23.54, "pve_crit_mult": 5, "burst_delay": 5,  "burst_size": 1, "inner_burst_delay": 0  },
             "1KV":         {"damage": 0,     "crit_mult": -25.5, "pve_damage": 0, "pve_crit_mult": -25.5, "burst_delay": 30,    "burst_size": 0, "inner_burst_delay": 0  },
             "zero":        {"damage": 0,     "crit_mult": 0, "pve_damage": 0, "pve_crit_mult": 0, "burst_delay": 0,    "burst_size": 0, "inner_burst_delay": 0  }
         },
