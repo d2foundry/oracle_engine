@@ -715,7 +715,7 @@
         "subFam": {
             "Aggressive":    {"damage": 15.495, "crit_mult": 23, "pve_damage": 18.60, "pve_crit_mult": 10,    "burst_delay": 10, "burst_size": 4, "inner_burst_delay": 2},
             "High-Impact":   {"damage": 21.496, "crit_mult": 15, "pve_damage": 26.4, "pve_crit_mult": 5,    "burst_delay": 12, "burst_size": 3, "inner_burst_delay": 2},
-            "Rapid-Fire":    {"damage": 14.504, "crit_mult": 20, "pve_damage": 16.80, "pve_crit_mult": 10,   "burst_delay": 6,  "burst_size": 3, "inner_burst_delay": 2},
+            "Rapid-Fire":    {"damage": 15.0, "crit_mult": 18, "pve_damage": 16.80, "pve_crit_mult": 10,   "burst_delay": 6,  "burst_size": 3, "inner_burst_delay": 2},
             "Adaptive":      {"damage": 21.996, "crit_mult": 8, "pve_damage": 22.812, "pve_crit_mult": 8,    "burst_delay": 10, "burst_size": 3, "inner_burst_delay": 2},
             "Lightweight":   {"damage": 19.7, "crit_mult": 5,  "pve_damage": 19.2, "pve_crit_mult": 8,    "burst_delay": 8,  "burst_size": 3, "inner_burst_delay": 2},
             "VigilanceWing": {"damage": 15.972, "crit_mult": 8,  "pve_damage": 18.9, "pve_crit_mult": -2,   "burst_delay": 9,  "burst_size": 5, "inner_burst_delay": 2},
