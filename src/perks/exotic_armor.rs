@@ -220,7 +220,6 @@ pub fn exotic_armor() {
         }),
     );
 
-
     //TODO: AUTORELOAD FOR SEALED AHAMKARA GRASPS
     //TODO: LUCKY PANTS AFFECTING ACCURACY CONE
     //LUCKY PANTS ONLY WORKS FOR READY ?!?!?! crazy :(
@@ -297,11 +296,7 @@ pub fn exotic_armor() {
         Perks::LionRampart,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut stats = HashMap::new();
-                if _input.value > 0 {
-                    stats.insert(StatHashes::AIRBORNE.into(), 50);
-                };
-                stats
+                HashMap::from([(StatHashes::AIRBORNE.into(), 50)])
             },
         ),
     );
