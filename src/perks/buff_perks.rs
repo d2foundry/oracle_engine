@@ -306,7 +306,7 @@ pub fn buff_perks() {
                 return DamageModifierResponse::default();
             }
 
-            let buff = surge_buff(_input.cached_data, 2, _input.pvp);
+            let buff = surge_buff(_input.cached_data, 4, _input.pvp);
 
             DamageModifierResponse::surge_buff(buff)
         }),

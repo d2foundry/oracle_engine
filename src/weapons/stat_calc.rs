@@ -491,18 +491,20 @@ fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f6
         (WeaponType::SIDEARM, FORERUNNER) => 2.0,
         (WeaponType::SIDEARM, _) => 1.2,
 
+        (WeaponType::SUBMACHINEGUN, 903) => 1.5,
         (WeaponType::SUBMACHINEGUN, _) => 1.4,
 
         (WeaponType::HANDCANNON, LAST_WORD) => 1.1,
         (WeaponType::HANDCANNON, CRIMSON) => 1.3,
         (WeaponType::HANDCANNON, ERIANAS_VOW) => 2.4,
+        (WeaponType::HANDCANNON, 907) => 1.6,
         (WeaponType::HANDCANNON, _) => 1.5,
 
         (WeaponType::AUTORIFLE, 901) => 1.7,
         (WeaponType::AUTORIFLE, _) => 1.6,
 
         (WeaponType::PULSERIFLE, 904 | 907) => 1.8,
-        (WeaponType::PULSERIFLE, 901) => 1.6,
+        (WeaponType::PULSERIFLE, 901 | 911) => 1.6,
         (WeaponType::PULSERIFLE, _) => 1.7,
 
         (WeaponType::BOW, _) => 1.8,
