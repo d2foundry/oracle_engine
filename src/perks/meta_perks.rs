@@ -173,13 +173,13 @@ pub fn meta_perks() {
                     if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
                         return ExplosivePercentResponse {
                             percent: 0.5 + 0.003 * blast_radius as f64,
-                            delyed: 0.0,
+                            delay: 0.0,
                             retain_base_total: true,
                         };
                     } else if _input.calc_data.ammo_type == &AmmoType::HEAVY {
                         return ExplosivePercentResponse {
                             percent: 0.7 + 0.00175 * blast_radius as f64,
-                            delyed: 0.0,
+                            delay: 0.0,
                             retain_base_total: true,
                         };
                     };
@@ -201,13 +201,13 @@ pub fn meta_perks() {
                 {
                     return ExplosivePercentResponse {
                         percent: 0.778,
-                        delyed: 0.0,
+                        delay: 0.0,
                         retain_base_total: true,
                     };
                 }
                 ExplosivePercentResponse {
                     percent: 0.0,
-                    delyed: 0.0,
+                    delay: 0.0,
                     retain_base_total: true,
                 }
             },

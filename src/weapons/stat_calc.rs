@@ -403,7 +403,7 @@ impl Weapon {
             if epr.retain_base_total {
                 crit = (crit - 1.0) / (1.0 - epr.percent) + 1.0;
             }
-            delay = epr.delyed;
+            delay = epr.delay;
         }
         DamageProfile {
             impact_dmg: impact,
