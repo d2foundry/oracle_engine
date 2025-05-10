@@ -140,16 +140,7 @@ impl Weapon {
     }
 
     pub fn static_calc_input(&self) -> CalculationInput {
-        CalculationInput::construct_static(
-            self.intrinsic_hash,
-            &self.firing_data,
-            &self.stats,
-            &self.perk_value_map,
-            &self.weapon_type,
-            &self.ammo_type,
-            &self.damage_type,
-            self.firing_data.crit_mult,
-        )
+        CalculationInput::construct_static(self)
     }
 
     pub fn sparse_calc_input(&self, _total_shots_fired: i32, _total_time: f64) -> CalculationInput {
@@ -199,16 +190,7 @@ impl Weapon {
     }
     pub fn update_stats(&mut self) {
         self.perk_value_map = self.perk_value_map_update();
-        let input = CalculationInput::construct_static(
-            self.intrinsic_hash,
-            &self.firing_data,
-            &self.stats,
-            &self.perk_value_map,
-            &self.weapon_type,
-            &self.ammo_type,
-            &self.damage_type,
-            self.firing_data.crit_mult,
-        );
+        let input = CalculationInput::construct_static(self);
         let inter_var = get_stat_bumps(self.list_perks(), input, false, &mut HashMap::new());
         let dynamic_stats = &inter_var[0];
         let static_stats = &inter_var[1];

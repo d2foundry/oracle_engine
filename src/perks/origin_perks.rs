@@ -21,7 +21,6 @@ pub fn origin_perks() {
             let last_proc = *data.unwrap_or(&1.0);
             let time_since_last_proc = _input.calc_data.time_total - last_proc;
             let max_refund = _input.calc_data.base_mag - _input.calc_data.curr_mag;
-            
 
             if _input.value == 0 || time_since_last_proc < 4.0 || max_refund == 0.0 {
                 return RefundResponse::default();
@@ -60,11 +59,21 @@ pub fn origin_perks() {
     add_dmr(
         Perks::HakkeBreach,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let damage_mult = if _input.value > 0 { 0.3 } else { 0.0 };
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+
+            let buff = match _input.value {
+                1 => 1.15,
+                2 => 1.45,
+                3 => 1.30,
+                _ => 1.30,
+            };
+
             DamageModifierResponse {
-                impact_dmg_scale: 1.0 + damage_mult,
-                explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                impact_dmg_scale: buff,
+                explosive_dmg_scale: buff,
+                ..Default::default()
             }
         }),
     );
@@ -168,7 +177,7 @@ pub fn origin_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: damage_mult,
                 explosive_dmg_scale: damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -257,9 +266,25 @@ pub fn origin_perks() {
             let mut map = HashMap::new();
             if _input.value > 0 {
                 map.insert(StatHashes::RELOAD.into(), 40);
+                map.insert(StatHashes::HANDLING.into(), 20);
             }
             map
         }),
+    );
+
+    add_hmr(
+        Perks::QuietMoment,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                if _input.value == 0 {
+                    return HandlingModifierResponse::default();
+                }
+                HandlingModifierResponse {
+                    stat_add: 20,
+                    ..Default::default()
+                }
+            },
+        ),
     );
 
     add_rsmr(
@@ -356,6 +381,7 @@ pub fn origin_perks() {
             if _input.value > 0 {
                 map.insert(StatHashes::HANDLING.into(), 20);
                 map.insert(StatHashes::RELOAD.into(), 20);
+                map.insert(StatHashes::RANGE.into(), 20);
             }
             map
         }),
@@ -390,7 +416,18 @@ pub fn origin_perks() {
             }
         }),
     );
-
+    add_rmr(
+        Perks::TexBalancedStock,
+        Box::new(|_input: ModifierResponseInput| -> RangeModifierResponse {
+            if _input.value == 0 {
+                return RangeModifierResponse::default();
+            }
+            RangeModifierResponse {
+                range_stat_add: 20,
+                ..Default::default()
+            }
+        }),
+    );
     add_sbr(
         Perks::SurosSynergy,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {

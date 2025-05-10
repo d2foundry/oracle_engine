@@ -27,7 +27,10 @@ pub fn meta_perks() {
             if *_input.calc_data.weapon_type == WeaponType::LINEARFUSIONRIFLE && !_input.pvp {
                 crit_scale *= 1.15;
             };
-            if *_input.calc_data.damage_type == DamageType::KINETIC && !_input.pvp {
+            if *_input.calc_data.damage_type == DamageType::KINETIC
+                && !_input.pvp
+                && *_input.calc_data.enemy_type != EnemyType::BOSS
+            {
                 if _input.calc_data.ammo_type == &AmmoType::PRIMARY {
                     dmg_scale *= 1.1;
                 } else if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
@@ -36,11 +39,49 @@ pub fn meta_perks() {
             };
 
             if *_input.calc_data.ammo_type == AmmoType::PRIMARY
-                && _input.calc_data.intrinsic_hash > 1000
                 && *_input.calc_data.enemy_type == EnemyType::MINOR
                 && !_input.pvp
+                && _input.calc_data.intrinsic_hash > 1000
             {
-                dmg_scale *= 1.4;
+                dmg_scale *= 1.3
+            }
+            if *_input.calc_data.enemy_type == EnemyType::MINOR && !_input.pvp {
+                dmg_scale *= match *_input.calc_data.weapon_type {
+                    WeaponType::SIDEARM | WeaponType::BOW => 1.2,
+                    WeaponType::TRACERIFLE => 1.44,
+                    WeaponType::SCOUTRIFLE => 1.38,
+                    WeaponType::PULSERIFLE => 1.15,
+                    WeaponType::AUTORIFLE => 1.265,
+                    WeaponType::SUBMACHINEGUN => 1.155,
+                    WeaponType::HANDCANNON => 1.05,
+                    WeaponType::SNIPER => 1.6,
+                    WeaponType::FUSIONRIFLE => 1.3,
+                    _ => 1.0,
+                };
+            }
+            if *_input.calc_data.enemy_type == EnemyType::ELITE && !_input.pvp {
+                dmg_scale *= match *_input.calc_data.weapon_type {
+                    WeaponType::TRACERIFLE => 1.2,
+                    WeaponType::SNIPER => 1.75,
+                    WeaponType::SCOUTRIFLE => 1.3,
+                    WeaponType::AUTORIFLE => 1.1,
+                    WeaponType::FUSIONRIFLE => 1.3,
+                    _ => 1.0,
+                };
+            }
+            if *_input.calc_data.enemy_type == EnemyType::MINIBOSS && !_input.pvp {
+                dmg_scale *= match *_input.calc_data.weapon_type {
+                    WeaponType::SNIPER => 1.35,
+                    WeaponType::FUSIONRIFLE => 1.3,
+                    _ => 1.0,
+                };
+            }
+            if *_input.calc_data.enemy_type == EnemyType::CHAMPION && !_input.pvp {
+                dmg_scale *= match *_input.calc_data.weapon_type {
+                    WeaponType::SNIPER => 1.25,
+                    WeaponType::FUSIONRIFLE => 1.3,
+                    _ => 1.0,
+                };
             }
 
             if *_input.calc_data.weapon_type == WeaponType::LINEARFUSIONRIFLE
@@ -58,11 +99,11 @@ pub fn meta_perks() {
                 let stat = (charge_time.perk_val() - charge_time.base_value) as f64;
                 dmg_scale *= 1.0 - (0.6 * stat) / total_damage;
             }
-
             DamageModifierResponse {
                 crit_scale,
                 impact_dmg_scale: dmg_scale,
                 explosive_dmg_scale: dmg_scale,
+                ..Default::default()
             }
         }),
     );
@@ -126,7 +167,7 @@ pub fn meta_perks() {
                 if *_input.calc_data.weapon_type == WeaponType::GRENADELAUNCHER {
                     let blast_radius_struct =
                         _input.calc_data.stats.get(&StatHashes::BLAST_RADIUS.into());
-                        
+
                     let blast_radius = blast_radius_struct.cloned().unwrap_or_default().perk_val();
 
                     if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
@@ -141,6 +182,17 @@ pub fn meta_perks() {
                             delyed: 0.0,
                             retain_base_total: true,
                         };
+                    };
+                }
+                if *_input.calc_data.weapon_type == WeaponType::SIDEARM
+                    && _input.calc_data.intrinsic_hash == 914
+                {
+                    let percent = if _input.pvp { 0.536 } else { 0.822 };
+
+                    return ExplosivePercentResponse {
+                        percent,
+                        delyed: 0.0,
+                        retain_base_total: true,
                     };
                 }
                 if *_input.calc_data.weapon_type == WeaponType::ROCKET
@@ -184,8 +236,14 @@ pub fn meta_perks() {
         Perks::TargetingMod,
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                let ads_scale = match _input.value {
+                    0 => 1.0,
+                    1 => 0.85,
+                    2 => 0.75,
+                    3.. => 0.7,
+                };
                 HandlingModifierResponse {
-                    ads_scale: if _input.value > 0 { 0.75 } else { 1.0 },
+                    ads_scale,
                     ..Default::default()
                 }
             },
@@ -211,13 +269,13 @@ pub fn meta_perks() {
         Perks::ReserveMod,
         Box::new(
             |_input: ModifierResponseInput| -> InventoryModifierResponse {
-                let mut inv_buff = if _input.value > 0 { 20 } else { 0 };
-                if _input.value == 2 {
-                    inv_buff += 20;
-                }
-                if _input.value > 2 {
-                    inv_buff += 30;
-                }
+                let inv_buff = match _input.value {
+                    0 => 0,
+                    1 => 20,
+                    2 => 40,
+                    3 => 50,
+                    _ => 50,
+                };
                 InventoryModifierResponse {
                     inv_stat_add: inv_buff,
                     inv_scale: 1.0,
@@ -230,13 +288,13 @@ pub fn meta_perks() {
     add_sbr(
         Perks::ReserveMod,
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
-            let mut inv_buff = if _input.value > 0 { 20 } else { 0 };
-            if _input.value == 2 {
-                inv_buff += 15;
-            }
-            if _input.value > 2 {
-                inv_buff += 20;
-            }
+            let inv_buff = match _input.value {
+                0 => 0,
+                1 => 20,
+                2 => 40,
+                3 => 50,
+                _ => 50,
+            };
             let mut stats = HashMap::new();
             stats.insert(StatHashes::INVENTORY_SIZE.into(), inv_buff);
             stats
@@ -340,4 +398,18 @@ pub fn meta_perks() {
             }
         }),
     );
+    add_sbr(
+        Perks::InFlightCompensatorMod,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let mut stats = HashMap::new();
+            let buff = match _input.value {
+                0 => 0,
+                1 => 15,
+                2 => 25,
+                3.. => 30,
+            };
+            stats.insert(StatHashes::AIRBORNE.into(), buff);
+            stats
+        }),
+    )
 }

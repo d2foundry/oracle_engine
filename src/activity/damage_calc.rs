@@ -13,8 +13,7 @@ pub struct DifficultyData {
 
 const WEAPON_DELTA_EXPONENT: f64 = 0.00672;
 
-#[derive(Debug, Clone)]
-#[derive(Default)]
+#[derive(Debug, Clone, Default)]
 pub enum DifficultyOptions {
     #[default]
     NORMAL = 1,
@@ -129,7 +128,7 @@ pub(super) fn get_wep_delta_mult(_activity: &Activity) -> f64 {
         difficulty_data.cap
     };
 
-    let epl = (_activity.player.wep_power as i32 - _activity.rpl as i32).clamp(-100, cap);
+    let epl = (_activity.player.power as i32 - _activity.rpl as i32).clamp(-100, cap);
 
     if epl < -99 {
         return 0.0;

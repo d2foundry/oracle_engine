@@ -30,22 +30,6 @@ pub fn exotic_armor() {
         }),
     );
 
-    add_dmr(
-        Perks::MechaneersTricksleeves,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value == 0 || *_input.calc_data.weapon_type != WeaponType::SIDEARM {
-                return DamageModifierResponse::default();
-            };
-
-            let damage_mult = if _input.pvp { 1.35 } else { 2.0 };
-            DamageModifierResponse {
-                explosive_dmg_scale: damage_mult,
-                impact_dmg_scale: damage_mult,
-                ..Default::default()
-            }
-        }),
-    );
-
     //doesnt work for sturm overcharge, (maybe) memento
     add_dmr(
         Perks::LuckyPants,
@@ -66,7 +50,7 @@ pub fn exotic_armor() {
             let mult = if _input.calc_data.ammo_type == &AmmoType::SPECIAL {
                 0.3
             } else {
-                0.6
+                0.45
             };
 
             DamageModifierResponse {
@@ -117,11 +101,7 @@ pub fn exotic_armor() {
                 return DamageModifierResponse::default();
             }
             let modifier = 1.0 + (0.3 - health_percent);
-            DamageModifierResponse {
-                impact_dmg_scale: modifier,
-                explosive_dmg_scale: modifier,
-                crit_scale: 1.0,
-            }
+            DamageModifierResponse::basic_dmg_buff(modifier)
         }),
     );
 
@@ -174,15 +154,15 @@ pub fn exotic_armor() {
     add_dmr(
         Perks::MechaneersTricksleeves,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mult = if _input.pvp { 1.35 } else { 2.0 };
-            if _input.value > 0 && _input.calc_data.weapon_type == &WeaponType::SIDEARM {
-                DamageModifierResponse {
-                    explosive_dmg_scale: mult,
-                    impact_dmg_scale: mult,
-                    ..Default::default()
-                }
-            } else {
-                DamageModifierResponse::default()
+            if _input.value == 0 || *_input.calc_data.weapon_type != WeaponType::SIDEARM {
+                return DamageModifierResponse::default();
+            };
+
+            let damage_mult = if _input.pvp { 1.10 } else { 2.0 };
+            DamageModifierResponse {
+                explosive_dmg_scale: damage_mult,
+                impact_dmg_scale: damage_mult,
+                ..Default::default()
             }
         }),
     );
@@ -226,6 +206,18 @@ pub fn exotic_armor() {
                 stats
             },
         ),
+    );
+
+    add_dmr(
+        Perks::SealedAhamkaraGrasps,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            let buff = if _input.pvp { 1.2 } else { 1.35 };
+
+            DamageModifierResponse::basic_dmg_buff(buff)
+        }),
     );
 
     //TODO: AUTORELOAD FOR SEALED AHAMKARA GRASPS
@@ -274,22 +266,6 @@ pub fn exotic_armor() {
         ),
     );
 
-    add_dmr(
-        Perks::NoBackupPlans,
-        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if *_input.calc_data.weapon_type != WeaponType::SHOTGUN || _input.value == 0 {
-                return DamageModifierResponse::default();
-            }
-
-            let buff = if _input.pvp { 1.10 } else { 1.35 };
-            DamageModifierResponse {
-                impact_dmg_scale: buff,
-                explosive_dmg_scale: buff,
-                ..Default::default()
-            }
-        }),
-    );
-
     add_sbr(
         Perks::ActiumWarRig,
         Box::new(
@@ -320,11 +296,7 @@ pub fn exotic_armor() {
         Perks::LionRampart,
         Box::new(
             |_input: ModifierResponseInput| -> HashMap<BungieHash, StatBump> {
-                let mut stats = HashMap::new();
-                if _input.value > 0 {
-                    stats.insert(StatHashes::AIRBORNE.into(), 50);
-                };
-                stats
+                HashMap::from([(StatHashes::AIRBORNE.into(), 50)])
             },
         ),
     );
@@ -336,7 +308,7 @@ pub fn exotic_armor() {
                 let mut stats = HashMap::new();
                 if _input.calc_data.weapon_type == &WeaponType::SUBMACHINEGUN {
                     stats.insert(StatHashes::AIRBORNE.into(), 40);
-                    stats.insert(StatHashes::HANDLING.into(), 100);
+                    stats.insert(StatHashes::HANDLING.into(), 50);
                 };
                 stats
             },
@@ -349,10 +321,10 @@ pub fn exotic_armor() {
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
                 if _input.calc_data.weapon_type == &WeaponType::SUBMACHINEGUN {
                     return HandlingModifierResponse {
-                        stat_add: 100,
+                        stat_add: 50,
                         ads_scale: 1.0,
-                        draw_scale: 0.6,
-                        stow_scale: 0.6,
+                        draw_scale: 0.8,
+                        stow_scale: 0.8,
                         ..Default::default()
                     };
                 }
@@ -416,8 +388,9 @@ pub fn exotic_armor() {
                 if _input.calc_data.intrinsic_hash == 1863355414
                     || _input.calc_data.intrinsic_hash == 2965975126
                     || _input.calc_data.intrinsic_hash == 2724693746
+                    || _input.calc_data.intrinsic_hash == 4184462049
                 {
-                    //Thorn, Osteo Striga, Touch of Malice
+                    //Thorn, Osteo Striga, Touch of Malice, Necrochasm
                     stats.insert(StatHashes::AIRBORNE.into(), 30);
                 };
                 stats

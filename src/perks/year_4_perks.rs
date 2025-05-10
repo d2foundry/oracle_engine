@@ -30,7 +30,7 @@ pub fn year_4_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + dmg_boost,
                 explosive_dmg_scale: 1.0 + dmg_boost,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -90,7 +90,7 @@ pub fn year_4_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + dmg_boost,
                 explosive_dmg_scale: 1.0 + dmg_boost,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -116,6 +116,61 @@ pub fn year_4_perks() {
                 let handling = if _input.value > 0 { 20 } else { 0 };
                 HandlingModifierResponse {
                     stat_add: handling,
+                    ..Default::default()
+                }
+            },
+        ),
+    );
+
+    add_dmr(
+        Perks::BluntExecutionRounds,
+        Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            let duration = if _input.is_enhanced { 11.0 } else { 10.0 };
+            if _input.calc_data.time_total > duration
+                || _input.calc_data.total_shots_fired
+                    > _input.calc_data.curr_firing_data.burst_size.into()
+                || _input.value == 0
+            {
+                return DamageModifierResponse::default();
+            }
+            let dmg_boost = if _input.pvp { 1.0 } else { 5.0 };
+            DamageModifierResponse {
+                impact_dmg_scale: 1.0 + dmg_boost,
+                explosive_dmg_scale: 1.0 + dmg_boost,
+                ..Default::default()
+            }
+        }),
+    );
+
+    add_sbr(
+        Perks::BluntExecutionRounds,
+        Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
+            let duration = if _input.is_enhanced { 11.0 } else { 10.0 };
+            if _input.calc_data.time_total > duration
+                || _input.calc_data.total_shots_fired
+                    > _input.calc_data.curr_firing_data.burst_size.into()
+                || _input.value == 0
+            {
+                return HashMap::new();
+            }
+            HashMap::from([(StatHashes::HANDLING.into(), 100)])
+        }),
+    );
+
+    add_hmr(
+        Perks::BluntExecutionRounds,
+        Box::new(
+            |_input: ModifierResponseInput| -> HandlingModifierResponse {
+                let duration = if _input.is_enhanced { 11.0 } else { 10.0 };
+                if _input.calc_data.time_total > duration
+                    || _input.calc_data.total_shots_fired
+                        > _input.calc_data.curr_firing_data.burst_size.into()
+                    || _input.value == 0
+                {
+                    return HandlingModifierResponse::default();
+                }
+                HandlingModifierResponse {
+                    stat_add: 100,
                     ..Default::default()
                 }
             },
@@ -238,7 +293,7 @@ pub fn year_4_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + dmg,
                 explosive_dmg_scale: 1.0 + dmg,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -404,11 +459,12 @@ pub fn year_4_perks() {
         Perks::Reconstruction,
         Box::new(
             |_input: ModifierResponseInput| -> MagazineModifierResponse {
-                let mag_scale = if _input.value > 0 { 2.0 } else { 1.0 };
+                if _input.value == 0 {
+                    return MagazineModifierResponse::default();
+                }
                 MagazineModifierResponse {
-                    magazine_stat_add: 0,
-                    magazine_scale: mag_scale,
-                    magazine_add: 0.0,
+                    magazine_add: _input.calc_data.base_mag,
+                    ..Default::default()
                 }
             },
         ),
@@ -439,7 +495,7 @@ pub fn year_4_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + dmg,
                 explosive_dmg_scale: 1.0 + dmg,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -482,7 +538,7 @@ pub fn year_4_perks() {
                 DamageModifierResponse {
                     impact_dmg_scale: 1.0 + damage_mult,
                     explosive_dmg_scale: 1.0 + damage_mult,
-                    crit_scale: 1.0,
+                    ..Default::default()
                 }
             } else {
                 DamageModifierResponse::default()
@@ -501,7 +557,7 @@ pub fn year_4_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: 1.0 + damage_mult,
                 explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -632,15 +688,16 @@ pub fn year_4_perks() {
     add_dmr(
         Perks::KickStart,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            let mut damage_mult = if _input.value > 0 { 0.20 } else { 0.0 };
-            let duration = 1.0;
-            if _input.calc_data.time_total > duration {
-                damage_mult = 0.0;
-            };
+            const DURATION: f64 = 1.0;
+            const MULT: f64 = 1.15;
+            if _input.value == 0 || _input.calc_data.time_total > DURATION {
+                return DamageModifierResponse::default();
+            }
+
             DamageModifierResponse {
-                impact_dmg_scale: 1.0 + damage_mult,
-                explosive_dmg_scale: 1.0 + damage_mult,
-                crit_scale: 1.0,
+                impact_dmg_scale: MULT,
+                explosive_dmg_scale: MULT,
+                ..Default::default()
             }
         }),
     );

@@ -18,3 +18,5 @@ database/enhanced_handler.rs
 /zPythonStuff
 /zPveReverser
 data.json
+.database
+.DS_Store

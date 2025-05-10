@@ -16,7 +16,7 @@ fn ceil(x: f64) -> f64 {
 }
 
 const RESILIENCE_VALUES: [f64; 11] = [
-    185.001, 186.001, 187.001, 188.001, 189.001, 190.001, 192.001, 194.001, 196.001, 198.01, 200.00,
+    215.001, 216.001, 217.001, 218.001, 219.001, 220.001, 222.001, 224.001, 226.001, 228.01, 230.00,
 ];
 
 #[derive(Debug, Clone, Serialize)]
@@ -47,11 +47,11 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
     let mut ttk_data: Vec<ResillienceSummary> = Vec::new();
     let mut persistent_data: HashMap<String, f64> = HashMap::new();
 
-    let tmp_dmg_prof = _weapon.get_damage_profile();
-    let impact_dmg = tmp_dmg_prof.0;
-    let explosion_dmg = tmp_dmg_prof.1;
-    let mut crit_mult = tmp_dmg_prof.2;
-    // let damage_delay = tmp_dmg_prof.3;
+    let tmp_dmg_prof = _weapon.get_damage_profile(true);
+    let impact_dmg = tmp_dmg_prof.impact_dmg;
+    let explosion_dmg = tmp_dmg_prof.explosion_dmg;
+    let mut crit_mult = tmp_dmg_prof.crit_mult;
+    // let damage_delay = tmp_dmg_prof.damage_delay;
     if _weapon.weapon_type == WeaponType::SHOTGUN && _weapon.firing_data.burst_size == 12 {
         crit_mult = 1.0; // shawty has no crits
     }
@@ -217,9 +217,9 @@ pub fn calc_ttk(_weapon: &Weapon, _overshield: f64) -> Vec<ResillienceSummary> {
             );
             ///////////////////////////////
 
-            let tmp_dmg_prof = _weapon.get_damage_profile();
-            let impact_dmg = tmp_dmg_prof.0;
-            let explosion_dmg = tmp_dmg_prof.1;
+            let tmp_dmg_prof = _weapon.get_damage_profile(true);
+            let impact_dmg = tmp_dmg_prof.impact_dmg;
+            let explosion_dmg = tmp_dmg_prof.explosion_dmg;
 
             let body_damage = (impact_dmg * dmg_mods.impact_dmg_scale)
                 + (explosion_dmg * dmg_mods.explosive_dmg_scale);

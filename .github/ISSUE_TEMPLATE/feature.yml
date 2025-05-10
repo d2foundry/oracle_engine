@@ -1,0 +1,43 @@
+name: Feature Request
+description: Create an issue for a new feature or enhancement
+title: "feat: <title>"
+labels: "enhancement"
+body:
+  - type: input
+    attributes:
+      label: Synopsis of the feature
+      description: High level details on what the feature intends on accomplishing
+      placeholder: better explosive damage calc, new response modifier, etc
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: feature type
+      description: Is this a new feature, an enhancement/change to existing functionality, or something else
+      options:
+        - New feature
+        - Enhancement/Change
+        - Other
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Description of the feature
+      description: Full description on what the feature intends on accomplishing
+      placeholder: accomplishes abc via xyz
+  - type: textarea
+    attributes:
+      label: Supporting Information
+      description: Any information you think that is relevant to the feature
+      placeholder: documentation, references, etc
+  - type: checkboxes
+    attributes:
+      label: Feature checklist
+      description: Checklist to track progress of the issue.
+      options:
+        - label: cargo build passes
+        - label: PR linked (draft if code is still in progress!)
+        - label: Changes verified by Foundry contributor
+        

@@ -8,15 +8,15 @@ use crate::{
         get_handling_modifier, get_magazine_modifier, get_range_modifier, get_reload_modifier,
         get_reserve_modifier, get_velocity_modifier,
         lib::{
-            CalculationInput, DamageModifierResponse, FiringModifierResponse,
+            CalculationInput, DamageModifierResponse, DamageProfile, FiringModifierResponse,
             HandlingModifierResponse, InventoryModifierResponse, MagazineModifierResponse,
             RangeModifierResponse, ReloadModifierResponse,
         },
         Perks,
     },
     types::rs_types::{
-        AmmoFormula, AmmoResponse, FiringResponse, HandlingFormula, HandlingResponse, RangeFormula,
-        RangeResponse, ReloadFormula, ReloadResponse,
+        AmmoFormula, AmmoResponse, FiringResponse, HandlingFormula, HandlingResponse,
+        HealthResponse, RangeFormula, RangeResponse, ReloadFormula, ReloadResponse,
     },
 };
 
@@ -58,10 +58,16 @@ impl Weapon {
         };
 
         let mut out = self.reload_formula.calc_reload_time_formula(reload_stat);
-        out.reload_time *= modifiers.reload_time_scale;
 
+        //this is some weird math that oddly works?
+        //dont ask me why?????
+        //i HATE BOWS
         if self.weapon_type == WeaponType::BOW {
-            out.reload_time = out.reload_time.clamp(0.6, 5.0);
+            let reload_time = out.reload_time - 0.1;
+            out.reload_time =
+                reload_time * 0.3 * modifiers.reload_time_scale + reload_time * 0.7 + 0.1;
+        } else {
+            out.reload_time *= modifiers.reload_time_scale;
         }
 
         out
@@ -116,12 +122,19 @@ impl Weapon {
             RangeModifierResponse::default()
         };
 
-        self.range_formula.calc_range_falloff_formula(
-            range_stat,
-            ads_mult,
-            modifiers,
-            self.range_formula.floor_percent,
-        )
+        let pve_floor = self
+            .range_formula
+            .pve_floor_percent
+            .unwrap_or(self.range_formula.floor_percent);
+
+        let floor = if _pvp {
+            self.range_formula.floor_percent
+        } else {
+            pve_floor
+        };
+
+        self.range_formula
+            .calc_range_falloff_formula(range_stat, ads_mult, modifiers, floor)
     }
 }
 
@@ -319,10 +332,10 @@ impl Weapon {
             pvp_damage_modifiers = DamageModifierResponse::default();
             pve_damage_modifiers = DamageModifierResponse::default();
         };
-        let tmp_dmg_prof = self.get_damage_profile();
-        let impact_dmg = tmp_dmg_prof.0;
-        let explosion_dmg = tmp_dmg_prof.1;
-        let crit_mult = tmp_dmg_prof.2;
+        let tmp_dmg_prof = self.get_damage_profile(_pvp);
+        let impact_dmg = tmp_dmg_prof.impact_dmg;
+        let explosion_dmg = tmp_dmg_prof.explosion_dmg;
+        let crit_mult = tmp_dmg_prof.crit_mult;
 
         let fd = self.firing_data;
         let extra_charge_delay = if self.weapon_type == WeaponType::FUSIONRIFLE {
@@ -368,26 +381,36 @@ impl Weapon {
 }
 
 impl Weapon {
-    pub fn get_damage_profile(&self) -> (f64, f64, f64, f64) {
-        let impact;
-        let mut explosion = 0.0_f64;
-        let mut crit = 1.0_f64;
-        let delay;
-
-        let epr = get_explosion_data(self.list_perks(), &self.static_calc_input(), false);
-        if epr.percent <= 0.0 {
-            impact = self.firing_data.damage;
-            crit = self.firing_data.crit_mult;
-            delay = 0.0;
+    pub fn get_damage_profile(&self, _pvp: bool) -> DamageProfile {
+        let mut impact = if _pvp {
+            self.firing_data.damage
         } else {
-            impact = self.firing_data.damage * (1.0 - epr.percent);
-            explosion = self.firing_data.damage * epr.percent;
-            if epr.retain_base_total && self.firing_data.crit_mult > 1.0 {
-                crit = (self.firing_data.crit_mult - 1.0) / (1.0 - epr.percent) + 1.0
+            self.firing_data.pve_damage
+        };
+        let mut explosion = 0.0_f64;
+        let mut crit = if _pvp {
+            self.firing_data.crit_mult
+        } else {
+            self.firing_data.pve_crit_mult
+        };
+        let mut delay = 0.0;
+
+        let epr = get_explosion_data(self.list_perks(), &self.static_calc_input(), _pvp);
+        if epr.percent > 0.0 {
+            explosion = impact * epr.percent;
+            impact *= 1.0 - epr.percent;
+
+            if epr.retain_base_total {
+                crit = (crit - 1.0) / (1.0 - epr.percent) + 1.0;
             }
             delay = epr.delyed;
         }
-        (impact, explosion, crit, delay)
+        DamageProfile {
+            impact_dmg: impact,
+            explosion_dmg: explosion,
+            crit_mult: crit,
+            damage_delay: delay,
+        }
     }
 }
 
@@ -468,27 +491,32 @@ fn get_ads_multiplier(weapon_type: WeaponType, intrinsic_hash: u32) -> Result<f6
         (WeaponType::SIDEARM, FORERUNNER) => 2.0,
         (WeaponType::SIDEARM, _) => 1.2,
 
+        (WeaponType::SUBMACHINEGUN, 903) => 1.5,
         (WeaponType::SUBMACHINEGUN, _) => 1.4,
 
         (WeaponType::HANDCANNON, LAST_WORD) => 1.1,
         (WeaponType::HANDCANNON, CRIMSON) => 1.3,
         (WeaponType::HANDCANNON, ERIANAS_VOW) => 2.4,
+        (WeaponType::HANDCANNON, 907) => 1.6,
         (WeaponType::HANDCANNON, _) => 1.5,
 
-        (WeaponType::AUTORIFLE, _) => 1.7,
+        (WeaponType::AUTORIFLE, 901) => 1.7,
+        (WeaponType::AUTORIFLE, _) => 1.6,
 
+        (WeaponType::PULSERIFLE, 904 | 907) => 1.8,
+        (WeaponType::PULSERIFLE, 901 | 911) => 1.6,
         (WeaponType::PULSERIFLE, _) => 1.7,
 
         (WeaponType::BOW, _) => 1.8,
 
         (WeaponType::SCOUTRIFLE, _) => 2.0,
 
-        (WeaponType::SHOTGUN, 918679156) => 1.2,
+        (WeaponType::SHOTGUN, 916) => 1.2,        //Slugs
         (WeaponType::SHOTGUN, 1394384862) => 1.2, //Chaperone
         (WeaponType::SHOTGUN, 536517534) => 1.2,  //Duality
         (WeaponType::SHOTGUN, _) => 1.0,
 
-        (WeaponType::FUSIONRIFLE, VEX_MYTHOCLAST) => 1.5,
+        (WeaponType::FUSIONRIFLE, VEX_MYTHOCLAST) => 1.7,
         (WeaponType::FUSIONRIFLE, _) => 1.3,
 
         (WeaponType::TRACERIFLE, _) => 1.6,
@@ -522,8 +550,8 @@ impl Weapon {
                         .unwrap_or(&Stat::new())
                         .perk_val()
                         .clamp(0, 100),
-                ) * 0.4
-                    + 60.0
+                ) * 0.52
+                    + 78.0
             }
             WeaponType::GRENADELAUNCHER => {
                 f64::from(
@@ -624,11 +652,38 @@ impl Weapon {
             // add "| WeaponType::SWORD" to matches when swords work
             buffer.insert("shield_duration".to_string(), self.calc_shield_duration());
         }
-
+        if matches!(self.intrinsic_hash, 912) {
+            buffer.insert(
+                "health_per_shot".to_string(),
+                self.get_health_info().health_per_shot,
+            );
+            buffer.insert(
+                "shots_to_proc_restoration".to_string(),
+                self.get_health_info().shots_to_proc_restoration,
+            );
+            buffer.insert(
+                "percent_energy_drained_per_shot".to_string(),
+                self.get_health_info().percent_energy_drained_per_shot,
+            );
+        }
         if self.weapon_type == WeaponType::BOW {
             buffer.insert("perfect_draw".to_string(), self.calc_perfect_draw());
         }
 
         buffer
+    }
+}
+impl Weapon {
+    pub fn get_health_info(&self) -> HealthResponse {
+        let (health_per_shot, shots_to_proc_restoration, percent_energy_drained_per_shot) =
+            match &self.weapon_type {
+                WeaponType::AUTORIFLE => (12.0, 6.0, 2.0),
+                _ => (0.0, 0.0, 0.0),
+            };
+        HealthResponse {
+            health_per_shot,
+            shots_to_proc_restoration,
+            percent_energy_drained_per_shot,
+        }
     }
 }

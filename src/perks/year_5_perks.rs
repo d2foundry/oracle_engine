@@ -64,7 +64,6 @@ pub fn year_5_perks() {
     add_dmr(
         Perks::FocusedFury,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            
             let shots_needed = (_input.calc_data.base_mag
                 * (_input.calc_data.curr_firing_data.burst_size as f64))
                 / 2.0;
@@ -78,7 +77,7 @@ pub fn year_5_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: dmg_boost,
                 explosive_dmg_scale: dmg_boost,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -112,6 +111,9 @@ pub fn year_5_perks() {
     add_dmr(
         Perks::GutShot,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
             let high_weapons = [
                 WeaponType::AUTORIFLE,
                 WeaponType::HANDCANNON,
@@ -134,6 +136,7 @@ pub fn year_5_perks() {
                 impact_dmg_scale: dmg_scale,
                 explosive_dmg_scale: dmg_scale,
                 crit_scale,
+                ..Default::default()
             }
         }),
     );
@@ -302,7 +305,12 @@ pub fn year_5_perks() {
         Perks::TargetLock,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let nerf = 0.625; //patch 7.1.5
-            let enh_increase = if _input.is_enhanced { 1.2 } else { 1.0 };
+            let enh_increase = match (_input.is_enhanced, _input.pvp) {
+                (false, _) => 1.0,
+                (true, false) => 1.125,
+                (true, true) => 1.2,
+            };
+            
             let low_end_dmg = 0.0934 * enh_increase * nerf;
             let high_end_dmg = 0.4005 * enh_increase * nerf;
 
@@ -324,25 +332,25 @@ pub fn year_5_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: buff + 1.0,
                 explosive_dmg_scale: buff + 1.0,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
 
     add_dmr(
-        Perks::OverUnder,
+        Perks::UnderOver,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
             let mut buff = 1.0_f64;
             if _input.calc_data.has_overshield {
-                buff += 0.2;
-            }
-            if _input.is_enhanced {
-                buff *= 1.05;
+                buff += if _input.pvp { 0.2 } else { 1.25 };
+                if _input.is_enhanced {
+                    buff *= 1.05;
+                }
             }
             DamageModifierResponse {
                 impact_dmg_scale: buff,
                 explosive_dmg_scale: buff,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
@@ -396,14 +404,13 @@ pub fn year_5_perks() {
     add_dmr(
         Perks::BaitAndSwitch,
         Box::new(|_input: ModifierResponseInput| -> DamageModifierResponse {
-            if _input.value > 0 {
-                DamageModifierResponse {
-                    impact_dmg_scale: 1.35,
-                    explosive_dmg_scale: 1.35,
-                    crit_scale: 1.0,
-                }
-            } else {
-                DamageModifierResponse::default()
+            if _input.value == 0 {
+                return DamageModifierResponse::default();
+            }
+            DamageModifierResponse {
+                impact_dmg_scale: 1.30,
+                explosive_dmg_scale: 1.30,
+                ..Default::default()
             }
         }),
     );
@@ -516,21 +523,12 @@ pub fn year_5_perks() {
     add_fmr(
         Perks::SuccesfulWarmup,
         Box::new(|_input: ModifierResponseInput| -> FiringModifierResponse {
-            let fire_rate_buff = if _input.value > 0 { 0.625 } else { 1.0 };
-            let duration = if _input.value > 0 {
-                6_f64
-                    + (if _input.is_enhanced { 5_f64 } else { 4_f64 })
-                        * clamp(_input.value as f64 - 1_f64, 0_f64, 4_f64)
-            } else {
-                0.0
-            };
-            if _input.calc_data.time_total < duration as f64 {
-                FiringModifierResponse {
-                    burst_delay_scale: fire_rate_buff,
-                    ..Default::default()
-                }
-            } else {
-                FiringModifierResponse::default()
+            if _input.value == 0 {
+                return FiringModifierResponse::default();
+            }
+            FiringModifierResponse {
+                burst_delay_scale: 0.625,
+                ..Default::default()
             }
         }),
     );
@@ -541,7 +539,7 @@ pub fn year_5_perks() {
             DamageModifierResponse {
                 impact_dmg_scale: scalar,
                 explosive_dmg_scale: scalar,
-                crit_scale: 1.0,
+                ..Default::default()
             }
         }),
     );
