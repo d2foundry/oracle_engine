@@ -3,15 +3,19 @@ use std::collections::HashMap;
 use serde::Serialize;
 
 use super::{enhanced_check, Perk, Perks};
-
 #[derive(Debug, Clone, Serialize, Default)]
+#[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum PerkValueVariant {
     #[default]
-    STATIC,
-    TOGGLE,
-    SLIDER,
-    OPTIONS,
+    Static,
+    Toggle,
+    ActiveToggle,
+    Slider,
+    ActiveSlider,
+    Options,
+    ActiveOptions,
 }
+
 
 #[derive(Debug, Clone, Serialize)]
 pub struct PerkOptionData {
@@ -25,28 +29,49 @@ impl PerkOptionData {
         PerkOptionData {
             stacks: (0, 0),
             options: vec![],
-            option_type: PerkValueVariant::STATIC,
+            option_type: PerkValueVariant::Static,
         }
     }
     pub fn toggle() -> PerkOptionData {
         PerkOptionData {
             stacks: (0, 1),
             options: vec![],
-            option_type: PerkValueVariant::TOGGLE,
+            option_type: PerkValueVariant::Toggle,
+        }
+    }
+    pub fn active_toggle() -> PerkOptionData {
+        PerkOptionData {
+            stacks: (0, 1),
+            options: vec![],
+            option_type: PerkValueVariant::ActiveToggle,
         }
     }
     pub fn stacking(_stacks: u32) -> PerkOptionData {
         PerkOptionData {
             stacks: (0, _stacks),
             options: vec![],
-            option_type: PerkValueVariant::SLIDER,
+            option_type: PerkValueVariant::Slider,
+        }
+    }
+    pub fn active_stacking(_stacks: u32) -> PerkOptionData {
+        PerkOptionData {
+            stacks: (0, _stacks),
+            options: vec![],
+            option_type: PerkValueVariant::ActiveSlider,
         }
     }
     pub fn stacking_min(_stacks: u32, _min_stacks: u32) -> PerkOptionData {
         PerkOptionData {
             stacks: (_min_stacks, _stacks),
             options: vec![],
-            option_type: PerkValueVariant::SLIDER,
+            option_type: PerkValueVariant::Slider,
+        }
+    }
+    pub fn active_stacking_min(_stacks: u32, _min_stacks: u32) -> PerkOptionData {
+        PerkOptionData {
+            stacks: (_min_stacks, _stacks),
+            options: vec![],
+            option_type: PerkValueVariant::ActiveSlider,
         }
     }
     pub fn options(_options: Vec<&str>) -> PerkOptionData {
@@ -57,7 +82,18 @@ impl PerkOptionData {
         PerkOptionData {
             stacks: (0, options.len() as u32 - 1),
             options,
-            option_type: PerkValueVariant::OPTIONS,
+            option_type: PerkValueVariant::Options,
+        }
+    }
+    pub fn active_options(_options: Vec<&str>) -> PerkOptionData {
+        let mut options = vec!["None".to_string()];
+        for option in _options {
+            options.push(option.to_string());
+        }
+        PerkOptionData {
+            stacks: (0, options.len() as u32 - 1),
+            options,
+            option_type: PerkValueVariant::ActiveOptions,
         }
     }
     pub fn options_raw(_options: Vec<&str>) -> PerkOptionData {
@@ -68,7 +104,18 @@ impl PerkOptionData {
         PerkOptionData {
             stacks: (0, options.len() as u32 - 1),
             options,
-            option_type: PerkValueVariant::OPTIONS,
+            option_type: PerkValueVariant::Options,
+        }
+    }
+    pub fn active_options_raw(_options: Vec<&str>) -> PerkOptionData {
+        let mut options = vec![];
+        for option in _options {
+            options.push(option.to_string());
+        }
+        PerkOptionData {
+            stacks: (0, options.len() as u32 - 1),
+            options,
+            option_type: PerkValueVariant::ActiveOptions,
         }
     }
 }
@@ -290,11 +337,11 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::EddyCurrent => Some(PerkOptionData::options(["Base", "Amplified"].to_vec())),
 
         //season 22 | year 6
-        Perks::PrecisionInstrument => Some(PerkOptionData::stacking(6)),
+        Perks::PrecisionInstrument => Some(PerkOptionData::active_stacking(6)),
         Perks::LooseChange => Some(PerkOptionData::toggle()),
         Perks::HighGround => Some(PerkOptionData::stacking(3)),
-        Perks::HeadRush => Some(PerkOptionData::toggle()),
-        Perks::EnlightendAction => Some(PerkOptionData::stacking(12)),
+        Perks::HeadRush => Some(PerkOptionData::toggle());
+        Perks::EnlightendAction => Some(PerkOptionData::active_stacking(12)),
         Perks::SwordLogic => Some(PerkOptionData::stacking(4)),
         //season 23 | year 6
         Perks::Onslaught => Some(PerkOptionData::stacking(3)),
@@ -316,7 +363,7 @@ fn hash_to_perk_option_data(_hash: u32) -> Option<PerkOptionData> {
         Perks::TimelostMagazine => Some(PerkOptionData::toggle()),
 
         //exotics
-        Perks::CranialSpike => Some(PerkOptionData::stacking(5)),
+        Perks::CranialSpike => Some(PerkOptionData::active_stacking(5)),
         Perks::DarkForgedTrigger => Some(PerkOptionData::toggle()),
         Perks::AgersCall => Some(PerkOptionData::static_()),
         Perks::LagragianSight => Some(PerkOptionData::toggle()),
