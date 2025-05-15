@@ -76,16 +76,14 @@ pub fn year_7_perks() {
         Box::new(|_input: ModifierResponseInput| -> HashMap<u32, i32> {
             let mut stats = HashMap::new();
             let enhance_buff = if _input.is_enhanced { 1 } else { 0 };
-            if _input.value > 0 {
-                stats.insert(
-                    StatHashes::AIRBORNE.into(),
-                    (15 + 2 * enhance_buff) * _input.value as i32,
-                );
-                stats.insert(
-                    StatHashes::AIM_ASSIST.into(),
-                    (5 + enhance_buff) * _input.value as i32,
-                );
-            }
+            stats.insert(
+                StatHashes::AIRBORNE.into(),
+                (15 + 2 * enhance_buff) * (_input.value + 1) as i32,
+            );
+            stats.insert(
+                StatHashes::AIM_ASSIST.into(),
+                (5 + enhance_buff) * (_input.value + 1)  as i32,
+            );
             stats
         }),
     );
@@ -93,12 +91,9 @@ pub fn year_7_perks() {
         Perks::LoneWolf,
         Box::new(
             |_input: ModifierResponseInput| -> HandlingModifierResponse {
-                if _input.value == 0 {
-                    HandlingModifierResponse::default();
-                }
                 let enhance_buff = if _input.is_enhanced { 0.05 } else { 0.0 };
                 HandlingModifierResponse {
-                    ads_scale: 1.0 - (0.1 * _input.value as f64) - enhance_buff,
+                    ads_scale: 0.9 - (0.1 * _input.value as f64) - enhance_buff,
                     ..Default::default()
                 }
             },
