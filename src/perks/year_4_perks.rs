@@ -45,9 +45,8 @@ pub fn year_4_perks() {
             };
             FiringModifierResponse {
                 burst_delay_scale: firing_slow,
-                burst_delay_add: 0.0,
                 inner_burst_scale: firing_slow,
-                burst_size_add: 0.0,
+                ..Default::default()
             }
         }),
     );
@@ -186,9 +185,7 @@ pub fn year_4_perks() {
             };
             FiringModifierResponse {
                 burst_delay_scale: delay_mult,
-                burst_delay_add: 0.0,
-                inner_burst_scale: 1.0,
-                burst_size_add: 0.0,
+                ..Default::default()
             }
         }),
     );
