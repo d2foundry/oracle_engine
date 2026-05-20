@@ -193,9 +193,7 @@ pub fn exotic_perks() {
             };
             FiringModifierResponse {
                 burst_delay_scale: delay_mult,
-                burst_delay_add: 0.0,
-                inner_burst_scale: 1.0,
-                burst_size_add: 0.0,
+                ..Default::default()
             }
         }),
     );
@@ -241,9 +239,7 @@ pub fn exotic_perks() {
             };
             FiringModifierResponse {
                 burst_delay_scale: delay_mult,
-                burst_delay_add: 0.0,
-                inner_burst_scale: 1.0,
-                burst_size_add: 0.0,
+                ..Default::default()
             }
         }),
     );
